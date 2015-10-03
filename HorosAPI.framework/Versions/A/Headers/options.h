@@ -1,0 +1,42 @@
+//
+//  options.h
+//  OsiriX_Lion
+//
+//  Created by Alex Bettarini on 17 Nov 2014.
+//  Copyright (c) 2014 Osiri-LXIV Team. All rights reserved.
+//
+
+#ifndef OPTIONS_H_INCLUDED
+#define OPTIONS_H_INCLUDED
+
+//#define VTK_USE_SYSTEM_TIFF
+
+////////////////////////////////////////////////////////////////////////////////
+/* If using this feature, also create your own Binaries/Icon/DefaultBanner.png
+ */
+//#define WITH_BANNER
+
+////////////////////////////////////////////////////////////////////////////////
+#define WITH_IMPORTANT_NOTICE
+
+////////////////////////////////////////////////////////////////////////////////
+#define WITH_OS_VALIDATION
+
+////////////////////////////////////////////////////////////////////////////////
+#define WITH_RED_CAPTION
+
+////////////////////////////////////////////////////////////////////////////////
+/* If using this feature, you might want to change the TARGETS
+ *  Build Settings,Code Signing
+ *  from "Don't Code Sign"
+ *  to "Developer ID Application: Your Name"
+ */
+//#define WITH_CODE_SIGNING // and certificate for Deployment build
+
+////////////////////////////////////////////////////////////////////////////////
+/* Also, search the source files for
+ *  BUILTIN_DCMTK
+ *  DCMDEBUG
+ *  _STEREO_VISION_
+ */
+#endif
