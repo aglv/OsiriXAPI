@@ -169,6 +169,6 @@ extern NSString* const DicomDatabaseLogEntryEntityName;
 
 @end
 
-#import "DicomDatabase+Routing.h"
+//#import "DicomDatabase+Routing.h"
 #import "DicomDatabase+Clean.h"
 
