@@ -7,9 +7,9 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleExecutable</key>
-	<string>HorosDCM</string>
+	<string>Horos</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.macrad.dcmframework</string>
+	<string>com.horosproject.Horos</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundlePackageType</key>
