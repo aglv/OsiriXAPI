@@ -7,9 +7,9 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleExecutable</key>
-	<string>Horos</string>
+	<string>OsiriX</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.horosproject.Horos</string>
+	<string>io.volz.osirix.api</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundlePackageType</key>
