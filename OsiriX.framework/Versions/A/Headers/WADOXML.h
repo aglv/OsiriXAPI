@@ -19,10 +19,10 @@
     NSMutableDictionary *studies;
     
     NSString *studyInstanceUID, *seriesInstanceUID, *SOPInstanceUID;
-    NSString *wadoURL;
+    NSString *wadoURL, *webLogin, *transferSyntax;
 }
 @property (readonly) NSMutableDictionary *studies;
-@property (retain) NSString *studyInstanceUID, *seriesInstanceUID, *SOPInstanceUID, *wadoURL;
+@property (retain) NSString *studyInstanceUID, *seriesInstanceUID, *SOPInstanceUID, *wadoURL, *webLogin, *transferSyntax;
 
 - (void) parseURL: (NSURL*) url;
 - (NSArray*) getWADOUrls;

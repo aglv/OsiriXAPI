@@ -15,10 +15,10 @@
 #import <Cocoa/Cocoa.h>
 #import "OSIWindowController.h"
 #import "CPRMPRDCMView.h"
-#import "CPRVolumeData.h"
 #import "VRController.h"
 #import "VRView.h"
 #import "FlyAssistant.h"
+#import "ROI.h"
 
 enum _ViewsPosition {
     NormalPosition = 0,
@@ -71,7 +71,7 @@ typedef NSInteger CPRExportRotationSpan;
 	IBOutlet NSObjectController *ob;
 	
 	// To be able to use Cocoa bindings with toolbar...
-	IBOutlet NSView *tbLOD, *tbThickSlab, *tbWLWW, *tbTools, *tbShading, *tbMovie, *tbBlending, *tbSyncZoomLevel, *tbHighResolution, *tbInterpolationMode;
+	IBOutlet NSView *tbLOD, *tbThickSlab, *tbWLWW, *tbTools, *tbShading, *tbMovie, *tbBlending, *tbSyncZoomLevel, *tbHighResolution;
 	
     IBOutlet NSView *tbPathAssistant;
     IBOutlet NSView *testView;
@@ -183,15 +183,8 @@ typedef NSInteger CPRExportRotationSpan;
 	
 	NSMutableArray *_delegateCurveViewDebugging;
 	NSMutableArray *_delegateDisplayInfoDebugging;
-    
-    CPRInterpolationMode selectedInterpolationMode;
-    
-    BOOL isInitializing;
 }
 
-@property (atomic) CPRInterpolationMode selectedInterpolationMode;
-- (void) setInterpolationMode:(NSNumber*)value;
-- (NSNumber*) interpolationMode;
 @property (nonatomic) float clippingRangeThickness, dcmIntervalMin, dcmIntervalMax, blendingPercentage;
 @property (nonatomic) int clippingRangeMode, mouseViewID;
 @property (nonatomic) int curMovieIndex, maxMovieIndex, blendingMode;
@@ -236,7 +229,7 @@ typedef NSInteger CPRExportRotationSpan;
 - (id) selectedViewOnlyMPRView: (BOOL) onlyMPRView;
 - (void) computeCrossReferenceLines:(CPRMPRDCMView*) sender;
 - (IBAction)setTool:(id)sender;
-- (void) setToolIndex: (ToolMode) toolIndex;
+- (void) setToolIndex: (int) toolIndex;
 - (float) getClippingRangeThicknessInMm;
 - (void) propagateWLWW:(DCMView*) sender;
 - (void) propagateOriginRotationAndZoomToTransverseViews: (CPRTransverseView*) sender;
@@ -257,7 +250,7 @@ typedef NSInteger CPRExportRotationSpan;
 - (BOOL) getMovieDataAvailable;
 - (void)Apply3DOpacityString:(NSString*)str;
 - (void)Apply2DOpacityString:(NSString*)str;
-- (NSImage*) imageForROI: (ToolMode) i;
+- (NSImage*) imageForROI: (int) i;
 - (void) setROIToolTag:(ToolMode) roitype;
 - (IBAction) roiGetInfo:(id) sender;
 - (void) delayedFullLODRendering: (id) sender;

@@ -18,6 +18,8 @@
 
 @interface WebPortalStudy : NSManagedObject
 
+-(DicomStudy*)study;
+
 @property (nonatomic, retain) NSDate * dateAdded;
 @property (nonatomic, retain) NSString * patientUID;
 @property (nonatomic, retain) NSString * studyInstanceUID;

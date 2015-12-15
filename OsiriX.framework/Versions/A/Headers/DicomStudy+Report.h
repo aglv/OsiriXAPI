@@ -23,8 +23,14 @@
 
 // pdf to dicom
 +(void)transformPdfAtPath:(NSString*)pdfPath toDicomAtPath:(NSString*)outDicomPath usingSourceDicomAtPath:(NSString*)sourcePath;
++(void)transformPdfAtPath:(NSString*)pdfPath toDicomAtPath:(NSString*)outDicomPath usingSourceDicomAtPath:(NSString*)sourcePath seriesDescription:(NSString*) seriesDescription;
 -(void)transformPdfAtPath:(NSString*)pdfPath toDicomAtPath:(NSString*)outDicomPath;
+
+-(BOOL) transformPath:(NSString*) inPath toDicomAtPath:(NSString*) outPath seriesDescription:(NSString*) seriesDescription;
+-(BOOL) transformPath:(NSString*) inPath seriesDescription:(NSString*) seriesDescription;
+
 -(void)saveReportAsDicomAtPath:(NSString*)path;
 -(NSString*)saveReportAsDicomInTmp;
-
+-(BOOL) addToReportROIs:(BOOL) rois andKeyImages:(BOOL) keys;
++(NSArray*) acceptedExtensions;
 @end

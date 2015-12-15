@@ -13,7 +13,7 @@
  =========================================================================*/
 
 #import "BrowserController.h"
-
+#import "NoVibrancyTableView.h"
 
 @interface BrowserController (Activity)
 
@@ -23,5 +23,5 @@
 @end
 
 
-@interface ThreadsTableView : NSTableView
+@interface ThreadsTableView : NoVibrancyTableView
 @end

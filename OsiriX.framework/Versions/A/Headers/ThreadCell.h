@@ -24,8 +24,7 @@
 	NSThread* _thread;
     id _retainedThreadDictionary;
 	NSTableView* _view;
-
-    CGFloat _lastDisplayedProgress;
+    NSTimeInterval lastStatusUpdate, lastCancelUpdate, lastProgressUpdate;
     BOOL KVOObserving;
 }
 

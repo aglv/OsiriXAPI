@@ -43,7 +43,7 @@
 -(void)processAlbumsJson;
 -(void)processSeriesListJson;
 
--(void)processWado;
+-(BOOL)processWado;
 
 -(void)processWeasisJnlp;
 -(void)processWeasisXml;
@@ -55,6 +55,8 @@
 -(void)processImage;
 -(void)processImageAsScreenCapture: (BOOL) asDisplayed;
 -(void)processMovie;
+
+- (id)objectWithXID:(NSString*)xid;
 
 @end
 

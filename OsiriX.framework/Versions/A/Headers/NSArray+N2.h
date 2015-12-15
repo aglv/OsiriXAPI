@@ -20,7 +20,7 @@
 - (NSArray*)splitArrayIntoArraysOfMinSize:(NSUInteger)chunkSize maxArrays:(NSUInteger)maxArrays;
 - (NSArray*)splitArrayIntoChunksOfMinSize:(NSUInteger)chunkSize maxChunks:(NSUInteger)maxChunks;
 - (id) deepMutableCopy;
-
+- (NSArray *)arrayByRemovingObject:(id)obj;
 @end
 
 

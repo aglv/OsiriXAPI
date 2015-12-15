@@ -17,25 +17,23 @@
 
 @interface N2ManagedDatabase : NSObject {
 	@protected
-    NSString* _sqlFilePath;
+    NSString *_sqlFilePath;
 	@private
-	NSManagedObjectContext* _managedObjectContext;
+	NSManagedObjectContext *_managedObjectContext;
+    NSPersistentStore *mainStore;
     id _mainDatabase;
     volatile BOOL _isDeallocating;
     
-#ifndef NDEBUG
+    NSTimeInterval timeOfLastModification;
     NSThread *associatedThread;
-#endif
 }
 
-#ifndef NDEBUG
 @property(readonly) NSThread* associatedThread;
-#endif
-
+@property(readonly) NSPersistentStore *mainStore;
 @property(readonly,retain) NSString* sqlFilePath;
 @property(readonly) NSManagedObjectModel* managedObjectModel;
 @property(readwrite,retain) NSManagedObjectContext* managedObjectContext; // only change this value if you know what you're doing
-
+@property NSTimeInterval timeOfLastModification;
 @property(readonly,retain) id mainDatabase; // for independentDatabases
 -(BOOL)isMainDatabase;
 
@@ -58,6 +56,8 @@
 -(NSManagedObjectModel*)managedObjectModel;
 //-(NSMutableDictionary*)persistentStoreCoordinatorsDictionary;
 -(BOOL)migratePersistentStoresAutomatically; // default implementation returns YES
+-(NSPersistentStore*) addPersistentStoreWithPath: (NSString*) sqlFilePath;
+-(void) removeAllSecondaryStores;
 
 -(id)initWithPath:(NSString*)sqlFilePath;
 -(id)initWithPath:(NSString*)sqlFilePath context:(NSManagedObjectContext*)context;
@@ -67,7 +67,8 @@
 -(NSManagedObjectContext*)independentContext:(BOOL)independent;
 -(NSManagedObjectContext*)independentContext;
 -(id)independentDatabase;
-
+-(id)independentDatabaseIfNotMainThread;
+-(BOOL) managedObjectContextExist;
 -(NSEntityDescription*)entityForName:(NSString*)name;
 
 -(id)objectWithID:(id)oid;

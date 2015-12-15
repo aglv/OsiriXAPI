@@ -280,6 +280,9 @@ unsigned int dcmGuessModalityBytes(const char *sopClassUID);
 #define UID_JPEG2000TransferSyntax              "1.2.840.10008.1.2.4.91"
 /* MPEG2 Main Profile @ Main Level */
 #define UID_MPEG2MainProfileAtMainLevelTransferSyntax "1.2.840.10008.1.2.4.100"
+#define UID_MPEG4ProfileAtMainLevelTransferSyntax "1.2.840.10008.1.2.4.102"
+#define UID_MPEG24BDProfileAtMainLevelTransferSyntax "1.2.840.10008.1.2.4.103"
+
 /* JPEG 2000 Part 2 Multi-component Image Compression (Lossless Only) */
 #define UID_JPEG2000Part2MulticomponentImageCompressionLosslessOnlyTransferSyntax "1.2.840.10008.1.2.4.92"
 /* JPEG 2000 Part 2 Multi-component Image Compression (Lossless or Lossy) */
@@ -316,13 +319,17 @@ unsigned int dcmGuessModalityBytes(const char *sopClassUID);
 #define UID_PETCurveStorage                                        "1.2.840.10008.5.1.4.1.1.129"
 #define UID_CTImageStorage                                         "1.2.840.10008.5.1.4.1.1.2"
 #define UID_EnhancedCTImageStorage                                 "1.2.840.10008.5.1.4.1.1.2.1"
+#define UID_LegacyConvertedEnhancedCTImageStorage                  "1.2.840.10008.5.1.4.1.1.2.2"
 #define UID_EnhancedPETImageStorage                                "1.2.840.10008.5.1.4.1.1.130"
+#define UID_LegacyConvertedEnhancedPETImageStorage                 "1.2.840.10008.5.1.4.1.1.128.1"
 #define UID_NuclearMedicineImageStorage                            "1.2.840.10008.5.1.4.1.1.20"
 #define UID_RETIRED_UltrasoundMultiframeImageStorage               "1.2.840.10008.5.1.4.1.1.3"
 #define UID_UltrasoundMultiframeImageStorage                       "1.2.840.10008.5.1.4.1.1.3.1"
 #define UID_MRImageStorage                                         "1.2.840.10008.5.1.4.1.1.4"
 #define UID_EnhancedMRImageStorage                                 "1.2.840.10008.5.1.4.1.1.4.1"
 #define UID_MRSpectroscopyStorage                                  "1.2.840.10008.5.1.4.1.1.4.2"
+#define UID_EnhancedMRColorImageStorage                            "1.2.840.10008.5.1.4.1.1.4.3"
+#define UID_LegacyConvertedEnhancedMRImageStorage                  "1.2.840.10008.5.1.4.1.1.4.4"
 #define UID_RTImageStorage                                         "1.2.840.10008.5.1.4.1.1.481.1"
 #define UID_RTDoseStorage                                          "1.2.840.10008.5.1.4.1.1.481.2"
 #define UID_RTStructureSetStorage                                  "1.2.840.10008.5.1.4.1.1.481.3"
@@ -370,11 +377,12 @@ unsigned int dcmGuessModalityBytes(const char *sopClassUID);
 #define UID_HemodynamicWaveformStorage                             "1.2.840.10008.5.1.4.1.1.9.2.1"
 #define UID_CardiacElectrophysiologyWaveformStorage                "1.2.840.10008.5.1.4.1.1.9.3.1"
 #define UID_BasicVoiceAudioWaveformStorage                         "1.2.840.10008.5.1.4.1.1.9.4.1"
+#define UID_ParametricMapStorage                                   "1.2.840.10008.5.1.4.1.1.30"
 
 #define UID_EnhancedXAImageStorage                                 "1.2.840.10008.5.1.4.1.1.12.1.1"
 #define UID_EnhancedXRFImageStorage                                "1.2.840.10008.5.1.4.1.1.12.2.1"
-#define UID_XRay3DAngiographicImageStorage                         "1.2.840.10008.5.1.4.1.1.13.1.1"
-#define UID_XRay3DCraniofacialImageStorage                         "1.2.840.10008.5.1.4.1.1.13.1.2"
+#define XRay3DAngiographicImageStorage                             "1.2.840.10008.5.1.4.1.1.13.1.1"
+#define XRay3DCraniofacialImageStorage                             "1.2.840.10008.5.1.4.1.1.13.1.2"
 #define UID_BreastTomosynthesisImageStorage                        "1.2.840.10008.5.1.4.1.1.13.1.3"
 
 #define UID_ColorSoftcopyPresentationStateStorage                  "1.2.840.10008.5.1.4.1.1.11.2"
@@ -553,7 +561,38 @@ unsigned int dcmGuessModalityBytes(const char *sopClassUID);
 #define UID_HangingProtocolStorage                                 "1.2.840.10008.5.1.4.38.1"
 
 // Private DCMTK UIDs
+#define UID_Philips3DObject2Storage                             "1.3.46.670589.5.0.2.1"
+#define UID_Philips3DObjectStorage                             "1.3.46.670589.5.0.2"
+#define UID_Philips3DPresentationStateStorage                             "1.3.46.670589.2.5.1.1"
+#define UID_PhilipsCompositeObjectStorage                             "1.3.46.670589.5.0.4"
+#define UID_PhilipsCTSyntheticImageStorage                             "1.3.46.670589.5.0.9"
+#define UID_PhilipsCXImageStorage                             "1.3.46.670589.2.4.1.1"
+#define UID_PhilipsCXSyntheticImageStorage                             "1.3.46.670589.5.0.12"
+#define UID_PhilipsLiveRunStorage                             "1.3.46.670589.7.8.1618510092"
+#define UID_PhilipsMRCardio2Storage                             "1.3.46.670589.5.0.8.1"
+#define UID_PhilipsMRCardioAnalysis2Storage                             "1.3.46.670589.5.0.11.1"
+#define UID_PhilipsMRCardioAnalysisStorage                             "1.3.46.670589.5.0.11"
+#define UID_PhilipsMRCardioProfileStorage                             "1.3.46.670589.5.0.7"
+#define UID_PhilipsMRCardioStorage                             "1.3.46.670589.5.0.8"
+#define UID_PhilipsMRColorImageStorage                             "1.3.46.670589.11.0.0.12.3"
+#define UID_PhilipsMRExamcardStorage                             "1.3.46.670589.11.0.0.12.4"
+#define UID_PhilipsMRSeriesDataStorage                             "1.3.46.670589.11.0.0.12.2"
+#define UID_PhilipsMRSpectrumStorage                             "1.3.46.670589.11.0.0.12.1"
+#define UID_PhilipsMRSyntheticImageStorage                             "1.3.46.670589.5.0.10"
+#define UID_PhilipsPerfusionImageStorage                             "1.3.46.670589.5.0.14"
+#define UID_PhilipsPerfusionStorage                             "1.3.46.670589.5.0.13"
 #define UID_PhilipsPrivateXRayMFStorage                             "1.3.46.670589.7.8.1618510091"
+#define UID_PhilipsReconstructionStorage                             "1.3.46.670589.7.8.16185100130"
+#define UID_PhilipsRunStorage                             "1.3.46.670589.7.8.16185100129"
+#define UID_PhilipsSpecialisedXAStorage                             "1.3.46.670589.2.3.1.1"
+#define UID_PhilipsSurface2Storage                             "1.3.46.670589.5.0.3.1"
+#define UID_PhilipsSurfaceStorage                             "1.3.46.670589.5.0.3"
+#define UID_PhilipsVolume2Storage                             "1.3.46.670589.5.0.1.1"
+#define UID_PhilipsVolumeSetStorage                             "1.3.46.670589.2.11.1.1"
+#define UID_PhilipsVolumeStorage                             "1.3.46.670589.5.0.1"
+#define UID_PhilipsVRMLStorage                             "1.3.46.670589.2.8.1.1"
+
+
 #define UID_SiemensCSAPrivateNonImageStorage                        "1.3.12.2.1107.5.9.1"
 
 // Private SOP Class UID used to shutdown external network applications

@@ -30,4 +30,5 @@
 
 -(int)findDBPath:(NSString*)path dbFolder:(NSString*)DBFolderLocation __deprecated;
 -(void)removePathFromSources:(NSString*) path;
+-(NSArray*) localDatabases;
 @end

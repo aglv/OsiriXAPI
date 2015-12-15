@@ -75,7 +75,9 @@ typedef enum {
     EXS_JPEG2000 = 27,
     EXS_MPEG2MainProfileAtMainLevel = 28,
     EXS_JPEG2000MulticomponentLosslessOnly = 29,
-    EXS_JPEG2000Multicomponent = 30
+    EXS_JPEG2000Multicomponent = 30,
+    EXS_MPEG4MainProfileAtMainLevel = 31,
+    EXS_MPEG24BDMainProfileAtMainLevel = 32
 } E_TransferSyntax;
 
 typedef enum {

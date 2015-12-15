@@ -13,7 +13,6 @@
  =========================================================================*/
 
 #import <Cocoa/Cocoa.h>
-#import "NSUserDefaultsController+OsiriX.h"
 
 
 @interface NSUserDefaults (OsiriX)

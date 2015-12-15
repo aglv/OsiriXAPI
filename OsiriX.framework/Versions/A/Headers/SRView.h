@@ -10,45 +10,6 @@
      This software is distributed WITHOUT ANY WARRANTY; without even
      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
      PURPOSE.
- ---------------------------------------------------------------------------
- 
- This file is part of the Horos Project.
- 
- Current contributors to the project include Alex Bettarini and Danny Weissman.
- 
- Horos is free software: you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation,  version 3 of the License.
- 
- Horos is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
- 
- You should have received a copy of the GNU General Public License
- along with Horos.  If not, see <http://www.gnu.org/licenses/>.
-
- 
-
- 
- ---------------------------------------------------------------------------
- 
- This file is part of the Horos Project.
- 
- Current contributors to the project include Alex Bettarini and Danny Weissman.
- 
- Horos is free software: you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation,  version 3 of the License.
- 
- Horos is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
- 
- You should have received a copy of the GNU General Public License
- along with Horos.  If not, see <http://www.gnu.org/licenses/>.
-
 =========================================================================*/
 
 #import <AppKit/AppKit.h>
@@ -57,7 +18,7 @@
 #import "Camera.h"
 
 #ifdef __cplusplus
-#import "VTKViewOSIRIX.h"
+#include "VTKView.h"
 #define id Id
 #include "vtkCommand.h"
 #include "vtkProperty.h"
@@ -248,7 +209,7 @@ typedef struct renderSurface
     NSMutableArray				*pixList;
     DCMPix						*firstObject;
     float						*data, *dataFRGB;
-    ToolMode					currentTool;
+    short						currentTool;
 	float						cosines[ 9];
 	float						blendingcosines[ 9];
 
@@ -339,7 +300,7 @@ typedef struct renderSurface
 	
 	NSPoint						_mouseLocStart;  // mouseDown start point
 	BOOL						_resizeFrame;
-	ToolMode					_tool;
+	short						_tool;
 	
 	NSRect						savedViewSizeFrame;
 
@@ -369,7 +330,7 @@ typedef struct renderSurface
 
 #ifdef _STEREO_VISION_
 @property(readwrite) BOOL StereoVisionOn; 
-@property(readonly) ToolMode currentTool;
+@property(readonly) short currentTool;
 #endif
 
 -(unsigned char*) getRawPixels:(long*) width :(long*) height :(long*) spp :(long*) bpp :(BOOL) screenCapture :(BOOL) force8bits;
@@ -450,7 +411,7 @@ typedef struct renderSurface
 - (IBAction) IBSetSelected3DPointAnnotationColor: (id) sender;
 - (IBAction) IBSetSelected3DPointAnnotationSize: (id) sender;
 
--(void) setCursorForView: (ToolMode) tool;
+-(void) setCursorForView: (long) tool;
 
 //Dragging
 - (void) startDrag:(NSTimer*)theTimer;
@@ -465,7 +426,7 @@ typedef struct renderSurface
 void SRSpaceNavigatorMessageHandler(io_connect_t connection, natural_t messageType, void *messageArgument);
 #ifdef _STEREO_VISION_
 //Added SilvanWidmer 27-08-09
-- (ToolMode) getTool: (NSEvent*) event;
+- (long) getTool: (NSEvent*) event;
 #endif
 
 @end

@@ -10,58 +10,13 @@
      This software is distributed WITHOUT ANY WARRANTY; without even
      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
      PURPOSE.
- ---------------------------------------------------------------------------
- 
- This file is part of the Horos Project.
- 
- Current contributors to the project include Alex Bettarini and Danny Weissman.
- 
- Horos is free software: you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation,  version 3 of the License.
- 
- Horos is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
- 
- You should have received a copy of the GNU General Public License
- along with Horos.  If not, see <http://www.gnu.org/licenses/>.
-
- 
-
- 
- ---------------------------------------------------------------------------
- 
- This file is part of the Horos Project.
- 
- Current contributors to the project include Alex Bettarini and Danny Weissman.
- 
- Horos is free software: you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation,  version 3 of the License.
- 
- Horos is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
- 
- You should have received a copy of the GNU General Public License
- along with Horos.  If not, see <http://www.gnu.org/licenses/>.
-
 =========================================================================*/
 
 #ifndef FVTIFF_H
 #define FVTIFF_H
 
 #import <Foundation/Foundation.h>
-#import "options.h"
-#ifdef VTK_USE_SYSTEM_TIFF
-#include <tiffio.h>
-#else
 #include "tiffio.h"
-//#include "vtktiff/tiffio.h"
-#endif
 
 #define TIFFTAG_FV_MMHEADER		34361
 #define TIFFTAG_FV_MMSTAMP		34362
@@ -123,17 +78,10 @@ typedef struct // this is from the FV docs, but I think the docs are not quite r
 
 }	FV_MM_HEAD;										// Total Size (bytes):					1456
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 int FV_Read_MM_HEAD(const char* data, FV_MM_HEAD* head);
 int FV_Read_DIM_INFO(const char* data, FV_MM_DIM_INFO* info);
 NSXMLDocument* XML_from_FVTiff(NSString* srcFile);
-void FV_EMPTY_TIFFWarning(const char *module, const char *fmt, ...);
 
-#ifdef __cplusplus
-}
-#endif
+void FV_EMPTY_TIFFWarning(const char *module, const char *fmt, ...);
 
 #endif

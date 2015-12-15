@@ -10,50 +10,13 @@
      This software is distributed WITHOUT ANY WARRANTY; without even
      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
      PURPOSE.
- ---------------------------------------------------------------------------
- 
- This file is part of the Horos Project.
- 
- Current contributors to the project include Alex Bettarini and Danny Weissman.
- 
- Horos is free software: you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation,  version 3 of the License.
- 
- Horos is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
- 
- You should have received a copy of the GNU General Public License
- along with Horos.  If not, see <http://www.gnu.org/licenses/>.
-
- 
-
- 
- ---------------------------------------------------------------------------
- 
- This file is part of the Horos Project.
- 
- Current contributors to the project include Alex Bettarini and Danny Weissman.
- 
- Horos is free software: you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation,  version 3 of the License.
- 
- Horos is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
- 
- You should have received a copy of the GNU General Public License
- along with Horos.  If not, see <http://www.gnu.org/licenses/>.
-
 =========================================================================*/
 
 
 #import <Foundation/Foundation.h>
 #import <Cocoa/Cocoa.h>
+
+#define ItIsADICOMDIR -8237
 
 /** \brief  Parses files for importing into the database */
 
@@ -82,7 +45,8 @@
 	NSMutableDictionary *dicomElements;
 }
 
-@property (retain) NSString *serieID;
+@property(retain) NSString *serieID, *serie;
+@property(retain, nonatomic) NSString *filePath;
 
 // file functions
 + (BOOL) isTiffFile:(NSString *) file; /**< Test for TIFF file format */
@@ -90,6 +54,7 @@
 + (BOOL) isDICOMFile:(NSString *) file; /**< Test for DICOM file format */
 + (BOOL) isDICOMFile:(NSString *) file compressed:(BOOL*) compressed; /**< Test for DICOM file format, returns YES for compressed BOOL if Transfer syntax is compressed. */
 + (BOOL) isDICOMFile:(NSString *) file compressed:(BOOL*) compressed image:(BOOL*) image;
++ (BOOL) isDICOMFile:(NSString *) file compressed:(BOOL*) compressed image:(BOOL*) image SOP:(NSString**) SOP;
 + (BOOL) isXMLDescriptedFile:(NSString *) file; /**< Test for XML descripted  file format */
 + (BOOL) isXMLDescriptorFile:(NSString *) file; /**< Test for XML descriptor file format. Fake DICOM for other files with XML descriptor*/
 + (void) setFilesAreFromCDMedia: (BOOL) f; /**< Set flag for filesAreFromCDMedia */
@@ -118,12 +83,14 @@
 - (id) initRandom; /**< Inits and returns an empty dicomFile */
 //- (id) initWithXMLDescriptor: (NSString*)pathToXMLDescriptor path:(NSString*) f; /**< Init with XMLDescriptor for information and f for image data */
 - (NSString*) patientUID; /**< Returns the patientUID */
-+ (NSString*) patientUID: (id) src; /**< Returns the patientUID */
++ (NSString*) patientUID: (NSDictionary*) src; /**< Returns the patientUID */
++ (NSString*) patientUIDwithName: (NSString*) name birthdate: (NSDate*) birthdate patientID: (NSString*) patID; /**< Returns the patientUID */
+- (void) compressed:(BOOL*) compressed image:(BOOL*) image SOP:(NSString**) SOP;
 
 /** Returns a dictionary of the elements used to import into the database
 * Keys:
 * @"studyComment", @"studyID", @"studyDescription", @"studyDate", @"modality", @"patientID", @"patientName",
-* @"patientUID", @"fileType", @"commentsAutoFill", @"album", @"SOPClassUID", @"SOPUID", @"institutionName",
+* @"patientUID", @"fileType", @"comments", @"album", @"SOPClassUID", @"SOPUID", @"institutionName",
 * @"referringPhysiciansName", @"performingPhysiciansName", @"accessionNumber", @"patientAge", @"patientBirthDate", 
 * @"patientSex", @"cardiacTime", @"protocolName", @"sliceLocation", @"imageID", @"seriesNumber", @"seriesDICOMUID",
 * @"studyNumber", @"seriesID", @"hasDICOM"
@@ -160,16 +127,8 @@
 - (BOOL) combineProjectionSeriesMode; /**< Returns the combineProjectionSeriesMode default. */
 //- (BOOL) checkForLAVIM; /**< Returns the CHECKFORLAVIM default. */
 - (BOOL) separateCardiac4D; /**< Returns the SEPARATECARDIAC4D default. If YES separates cardiac studies into separate gated series. */
-- (int) commentsGroup; /**< Returns the commentsGroup default. The DICOM group to get comments from. */
-- (int) commentsElement; /**< Returns the commentsGroup default.  The DICOM  element to get get comments from. */
-- (int) commentsGroup2; /**< Returns the commentsGroup default. The DICOM group to get comments from. */
-- (int) commentsElement2; /**< Returns the commentsGroup default.  The DICOM  element to get get comments from. */
-- (int) commentsGroup3; /**< Returns the commentsGroup default. The DICOM group to get comments from. */
-- (int) commentsElement3; /**< Returns the commentsGroup default.  The DICOM  element to get get comments from. */
-- (int) commentsGroup4; /**< Returns the commentsGroup default. The DICOM group to get comments from. */
-- (int) commentsElement4; /**< Returns the commentsGroup default.  The DICOM  element to get get comments from. */
 - (BOOL) containsString: (NSString*) s inArray: (NSArray*) a;
-- (BOOL) containsLocalizerInString: (NSString*) str;
++ (BOOL) containsLocalizerInString: (NSString*) str;
 @end
 
 

@@ -35,10 +35,14 @@
 	NSMutableArray* multipartData;
 	BOOL postHeaderOK;
 	NSData *postBoundary;
-	NSString *POSTfilename;
+	NSString *POSTfilename, *originalFileName;
     
     DicomDatabase* _independentDicomDatabase;
     NSThread* _independentDicomDatabaseThread;
+    
+#ifndef NDEBUG
+    NSThread *initThread;
+#endif
 }
 
 -(CFHTTPMessageRef)request;
@@ -47,7 +51,7 @@
 @property(retain, nonatomic) WebPortalSession* session;
 @property(retain) WebPortalUser* user;
 @property(retain) NSDictionary* parameters;
-@property(retain) NSString* GETParams;
+@property(retain) NSString* GETParams, *originalFileName;
 @property(retain,readonly) DicomDatabase* independentDicomDatabase;
 
 @property(assign,readonly) WebPortalServer* server;

@@ -10,45 +10,6 @@
      This software is distributed WITHOUT ANY WARRANTY; without even
      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
      PURPOSE.
- ---------------------------------------------------------------------------
- 
- This file is part of the Horos Project.
- 
- Current contributors to the project include Alex Bettarini and Danny Weissman.
- 
- Horos is free software: you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation,  version 3 of the License.
- 
- Horos is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
- 
- You should have received a copy of the GNU General Public License
- along with Horos.  If not, see <http://www.gnu.org/licenses/>.
-
- 
-
- 
- ---------------------------------------------------------------------------
- 
- This file is part of the Horos Project.
- 
- Current contributors to the project include Alex Bettarini and Danny Weissman.
- 
- Horos is free software: you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation,  version 3 of the License.
- 
- Horos is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
- 
- You should have received a copy of the GNU General Public License
- along with Horos.  If not, see <http://www.gnu.org/licenses/>.
-
 =========================================================================*/
 
 
@@ -62,6 +23,7 @@ Super Class for SCU classes such as verifySCU, storeSCU, moveSCU, findSCU
 #ifdef __cplusplus
 #undef verify
 #include "osconfig.h" /* make sure OS specific configuration is included first */
+#include "dcdatset.h"
 #include "dimse.h"
 #include "dccodec.h"
 
@@ -86,12 +48,12 @@ typedef char* T_ASC_Network;
 #import "DICOMTLS.h"
 #import "DDKeychain.h"
 
-@interface DCMTKServiceClassUser : NSObject {
+@interface DCMTKServiceClassUser: NSObject <NSCopying> {
 	NSString *_callingAET;
 	NSString *_calledAET;
 	int _port;
 	NSString *_hostname;
-	NSDictionary *_extraParameters;
+	NSMutableDictionary *_extraParameters;
 	BOOL _shouldAbort;
 	int _transferSyntax;
 	float _compression;
@@ -120,9 +82,10 @@ typedef char* T_ASC_Network;
 	const char *_dhparam;
 }
 
-@property BOOL _abortAssociation;
-@property (readonly) NSString *_hostname;
-@property int _port;
+@property BOOL abortAssociation;
+@property (retain) NSString *hostname, *callingAET, *calledAET;
+@property (readonly) NSMutableDictionary *extraParameters;
+@property int port, transferSyntax;
 
 - (id) initWithCallingAET:(NSString *)myAET  
 			calledAET:(NSString *)theirAET  
@@ -133,7 +96,5 @@ typedef char* T_ASC_Network;
 			extraParameters:(NSDictionary *)extraParameters;
 			
 - (OFCondition) addPresentationContext:(T_ASC_Parameters *)params abstractSyntax:(const char *)abstractSyntax;
-- (NSString *)calledAET;
-- (NSString *)callingAET;
-- (NSDictionary *) extraParameters;
+- (NSMutableDictionary *) extraParameters;
 @end

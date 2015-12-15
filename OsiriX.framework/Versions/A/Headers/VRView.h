@@ -10,55 +10,15 @@
      This software is distributed WITHOUT ANY WARRANTY; without even
      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
      PURPOSE.
- ---------------------------------------------------------------------------
- 
- This file is part of the Horos Project.
- 
- Current contributors to the project include Alex Bettarini and Danny Weissman.
- 
- Horos is free software: you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation,  version 3 of the License.
- 
- Horos is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
- 
- You should have received a copy of the GNU General Public License
- along with Horos.  If not, see <http://www.gnu.org/licenses/>.
-
- 
-
- 
- ---------------------------------------------------------------------------
- 
- This file is part of the Horos Project.
- 
- Current contributors to the project include Alex Bettarini and Danny Weissman.
- 
- Horos is free software: you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation,  version 3 of the License.
- 
- Horos is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
- 
- You should have received a copy of the GNU General Public License
- along with Horos.  If not, see <http://www.gnu.org/licenses/>.
-
 =========================================================================*/
 
 
 
 #import <AppKit/AppKit.h>
 #import "DCMPix.h"
-#import "DCMView.h"
 
 #ifdef __cplusplus
-#import "VTKViewOSIRIX.h"
+#import "VTKView.h"
 
 #define id Id
 #include "vtkCommand.h"
@@ -307,6 +267,11 @@ typedef char* VTKStereoVRView;
 	NSCursor				*cursor;
 	BOOL					cursorSet;
 	
+    int                     trackPadNumberOfFingers;
+    float                   trackPadScaleAccumulator;
+    BOOL                    trackPadMoved;
+
+    
     vtkRenderer				*aRenderer;
     vtkCamera				*aCamera;
 
@@ -332,7 +297,6 @@ typedef char* VTKStereoVRView;
 	vtkTextActor				*textWLWW, *textX;
 	BOOL						isViewportResizable;
 	vtkTextActor				*oText[ 5];
-	char						WLWWString[ 200];
 	vtkImageImport				*reader;
 	vtkVolumeRayCastCompositeFunction  *compositeFunction;
 	vtkPiecewiseFunction		*opacityTransferFunction;
@@ -445,7 +409,7 @@ typedef char* VTKStereoVRView;
 
 #ifdef _STEREO_VISION_
 @property(readwrite) BOOL StereoVisionOn; 
-//@property(readonly) ToolMode currentTool;
+//@property(readonly) short currentTool;
 #endif
 
 @property (nonatomic) BOOL clipRangeActivated, keep3DRotateCentered, dontResetImage, bestRenderingMode;
@@ -570,6 +534,15 @@ typedef char* VTKStereoVRView;
 - (void) setViewportResizable: (BOOL) boo;
 - (void) scrollInStack: (float) delta;
 
+- (void) rightMouseDragged:(NSEvent *)theEvent backingScaleFactor: (float) backingScaleFactor;
+- (void) mouseDown:(NSEvent *)theEvent backingScaleFactor: (float) backingScaleFactor;
+- (void) mouseDragged:(NSEvent *)theEvent backingScaleFactor: (float) backingScaleFactor;
+- (void) rightMouseDown:(NSEvent *)theEvent backingScaleFactor: (float) backingScaleFactor;
+
+- (float) SIOrientationInDegrees;
+- (float) LROrientationInDegrees;
+- (float) RollOrientationInDegrees;
+
 // 3D Points
 - (BOOL) get3DPixelUnder2DPositionX:(float) x Y:(float) y pixel: (long*) pix position:(float*) position value:(float*) val;
 - (BOOL) get3DPixelUnder2DPositionX:(float) x Y:(float) y pixel: (long*) pix position:(float*) position value:(float*) val maxOpacity: (float) maxOpacity minValue: (float) minValue;
@@ -634,7 +607,7 @@ typedef char* VTKStereoVRView;
 - (void) exportTIFF:(id) sender;
 
 // cursors
--(void) setCursorForView: (ToolMode) tool;
+-(void) setCursorForView: (long) tool;
 
 //Dragging
 - (void) startDrag:(NSTimer*)theTimer;
@@ -664,6 +637,8 @@ typedef char* VTKStereoVRView;
 //- (void)_iChatStateChanged:(NSNotification *)aNotification;
 
 - (void)yaw:(float)degrees;
+- (void)roll:(float)degrees;
+- (void)pitch:(float)degrees;
 - (void)panX:(double)x Y:(double)y;
 
 - (void)recordFlyThru;
@@ -674,7 +649,7 @@ void VRSpaceNavigatorMessageHandler(io_connect_t connection, natural_t messageTy
 
 #ifdef _STEREO_VISION_
 //Added SilvanWidmer 27-08-09
-- (ToolMode) getTool: (NSEvent*) event;
+- (long) getTool: (NSEvent*) event;
 - (void) computeLength;
 - (void) generateROI;
 #endif

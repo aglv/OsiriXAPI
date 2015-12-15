@@ -27,18 +27,23 @@
 	NSTimeInterval _timestamp;
     dispatch_semaphore_t _connectionsSemaphoreId;
     NSString *password;
+    
+    BOOL remoteDBWaitingForLoad;
+    NSString *remoteDBPathToLoad;
 }
 
 @property(readonly,retain) NSString* address;
 @property(readonly) NSInteger port;
 @property(readonly,retain) NSHost* host;
+@property(retain) NSString *remoteDBPathToLoad;
 
 +(RemoteDicomDatabase*)databaseForLocation:(NSString*)location port:(NSUInteger)port name:(NSString*)name update:(BOOL)flagUpdate;
 
 -(id)initWithLocation:(NSString*)location port:(NSUInteger)port;
 -(id)initWithHost:(NSHost*)host port:(NSInteger)port update:(BOOL)flagUpdate;
 
--(NSThread*)initiateUpdate;
+-(NSThread*) initiateUpdate;
+-(NSThread*) forceInitiateUpdate;
 
 -(NSString*)cacheDataForImage:(DicomImage*)image maxFiles:(NSInteger)maxFiles;
 -(NSString*)localPathForImage:(DicomImage*)image;

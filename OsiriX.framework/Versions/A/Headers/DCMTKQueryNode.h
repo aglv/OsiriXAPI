@@ -10,45 +10,6 @@
      This software is distributed WITHOUT ANY WARRANTY; without even
      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
      PURPOSE.
- ---------------------------------------------------------------------------
- 
- This file is part of the Horos Project.
- 
- Current contributors to the project include Alex Bettarini and Danny Weissman.
- 
- Horos is free software: you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation,  version 3 of the License.
- 
- Horos is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
- 
- You should have received a copy of the GNU General Public License
- along with Horos.  If not, see <http://www.gnu.org/licenses/>.
-
- 
-
- 
- ---------------------------------------------------------------------------
- 
- This file is part of the Horos Project.
- 
- Current contributors to the project include Alex Bettarini and Danny Weissman.
- 
- Horos is free software: you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation,  version 3 of the License.
- 
- Horos is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
- 
- You should have received a copy of the GNU General Public License
- along with Horos.  If not, see <http://www.gnu.org/licenses/>.
-
 =========================================================================*/
 
 
@@ -57,35 +18,42 @@
 
 @class DCMCalendarDate;
 /** \brief Base class for query nodes */
-@interface DCMTKQueryNode : DCMTKServiceClassUser
+@interface DCMTKQueryNode : DCMTKServiceClassUser <NSCopying>
 {
 	NSMutableArray *_children;
 	NSString *_uid;
 	NSString *_theDescription;
-	NSString *_name;
+	NSString *_name, *_rawName;
 	NSString *_patientID;
 	NSString *_referringPhysician;
     NSString *_performingPhysician;
 	NSString *_institutionName;
 	NSString *_comments;
     NSString *_interpretationStatusID;
+    NSString *_scheduledProcedureStepStatus;
 	NSString *_accessionNumber;
+    NSString *_patientSex;
 	DCMCalendarDate *_date;
 	DCMCalendarDate *_birthdate;
 	DCMCalendarDate *_time;
 	NSString *_modality;
 	NSNumber *_numberImages;
 	NSString *_specificCharacterSet;
-	NSManagedObject *_logEntry;
+    NSString *_abstractSyntax;
 	BOOL showErrorMessage, firstWadoErrorDisplayed, _dontCatchExceptions, _isAutoRetrieve, _noSmartMode;
 	OFCondition globalCondition;
     NSUInteger _countOfSuboperations, _countOfSuccessfulSuboperations;
+    NSMutableDictionary *miscDictionary;
+    DcmDataset *originalDataset;
 }
 
+@property( readonly) DcmDataset *originalDataset;
+@property( readonly) NSMutableDictionary *miscDictionary;
 @property BOOL dontCatchExceptions;
 @property BOOL isAutoRetrieve;
 @property BOOL noSmartMode;
 @property NSUInteger countOfSuboperations, countOfSuccessfulSuboperations;
+@property (retain) NSString *abstractSyntax;
 
 + (id)queryNodeWithDataset:(DcmDataset *)dataset
 			callingAET:(NSString *)myAET  
@@ -105,13 +73,17 @@
 			compression: (float)compression
 			extraParameters:(NSDictionary *)extraParameters;
 
+- (NSNumber*)rawNoFiles;
+- (NSString*)type;
 - (NSString *)uid;
 - (BOOL) isDistant;
 - (NSString *)theDescription;
 - (NSString *)name;
+- (NSString *)rawName;
 - (NSString *)patientID;
 - (NSString *)accessionNumber;
 - (NSString *)referringPhysician;
+- (NSString *)patientSex;
 - (NSString *)performingPhysician;
 - (NSString *)institutionName;
 - (DCMCalendarDate *)date;
@@ -124,11 +96,11 @@
 - (void)addChild:(DcmDataset *)dataset;
 - (DcmDataset *)queryPrototype;
 - (DcmDataset *)moveDataset;
+- (BOOL) isWorkList;
 // values are a NSDictionary the key for the value is @"value" key for the name is @"name"  name is the tag descriptor from the tag dictionary
 - (void)queryWithValues:(NSArray *)values;
 - (void) queryWithValues:(NSArray *)values dataset:(DcmDataset*) dataset;
-- (NSManagedObject *)logEntry;
-- (void)setLogEntry:(NSManagedObject *)logEntry;
+- (void) queryWithValues:(NSArray *)values dataset:(DcmDataset*) dataset syntaxAbstract:(NSString*) syntaxAbstract;
 - (void)setShowErrorMessage:(BOOL) m;
 //common network code for move and query
 - (BOOL)setupNetworkWithSyntax:(const char *)abstractSyntax dataset:(DcmDataset *)dataset;
@@ -148,6 +120,8 @@
 
 - (void) move:(NSDictionary*) dict retrieveMode: (int) retrieveMode;
 - (void) move:(NSDictionary*) dict;
+
+//- (void) sendMessage: (NSString*) abstractSyntax command: (int) cmd;
 
 + (dispatch_semaphore_t)semaphoreForServerHostAndPort:(NSString*)key;
 

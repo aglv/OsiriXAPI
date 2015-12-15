@@ -10,45 +10,6 @@
      This software is distributed WITHOUT ANY WARRANTY; without even
      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
      PURPOSE.
- ---------------------------------------------------------------------------
- 
- This file is part of the Horos Project.
- 
- Current contributors to the project include Alex Bettarini and Danny Weissman.
- 
- Horos is free software: you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation,  version 3 of the License.
- 
- Horos is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
- 
- You should have received a copy of the GNU General Public License
- along with Horos.  If not, see <http://www.gnu.org/licenses/>.
-
- 
-
- 
- ---------------------------------------------------------------------------
- 
- This file is part of the Horos Project.
- 
- Current contributors to the project include Alex Bettarini and Danny Weissman.
- 
- Horos is free software: you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation,  version 3 of the License.
- 
- Horos is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
- 
- You should have received a copy of the GNU General Public License
- along with Horos.  If not, see <http://www.gnu.org/licenses/>.
-
 =========================================================================*/
 
 
@@ -57,7 +18,7 @@
 
 @class DCMObject;
 @class DCMExportPlugin;
-
+@class DicomImage;
 
 #ifdef __cplusplus
 
@@ -83,42 +44,47 @@ typedef char* DcmFileFormat;
 /** \brief Export image as DICOM  */
 @interface DICOMExport : NSObject
 {
-		NSString			*dcmSourcePath;
-		
-		DCMObject			*dcmDst;
-		DcmFileFormat		*dcmtkFileFormat;
-		
-		// Raw data support
-		unsigned char		*data, *localData;
-		long				width, height, spp, bps;
-		BOOL				isSigned, modalityAsSource, rotateRawDataBy90degrees, triedToDecompress;
-		int					offset;
-		
-		// NSImage support
-		NSImage				*image;
-		NSBitmapImageRep	*imageRepresentation;
-		unsigned char		*imageData;
-		BOOL				freeImageData;
-		
-		int					exportInstanceNumber, exportSeriesNumber;
-		NSString			*exportSeriesUID;
-		NSString			*exportSeriesDescription;
-		
-		long				ww, wl;
-		float				spacingX, spacingY, slope;
-		float				sliceThickness;
-		float				sliceInterval;
-		float				orientation[ 6];
-		float				position[ 3];
-		float				slicePosition;
+    NSString			*dcmSourcePath;
+    DicomImage          *iDicomImage;
     
-        NSMutableDictionary *metaDataDict;
+    DcmFileFormat		*dcmtkFileFormat;
+    
+    // Raw data support
+    unsigned char		*data, *localData;
+    long				width, height, spp, bps;
+    BOOL				isSigned, modalityAsSource, rotateRawDataBy90degrees, triedToDecompress;
+    int					offset;
+    
+    // NSImage support
+    NSImage				*image;
+    NSBitmapImageRep	*imageRepresentation;
+    unsigned char		*imageData;
+    BOOL				freeImageData;
+    
+    BOOL                removeDICOMOverlays;
+		
+    int					exportInstanceNumber, exportSeriesNumber;
+    NSString			*exportSeriesUID;
+    NSString			*exportSeriesDescription;
+    
+    long				ww, wl;
+    float				spacingX, spacingY, slope;
+    float				sliceThickness;
+    float				sliceInterval;
+    float				orientation[ 6];
+    float				position[ 3];
+    float				slicePosition;
+
+    NSMutableDictionary *metaDataDict;
 }
 @property( readonly) NSMutableDictionary *metaDataDict;
-@property BOOL rotateRawDataBy90degrees;
+@property BOOL rotateRawDataBy90degrees, removeDICOMOverlays;
+
++ (DICOMExport*) exporter;
 
 // Is this DCM file based on another DCM file?
-- (void) setSourceFile:(NSString*) isource;
+- (void) setSourceFile:(NSString*) isource __deprecated;
+- (void) setSourceDicomImage:(DicomImage*) i;
 
 // Set Pixel Data from a raw source
 - (long) setPixelData:		(unsigned char*) idata

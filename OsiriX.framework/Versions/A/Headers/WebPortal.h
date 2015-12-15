@@ -17,7 +17,7 @@
 
 @class WebPortalDatabase, WebPortalSession, WebPortalServer, DicomDatabase;
 
-#define THREAD_POOL_SIZE 4
+#define THREAD_POOL_SIZE 8
 
 @interface WebPortal : NSObject {
 @private
@@ -30,7 +30,6 @@
 	BOOL usesSSL;
 	NSInteger portNumber;
 	NSString* address;
-	NSArray* dirsToScanForFiles;
 	BOOL authenticationRequired;
 	BOOL passwordRestoreAllowed;
 	BOOL wadoEnabled;
@@ -41,7 +40,6 @@
 	NSInteger notificationsInterval;
 	NSTimer* notificationsTimer, *temporaryUsersTimer;
 	
-	NSArray *preferredLocalizations;
 	NSMutableDictionary* cache;
 	NSMutableDictionary* locks;
 	NSMutableArray *runLoops, *runLoopsLoad, *httpThreads;
@@ -72,8 +70,6 @@
 @property (nonatomic) NSInteger portNumber;
 @property(retain) NSString* address;
 
-@property(retain) NSArray* dirsToScanForFiles;
-
 @property BOOL authenticationRequired;
 @property BOOL passwordRestoreAllowed;
 
@@ -93,6 +89,8 @@
 - (NSThread*) threadForRunLoopRef: (CFRunLoopRef) runloopref;
 
 -(NSData*)dataForPath:(NSString*)rel;
++(NSData*)dataForPath:(NSString*)file;
++(NSString*)pathForPath:(NSString*)path;
 -(NSString*)stringForPath:(NSString*)file;
 
 -(WebPortalSession*)newSession;

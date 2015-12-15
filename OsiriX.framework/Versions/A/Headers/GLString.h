@@ -79,6 +79,8 @@
 	BOOL requiresUpdate;
 }
 
+@property (readonly) NSAttributedString *string;
+
 // this API requires a current rendering context and all operations will be performed in regards to thar context
 // the same context should be current for all method calls for a particular object instance
 

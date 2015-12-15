@@ -25,13 +25,14 @@
 	NSMutableDictionary *WADODownloadDictionary, *logEntry;
 	BOOL showErrorMessage, firstWadoErrorDisplayed, _abortAssociation;
     NSTimeInterval firstReceivedTime, lastStatusUpdate;
-    NSString *baseStatus;
+    NSString *baseStatus, *incomingPath;
+    NSMutableArray *filesToIndexDirectly;
 }
 
 @property BOOL _abortAssociation, showErrorMessage;
 @property int countOfSuccesses, WADOGrandTotal, WADOBaseTotal;
 @property unsigned long totalData, receivedData;
-@property (retain) NSString *baseStatus;
+@property (retain) NSString *baseStatus, *incomingPath;
 
 - (void) WADODownload: (NSArray*) urlToDownload;
 

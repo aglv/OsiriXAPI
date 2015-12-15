@@ -27,6 +27,7 @@
 - (int)getPID:(NSString *)forProcess;
 // executes pathToCommand with privileges
 - (BOOL)executeCommand:(NSString *)pathToCommand withArgs:(NSArray *)arguments;
+- (BOOL)executeCommand:(NSString *)pathToCommand withArgs:(NSArray *)arguments wait: (BOOL) wait;
 // kills the process specified by commandFromPS
 - (BOOL)killProcess:(NSString *)commandFromPS;
 @end

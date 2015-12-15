@@ -10,45 +10,6 @@
      This software is distributed WITHOUT ANY WARRANTY; without even
      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
      PURPOSE.
- ---------------------------------------------------------------------------
- 
- This file is part of the Horos Project.
- 
- Current contributors to the project include Alex Bettarini and Danny Weissman.
- 
- Horos is free software: you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation,  version 3 of the License.
- 
- Horos is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
- 
- You should have received a copy of the GNU General Public License
- along with Horos.  If not, see <http://www.gnu.org/licenses/>.
-
- 
-
- 
- ---------------------------------------------------------------------------
- 
- This file is part of the Horos Project.
- 
- Current contributors to the project include Alex Bettarini and Danny Weissman.
- 
- Horos is free software: you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation,  version 3 of the License.
- 
- Horos is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
- 
- You should have received a copy of the GNU General Public License
- along with Horos.  If not, see <http://www.gnu.org/licenses/>.
-
 =========================================================================*/
 
 
@@ -60,6 +21,7 @@
 @class QueryArrayController;
 @class QueryFilter;
 @class DicomStudy;
+@class DICOMFieldMenu;
 
 #define MAXINSTANCE 40
 
@@ -89,9 +51,6 @@ enum
 	IBOutlet	NSProgressIndicator			*progressIndicator;
 	IBOutlet	NSSearchField				*searchFieldName, *searchFieldRefPhysician, *searchFieldID, *searchFieldAN, *searchFieldStudyDescription, *searchFieldComments, *searchInstitutionName, *searchCustomField;
 	
-    IBOutlet    NSPopUpButton               *dicomFieldsMenu;
-                NSArray                     *DICOMFieldsArray;
-    
 				NSMutableArray				*sourcesArray;
 	IBOutlet	sourcesTableView			*sourcesTable;
 	IBOutlet	NSTextField					*selectedResultSource;
@@ -101,6 +60,7 @@ enum
 	IBOutlet	NSWindow					*presetWindow;
 	IBOutlet	NSTextField					*presetName;
 	
+    IBOutlet	NSMatrix					*mwlStatusMatrix;
 	IBOutlet	NSMatrix					*birthdateFilterMatrix;
 	IBOutlet	NSMatrix					*dateFilterMatrix;
 	IBOutlet	NSMatrix					*modalityFilterMatrix;
@@ -156,6 +116,9 @@ enum
     IBOutlet NSButton                       *authButton;
     
     NSMutableSet                            *performingQueryThreads;
+    
+    NSString *customDICOMFieldGroupAndElement;
+    DICOMFieldMenu *DICOMField;
 }
 
 @property (readonly) NSRecursiveLock *autoQueryLock;
@@ -163,7 +126,9 @@ enum
 @property BOOL autoQuery, DatabaseIsEdited;
 @property NSInteger autoRefreshQueryResults;
 @property (nonatomic) int currentAutoQR;
-@property(readonly) SFAuthorizationView* authView;
+@property (readonly) SFAuthorizationView* authView;
+@property (retain) NSString *customDICOMFieldGroupAndElement;
+@property (retain) DICOMFieldMenu *DICOMField;
 
 + (QueryController*) currentQueryController;
 + (QueryController*) currentAutoQueryController;

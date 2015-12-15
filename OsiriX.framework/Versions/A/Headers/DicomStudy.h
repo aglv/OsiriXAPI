@@ -10,45 +10,6 @@
      This software is distributed WITHOUT ANY WARRANTY; without even
      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
      PURPOSE.
- ---------------------------------------------------------------------------
- 
- This file is part of the Horos Project.
- 
- Current contributors to the project include Alex Bettarini and Danny Weissman.
- 
- Horos is free software: you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation,  version 3 of the License.
- 
- Horos is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
- 
- You should have received a copy of the GNU General Public License
- along with Horos.  If not, see <http://www.gnu.org/licenses/>.
-
- 
-
- 
- ---------------------------------------------------------------------------
- 
- This file is part of the Horos Project.
- 
- Current contributors to the project include Alex Bettarini and Danny Weissman.
- 
- Horos is free software: you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation,  version 3 of the License.
- 
- Horos is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
- 
- You should have received a copy of the GNU General Public License
- along with Horos.  If not, see <http://www.gnu.org/licenses/>.
-
 =========================================================================*/
 
 
@@ -62,11 +23,15 @@
 	BOOL isHidden;
 	NSNumber *dicomTime;
     NSUInteger _numberOfImagesWhenCachedModalities;
-	NSString *cachedModalites;
+	NSString *cachedModalites, *cacheYearOldAcquisition, *cacheYearOld;
+    NSColor *cachedColor;
+    NSArray *cachedPresentationStates;
     BOOL reentry;
 }
 
 @property(nonatomic, retain) NSString* accessionNumber;
+@property(nonatomic, retain) NSString* color;
+@property(nonatomic, retain) NSString* studyState;
 @property(nonatomic, retain) NSString* comment;
 @property(nonatomic, retain) NSString* comment2;
 @property(nonatomic, retain) NSString* comment3;
@@ -98,28 +63,38 @@
 @property(nonatomic, retain) NSSet* series;
 
 + (NSRecursiveLock*) dbModifyLock;
++ (NSString*) formattedPatientName: (NSString*) n;
 + (NSString*) soundex: (NSString*) s;
 - (NSString*) soundex;
 + (NSString*) yearOldFromDateOfBirth: (NSDate*) dateOfBirth;
 + (NSString*) yearOldAcquisition:(NSDate*) acquisitionDate FromDateOfBirth: (NSDate*) dateOfBirth;
 + (BOOL) displaySeriesWithSOPClassUID: (NSString*) uid andSeriesDescription: (NSString*) description;
++ (NSArray*) seriesSortDescriptors;
++ (void) resetPreferences;
 - (NSNumber*) noFiles;
 - (NSSet*) paths;
 - (NSSet*) keyImages;
+- (NSArray*) roiAndKeyImages;
+- (NSString*) yearOld;
+- (NSString*) yearOldAcquisition;
 - (NSSet*) images;
 - (NSNumber*) rawNoFiles;
 - (NSString*) modalities;
 + (NSString*) displayedModalitiesForSeries: (NSArray*) seriesModalities;
 - (NSArray*) imageSeries;
 - (NSArray*) imageSeriesContainingPixels:(BOOL) pixels;
+- (NSArray*) imageSeriesContainingPixels:(BOOL) pixels includeLocalizersSeries: (BOOL) includeLocalizersSeries;
 - (NSArray*) keyObjectSeries;
 - (NSArray*) keyObjects;
 - (NSArray*) presentationStateSeries;
+- (NSArray*) presentationStateObjects;
+- (NSArray*) presentationStateDictionaries;
 - (NSArray*) waveFormSeries;
 - (NSString*) roiPathForImage: (DicomImage*) image inArray: (NSArray*) roisArray;
 - (NSString*) roiPathForImage: (DicomImage*) image;
 - (DicomImage*) roiForImage: (DicomImage*) image inArray: (NSArray*) roisArray;
 - (DicomSeries*) roiSRSeries;
+- (DicomSeries*) localizersSeries;
 - (DicomSeries*) reportSRSeries;
 - (DicomImage*) windowsStateImage;
 - (DicomSeries*) windowsStateSRSeries;
@@ -131,6 +106,7 @@
 - (NSArray*) allWindowsStateSRSeries;
 - (BOOL) isHidden;
 - (BOOL) isDistant;
+- (NSNumber*) dicomTime;
 - (void) setHidden: (BOOL) h;
 - (NSNumber*) noFilesExcludingMultiFrames;
 - (NSDictionary*) annotationsAsDictionary;
@@ -138,7 +114,14 @@
 - (void) reapplyAnnotationsFromDICOMSR;
 - (NSComparisonResult) compareName:(DicomStudy*)study;
 - (NSArray*) roiImages;
+- (NSArray*) allSeries;
 - (NSArray*) generateDICOMSCImagesForKeyImages: (BOOL) keyImages andROIImages: (BOOL) ROIImages;
+- (void) setNSColor:(NSColor *)c;
+- (NSColor*) NSColor;
+- (NSString*) type;
+- (NSString*) calledAET; // Match DCMTKQueryNode
+- (NSString*) callingAET; // Match DCMTKQueryNode
+- (NSString *)hostname; // Match DCMTKQueryNode
 @end
 
 @interface DicomStudy (CoreDataGeneratedAccessors)

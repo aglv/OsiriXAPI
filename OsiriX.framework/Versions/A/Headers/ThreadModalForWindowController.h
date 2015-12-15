@@ -32,6 +32,8 @@
     NSString* _lastPositionedStatus;
     
     NSTimeInterval lastGUIUpdate;
+    
+    int protectRecusive;
 }
 
 @property(retain, readonly) NSThread* thread;

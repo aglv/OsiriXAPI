@@ -34,6 +34,7 @@ typedef NSInteger DataNodeIdentifierType;*/
     NSUInteger _port;
 	NSString* _description;
 	NSDictionary* _dictionary;
+    BOOL _checked;
     BOOL _detected; // i.e. if this node was detected through bonjour, or mounted
     BOOL _entered; // if this node is listed in the user defaults, entered by the user
 }
@@ -48,6 +49,7 @@ typedef NSInteger DataNodeIdentifierType;*/
 @property(retain) NSDictionary* dictionary;
 @property BOOL detected;
 @property BOOL entered;
+@property BOOL checked;
 
 -(id)initWithLocation:(NSString*)location port:(NSUInteger) port aetitle:(NSString*) aetitle description:(NSString*)description dictionary:(NSDictionary*)dictionary;
 

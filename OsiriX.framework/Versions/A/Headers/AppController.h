@@ -10,56 +10,17 @@
      This software is distributed WITHOUT ANY WARRANTY; without even
      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
      PURPOSE.
- ---------------------------------------------------------------------------
- 
- This file is part of the Horos Project.
- 
- Current contributors to the project include Alex Bettarini and Danny Weissman.
- 
- Horos is free software: you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation,  version 3 of the License.
- 
- Horos is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
- 
- You should have received a copy of the GNU General Public License
- along with Horos.  If not, see <http://www.gnu.org/licenses/>.
-
- 
-
- 
- ---------------------------------------------------------------------------
- 
- This file is part of the Horos Project.
- 
- Current contributors to the project include Alex Bettarini and Danny Weissman.
- 
- Horos is free software: you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation,  version 3 of the License.
- 
- Horos is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
- 
- You should have received a copy of the GNU General Public License
- along with Horos.  If not, see <http://www.gnu.org/licenses/>.
-
 =========================================================================*/
 
 // This will be added to the main inded page of the Doxygen documentation
-/** \mainpage Horos index page
+/** \mainpage OsiriX index page
 *  <img src= "../../../osirix/Binaries/Icons/SmallLogo.tif">
-* \section Intro Horos DICOM workstation
+* \section Intro OsiriX DICOM workstation
 *  Osirix is a free open source DICOM workstation with full 64 bit support.
 *
 *  We extend out thanks to other in the open source community.
 *
-*  VTK, ITK, and DCMTK open source projects are extensively used in Horos.
+*  VTK, ITK, and DCMTK open source projects are extensively used in OsiriX.
 *
 *  The OsiriX team.
 */
@@ -74,8 +35,6 @@
 
 #import <AppKit/AppKit.h>
 #import "XMLRPCMethods.h"
-
-#include "options.h"
 
 //@class ThreadPoolServer;
 //@class ThreadPerConnectionServer;
@@ -114,6 +73,7 @@ extern "C"
 	NSRect screenFrame();
 	NSString * documentsDirectoryFor( int mode, NSString *url) __deprecated;
 	NSString * documentsDirectory() __deprecated;
+    extern BOOL hideListenerError;
 #ifdef __cplusplus
 }
 #endif
@@ -146,6 +106,7 @@ extern AppController* OsiriX;
 	IBOutlet NSMenu					*roisMenu;
 	IBOutlet NSMenu					*othersMenu;
 	IBOutlet NSMenu					*dbMenu;
+    IBOutlet NSMenu					*reportMenu;
 	IBOutlet NSWindow				*dbWindow;
 	IBOutlet NSMenu					*windowsTilingMenuRows, *windowsTilingMenuColumns;
     IBOutlet NSMenu                 *recentStudiesMenu;
@@ -168,34 +129,41 @@ extern AppController* OsiriX;
 	int								lastColumns, lastRows, lastCount;
     
     BonjourPublisher* _bonjourPublisher;
+    
+    long updateTotalData, updateReceivedData;
+    NSMutableData *updateData;
 }
 
 @property BOOL checkAllWindowsAreVisibleIsOff, isSessionInactive;
-@property (readonly) NSMenu *filtersMenu, *recentStudiesMenu, *windowsTilingMenuRows, *windowsTilingMenuColumns;
+@property(readonly) NSMenu *filtersMenu, *recentStudiesMenu, *windowsTilingMenuRows, *windowsTilingMenuColumns;
 @property(readonly) NSNetService* dicomBonjourPublisher;
-@property (readonly) XMLRPCInterface *XMLRPCServer;
+@property(readonly) XMLRPCInterface *XMLRPCServer;
 @property(readonly) BonjourPublisher* bonjourPublisher;
+@property(readonly) int lastColumns, lastRows, lastCount;
 
 + (BOOL) isFDACleared;
 + (BOOL) willExecutePlugin;
 + (BOOL) willExecutePlugin:(id) filter;
-
-+ (BOOL) hasMacOSXLeopard;
++ (BOOL) hasMacOSXLion;
 + (BOOL) hasMacOSXSnowLeopard;
-+ (BOOL) hasMacOSXLion;         // >= 10.7.5
-+ (BOOL) hasMacOSXMountainLion;
-+ (BOOL) hasMacOSX1083;
++ (BOOL) hasMacOSXLeopard;
++ (BOOL) hasOSXElCapitan;
++ (BOOL) hasOSXYosemite;
++ (BOOL) isOSXYosemite;
++ (int) isUnsupportedOS;
 + (BOOL) hasMacOSXMaverick;
-+ (BOOL) hasMacOSXYosemite;
-
-+(NSString*)UID;
++ (NSArray*) IPv4Address;
++ (NSString*) UID;
++ (NSString*) getRK;
 
 #pragma mark-
 #pragma mark initialization of the main event loop singleton
 
 + (void) createNoIndexDirectoryIfNecessary:(NSString*) path __deprecated;
-#ifdef WITH_IMPORTANT_NOTICE
-+ (void) displayImportantNotice:(id) sender;
+#ifndef OSIRIXLITE
++ (void) displayImportantNotice64:(id) sender;
+#else
++ (void) displayImportantNotice32:(id) sender;
 #endif
 + (AppController*) sharedAppController; /**< Return the shared AppController instance */
 + (void) resizeWindowWithAnimation:(NSWindow*) window newSize: (NSRect) newWindowFrame;
@@ -203,6 +171,7 @@ extern AppController* OsiriX;
 + (ThumbnailsListPanel*)thumbnailsListPanelForScreen:(NSScreen*)screen;
 + (NSString*)printStackTrace:(NSException*)e __deprecated; // use -[NSException printStackTrace] form NSException+N2
 + (BOOL) isKDUEngineAvailable;
++ (void) binpdf: (NSString*) file toFile: (NSString*) toFile;
 
 #pragma mark-
 #pragma mark HTML Templates
@@ -243,8 +212,8 @@ extern AppController* OsiriX;
 //- (IBAction)toggleActivityWindow:(id)sender;
 //===============HELP==========================
 - (IBAction) sendEmail: (id) sender;   /**< Send email to lead developer */
-- (IBAction) openHorosWebPage: (id) sender;  /**<  Open Horos web page */
-- (IBAction) openHorosDiscussion: (id) sender; /**< Open Horos discussion web page */
+- (IBAction) openOsirixWebPage: (id) sender;  /**<  Open OsiriX web page */
+//- (IBAction) openOsirixDiscussion: (id) sender; /**< Open OsiriX discussion web page */
 - (IBAction) osirix64bit: (id) sender;
 //---------------------------------------------
 - (IBAction) help: (id) sender;  /**< Open help window */
@@ -271,6 +240,7 @@ extern AppController* OsiriX;
 - (NSArray*) FindRelatedViewers:(NSArray*) pixList; /**< Return an array of all WindowControllers using the pixList */
 - (IBAction) cancelModal: (id) sender;
 - (IBAction) okModal: (id) sender;
+- (IBAction)alternateModal:(id)sender;
 - (NSString*) privateIP;
 - (void) killDICOMListenerWait:(BOOL) w;
 - (void) runPreferencesUpdateCheck:(NSTimer*) timer;
@@ -282,11 +252,14 @@ extern AppController* OsiriX;
 - (void) addStudyToRecentStudiesMenu: (NSManagedObjectID*) studyID;
 - (void) loadRecentStudy: (id) sender;
 - (void) buildRecentStudiesMenu;
-
+- (NSMutableArray*) orderedWindowsAccordingToPositionByRows: (NSArray*) a;
+- (NSMutableArray*) orderedWindowsAccordingToPositionByColumns: (NSArray*) a;
 - (NSMenu*) viewerMenu;
 - (NSMenu*) fileMenu;
 - (NSMenu*) exportMenu;
-- (NSMenu*)imageTilingMenu;
+- (NSMenu*) imageTilingMenu;
+- (NSMenu*) applyWindowProtocolMenu;
+- (NSMenu*) VOILutMenu;
 - (NSMenu*) orientationMenu;
 - (NSMenu*) opacityMenu;
 - (NSMenu*) wlwwMenu;
@@ -314,6 +287,7 @@ extern AppController* OsiriX;
 
 #pragma mark -
 -(WebPortal*)defaultWebPortal;
+-(BOOL) processOsiriXSchemeURL: (NSURL*) url;
 
 #ifndef OSIRIX_LIGHT
 -(NSString*)weasisBasePath;
@@ -322,7 +296,6 @@ extern AppController* OsiriX;
 -(void)setReceivingIcon;
 -(void)unsetReceivingIcon;
 -(void)setBadgeLabel:(NSString*)label;
-
 - (void)playGrabSound;
 
 @end

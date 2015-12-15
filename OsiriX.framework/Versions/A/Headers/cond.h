@@ -79,12 +79,18 @@ const unsigned short ASCC_DUPLICATEPRESENTATIONCONTEXTID = 0x104;
 const unsigned short ASCC_MISSINGTRANSFERSYNTAX          = 0x105;
 const unsigned short ASCC_NULLKEY                        = 0x106;
 const unsigned short ASCC_SHUTDOWNAPPLICATION            = 0x107;
+const unsigned short ASCC_USERIDENTIFICATIONFAILED       = 0x108;
+const unsigned short ASCC_SCPSCUROLESELECTIONFAILED      = 0x109;
+const unsigned short ASCC_NOPRESENTATIONCONTEXTPROPOSED  = 0x110;
 
 // condition constants used in the association module
 extern const OFCondition ASC_BADPRESENTATIONCONTEXTID;   /* Bad presentation context ID */
 extern const OFCondition ASC_MISSINGTRANSFERSYNTAX;      /* Missing transfer syntax */
 extern const OFCondition ASC_NULLKEY;                    /* Caller passed in a NULL key */
 extern const OFCondition ASC_SHUTDOWNAPPLICATION;        /* Peer requested application shutdown */
+extern const OFCondition ASC_USERIDENTIFICATIONFAILED;
+extern const OFCondition ASC_SCPSCUROLESELECTIONFAILED;
+extern const OFCondition ASC_NOPRESENTATIONCONTEXTPROPOSED;      
 
 // condition code constants used in the DIMSE module
 const unsigned short DIMSEC_BADCOMMANDTYPE               = 0x201;

@@ -10,45 +10,6 @@
      This software is distributed WITHOUT ANY WARRANTY; without even
      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
      PURPOSE.
- ---------------------------------------------------------------------------
- 
- This file is part of the Horos Project.
- 
- Current contributors to the project include Alex Bettarini and Danny Weissman.
- 
- Horos is free software: you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation,  version 3 of the License.
- 
- Horos is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
- 
- You should have received a copy of the GNU General Public License
- along with Horos.  If not, see <http://www.gnu.org/licenses/>.
-
- 
-
- 
- ---------------------------------------------------------------------------
- 
- This file is part of the Horos Project.
- 
- Current contributors to the project include Alex Bettarini and Danny Weissman.
- 
- Horos is free software: you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation,  version 3 of the License.
- 
- Horos is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
- 
- You should have received a copy of the GNU General Public License
- along with Horos.  If not, see <http://www.gnu.org/licenses/>.
-
 =========================================================================*/
 
 #import <Cocoa/Cocoa.h>
@@ -58,7 +19,7 @@ void* sopInstanceUIDEncode( NSString *sopuid);
 
 #define OsirixDicomImageSizeUnknown INT_MAX
 
-@class DCMSequenceAttribute, DicomSeries, DICOMExport;
+@class DCMSequenceAttribute, DicomSeries, DICOMExport, DicomDatabase;
 
 @interface NSData (OsiriX)
 - (BOOL) isEqualToSopInstanceUID:(NSData*) sopInstanceUID;
@@ -81,9 +42,12 @@ void* sopInstanceUIDEncode( NSString *sopuid);
 	NSString	*fileType;
     
     NSImage*    _thumbnail;
+    
+    id sortingValue;
 }
 
 @property(retain) NSNumber* numberOfFrames;
+@property(retain) id sortingValue;
 
 @property(nonatomic, retain) NSString* comment;
 @property(nonatomic, retain) NSString* comment2;
@@ -122,33 +86,42 @@ void* sopInstanceUIDEncode( NSString *sopuid);
 - (NSNumber*) isImageStorage;
 + (NSData*) sopInstanceUIDEncodeString:(NSString*) s;
 - (NSString*) uniqueFilename;
+- (NSNumber*) numberOfSeries;
 - (NSSet*) paths;
 - (NSString*) completePath;
 - (NSString*) completePathResolved;
 #ifndef OSIRIX_LIGHT
 - (DCMSequenceAttribute*) graphicAnnotationSequence;
 #endif
+- (NSString*) type;
 - (NSImage*) image;
 - (NSImage*) thumbnail;
+- (NSNumber*) inDatabaseFolder;
+- (void) setInDatabaseFolder:(NSNumber*) f;
+- (NSString*) path;
+- (void) setPath:(NSString*) p;
 - (NSImage*) imageAsScreenCapture:(NSRect)frame;
+- (NSImage*) imageAsScreenCapture;
 - (NSDictionary*) imageAsDICOMScreenCapture:(DICOMExport*) exporter;
+-(NSDictionary*) imageAsDICOMScreenCapture:(DICOMExport*) exporter exporterForRGB: (DICOMExport*) exporterRGB;
 - (NSImage*) thumbnailIfAlreadyAvailable;
 - (void) setThumbnail:(NSImage*)image;
 - (NSString*) completePathWithDownload:(BOOL) download supportNonLocalDatabase: (BOOL) supportNonLocalDatabase;
-+ (NSString*) completePathForLocalPath:(NSString*) path directory:(NSString*) directory;
+- (NSString*) completePathForLocalPath:(NSString*) path;
 - (NSString*) SRFilenameForFrame: (int) frameNo;
 - (NSString*) SRPathForFrame: (int) frameNo;
 - (NSString*) SRPath;
 - (NSString*) sopInstanceUID;
+- (void) setSopInstanceUID: (NSString*) s;
 @property(nonatomic, retain) NSString* modality;
 
-- (NSString*) path;
 - (NSString*) extension;
 - (NSNumber*) height;
 - (NSNumber*) width;
-
+- (NSString*) fileType;
 - (NSNumber*) isKeyImage;
 - (void) setIsKeyImage:(NSNumber*) f;
+- (void) setIsKeyImage:(NSNumber*) f archiveAnnotationsAsDICOMSR: (BOOL) archiveAnnotationsAsDICOMSR;
 
 + (NSMutableArray*) dicomImagesInObjects:(NSArray*)objects;
 

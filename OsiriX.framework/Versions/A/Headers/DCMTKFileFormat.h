@@ -12,13 +12,16 @@
  PURPOSE.
  =========================================================================*/
 
-#import <DCMPix.h>
-
 @interface DCMTKFileFormat : NSObject
 {
     void *dcmtkDcmFileFormat;
 }
 @property void *dcmtkDcmFileFormat;
+
++ (NSArray*) prepareDICOMFieldsArrays;
+
++(NSString*) getNameForGroupAndElement:(int) gp element:(int) el;
++(int) getGroupAndElementForName:(NSString*) name group:(int*) gp element:(int*) el;
 
 - (id) initWithFile: (NSString*) file;
 

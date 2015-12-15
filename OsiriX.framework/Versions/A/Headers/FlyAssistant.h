@@ -53,9 +53,9 @@ typedef enum PathAssistantMode PathAssistantMode;
 	float im2wordTransformMatrix[4][4];
 	float word2imTransformMatirx[4][4];
 	
-	int inputWidth,inputHeight,inputDepth;
+	long inputWidth,inputHeight,inputDepth;
 	float inputSpacing_x, inputSpacing_y, inputSpacing_z;
-	int distmapWidth,distmapHeight,distmapDepth;
+	long distmapWidth,distmapHeight,distmapDepth;
 	float resampleVoxelSize;
 	float resampleScale_x;
 	float resampleScale_y;
@@ -72,7 +72,7 @@ typedef enum PathAssistantMode PathAssistantMode;
     float inputMinValue, inputMaxValue;
     
     vImagePixelCount * inputHisto;
-    unsigned int histoSize;
+    unsigned long histoSize;
 }
 @property  float centerlineResampleStepLength;
 - (id) initWithVolume:(float*)data WidthDimension:(int*)dim Spacing:(float*)spacing ResampleVoxelSize:(float)vsize;

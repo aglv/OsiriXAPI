@@ -18,14 +18,15 @@ enum {
 @interface CSMailMailClient : NSObject
 {
     NSAppleScript *script;
-    NSDictionary *defaultSMTPAccount;
     NSString *fromAddress;
 }
 
 + (id) mailClient;
 - (NSString *)name;
 - (NSString *)version;
+- (NSDictionary *) findSMTPAccount;
 - (NSDictionary *) defaultSMTPAccountFromMail;
+- (NSDictionary *) SMTPAccountFromKeyChainForEmail: (NSString*) email;
 - (NSString *)applicationName;
 
 - (BOOL)applicationIsInstalled;
