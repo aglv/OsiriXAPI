@@ -1,4 +1,4 @@
-You shouldn't actually link to this framework: its purpose it to provide the API for OsiriX plugins (headers only).
+You shouldn't actually link to this framework: its purpose it to provide the API for OsiriX plugins (headers only). It you do, make sure it's a weak link!
 
 My technique for OsiriX API linking in plugin (and preferences) targets is:
 - Include OsiriX-API as a git submodule
