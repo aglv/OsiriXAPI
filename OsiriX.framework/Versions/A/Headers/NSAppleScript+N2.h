@@ -16,6 +16,6 @@
 
 @interface NSAppleScript (N2)
 
--(id)runWithArguments:(NSArray*)args error:(NSDictionary**)errs;
+- (id)runWithArguments:(NSArray*)args error:(NSDictionary**)errs;
 
 @end
