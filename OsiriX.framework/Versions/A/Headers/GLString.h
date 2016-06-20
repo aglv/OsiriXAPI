@@ -54,12 +54,6 @@
 #import <OpenGL/OpenGL.h>
 #import <OpenGL/CGLContext.h>
 
-@interface NSBezierPath (RoundRect)
-+ (NSBezierPath *)bezierPathWithRoundedRect:(NSRect)rect cornerRadius:(float)radius;
-
-- (void)appendBezierPathWithRoundedRect:(NSRect)rect cornerRadius:(float)radius;
-@end
-
 @interface GLString : NSObject {
 	CGLContextObj cgl_ctx; // current context at time of texture creation
 	GLuint texName;

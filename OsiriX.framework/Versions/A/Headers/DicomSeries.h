@@ -15,7 +15,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-#define THUMBNAILSIZE 70
+#define THUMBNAILSIZE 160
 
 @class DicomStudy, DicomImage;
 
@@ -24,6 +24,7 @@
 @interface DicomSeries : NSManagedObject
 {
 	NSNumber	*dicomTime;
+    NSImage     *thumbnailImage;
 }
 
 @property(nonatomic, retain, readonly) NSNumber* dicomTime;
@@ -73,6 +74,8 @@
 - (BOOL) isDistant;
 + (void) recomputeLocalizersSeriesInstanceUIDForStudies: (NSSet*) studiesSet;
 - (NSString*) type;
+- (NSImage*) thumbnailImage;
+- (NSString*) ROIsDescription;
 @end
 
 @interface DicomSeries (CoreDataGeneratedAccessors)

@@ -23,6 +23,7 @@
     NSString *_studyID;
 }
 
+- (NSNumber*) stateText;
 - (NSString*) studyID;
 - (NSString*) studyInstanceUID;// Match DicomStudy
 - (NSString*) studyName;// Match DicomStudy

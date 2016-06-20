@@ -12,10 +12,8 @@
  PURPOSE.
  =========================================================================*/
 
-#import <Foundation/Foundation.h>
+#import <Cocoa/Cocoa.h>
 
-@interface NSAppleScript (N2)
-
--(id)runWithArguments:(NSArray*)args error:(NSDictionary**)errs;
+@interface ThickSlabSlider : NSSlider
 
 @end

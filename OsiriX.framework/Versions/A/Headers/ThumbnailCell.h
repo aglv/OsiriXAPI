@@ -17,7 +17,7 @@
 
 
 @interface ThumbnailCell : NSButtonCell {
-	BOOL rightClick;
+	BOOL rightClick, isStudy;
     BOOL invertedSet, invertedColors;
     
     float animationHeightPercent;

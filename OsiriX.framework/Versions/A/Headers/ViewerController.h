@@ -69,6 +69,7 @@ enum
 	NSConditionLock *flipDataThread, *convThread;
 	NSThread *loadingThread;
     BOOL awakeFromNib, firstBuildMatrix;
+    NSTimeInterval windowInitTime;
 	
     ToolbarPanelController *toolbarPanel;
     
@@ -379,6 +380,7 @@ enum
 @property(readonly) ToolbarPanelController *toolbarPanel;
 @property(readonly) NSMatrix *previewMatrix;
 @property(readonly) NSScrollView *previewMatrixScrollView;
+@property(readonly) NSTimeInterval windowInitTime;
 
 /** Return the 'dragged' window, the destination window is contained in the 'viewerController' object of the 'PluginFilter' object */
 @property(nonatomic, retain) ViewerController *blendedWindow;
@@ -395,7 +397,7 @@ enum
 + (ViewerController*) frontMostDisplayed2DViewerForScreen: (NSScreen*) screen;
 + (NSArray*) displayed2DViewerForScreen: (NSScreen*) screen;
 + (void) closeAllWindows;
-+ (NSArray*) poolOf2DViewers;
++ (NSMutableArray*) poolOf2DViewers;
 + (NSArray*) studyColors;
 + (void) clearFrontMost2DViewerCache;
 
@@ -562,6 +564,8 @@ enum
 /** Action to start printing.  Called when print window is ordered out */
 - (IBAction) endPrint:(id) sender;
 
+- (IBAction) copyAllROIsInThisSeries:(id)sender;
+
 + (ToolMode) getToolEquivalentToHotKey:(int) h;
 + (int) getHotKeyEquivalentToTool:(int) h;
 //- (IBAction) startMSRG:(id) sender;
@@ -635,6 +639,7 @@ enum
 - (IBAction) reSyncOrigin:(id) sender;
 - (void) loadROI:(long) mIndex;
 - (void) saveROI:(long) mIndex;
+- (IBAction) roiCopyInfo:(NSMenuItem*) menuItem;
 - (void) setMatrixVisible: (BOOL) visible;
 - (BOOL) matrixIsVisible;
 - (id) findPlayStopButton;
@@ -673,6 +678,7 @@ enum
 - (void) setupToolbar;
 - (NSToolbar*) toolbar;
 - (void) PlayStop:(id) sender;
+- (void) performAnimationIfPlaying;
 - (short) getNumberOfImages;
 - (float) frameRate;
 - (void) adjustSlider;

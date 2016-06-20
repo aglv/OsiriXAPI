@@ -71,6 +71,7 @@
 +(NSArray*)studiesForUser: (WebPortalUser*) user predicate:(NSPredicate*)predicate;
 +(NSArray*)studiesForUser: (WebPortalUser*) user predicate:(NSPredicate*)predicate sortBy:(NSString*)sortValue;
 +(NSArray*)studiesForUser: (WebPortalUser*) user predicate:(NSPredicate*)predicate sortBy:(NSString*)sortValue fetchLimit:(int) fetchLimit fetchOffset:(int) fetchOffset numberOfStudies:(int*) numberOfStudies;
++(NSArray*)studiesForUser: (WebPortalUser*) user album:(NSString*)albumName sortBy:(NSString*)sortValue sortOrder:(NSComparisonResult) sortOrder fetchLimit:(int) fetchLimit fetchOffset:(int) fetchOffset numberOfStudies:(int*) numberOfStudies;
 
 -(NSArray*)studiesForAlbum:(NSString*)albumName;
 -(NSArray*)studiesForAlbum:(NSString*)albumName sortBy:(NSString*)sortValue;

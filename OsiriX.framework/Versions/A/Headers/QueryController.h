@@ -45,7 +45,7 @@ enum
 };
 
 /** \brief Window Controller for Q/R */
-@interface QueryController : NSWindowController <NSWindowDelegate, NSOutlineViewDelegate>
+@interface QueryController : NSWindowController <NSWindowDelegate, NSOutlineViewDelegate, NSTableViewDelegate>
 {
     IBOutlet    QueryOutlineView			*outlineView;
 	IBOutlet	NSProgressIndicator			*progressIndicator;
@@ -167,6 +167,7 @@ enum
 - (NSArray*) queryPatientID:(NSString*) ID;
 - (void) query:(id)sender;
 - (void) retrieve:(id)sender;
+- (void) retrieveClick:(id)sender;
 - (void) retrieve:(id)sender onlyIfNotAvailable:(BOOL) onlyIfNotAvailable;
 - (void) performQuery:(NSNumber*) showErrors;
 - (void) performRetrieve:(NSArray*) array;
@@ -191,4 +192,5 @@ enum
 - (void) autoQueryTimerFunction:(NSTimer*) t;
 - (void) executeRefresh: (id) sender;
 - (void)view:(NSView*)view recursiveBindEnableToObject:(id)obj withKeyPath:(NSString*)keyPath;
+- (void) pressStateCellForRow: (int) clickedRow column: (int) clickedColumn event: (NSEvent*) event;
 @end

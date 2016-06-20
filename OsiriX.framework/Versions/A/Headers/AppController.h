@@ -47,6 +47,14 @@
 @class DCMNetServiceDelegate;
 @class WebPortal;
 
+typedef enum
+{
+    linearIntegerGA,
+    log4GA,
+    log2GA
+    
+} GAMode;
+
 enum
 {
 	compression_sameAsDefault = 0,
@@ -74,6 +82,7 @@ extern "C"
 	NSString * documentsDirectoryFor( int mode, NSString *url) __deprecated;
 	NSString * documentsDirectory() __deprecated;
     extern BOOL hideListenerError;
+    extern BOOL gDarkAppearance;
 #ifdef __cplusplus
 }
 #endif
@@ -126,15 +135,22 @@ extern AppController* OsiriX;
 	
 	BOOL							checkAllWindowsAreVisibleIsOff, isSessionInactive;
 	
-	int								lastColumns, lastRows, lastCount;
+	int								lastColumns, lastRows, lastCount, lastColumnsPerScreen;
     
     BonjourPublisher* _bonjourPublisher;
     
     long updateTotalData, updateReceivedData;
     NSMutableData *updateData;
+    
+    // DICOM Definition parser
+    BOOL getCurrentModule;
+    NSString *previousContent, *previousOriginal, *currentFile, *currentModule;
+    NSMutableDictionary *DICOMDefinitionDict;
+    NSDictionary *currentAttribute;
+    NSMutableDictionary *currentIDElements;
 }
 
-@property BOOL checkAllWindowsAreVisibleIsOff, isSessionInactive;
+@property BOOL checkAllWindowsAreVisibleIsOff, isSessionInactive, showRestartNeeded;
 @property(readonly) NSMenu *filtersMenu, *recentStudiesMenu, *windowsTilingMenuRows, *windowsTilingMenuColumns;
 @property(readonly) NSNetService* dicomBonjourPublisher;
 @property(readonly) XMLRPCInterface *XMLRPCServer;
@@ -155,16 +171,19 @@ extern AppController* OsiriX;
 + (NSArray*) IPv4Address;
 + (NSString*) UID;
 + (NSString*) getRK;
++ (void) restartOsiriX;
++ (NSDictionary*) loadRegistrationDictionary;
 
 #pragma mark-
 #pragma mark initialization of the main event loop singleton
 
 + (void) createNoIndexDirectoryIfNecessary:(NSString*) path __deprecated;
 #ifndef OSIRIXLITE
-+ (void) displayImportantNotice64:(id) sender;
++ (int) displayVeryImportantNotice64:(id) sender;
 #else
-+ (void) displayImportantNotice32:(id) sender;
++ (int) displayVeryImportantNotice32:(id) sender;
 #endif
++ (NSURL*) baseURL;
 + (AppController*) sharedAppController; /**< Return the shared AppController instance */
 + (void) resizeWindowWithAnimation:(NSWindow*) window newSize: (NSRect) newWindowFrame;
 + (void) pause __deprecated;
@@ -172,11 +191,14 @@ extern AppController* OsiriX;
 + (NSString*)printStackTrace:(NSException*)e __deprecated; // use -[NSException printStackTrace] form NSException+N2
 + (BOOL) isKDUEngineAvailable;
 + (void) binpdf: (NSString*) file toFile: (NSString*) toFile;
-
++ (void) sendGAWithAction: (NSString*) action label:(NSString*) label;
++ (void) sendGAWithCategory:(NSString*) category action: (NSString*) action label:(NSString*) label;
++ (void) sendGAWithAction:(NSString*) action value:(int) intValue mode:(GAMode) gaMode;
++ (void) sendGAWithCategory:(NSString*) category action: (NSString*) action label:(NSString*) label value:(int) intValue mode:(GAMode) gaMode;
 #pragma mark-
 #pragma mark HTML Templates
 + (void)checkForHTMLTemplates __deprecated;
-
++ (BOOL) FPlistForKey: (NSString*) k;
 
 #pragma mark-
 #pragma mark  Server management
@@ -205,6 +227,7 @@ extern AppController* OsiriX;
 - (IBAction) tileWindows:(id)sender;  /**< Tile open window */
 - (IBAction) tile3DWindows:(id)sender; /**< Tile 3D open window */
 - (void) tileWindows:(id)sender windows: (NSMutableArray*) viewersList display2DViewerToolbar: (BOOL) display2DViewerToolbar displayThumbnailsList: (BOOL) displayThumbnailsList;
+- (void) checkWindowDisplay;
 - (void) scaleToFit:(id)sender;    /**< Scale opened windows */
 - (IBAction) closeAllViewers: (id) sender;  /**< Close All Viewers */
 - (void) checkAllWindowsAreVisible:(id) sender;
@@ -244,16 +267,16 @@ extern AppController* OsiriX;
 - (NSString*) privateIP;
 - (void) killDICOMListenerWait:(BOOL) w;
 - (void) runPreferencesUpdateCheck:(NSTimer*) timer;
++ (void) resetThumbnailsList;
 + (void) checkForPreferencesUpdate: (BOOL) b;
 + (BOOL) USETOOLBARPANEL;
 + (void) setUSETOOLBARPANEL: (BOOL) b;
 + (NSRect) usefullRectForScreen: (NSScreen*) screen;
-
++ (NSArray*) sortObjects: (NSArray*) objects accordingToSeriesDescriptionsArray: (NSArray*) seriesDescriptionsOrder;
+- (NSMutableArray*) orderedWindowsAccordingToPositionByRows: (NSArray*) a;
 - (void) addStudyToRecentStudiesMenu: (NSManagedObjectID*) studyID;
 - (void) loadRecentStudy: (id) sender;
 - (void) buildRecentStudiesMenu;
-- (NSMutableArray*) orderedWindowsAccordingToPositionByRows: (NSArray*) a;
-- (NSMutableArray*) orderedWindowsAccordingToPositionByColumns: (NSArray*) a;
 - (NSMenu*) viewerMenu;
 - (NSMenu*) fileMenu;
 - (NSMenu*) exportMenu;

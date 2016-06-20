@@ -21,7 +21,10 @@
 @private
     NSImage	*image, *lastImage, *lastImageAlternate;
 	BOOL clickedInLastImage;
+    BOOL rescaleImageToFit;
 }
+
+@property BOOL rescaleImageToFit;
 
 - (void)setImage:(NSImage *)anImage;
 - (void)setLastImage:(NSImage *)anImage;

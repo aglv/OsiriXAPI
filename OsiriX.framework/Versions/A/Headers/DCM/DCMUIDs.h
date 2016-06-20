@@ -88,6 +88,18 @@ static NSString *DCM_JPEGLossless14 = @"1.2.840.10008.1.2.4.57";
 static NSString *DCM_JPEGLossless15Retired = @"1.2.840.10008.1.2.4.58";
 static NSString *DCM_JPEGLSLossless = @"1.2.840.10008.1.2.4.80";
 static NSString *DCM_JPEGLSLossy = @"1.2.840.10008.1.2.4.81";
+
+static NSString *DCM_ModalityWorklistInformationModelFIND = @"1.2.840.10008.5.1.4.31";
+static NSString *DCM_GeneralPurposeWorklistInformationModelFIND = @"1.2.840.10008.5.1.4.32.1";
+static NSString *DCM_PatientRootQueryRetrieveInformationModelFIND = @"1.2.840.10008.5.1.4.1.2.1.1";
+static NSString *DCM_PatientRootQueryRetrieveInformationModelGET = @"1.2.840.10008.5.1.4.1.2.1.3";
+static NSString *DCM_PatientRootQueryRetrieveInformationModelMOVE = @"1.2.840.10008.5.1.4.1.2.1.2";
+static NSString *DCM_PatientStudyOnlyQueryRetrieveInformationModelFIND = @"1.2.840.10008.5.1.4.1.2.3.1";
+static NSString *DCM_PatientStudyOnlyQueryRetrieveInformationModelGET = @"1.2.840.10008.5.1.4.1.2.3.3";
+static NSString *DCM_PatientStudyOnlyQueryRetrieveInformationModelMOVE = @"1.2.840.10008.5.1.4.1.2.3.2";
+static NSString *DCM_StudyRootQueryRetrieveInformationModelFIND = @"1.2.840.10008.5.1.4.1.2.2.1";
+static NSString *DCM_StudyRootQueryRetrieveInformationModelGET = @"1.2.840.10008.5.1.4.1.2.2.3";
+static NSString *DCM_StudyRootQueryRetrieveInformationModelMOVE = @"1.2.840.10008.5.1.4.1.2.2.2";
 /*
 static NSString *DCM_KeyObjectSelectionDocument = @"1.2.840.10008.5.1.4.1.1.88.59";
 static NSString *DCM_MammographyCADSR = @"1.2.840.10008.5.1.4.1.1.88.50";
@@ -95,7 +107,7 @@ static NSString *DCM_MediaStorageDirectoryStorage = @"1.2.840.10008.1.3.10";
 static NSString *DCM_ModalityPerformedProcedureStep = @"1.2.840.10008.3.1.2.3.3";
 static NSString *DCM_ModalityPerformedProcedureStepNotification = @"1.2.840.10008.3.1.2.3.5";
 static NSString *DCM_ModalityPerformedProcedureStepRetrieve = @"1.2.840.10008.3.1.2.3.4";
-static NSString *DCM_ModalityWorklistInformationModelFIND = @"1.2.840.10008.5.1.4.31";
+
 static NSString *DCM_MRImageStorage = @"1.2.840.10008.5.1.4.1.1.4";
 static NSString *DCM_MRSpectroscopyStorage= @"1.2.840.10008.5.1.4.1.1.4.2";
 static NSString *DCM_MultiframeColorSecondaryCaptureImageStorage = @"1.2.840.10008.5.1.4.1.1.7.4";
@@ -104,12 +116,7 @@ static NSString *DCM_MultiframeGrayscaleWordSecondaryCaptureImageStorage = @"1.2
 static NSString *DCM_MultiframeSingleBitSecondaryCaptureImageStorage = @"1.2.840.10008.5.1.4.1.1.7.1"
 static NSString *DCM_NuclearMedicineImageStorage = @"1.2.840.10008.5.1.4.1.1.20";
 static NSString *DCM_NuclearMedicineImageStorageRetired = @"1.2.840.10008.5.1.4.1.1.5";
-static NSString *DCM_PatientRootQueryRetrieveInformationModelFIND = @"1.2.840.10008.5.1.4.1.2.1.1";
-static NSString *DCM_PatientRootQueryRetrieveInformationModelGET = @"1.2.840.10008.5.1.4.1.2.1.3";
-static NSString *DCM_PatientRootQueryRetrieveInformationModelMOVE = @"1.2.840.10008.5.1.4.1.2.1.2";
-static NSString *DCM_PatientStudyOnlyQueryRetrieveInformationModelFIND = @"1.2.840.10008.5.1.4.1.2.3.1";
-static NSString *DCM_PatientStudyOnlyQueryRetrieveInformationModelGET = @"1.2.840.10008.5.1.4.1.2.3.3";
-static NSString *DCM_PatientStudyOnlyQueryRetrieveInformationModelMOVE = @"1.2.840.10008.5.1.4.1.2.3.2";
+
 static NSString *DCM_PositronEmissionTomographyImageStorage = @"1.2.840.10008.5.1.4.1.1.128";
 static NSString *DCM_PresentationLUT = @"1.2.840.10008.5.1.1.16";
 static NSString *DCM_PrinterConfigurationRetrieval = @"1.2.840.10008.5.1.1.16.376";
@@ -148,9 +155,7 @@ static NSString *DCM_StorageCommitmentPushModel = @"1.2.840.10008.1.20.1";
 static NSString *DCM_StorageCommitmentPushModelSOPInstance = @"1.2.840.10008.1.20.1.1";
 static NSString *DCM_StoredPrintStorage = @"1.2.840.10008.5.1.1.27";
 static NSString *DCM_StudyComponentManagement = @"1.2.840.10008.3.1.2.3.2";
-static NSString *DCM_StudyRootQueryRetrieveInformationModelFIND = @"1.2.840.10008.5.1.4.1.2.2.1";
-static NSString *DCM_StudyRootQueryRetrieveInformationModelGET = @"1.2.840.10008.5.1.4.1.2.2.3";
-static NSString *DCM_StudyRootQueryRetrieveInformationModelMOVE = @"1.2.840.10008.5.1.4.1.2.2.2";
+
 static NSString *DCM_TwelveLeadECGWaveformStorage = @"1.2.840.10008.5.1.4.1.1.9.1.1";
 static NSString *DCM_UltrasoundImageStorage = @"1.2.840.10008.5.1.4.1.1.6.1";
 static NSString *DCM_UltrasoundImageStorageRetired = @"1.2.840.10008.5.1.4.1.1.6";

@@ -18,7 +18,7 @@
 
 /** \brief Root level DCMTKQueryNode */
 @interface DCMTKRootQueryNode : DCMTKQueryNode {
-
+    BOOL NSLogDisplayed;
 }
 
 @end

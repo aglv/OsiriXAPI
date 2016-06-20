@@ -235,7 +235,7 @@ typedef char* VTKStereoVRView;
 	IBOutlet NSMatrix		*VRquality;
 	
 	IBOutlet NSMatrix		*scissorStateMatrix;
-	IBOutlet NSColorWell	*backgroundColor;
+    NSColor *backgroundColor;
 	
 	IBOutlet NSObjectController	*shadingController;
 	
@@ -421,6 +421,7 @@ typedef char* VTKStereoVRView;
 @property (readonly) NSArray* currentOpacityArray;
 @property (retain) DICOMExport *exportDCM;
 @property (retain) NSString *dcmSeriesString;
+@property (retain, nonatomic) NSColor *backgroundColor;
 
 + (void) testGraphicBoard;
 //+ (BOOL) getCroppingBox:(double*) a :(vtkVolume *) volume :(vtkBoxWidget*) croppingBox;
@@ -442,7 +443,6 @@ typedef char* VTKStereoVRView;
 - (void) setEngine: (long) engineID showWait:(BOOL) showWait;
 - (IBAction)changeColorWith:(NSColor*) color;
 - (IBAction)changeColor:(id)sender;
-- (NSColor*)backgroundColor;
 - (void) exportDICOM;
 -(unsigned char*) getRawPixels:(long*) width :(long*) height :(long*) spp :(long*) bpp :(BOOL) screenCapture :(BOOL) force8bits;
 -(unsigned char*) getRawPixels:(long*) width :(long*) height :(long*) spp :(long*) bpp :(BOOL) screenCapture :(BOOL) force8bits offset:(int*) offset isSigned:(BOOL*) isSigned;

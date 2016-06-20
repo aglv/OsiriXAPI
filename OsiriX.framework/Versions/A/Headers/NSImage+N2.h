@@ -29,8 +29,11 @@
 -(NSSize)sizeByScalingDownProportionallyToSize:(NSSize)targetSize;
 -(NSImage*)imageByScalingProportionallyToSize:(NSSize)targetSize;
 -(NSImage*)imageByScalingProportionallyToSizeUsingNSImage:(NSSize)targetSize;
+-(NSImage*)imageByScalingProportionallyToSize:(NSSize)targetSize retinaSupport: (BOOL) retinaSupport;
 -(NSImage*)imageByScalingProportionallyUsingNSImage:(float)ratio;
 -(NSData*)getDataOfType:(NSBitmapImageFileType)type compressionFactor:(float)factor;
+
++ (float) backingScaleNSImage;
 
 @end
 

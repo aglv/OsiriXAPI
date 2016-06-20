@@ -18,6 +18,7 @@
 
 @interface NSFileManager (N2)
 
+- (BOOL) testWritingPermission:(NSString*) path error: (NSError**) error;
 -(void) moveItemAtPathToTrash: (NSString*) path;
 -(NSString*)findSystemFolderOfType:(int)folderType forDomain:(int)domain;
 -(NSString*)userApplicationSupportFolderForApp;

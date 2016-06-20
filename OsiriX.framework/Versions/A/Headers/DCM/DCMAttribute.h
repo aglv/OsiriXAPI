@@ -51,6 +51,7 @@
 @interface DCMAttribute : NSObject {
 	DCMAttributeTag *_tag;
 	long _valueLength;
+    long _offset;
 	NSMutableArray *_values;
 	NSString *_vr;
 	DCMCharacterSet *characterSet;
@@ -69,6 +70,7 @@
 @property(retain) NSMutableArray *values;
 @property(readonly) DCMAttributeTag *attrTag;
 @property(retain) DCMCharacterSet *characterSet;
+@property long offset;
 
 + (id)attributeWithAttribute:(DCMAttribute *)attr;
 + (id)attributeWithAttributeTag:(DCMAttributeTag *)tag;
@@ -114,4 +116,5 @@
 
 - (NSXMLNode *)xmlNode;
 - (NSString*)readableDescription;
+- (NSString *)valueAsString;
 @end

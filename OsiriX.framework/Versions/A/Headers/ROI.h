@@ -86,13 +86,15 @@ typedef enum ToolMode_
 	tCurvedROI,					//	28
     tTAGT,                      //  29
     tBall,                      //  30
-    tOvalAngle                  //  31
+    tOvalAngle,                 //  31
+    tAutoCurvedROI              //  32
 } ToolMode;
 
 @class DCMView;
 @class DCMPix;
 @class StringTexture;
 @class DCMObject;
+@class DCMUSRegion;
 
 /** \brief Region of Interest
 * 
@@ -170,7 +172,8 @@ typedef enum ToolMode_
     NSMutableArray  *cachedSplinePoints, *cachedSplinePointsWithoutScale;
     float           previousScaleForSplinePoints;
     
-	float			rmean, rmax, rmin, rdev, rtotal, rskewness, rkurtosis, rLength, rArea;
+    DCMUSRegion     *rUSRegion;
+	float			rmean, rmax, rmin, rdev, rtotal, rskewness, rkurtosis, rLength, rLengthPix, rArea, rAreaPix;
 	
     NSMutableDictionary *peakValue, *isoContour;
     
@@ -251,7 +254,7 @@ typedef enum ToolMode_
 @property(nonatomic) float thickness;
 @property(retain) ROI *parentROI;
 @property double sliceThickness, pixelSpacingX, pixelSpacingY;
-@property float min, max, mean, dev, skewness, kurtosis, total, length, area;
+@property (nonatomic) float min, max, mean, dev, skewness, kurtosis, total, length, area, lengthPix, areaPix;
 @property(assign) NSColor* NSColor;
 @property(assign) BOOL isSpline;
 @property(readonly) NSMutableDictionary *peakValue, *isoContour;
@@ -339,18 +342,20 @@ typedef enum ToolMode_
 /** Set resolution and origin associated to the ROI */
 - (void) setOriginAndSpacing :(float) ipixelSpacingx :(float) ipixelSpacingy :(NSPoint) iimageOrigin :(BOOL) sendNotification :(BOOL) inImageCheck;
 
-/** Compute the roiArea in cm2 */
-- (float) roiArea;
-
 /** Compute the geometric centroid in pixel space */
 - (NSPoint) centroid;
 
-/**  Compute the length for tMeasure ROI in cm */
-- (float) MesureLength: (float*) pixels;
-
 /**  Compute the length for between two points in cm */
-- (float) Length:(NSPoint) mesureA :(NSPoint) mesureB;
-- (float) LengthFrom:(NSPoint) mesureA to:(NSPoint) mesureB inPixel: (BOOL) inPixel;
+-(float) LengthInCm:(NSPoint) ptA to:(NSPoint) ptB;
++(float) LengthInCmFrom:(NSPoint) ptA to:(NSPoint) ptB spacingX: (double) px spacingY: (double) py;
++(float) LengthInPixelsFrom:(NSPoint) ptA to:(NSPoint) ptB;
++(float) LengthFrom:(NSPoint) ptA to:(NSPoint) ptB spacingX: (double) px spacingY: (double) py;
+
+/** Deprecated functions **/
+-(float) MesureLength:(float*) pixels pointA: (NSPoint) a pointB: (NSPoint) b __deprecated;
+-(float) MesureLength:(float*) pixels __deprecated;
+-(float) Length:(NSPoint) mesureA :(NSPoint) mesureB __deprecated;
+-(float) LengthFrom:(NSPoint) mesureA to:(NSPoint) mesureB inPixel: (BOOL) inPixel __deprecated;
 
 /** Compute an angle between 2 lines */
 - (float) Angle:(NSPoint) p2 :(NSPoint) p1 :(NSPoint) p3;
@@ -376,6 +381,7 @@ typedef enum ToolMode_
 
 + (NSMutableArray*) resamplePoints: (NSArray*) points number:(int) no;
 
++ (NSString*) formattedLengthForCM: (float) lCm;
 
 /** Update ROI on mouse down. For most rois this will be the origin of the ROI */
 - (BOOL)mouseRoiDown:(NSPoint)pt :(int)slice :(float)scale;
@@ -451,6 +457,14 @@ typedef enum ToolMode_
 /** is Spline rendered ? */
 - (BOOL)isSpline;
 
+/** area in mm2, deprecated: prefer property area */
+- (float) roiArea __deprecated;
+
+/** Description of elements contained in <-(NSString*) description>, separated by \t (tab) */
++ (NSString*) descriptionHeader;
++ (NSString*) stringTypeForROI: (int) i;
+- (NSString*) niceDescription;
+
 - (BOOL) isInside: (int*) pixelCoordinates;
 - (BOOL) isInside: (int*) pixelCoordinates :(float) sliceInterval;
 - (BOOL) containBallROI: (DCMView*) view pixelCoordinates: (double*) pixelCoordinates radius: (double*) radius;
@@ -459,6 +473,7 @@ typedef enum ToolMode_
 - (unsigned char*) getMapSize:(NSSize*) size origin:(NSPoint*) ROIorigin;
 - (ROI*) getBrushROI;
 - (ROI*) getBrushROIwithMinimum: (float) minimum maximum : (float) maximum dcmPix: (DCMPix*) inPix;
+- (void) computeAndDrawDiameterAgainst: (ROI*) otherROI scaleValue: (float) scaleValue offsetX: (float) offsetx offsetY: (float) offsety;
 
 /** Test to see if point is in text box or ROI and returns the mode. 
 * Can be ROI_Selected or ROI_selectedModify if hit test is YES 
@@ -513,6 +528,8 @@ typedef enum ToolMode_
 - (void) displayPointUnderMouse:(NSPoint) pt :(float) offsetx :(float) offsety :(float) scale;
 
 @property(retain) NSString *textualBoxLine1, *textualBoxLine2, *textualBoxLine3, *textualBoxLine4, *textualBoxLine5, *textualBoxLine6, *textualBoxLine7, *textualBoxLine8, *textualBoxLine9;
+- (NSArray*) textualBoxLines;
+
 @property NSTimeInterval groupID;
 
 

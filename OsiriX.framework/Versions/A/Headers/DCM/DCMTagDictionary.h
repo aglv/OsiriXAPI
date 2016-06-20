@@ -15,10 +15,15 @@
 #import <Foundation/Foundation.h>
 
 
-@interface DCMTagDictionary : NSDictionary {
-
+@interface DCMTagDictionary : NSObject {
+    NSDictionary *tagDictionary;
 }
-+(id)sharedTagDictionary;
 
+@property (readonly) NSDictionary *tagDictionary;
+
++(DCMTagDictionary*)sharedTagDictionary;
+-(NSDictionary*) dictionaryForGroupElement: (NSString*) ge;
+-(NSDictionary*) dictionaryForGroupElement: (NSString*) ge privateCreatorElement:(NSString*) privateCreatorElement;
+-(NSDictionary*) dictionaryForGroup: (int) group element: (int) element privateCreatorElement:(NSString*) privateCreatorElement;
 
 @end

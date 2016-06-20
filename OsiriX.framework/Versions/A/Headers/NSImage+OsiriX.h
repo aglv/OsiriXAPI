@@ -16,6 +16,7 @@
 
 @interface NSImage (OsiriX)
 
+-(NSData*)JPEGRepresentation;
 -(NSData*)JPEGRepresentationWithQuality:(CGFloat)quality;
 
 @end

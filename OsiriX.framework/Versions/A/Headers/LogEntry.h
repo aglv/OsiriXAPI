@@ -13,9 +13,18 @@
  =========================================================================*/
 
 #import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
 
-@interface NSAppleScript (N2)
+NS_ASSUME_NONNULL_BEGIN
 
--(id)runWithArguments:(NSArray*)args error:(NSDictionary**)errs;
+@interface LogEntry : NSManagedObject
+
+- (NSString *) countryDestinationHostname;
+- (NSString *) countryOriginHostname;
+- (NSString *) countryOriginName;
 
 @end
+
+NS_ASSUME_NONNULL_END
+
+#import "LogEntry+CoreDataProperties.h"

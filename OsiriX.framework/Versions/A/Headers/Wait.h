@@ -27,7 +27,7 @@
 	
 	SendController * _target;
 	NSDate  *startTime;
-	BOOL	cancel, aborted, openSession;
+	BOOL	cancel, aborted;
 	NSModalSession session;
 	NSTimeInterval lastTimeFrame, lastTimeFrameUpdate, firstTime, displayedTime;
     IOPMAssertionID assertionID;
@@ -36,7 +36,6 @@
 - (void)incrementBy:(double)delta;
 - (NSProgressIndicator*) progress;
 - (id) initWithString:(NSString*) str;
-- (id) initWithString:(NSString*) str :(BOOL) useSession;
 - (BOOL) aborted;
 - (IBAction) abortButton: (id) sender;
 - (void) setCancel :(BOOL) val;

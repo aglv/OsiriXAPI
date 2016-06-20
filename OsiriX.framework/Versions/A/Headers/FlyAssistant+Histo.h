@@ -16,7 +16,7 @@
  */
 - (void) autoComputeThresholdFromValue:(float)v;
 - (void) autoComputeThresholdFromPoint:(Point3D*)p;
-- (void) computeIntervalThresholdsFrom:(float)pixValue;
+//- (void) computeIntervalThresholdsFrom:(float)pixValue;
 
 /**
  Get the min and max values from input data

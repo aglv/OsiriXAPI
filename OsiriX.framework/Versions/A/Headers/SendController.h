@@ -58,13 +58,13 @@ enum SendServerType { osirixServer, offisServer };
 	BOOL				_abort;
 	NSRecursiveLock     *_lock;
 	NSDictionary		*_destinationServer;
+    BOOL                doNotUpdatePreferences;
 	
 	IBOutlet NSPopUpButton	*newServerList;
 	IBOutlet NSMatrix		*keyImageMatrix;
 	IBOutlet NSTextField	*numberImagesTextField, *addressAndPort;
 	IBOutlet NSPopUpButton	*syntaxListOffis;
 }
-
 + (void) sendFiles:(NSArray *)files;
 + (void) sendFiles:(NSArray *)files toNode: (NSDictionary*) node;
 + (void) sendFiles:(NSArray *)files toNode: (NSDictionary*) node usingSyntax: (int) syntax;

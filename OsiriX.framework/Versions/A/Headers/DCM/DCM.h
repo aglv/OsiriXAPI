@@ -13,33 +13,28 @@
 =========================================================================*/
 
 
-#import "OsiriX/DCMValueRepresentation.h"
-#import "OsiriX/DCMAttributeTag.h"
-#import "OsiriX/DCMAttribute.h"
-#import "OsiriX/DCMSequenceAttribute.h"
-#import "OsiriX/DCMDataContainer.h"
-#import "OsiriX/DCMObject.h"
-#import "OsiriX/DCMTransferSyntax.h"
-#import "OsiriX/DCMTagDictionary.h"
-#import "OsiriX/DCMTagForNameDictionary.h"
-#import "OsiriX/DCMCharacterSet.h"
-#import "OsiriX/DCMPixelDataAttribute.h"
-#import "OsiriX/DCMCalendarDate.h"
-
+#import "DCMValueRepresentation.h"
+#import "DCMAttributeTag.h"
+#import "DCMAttribute.h"
+#import "DCMSequenceAttribute.h"
+#import "DCMDataContainer.h"
+#import "DCMObject.h"
+#import "DCMTransferSyntax.h"
+#import "DCMTagDictionary.h"
+#import "DCMTagForNameDictionary.h"
+#import "DCMCharacterSet.h"
+#import "DCMPixelDataAttribute.h"
+#import "DCMCalendarDate.h"
 #import "DCMLimitedObject.h"
-
 #import "DCMNetServiceDelegate.h"
 #import "DCMEncapsulatedPDF.h"
-
 
 #define DCMDEBUG 0
 #define DCMFramework_compile YES
 
-
 #import <Accelerate/Accelerate.h>
 
-enum DCM_CompressionQuality {DCMLosslessQuality = 0, DCMHighQuality, DCMMediumQuality, DCMLowQuality};
-
+typedef enum DCM_CompressionQuality_ {DCMLosslessQuality = 0, DCMHighQuality, DCMMediumQuality, DCMLowQuality} DCM_CompressionQuality;
 
 
 @protocol MoveStatusProtocol

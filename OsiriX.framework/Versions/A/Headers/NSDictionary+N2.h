@@ -21,4 +21,6 @@
 -(id)keyForObject:(id)obj;
 -(id)deepMutableCopy;
 -(NSDictionary*)dictionaryWithLowercaseKeys;
+- (id)objectForCaseInsensitiveKey:(NSString *)key;
++ (NSDictionary *)dictionaryWithContentsOfData:(NSData *)data;
 @end

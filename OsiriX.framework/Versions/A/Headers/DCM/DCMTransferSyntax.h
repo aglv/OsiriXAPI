@@ -14,8 +14,6 @@
 
 #import <Foundation/Foundation.h>
 
-
-
 @interface DCMTransferSyntax : NSObject {
 
 NSString	*transferSyntax;
@@ -44,7 +42,11 @@ NSMutableDictionary *transferSyntaxDict;
 +(id)JPEGLossless14TransferSyntax;
 +(id)JPEGLSLosslessTransferSyntax;
 +(id)JPEGLSLossyTransferSyntax;
-+(id)RLELosslessTransferSyntax;
++(id)RLETransferSyntax;
++(id)MPEG4TransferSyntax;
++(id)MPEG4BDTransferSyntax;
++(BOOL)isMPEGTransferSyntax: (NSString*) s;
++(BOOL)isCompressed: (NSString*) s;
 
 - (id)initWithTS:(NSString *)ts;
 - (id)initWithTS:(NSString *)ts isEncapsulated:(BOOL)encapsulated  isLittleEndian:(BOOL)endian  isExplicit:(BOOL)explicitValue name:(NSString *)aName;

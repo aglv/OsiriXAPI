@@ -16,6 +16,8 @@
 #import <Cocoa/Cocoa.h>
 #include <Accelerate/Accelerate.h>
 
+#define ALPHASTATECOLOR 0.6
+
 @class DicomDatabase;
 @class MPR2DController,NSCFDate, DicomStudy, DicomSeries;
 @class ViewerController, DicomImage;
@@ -53,7 +55,8 @@ extern NSString* O2AlbumDragType;
 	
 	NSDateFormatter			*TimeFormat, *TimeWithSecondsFormat, *DateTimeWithSecondsFormat;
 	
-	NSRect					visibleScreenRect[ 40];
+#define MAXSCREENS 40
+	NSRect					visibleScreenRect[ MAXSCREENS];
 	NSString				*transferSyntax;
     NSArray                 *dirArray;
     NSToolbar               *toolbar;
@@ -166,7 +169,7 @@ extern NSString* O2AlbumDragType;
 	
 	NSPredicate						*testPredicate;
 	
-    BOOL							showAllImages, DatabaseIsEdited, isNetworkLogsActive;
+    BOOL							showAllImages, isNetworkLogsActive;
 	NSConditionLock					*queueLock;
 	
 	IBOutlet NSScrollView			*thumbnailsScrollView;
@@ -225,6 +228,8 @@ extern NSString* O2AlbumDragType;
     
     IBOutlet NSSplitView *bannerSplit;
     IBOutlet NSButton *banner;
+    NSMutableArray *bannersArray;
+    int bannerIndex;
     
     NSTimeInterval _timeIntervalOfLastLoadIconsDisplayIcons;
     NSThread *matrixLoadIconsThread;
@@ -313,6 +318,7 @@ extern NSString* O2AlbumDragType;
 + (BrowserController*) currentBrowser;
 + (NSMutableString*) replaceNotAdmitted: (NSString*)name;
 + (NSDictionary*) statesDictionary;
++ (NSImage *)createStateDotWithColor:(NSColor *)c alpha: (float) alpha;
 + (void) updateActivity;
 + (BOOL) horizontalHistory;
 + (BOOL) isHardDiskFull __deprecated;
@@ -354,6 +360,8 @@ extern NSString* O2AlbumDragType;
 - (NSPredicate*) smartAlbumPredicate:(NSManagedObject*) album;
 - (NSPredicate*) smartAlbumPredicateString:(NSString*) string;
 - (void) executeActionsForState: (NSNumber*) c;
+- (void) pressStateCellForRow: (int) clickedRow column: (int) clickedColumn event: (NSEvent*) event;
+- (void) rightClickCommentCellForRow: (int) clickedRow column: (int) clickedColumn event: (NSEvent*) event;
 - (void) emptyDeleteQueueThread;
 - (void) emptyDeleteQueue:(id) sender;
 - (BOOL)isUsingExternalViewer: (NSManagedObject*) item;
@@ -451,6 +459,7 @@ extern NSString* O2AlbumDragType;
 - (void) viewerDICOMMergeSelection:(id) sender;
 - (NSPredicate*) patientsnamePredicate: (NSString*) s;
 - (NSPredicate*) patientsnamePredicate: (NSString*) s soundex:(BOOL) soundex;
+- (NSPredicate*) patientsnamePredicate: (NSString*) s soundex:(BOOL) soundex level: (NSString*) level;
 - (IBAction)addSmartAlbum: (id)sender;
 - (IBAction)search: (id)sender;
 - (void) waitForDistantSearchThread;
@@ -499,6 +508,7 @@ extern NSString* O2AlbumDragType;
 - (IBAction) reparseIn4D:(id) sender;
 - (void)selectStudyWithObjectID:(NSManagedObjectID*)oid;
 - (BOOL) selectThisStudy: (id)study;
+- (BOOL) selectThisStudy: (NSManagedObject*)study changeAlbumIfNecessary: (BOOL) changeAlbumIfNecessary;
 
 - (void) previewPerformAnimation:(id) sender;
 - (void) matrixDisplayIcons:(id) sender;
@@ -588,6 +598,7 @@ extern NSString* O2AlbumDragType;
 - (void) queryDICOM:(id) sender;
 - (IBAction) querySelectedStudy:(id) sender;
 - (void) refreshComparativeStudies: (NSArray*) newStudies;
+- (NSMutableArray*) comparativeStudiesForStudy: (DicomStudy*) currentStudy protocol: (NSDictionary*) currentHangingProtocol;
 + (NSArray*) comparativeServers;
 - (IBAction) viewXML:(id) sender;
 - (void) unifyPatientIdentitiesForStudies: (NSArray*) studiesArray dictionary: (NSDictionary*) dict merge: (BOOL)  merge;

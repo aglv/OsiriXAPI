@@ -69,6 +69,7 @@
 - (BOOL) modificationsToApply;
 
 + (XMLController*) windowForViewer: (ViewerController*) v;
++ (NSDictionary *) DICOMDefitionsLinks;
 
 - (void) changeImageObject:(DicomImage*) image;
 - (id) initWithImage:(DicomImage*) image windowName:(NSString*) name viewer:(ViewerController*) v;
@@ -91,6 +92,7 @@
 - (NSString*) srcFile;
 - (NSString*) stringsSeparatedForNode:(NSXMLNode*) node;
 - (void) traverse: (NSXMLNode*) node string:(NSMutableString*) string;
+- (void) clickInDefinitionCell: (NSCell*) cell event: (NSEvent*) event;
 
 @property(readonly) NSManagedObject *imObj;
 @property(readonly) ViewerController *viewer;

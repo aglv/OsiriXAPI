@@ -56,6 +56,8 @@
 +(WebPortal*)defaultWebPortal;
 +(WebPortal*)wadoOnlyWebPortal;
 
++(NSDictionary*)webServicesHTMLFiles;
+
 @property(readonly, retain) WebPortalDatabase* database;
 @property(readonly, retain) DicomDatabase* dicomDatabase;
 @property(readonly, retain) NSMutableDictionary* cache;
@@ -95,6 +97,7 @@
 
 -(WebPortalSession*)newSession;
 -(WebPortalSession*)addSession:(NSString*) sid;
+-(void)deleteSessionId:(NSString*)sid;
 -(WebPortalSession*)sessionForId:(NSString*)sid;
 -(WebPortalSession*)sessionForUsername:(NSString*)username token:(NSString*)token;
 -(id)sessionForUsername:(NSString*)username token:(NSString*)token doConsume: (BOOL) doConsume;

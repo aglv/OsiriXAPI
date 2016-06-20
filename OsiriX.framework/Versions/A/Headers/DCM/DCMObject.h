@@ -10,45 +10,6 @@
      This software is distributed WITHOUT ANY WARRANTY; without even
      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
      PURPOSE.
- ---------------------------------------------------------------------------
- 
- This file is part of the Horos Project.
- 
- Current contributors to the project include Alex Bettarini and Danny Weissman.
- 
- Horos is free software: you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation,  version 3 of the License.
- 
- Horos is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
- 
- You should have received a copy of the GNU General Public License
- along with Horos.  If not, see <http://www.gnu.org/licenses/>.
-
- 
-
- 
- ---------------------------------------------------------------------------
- 
- This file is part of the Horos Project.
- 
- Current contributors to the project include Alex Bettarini and Danny Weissman.
- 
- Horos is free software: you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation,  version 3 of the License.
- 
- Horos is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
- 
- You should have received a copy of the GNU General Public License
- along with Horos.  If not, see <http://www.gnu.org/licenses/>.
-
 =========================================================================*/
 
 
@@ -72,12 +33,12 @@
 
 	NSMutableDictionary *attributes;
 	NSDictionary *dicomDict;
-	DCMTagDictionary *sharedTagDictionary;
 	DCMTagForNameDictionary *sharedTagForNameDictionary;
 	DCMCharacterSet *specificCharacterSet;
 	DCMTransferSyntax *transferSyntax;
 	BOOL _decodePixelData;
 	BOOL isSequence;
+    NSString *filePath;
 }
 
 @property(readonly) NSMutableDictionary *attributes; /**< Attributes as an NSDictionary */
@@ -94,20 +55,21 @@
 /** Quick test to see if data is a DICOM/ACR file.  First looks for the DICM at 128. If that isn't there looks for valid DICOM 3  elements at the start */
 + (BOOL)isDICOM:(NSData *)data;
 
-/** Returns to rootUID for files created used by Horos */
+/** Returns to rootUID for files created used by OsiriX */
 + (NSString *)rootUID;
 
 /** Returns the MACAddress of the computer which generated the image */
 + (NSString*) MACAddress;
 
-/** Returns to implementationClassUID for files created used by Horos */
+/** Returns to implementationClassUID for files created used by OsiriX */
 + (NSString *)implementationClassUID;
 
-/** Returns to implementationClassUID for files created used by Horos */
+/** Returns to implementationClassUID for files created used by OsiriX */
 + (NSString *)implementationVersionName;
 
 + (NSString*) newStudyInstanceUID;
 + (NSString*) newSeriesInstanceUID;
++ (NSString*) newSOPInstanceUID;
 
 /** Create an empty DICOM object */
 + (id)dcmObject;

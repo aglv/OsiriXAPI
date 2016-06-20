@@ -30,8 +30,9 @@ enum
 }
 + (NSString*) gethostnameAndPort: (int*) port forService:(NSNetService*) sender;
 + (NSArray *) DICOMServersList;
-+(NSMutableDictionary*)DICOMNodeInfoFromTXTRecordData:(NSData*)data;
++ (NSMutableDictionary*)DICOMNodeInfoFromTXTRecordData:(NSData*)data;
 + (NSArray *) DICOMServersListSendOnly: (BOOL) send QROnly:(BOOL) QR;
++ (NSDictionary*) serverForHostname:(NSString*) hostname port: (int) port;
 + (NSString*) getIPAddress: (NSString*) address;
 + (id)sharedNetServiceDelegate;
 - (void) setPublisher: (NSNetService*) p;

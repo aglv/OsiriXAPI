@@ -21,7 +21,7 @@
 @interface DicomStudy : NSManagedObject
 {
 	BOOL isHidden;
-	NSNumber *dicomTime;
+	NSNumber *dicomTime, *cachedRawNoFiles;
     NSUInteger _numberOfImagesWhenCachedModalities;
 	NSString *cachedModalites, *cacheYearOldAcquisition, *cacheYearOld;
     NSColor *cachedColor;
@@ -70,6 +70,8 @@
 + (NSString*) yearOldAcquisition:(NSDate*) acquisitionDate FromDateOfBirth: (NSDate*) dateOfBirth;
 + (BOOL) displaySeriesWithSOPClassUID: (NSString*) uid andSeriesDescription: (NSString*) description;
 + (NSArray*) seriesSortDescriptors;
++ (NSArray*) seriesSortDescriptorsWithSubKey: (NSString*) subKey;
++ (NSArray*) seriesSortDescriptorsWithSubKey: (NSString*) subKey addStudyDateSorting: (BOOL) addStudyDateSorting;
 + (void) resetPreferences;
 - (NSNumber*) noFiles;
 - (NSSet*) paths;
@@ -81,6 +83,9 @@
 - (NSNumber*) rawNoFiles;
 - (NSString*) modalities;
 + (NSString*) displayedModalitiesForSeries: (NSArray*) seriesModalities;
++ (NSArray*) chronologicalColors;
+- (NSNumber*) chronologicalNumber;
+- (NSColor*) chronologicalColor;
 - (NSArray*) imageSeries;
 - (NSArray*) imageSeriesContainingPixels:(BOOL) pixels;
 - (NSArray*) imageSeriesContainingPixels:(BOOL) pixels includeLocalizersSeries: (BOOL) includeLocalizersSeries;
@@ -118,10 +123,13 @@
 - (NSArray*) generateDICOMSCImagesForKeyImages: (BOOL) keyImages andROIImages: (BOOL) ROIImages;
 - (void) setNSColor:(NSColor *)c;
 - (NSColor*) NSColor;
+- (NSString*) ROIsDescription;
 - (NSString*) type;
 - (NSString*) calledAET; // Match DCMTKQueryNode
 - (NSString*) callingAET; // Match DCMTKQueryNode
 - (NSString *)hostname; // Match DCMTKQueryNode
++ (NSArray*) comparativeStudiesForStudy: (id) studySelectedID;
+- (NSArray*) studiesForThisPatient;
 @end
 
 @interface DicomStudy (CoreDataGeneratedAccessors)

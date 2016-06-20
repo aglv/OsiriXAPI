@@ -92,6 +92,7 @@
 
 @property (nonatomic, readwrite, assign) BOOL displayTransverseLines;
 @property (nonatomic, readwrite, assign) BOOL displayCrossLines;
+@property (nonatomic, readwrite, assign) BOOL drawAllNodes;
 
 - (void)waitUntilPixUpdate; // returns once this view's DCM pix object has been updated to reflect any changes made to the view. 
 

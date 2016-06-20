@@ -59,6 +59,7 @@
 
 /** Initialize a tag with the defined group and element.*/
 - (id)initWithGroup:(int)group element:(int)element;
+- (id) initWithGroup:(int)group element:(int)element privateCreator:(NSString*) pc;
 
 /** Initialize a copy of a tag */
 - (id)initWithTag:(DCMAttributeTag *)tag;

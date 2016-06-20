@@ -20,6 +20,7 @@
 @interface SplashScreen : NSWindowController <NSWindowDelegate>
 {
 	IBOutlet	NSButton *version;
+    IBOutlet    NSTextField *regAndTransactionID;
 	NSTimer		*timerIn, *timerOut;
 	IBOutlet	id view;
 	int         versionType;

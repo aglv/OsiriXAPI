@@ -53,6 +53,7 @@
 
 +(NSString*) modelName;
 -(BOOL) deleteSQLFileIfOpeningFailed;
+-(BOOL) dumpSqlFile;
 -(NSManagedObjectModel*)managedObjectModel;
 //-(NSMutableDictionary*)persistentStoreCoordinatorsDictionary;
 -(BOOL)migratePersistentStoresAutomatically; // default implementation returns YES
@@ -87,6 +88,8 @@
 -(BOOL)save;
 -(BOOL)save:(NSError**)err;
 
+-(void)deleteSqlFiles;
++(void)deleteSqlFiles: (NSString*) sqlIndex;
 @end
 
 @interface N2ManagedDatabase (Protected)

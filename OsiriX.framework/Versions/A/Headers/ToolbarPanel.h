@@ -16,7 +16,7 @@
 #import "ViewerController.h"
 
 /** Window Controller for Toolbar */
-@interface ToolbarPanelController : NSWindowController <NSToolbarDelegate>
+@interface ToolbarPanelController : NSWindowController <NSToolbarDelegate, NSWindowDelegate>
 {	
 	NSToolbar               *toolbar;
 	ViewerController		*viewer;

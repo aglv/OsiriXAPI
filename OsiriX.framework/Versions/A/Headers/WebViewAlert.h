@@ -15,12 +15,12 @@
 #import <Cocoa/Cocoa.h>
 #import <WebKit/WebKit.h>
 
-@interface WebViewAlert : NSWindowController
+@interface WebViewAlert : NSWindowController <WebPolicyDelegate, WebFrameLoadDelegate>
 {
     BOOL displayCancel, showDontShowAgain, dontShowAgain;
     NSURL *url;
     NSString *signature;
-    
+    int modalResponse;
     IBOutlet WebView *webView;
 }
 
@@ -28,6 +28,7 @@
 + (NSInteger) alertWithDictionary: (NSDictionary*) d;
 - (id) initWithDictionary: (NSDictionary*) d;
 
+@property (readonly) int modalResponse;
 @property BOOL displayCancel, showDontShowAgain, dontShowAgain;
 @property (retain) NSURL *url;
 @property (retain) NSString *signature;
