@@ -7,7 +7,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleExecutable</key>
-	<string>OsiriX</string>
+	<string>OsiriXAPI</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.osirix.api</string>
 	<key>CFBundleInfoDictionaryVersion</key>
