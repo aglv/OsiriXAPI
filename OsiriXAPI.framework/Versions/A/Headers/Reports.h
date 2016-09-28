@@ -21,7 +21,10 @@
 @interface Reports : NSObject
 {
 	NSMutableString *templateName;
+    NSString *templateFilename;
 }
+
+@property (retain) NSString *templateFilename;
 
 + (NSString*) getUniqueFilename:(DicomStudy*) study;
 + (NSString*) getOldUniqueFilename:(NSManagedObject*) study;
@@ -33,8 +36,8 @@
 
 - (BOOL) createNewPagesReportForStudy:(NSManagedObject*)aStudy toDestinationPath:(NSString*)aPath;
 - (BOOL) createNewOpenDocumentReportForStudy:(NSManagedObject*)aStudy toDestinationPath:(NSString*)aPath;
-+ (NSMutableArray*)pagesTemplatesList;
-+ (NSMutableArray*)wordTemplatesList;
++ (NSArray*)pagesTemplatesList;
++ (NSArray*)wordTemplatesList;
 - (NSMutableString *)templateName;
 - (void)setTemplateName:(NSString *)aName;
 + (int) Pages5orHigher;

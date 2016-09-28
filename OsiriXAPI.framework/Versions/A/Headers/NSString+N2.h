@@ -14,7 +14,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-
+#define WebPortalLocalized( key, comment) [key localizedForWebPortal]
 #define N2NonNullString( a) a ? a : @""
 
 @interface NSString (N2)
@@ -32,6 +32,15 @@
 -(NSString*)xmlUnescapedString;
 
 -(NSString*)ASCIIString;
+-(NSString*)quotedPrintableString;
+-(NSString*)txtToHtml;
+-(NSString*)resolveNSLocalizedStrings;
+-(NSString*)resolveNSLocalizedStringsForLanguage:(NSString*)language;
+-(NSString*)resolveNSLocalizedStringsEscapeQuotationMarks: (BOOL) escapeQuotationMarks;
+-(NSString*)resolveNSLocalizedStringsForLanguage:(NSString*)language inBundle:(NSBundle*)bundle;
+-(NSString*)resolveNSLocalizedStringsForLanguage:(NSString*)language inBundle:(NSBundle*)bundle escapeQuotationMarks: (BOOL) escapeQuotationMarks;
+-(NSString*)localizedForLanguage: (NSString*) language;
+-(NSString*)localizedForWebPortal;
 
 -(BOOL)contains:(NSString*)str;
 

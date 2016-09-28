@@ -3524,7 +3524,6 @@
 #include <OsiriXAPI/N2ManagedDatabase.h>
 #include <OsiriXAPI/N2MinMax.h>
 #include <OsiriXAPI/N2MutableUInteger.h>
-#include <OsiriXAPI/N2OpenGLViewWithSplitsWindow.h>
 #include <OsiriXAPI/N2Operators.h>
 #include <OsiriXAPI/N2Pair.h>
 #include <OsiriXAPI/N2Panel.h>
@@ -3616,11 +3615,13 @@
 #include <OsiriXAPI/BrowserController+Sources.h>
 #include <OsiriXAPI/browserController.h>
 #include <OsiriXAPI/BrowserControllerDCMTKCategory.h>
+#include <OsiriXAPI/BrowserControllerWindow.h>
 #include <OsiriXAPI/BrowserMatrix.h>
 #include <OsiriXAPI/BurnerWindowController.h>
 #include <OsiriXAPI/CalciumScoringWindowController.h>
 #include <OsiriXAPI/Camera.h>
 #include <OsiriXAPI/Centerline.h>
+#include <OsiriXAPI/CGSPrivate.h>
 #include <OsiriXAPI/CLUTOpacityView.h>
 #include <OsiriXAPI/ColorTransferView.h>
 #include <OsiriXAPI/ColorView.h>
@@ -3730,6 +3731,10 @@
 #include <OsiriXAPI/ITKSegmentation3DController.h>
 #include <OsiriXAPI/ITKTransform.h>
 #include <OsiriXAPI/JPEGExif.h>
+#include <OsiriXAPI/KeyImagesButtonCell.h>
+#include <OsiriXAPI/KeyImagesScrollView.h>
+#include <OsiriXAPI/KeyImagesWindow.h>
+#include <OsiriXAPI/KeyImagesWindowController.h>
 #include <OsiriXAPI/KeyObjectController.h>
 #include <OsiriXAPI/KeyObjectPopupController.h>
 #include <OsiriXAPI/KeyObjectReport.h>
@@ -3742,6 +3747,8 @@
 #include <OsiriXAPI/LLScoutViewer.h>
 #include <OsiriXAPI/LLSubtraction.h>
 #include <OsiriXAPI/LogArrayController.h>
+#include <OsiriXAPI/LogEntry+CoreDataProperties.h>
+#include <OsiriXAPI/LogEntry.h>
 #include <OsiriXAPI/LogManager.h>
 #include <OsiriXAPI/LogTableView.h>
 #include <OsiriXAPI/LogWindowController.h>
@@ -3792,12 +3799,14 @@
 #include <OsiriXAPI/OrthogonalMPRView.h>
 #include <OsiriXAPI/OrthogonalMPRViewer.h>
 #include <OsiriXAPI/OrthogonalReslice.h>
+#include <OsiriXAPI/OSIButtonCell.h>
 #include <OsiriXAPI/OSICoalescedPlanarROI.h>
 #include <OsiriXAPI/OSIEnvironment+Private.h>
 #include <OsiriXAPI/OSIEnvironment.h>
 #include <OsiriXAPI/OSIFloatVolumeData.h>
 #include <OsiriXAPI/OSIGeometry.h>
 #include <OsiriXAPI/OSIMaskROI.h>
+#include <OsiriXAPI/OSIOutlineView.h>
 #include <OsiriXAPI/OSIPathExtrusionROI.h>
 #include <OsiriXAPI/OSIPathROI.h>
 #include <OsiriXAPI/OSIPlanarBrushROI.h>
@@ -3889,6 +3898,7 @@
 #include <OsiriXAPI/StudyView.h>
 #include <OsiriXAPI/Survey.h>
 #include <OsiriXAPI/ThickSlabController.h>
+#include <OsiriXAPI/ThickSlabSlider.h>
 #include <OsiriXAPI/ThickSlabVR.h>
 #include <OsiriXAPI/ThreadCell.h>
 #include <OsiriXAPI/ThreadModalForWindowController.h>
@@ -3900,6 +3910,7 @@
 #include <OsiriXAPI/ThumbnailsListPanel.h>
 #include <OsiriXAPI/ToolBarNSWindow.h>
 #include <OsiriXAPI/ToolbarPanel.h>
+#include <OsiriXAPI/ToolButtonCell.h>
 #include <OsiriXAPI/UsersArrayController.h>
 #include <OsiriXAPI/ViewerController+CPP.h>
 #include <OsiriXAPI/ViewerController.h>

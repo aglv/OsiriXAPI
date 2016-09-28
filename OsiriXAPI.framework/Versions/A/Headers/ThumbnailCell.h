@@ -15,9 +15,10 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class DicomSeries;
 
 @interface ThumbnailCell : NSButtonCell {
-	BOOL rightClick;
+	BOOL rightClick, isStudy;
     BOOL invertedSet, invertedColors;
     
     float animationHeightPercent;
@@ -28,4 +29,7 @@
 
 + (float) thumbnailCellWidth;
 + (void) resetThumbnailCellWidth;
++ (BOOL) drawAnnotationsForROIsAndKeyimages: (DicomSeries*) series inRect: (NSRect) imageRect;
++ (BOOL) drawAnnotationsForROIs: (BOOL) imagesWithROIs andKeyimages: (BOOL) imagesWithKeys inRect: (NSRect) imageRect;
++ (void) hasThisObject: (id) object ROIs:(BOOL*)imagesWithROIs orIsKey:(BOOL*)imagesWithKeys;
 @end

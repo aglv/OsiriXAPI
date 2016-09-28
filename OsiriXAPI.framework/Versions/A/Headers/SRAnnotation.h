@@ -38,6 +38,7 @@ typedef char DSRDocument;
  * @param path File path
  */
 + (NSData *) roiFromDICOM:(NSString *)path;
++ (BOOL) hasRoiFromDICOM:(NSString *)path;
 
 /** Creates a DICOM SR from an array of ROIs
  * @param rois Array of ROI to archive

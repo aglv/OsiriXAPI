@@ -91,7 +91,7 @@
 * Keys:
 * @"studyComment", @"studyID", @"studyDescription", @"studyDate", @"modality", @"patientID", @"patientName",
 * @"patientUID", @"fileType", @"comments", @"album", @"SOPClassUID", @"SOPUID", @"institutionName",
-* @"referringPhysiciansName", @"performingPhysiciansName", @"accessionNumber", @"patientAge", @"patientBirthDate", 
+* @"referringPhysicianName", @"performingPhysicianName", @"accessionNumber", @"patientAge", @"patientBirthDate",
 * @"patientSex", @"cardiacTime", @"protocolName", @"sliceLocation", @"imageID", @"seriesNumber", @"seriesDICOMUID",
 * @"studyNumber", @"seriesID", @"hasDICOM"
 * */

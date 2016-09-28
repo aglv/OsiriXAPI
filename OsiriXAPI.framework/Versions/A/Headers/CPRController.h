@@ -100,7 +100,7 @@ typedef NSInteger CPRExportRotationSpan;
     
     // Fly Assistant and CurvedPath simplification
     FlyAssistant * assistant;
-    NSMutableArray * centerline;
+    NSMutableArray *centerline, *simplifiedCenterline;
     NSMutableArray * nodeRemovalCost;
     NSMutableArray * delHistory;
     NSMutableArray * delNodes;
@@ -170,7 +170,7 @@ typedef NSInteger CPRExportRotationSpan;
 	NSArray *wlwwMenuItems;
 	
 	float LOD;
-	BOOL lowLOD;
+	BOOL lowLOD, displayRadius;
 	
 	IBOutlet NSPanel *shadingPanel;
 	IBOutlet ShadingArrayController *shadingsPresetsController;
@@ -193,7 +193,7 @@ typedef NSInteger CPRExportRotationSpan;
 @property (readonly) DCMPix *originalPix;
 @property (readonly) CPRTransverseView *topTransverseView, *middleTransverseView, *bottomTransverseView;
 @property (nonatomic) float LOD, movieRate;
-@property BOOL lowLOD, displayMousePosition, blendingModeAvailable;
+@property BOOL lowLOD, displayMousePosition, blendingModeAvailable, displayRadius;
 @property (nonatomic, retain) NSColor *colorAxis1, *colorAxis2, *colorAxis3;
 @property (readonly) CPRMPRDCMView *mprView1, *mprView2, *mprView3;
 @property (readonly) NSSplitView *horizontalSplit1, *horizontalSplit2, *verticalSplit;
@@ -205,6 +205,7 @@ typedef NSInteger CPRExportRotationSpan;
 @property (nonatomic) CPRType cprType;
 @property (nonatomic) ViewsPosition viewsPosition;
 @property (nonatomic, readonly) CPRView *cprView;
+@property (readonly) CPRVolumeData *cprVolumeData;
 
 //@property (nonatomic) BOOL assistantPathMode;3
 
@@ -260,11 +261,13 @@ typedef NSInteger CPRExportRotationSpan;
 - (void) loadBezierPathFromFile:(NSString*) f;
 - (NSDictionary*)exportDCMImage16bitWithWidth:(NSUInteger)width height:(NSUInteger)height fullDepth:(BOOL)fullDepth withDicomExport:(DICOMExport *)dicomExport; // dicomExport can be nil
 - (void) setupToolbar;
-- (void)removeNode;
-- (void)undoLastNodeRemoval;
+- (BOOL) removeNode;
+- (BOOL) undoLastNodeRemoval;
 - (void)updateCurvedPathCost;
 - (void)resetSlider;
-- (IBAction)runFlyAssistant:(id)sender;
+//- (IBAction)runFlyAssistant:(id)sender;
 - (IBAction)onSliderMove:(id)sender;
 - (float) costFunction:(NSUInteger)index;
+- (BOOL) assistedCurvedPath;
+- (FlyAssistant*) assistant;
 @end

@@ -26,10 +26,10 @@
 	id _standardError, _standardInput, _standardOutput;
 }
 
-@property(retain) NSArray* arguments;
-@property(retain) NSString* currentDirectoryPath;
-@property(retain) NSDictionary* environment;
-@property(retain) NSString* launchPath;
+@property(copy) NSArray* arguments;
+@property(copy) NSString* currentDirectoryPath;
+@property(copy) NSDictionary* environment;
+@property(copy) NSString* launchPath;
 @property(retain) id standardError;
 @property(retain) id standardInput;
 @property(retain) id standardOutput;

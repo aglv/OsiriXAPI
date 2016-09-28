@@ -3,13 +3,13 @@
 <plist version="1.0">
 <dict>
 	<key>BuildMachineOSBuild</key>
-	<string>15B42</string>
+	<string>16B2333a</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleExecutable</key>
 	<string>OsiriXAPI</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.osirix.api</string>
+	<string>com.osirix.OsiriXAPI</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundlePackageType</key>
@@ -25,16 +25,16 @@
 	<key>DTCompiler</key>
 	<string>com.apple.compilers.llvm.clang.1_0</string>
 	<key>DTPlatformBuild</key>
-	<string>7B91b</string>
+	<string>8A218a</string>
 	<key>DTPlatformVersion</key>
 	<string>GM</string>
 	<key>DTSDKBuild</key>
-	<string>12F37</string>
+	<string>16A300</string>
 	<key>DTSDKName</key>
-	<string>macosx10.8</string>
+	<string>macosx10.12</string>
 	<key>DTXcode</key>
-	<string>0710</string>
+	<string>0800</string>
 	<key>DTXcodeBuild</key>
-	<string>7B91b</string>
+	<string>8A218a</string>
 </dict>
 </plist>

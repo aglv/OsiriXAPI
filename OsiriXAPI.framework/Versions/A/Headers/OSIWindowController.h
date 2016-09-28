@@ -22,6 +22,21 @@
 @class DicomDatabase;
 
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
+NSInteger OSIRunPanel( NSAlertStyle style, NSString *title, NSString *msgFormat, NSString *defaultButton, NSString *alternateButton, NSString *otherButton, ...);
+
+NSInteger OSIRunCriticalAlertPanel( NSString *title, NSString *msgFormat, NSString *defaultButton, NSString *alternateButton, NSString *otherButton, ...);
+NSInteger OSIRunInformationalAlertPanel( NSString *title, NSString *msgFormat, NSString *defaultButton, NSString *alternateButton, NSString *otherButton, ...);
+NSInteger OSIRunAlertPanel( NSString *title, NSString *msgFormat, NSString *defaultButton, NSString *alternateButton, NSString *otherButton, ...);
+
+#ifdef __cplusplus
+}
+#endif
+
 enum OsiriXBlendingTypes {BlendingPlugin = -1, BlendingFusion = 1, BlendingSubtraction, BlendingMultiplication, BlendingRed, BlendingGreen, BlendingBlue, Blending2DRegistration, Blending3DRegistration, BlendingLL};
 
 #ifdef id
@@ -31,7 +46,7 @@ enum OsiriXBlendingTypes {BlendingPlugin = -1, BlendingFusion = 1, BlendingSubtr
 
 @class DicomImage, DicomSeries, DicomStudy;
 
-@interface OSIWindowController : NSWindowController
+@interface OSIWindowController : NSWindowController <NSWindowDelegate>
 {
 	int _blendingType;
 	
@@ -44,12 +59,17 @@ enum OsiriXBlendingTypes {BlendingPlugin = -1, BlendingFusion = 1, BlendingSubtr
 
 @property(nonatomic,retain) DicomDatabase* database;
 -(void)refreshDatabase:(NSArray*)newImages;
-
+- (void) autoreleaseIfClosed;
 + (BOOL) dontWindowDidChangeScreen;
 + (void) setDontEnterWindowDidChangeScreen:(BOOL) a;
 + (void) setDontEnterMagneticFunctions:(BOOL) a;
 - (void) setMagnetic:(BOOL) a;
 - (BOOL) magnetic;
+
++ (void) setWindowAppearance: (NSWindow*) window;
++ (NSColor*) darkAppearanceFontColor;
++ (NSColor*) darkAppearanceBackgroundColor;
++ (float) darkAppearanceFontColorWhiteLevel;
 
 - (NSMutableArray*) pixList;
 - (void) addToUndoQueue:(NSString*) what;

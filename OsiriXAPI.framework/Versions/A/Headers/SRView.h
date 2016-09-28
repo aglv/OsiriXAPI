@@ -220,7 +220,7 @@ typedef struct renderSurface
 	IBOutlet NSWindow			*export3DVRWindow;
 	IBOutlet NSMatrix			*VRFrames;
 	
-	IBOutlet NSColorWell		*backgroundColor;
+	NSColor                     *backgroundColor;
 	
 	double						camPosition[ 3];
 	double						camFocal[ 3];
@@ -327,6 +327,8 @@ typedef struct renderSurface
 #endif
 	
 }
+
+@property (retain) NSColor *backgroundColor;
 
 #ifdef _STEREO_VISION_
 @property(readwrite) BOOL StereoVisionOn; 

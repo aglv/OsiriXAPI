@@ -18,7 +18,7 @@
 @interface NSMutableDictionary (N2)
 
 -(void)removeObject:(id)obj;
-
+-(void) setObjectIfNonNil: (id) obj forKey: (NSString*) key;
 -(void)setBool:(BOOL)b forKey:(NSString*)key;
 
 @end

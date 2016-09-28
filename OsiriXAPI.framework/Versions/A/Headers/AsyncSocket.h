@@ -326,6 +326,7 @@ typedef enum AsyncSocketError AsyncSocketError;
  * The host will be an IP address.
 **/
 - (NSString *)connectedHost;
+- (NSString *)connectedHostWithCheckForThreadSafery:(BOOL) checkForThreadSafety;
 - (UInt16)connectedPort;
 
 - (NSString *)localHost;

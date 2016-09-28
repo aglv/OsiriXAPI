@@ -21,12 +21,16 @@
 @interface DicomStudy : NSManagedObject
 {
 	BOOL isHidden;
-	NSNumber *dicomTime;
+	NSNumber *dicomTime, *cachedRawNoFiles;
     NSUInteger _numberOfImagesWhenCachedModalities;
 	NSString *cachedModalites, *cacheYearOldAcquisition, *cacheYearOld;
     NSColor *cachedColor;
     NSArray *cachedPresentationStates;
+    NSArray *cacheROIs;
+    NSManagedObject *cachedROISRSeries;
+    NSSet *cacheKeyImages;
     BOOL reentry;
+    int hasKeyImages, hasROIs;
 }
 
 @property(nonatomic, retain) NSString* accessionNumber;
@@ -70,6 +74,8 @@
 + (NSString*) yearOldAcquisition:(NSDate*) acquisitionDate FromDateOfBirth: (NSDate*) dateOfBirth;
 + (BOOL) displaySeriesWithSOPClassUID: (NSString*) uid andSeriesDescription: (NSString*) description;
 + (NSArray*) seriesSortDescriptors;
++ (NSArray*) seriesSortDescriptorsWithSubKey: (NSString*) subKey;
++ (NSArray*) seriesSortDescriptorsWithSubKey: (NSString*) subKey addStudyDateSorting: (BOOL) addStudyDateSorting;
 + (void) resetPreferences;
 - (NSNumber*) noFiles;
 - (NSSet*) paths;
@@ -81,6 +87,9 @@
 - (NSNumber*) rawNoFiles;
 - (NSString*) modalities;
 + (NSString*) displayedModalitiesForSeries: (NSArray*) seriesModalities;
++ (NSArray*) chronologicalColors;
+- (NSNumber*) chronologicalNumber;
+- (NSColor*) chronologicalColor;
 - (NSArray*) imageSeries;
 - (NSArray*) imageSeriesContainingPixels:(BOOL) pixels;
 - (NSArray*) imageSeriesContainingPixels:(BOOL) pixels includeLocalizersSeries: (BOOL) includeLocalizersSeries;
@@ -114,14 +123,20 @@
 - (void) reapplyAnnotationsFromDICOMSR;
 - (NSComparisonResult) compareName:(DicomStudy*)study;
 - (NSArray*) roiImages;
+- (NSArray*) imagesWithROIs;
 - (NSArray*) allSeries;
 - (NSArray*) generateDICOMSCImagesForKeyImages: (BOOL) keyImages andROIImages: (BOOL) ROIImages;
 - (void) setNSColor:(NSColor *)c;
 - (NSColor*) NSColor;
+- (NSString*) ROIsDescription;
 - (NSString*) type;
 - (NSString*) calledAET; // Match DCMTKQueryNode
 - (NSString*) callingAET; // Match DCMTKQueryNode
 - (NSString *)hostname; // Match DCMTKQueryNode
++ (NSArray*) comparativeStudiesForStudy: (id) studySelectedID;
+- (NSArray*) studiesForThisPatient;
+- (BOOL) hasROIs;
+- (BOOL) hasKeyImages;
 @end
 
 @interface DicomStudy (CoreDataGeneratedAccessors)

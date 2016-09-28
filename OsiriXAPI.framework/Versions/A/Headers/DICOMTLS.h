@@ -22,6 +22,7 @@ typedef enum
 	IgnorePeerCertificate
 } TLSCertificateVerificationType;
 
+#define TLSTESTFILE @"/tmp/OsiriX-DcmTLSTransportLayer"
 #define TLS_SEED_FILE @"/tmp/OsiriXTLSSeed"
 #define TLS_WRITE_SEED_FILE "/tmp/OsiriXTLSSeedWrite"
 #define TLS_PRIVATE_KEY_FILE @"/tmp/TLSKey"
@@ -50,6 +51,7 @@ typedef enum
 + (void) eraseKeys;
 
 #pragma mark Keychain Access
++ (NSString*) opensslSync;
 + (void)generateCertificateAndKeyForLabel:(NSString*)label withStringID:(NSString*)stringID;
 + (void)generateCertificateAndKeyForLabel:(NSString*)label;
 + (void)generateCertificateAndKeyForServerAddress:(NSString*)address port:(int)port AETitle:(NSString*)aetitle withStringID:(NSString*)stringID;

@@ -21,6 +21,7 @@
 - (NSArray*)splitArrayIntoChunksOfMinSize:(NSUInteger)chunkSize maxChunks:(NSUInteger)maxChunks;
 - (id) deepMutableCopy;
 - (NSArray *)arrayByRemovingObject:(id)obj;
+- (NSArray *)reversedArray;
 @end
 
 

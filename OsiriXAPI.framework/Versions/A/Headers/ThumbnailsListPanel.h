@@ -18,7 +18,7 @@
 @interface ThumbnailsListPanel : NSWindowController
 {	
 	NSView                  *thumbnailsView;
-    NSView                  *superView;
+//    NSView                  *superView;
 	long					screen;
 	ViewerController		*viewer;
 	BOOL					dontReenter;

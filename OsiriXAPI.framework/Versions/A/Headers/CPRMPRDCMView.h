@@ -102,14 +102,14 @@ typedef NSInteger CPRMPRDCMViewCPRType;
 - (void) detect2DPointInThisSlice;
 - (void) magicTrick;
 - (void) removeROI: (NSNotification*) note;
-
+- (void) toggleFrameZoom;
 - (void)setCrossCenter:(NSPoint)crossCenter;
 
 - (N3AffineTransform)pixToDicomTransform; // converts points in the DCMPix's coordinate space ("Slice Coordinates") into the DICOM space (patient space with mm units)
 - (N3Plane)plane;
 - (NSString *)planeName;
 - (NSColor *)colorForPlaneName:(NSString *)planeName;
-
+- (void) deleteCurrentCurvedPath;
 @end
 
 

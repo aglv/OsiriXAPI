@@ -35,6 +35,7 @@
 + (NSMenu*) fusionPluginsMenu;
 + (NSArray*) fusionPlugins;
 + (NSImage*) pluginIconForBundle: (NSBundle*) plugin;
++ (NSString*) versionForPath: (NSString*) path;
 
 + (void) startProtectForCrashWithFilter: (id) filter;
 + (void) startProtectForCrashWithPath: (NSString*) path;

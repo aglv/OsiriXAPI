@@ -24,7 +24,7 @@
 }
 @end
 
-@interface PluginManagerController : NSWindowController <NSURLDownloadDelegate>
+@interface PluginManagerController : NSWindowController <NSURLDownloadDelegate, WebPolicyDelegate>
 {
 
     IBOutlet NSMenu	*filtersMenu;

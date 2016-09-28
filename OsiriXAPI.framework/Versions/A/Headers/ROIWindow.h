@@ -41,12 +41,14 @@
 	IBOutlet NSWindow		*recalibrateWindow;
 	IBOutlet NSTextField	*recalibrateValue;
 	
-	NSMutableArray			*roiNames;
+	NSArray			*roiNames;
 	
 	NSTimer					*getName;
 	
 	NSString				*previousName;
 }
+@property (retain) NSArray* roiNames;
+
 - (IBAction)acceptSheet:(id)sender;
 - (IBAction) recalibrate:(id) sender;
 - (IBAction) roiEdit3DROISettings:(id) sender;

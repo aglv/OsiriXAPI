@@ -17,9 +17,10 @@
 #import <Cocoa/Cocoa.h>
 
 /** \brief  Window Controller for network logs */
-@interface LogWindowController : NSWindowController
+@interface LogWindowController : NSWindowController <NSTableViewDelegate>
 {
 	IBOutlet NSArrayController *receive, *move, *send, *web;
+    IBOutlet NSTableView *webTableView;
 }
 
 - (IBAction) export:(id) sender;

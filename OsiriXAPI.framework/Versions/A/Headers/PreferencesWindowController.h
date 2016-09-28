@@ -31,6 +31,7 @@
 	PreferencesWindowContext* currentContext;
 	NSMutableArray* animations;
 	IBOutlet NSView* flippedDocumentView;
+    NSSize paneListSize, windowSize;
 }
 
 @property(readonly) NSMutableArray* animations;

@@ -41,6 +41,7 @@
 }
 
 - (id) init:(NSString*) s;
+- (id) initWithString:(NSString*) str;
 - (BOOL) run;
 - (void) start;
 - (BOOL) started;

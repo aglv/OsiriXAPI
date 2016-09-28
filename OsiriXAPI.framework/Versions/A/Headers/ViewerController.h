@@ -17,6 +17,7 @@
 #import <Cocoa/Cocoa.h>
 #import <AppKit/AppKit.h>
 #import "ROI.h"
+#import "DefaultsOsiriX.h"
 
 @class DCMView;
 @class OpacityTransferView;
@@ -40,6 +41,7 @@
 @class CPRController;
 @class ViewerController;
 @class ToolbarPanelController;
+@class KeyImagesWindowController;
 
 #define ToolsMenuIconSize NSMakeSize(28.0, 28.0)
 
@@ -69,6 +71,7 @@ enum
 	NSConditionLock *flipDataThread, *convThread;
 	NSThread *loadingThread;
     BOOL awakeFromNib, firstBuildMatrix;
+    NSTimeInterval windowInitTime;
 	
     ToolbarPanelController *toolbarPanel;
     
@@ -357,10 +360,21 @@ enum
     long                    numberOfImagesForSeriesAtInit;
     
     BOOL                    willAdjustNSSlider;
+    NSTimeInterval          willAdjustNSSliderTimeInterval;
     BOOL                    movieViewer; // Will contain 4D dataset
+    
+    KeyImagesWindowController *keysCtrl;
+    
+    BOOL preFlipped;
+    
+    NSTimer *autoKeyImageTimer;
+    NSPoint previousMousePosition;
+    NSTimeInterval autoKeyImageChangeImageDataTime;
 }
+@property BOOL preFlipped;
 @property(retain) NSCalendarDate *injectionDateTime;
 @property(readonly) NSSlider *slider;
+@property(readonly) KeyImagesWindowController *keysCtrl;
 @property(readonly) short currentOrientationTool, originalOrientation;
 @property(readonly) NSTimer	*timer;
 @property(readonly) NSButton *keyImageCheck;
@@ -379,6 +393,7 @@ enum
 @property(readonly) ToolbarPanelController *toolbarPanel;
 @property(readonly) NSMatrix *previewMatrix;
 @property(readonly) NSScrollView *previewMatrixScrollView;
+@property(readonly) NSTimeInterval windowInitTime;
 
 /** Return the 'dragged' window, the destination window is contained in the 'viewerController' object of the 'PluginFilter' object */
 @property(nonatomic, retain) ViewerController *blendedWindow;
@@ -395,7 +410,7 @@ enum
 + (ViewerController*) frontMostDisplayed2DViewerForScreen: (NSScreen*) screen;
 + (NSArray*) displayed2DViewerForScreen: (NSScreen*) screen;
 + (void) closeAllWindows;
-+ (NSArray*) poolOf2DViewers;
++ (NSMutableArray*) poolOf2DViewers;
 + (NSArray*) studyColors;
 + (void) clearFrontMost2DViewerCache;
 
@@ -443,6 +458,7 @@ enum
 */
 - (void) waitIncrementBy:(id) waitWindow :(long) val;
 
++ (void) addAutoKeyEvent: (NSString*) event forImage: (DicomImage*) image;
 
 /** End the wait window */
 - (void) endWaitWindow:(id) waitWindow;
@@ -562,8 +578,10 @@ enum
 /** Action to start printing.  Called when print window is ordered out */
 - (IBAction) endPrint:(id) sender;
 
-+ (ToolMode) getToolEquivalentToHotKey:(int) h;
-+ (int) getHotKeyEquivalentToTool:(int) h;
+- (IBAction) copyAllROIsInThisSeries:(id)sender;
+
++ (int) getToolEquivalentToHotKey:(HotKeyActions) h;
++ (int) getHotKeyEquivalentToTool:(ToolMode) h;
 //- (IBAction) startMSRG:(id) sender;
 //- (IBAction) startMSRGWithAutomaticBounding:(id) sender;
 //arg: this function will automatically scan the buffer to create a textured ROI (tPlain) for all slices
@@ -585,7 +603,8 @@ enum
 - (IBAction) setButtonTool:(id) sender;
 - (IBAction) shutterOnOff:(id) sender;
 - (void) setImageIndex:(long) i;
-- (void) setImage:(NSManagedObject*) image;
+- (void) setImage:(DicomImage*) image;
+- (void) setPix:(DCMPix*) pix;
 - (long) imageIndex;
 - (IBAction) editSUVinjectionTime:(id)sender;
 - (IBAction) ok:(id)sender;
@@ -630,11 +649,13 @@ enum
 - (void) contextualDictionaryPath:(NSString *)newContextualDictionaryPath;
 - (NSString *) contextualDictionaryPath;
 - (void) contextualMenuEvent:(id)sender;
-- (void) loadSelectedSeries: (id) series rightClick: (BOOL) rightClick;
+- (ViewerController*) loadSelectedSeries: (id) series rightClick: (BOOL) rightClick;
 - (IBAction) setAxialOrientation:(id) sender;
 - (IBAction) reSyncOrigin:(id) sender;
 - (void) loadROI:(long) mIndex;
 - (void) saveROI:(long) mIndex;
+- (void) saveROI;
+- (IBAction) roiCopyInfo:(NSMenuItem*) menuItem;
 - (void) setMatrixVisible: (BOOL) visible;
 - (BOOL) matrixIsVisible;
 - (id) findPlayStopButton;
@@ -669,10 +690,12 @@ enum
 - (id) viewCinit:(NSMutableArray*)f :(NSMutableArray*) d :(NSData*) v;
 - (id) initWithPix:(NSMutableArray*)f withFiles:(NSMutableArray*) d withVolume:(NSData*) v;
 - (id) initWithPix:(NSMutableArray*)f withFiles:(NSMutableArray*)d withVolume:(NSData*) v movie:(BOOL) movie;
+- (id) initWithPix:(NSMutableArray*)f withFiles:(NSMutableArray*)d withVolume:(NSData*) v movie:(BOOL) movie preFlipped: (BOOL) preFlipped;
 - (void) speedSliderAction:(id) sender;
 - (void) setupToolbar;
 - (NSToolbar*) toolbar;
 - (void) PlayStop:(id) sender;
+- (void) performAnimationIfPlaying;
 - (short) getNumberOfImages;
 - (float) frameRate;
 - (void) adjustSlider;
@@ -831,6 +854,7 @@ enum
 - (DicomStudy *)currentStudy;
 - (DicomSeries *)currentSeries;
 - (DicomImage *)currentImage;
+- (DicomImage *)imageAtIndex: (NSUInteger) i;
 
 - (NSArray*)roisWithName:(NSString*)name;
 - (NSArray*)roisWithName:(NSString*)name in4D:(BOOL)in4D;
@@ -845,6 +869,8 @@ enum
 - (void)setWindowFrame:(NSRect)rect;
 - (void)setWindowFrame:(NSRect)rect showWindow:(BOOL) showWindow;
 - (void)setWindowFrame:(NSRect)rect showWindow:(BOOL) showWindow animate: (BOOL) animate;
+
+- (BOOL) goToPrevious: (BOOL) previous ROIsImage: (BOOL) ROIsImage keyImage: (BOOL) keyImage inStudy: (BOOL) study loop: (BOOL) loop;
 
 - (void) revertSeries:(id) sender;
 - (void) executeRevert;

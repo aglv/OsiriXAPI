@@ -18,6 +18,7 @@
 
 @interface NSFileManager (N2)
 
+-(BOOL) testWritingPermission:(NSString*) path error: (NSError**) error;
 -(void) moveItemAtPathToTrash: (NSString*) path;
 -(NSString*)findSystemFolderOfType:(int)folderType forDomain:(int)domain;
 -(NSString*)userApplicationSupportFolderForApp;
@@ -31,6 +32,8 @@
 -(BOOL)copyItemAtPath:(NSString*)srcPath toPath:(NSString*)dstPath byReplacingExisting:(BOOL)replace error:(NSError**)err;
 
 -(BOOL)applyFileModeOfParentToItemAtPath:(NSString*)path;
+
+-(NSArray*)filesWithExtension: (NSString*) extension inDirectory: (NSString*) directory;
 
 -(NSString*)destinationOfAliasAtPath:(NSString*)path;
 -(NSString*)destinationOfAliasOrSymlinkAtPath:(NSString*)path;

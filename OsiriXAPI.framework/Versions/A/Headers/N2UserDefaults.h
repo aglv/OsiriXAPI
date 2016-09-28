@@ -55,4 +55,5 @@
 -(NSRect)rectForKey:(NSString*)key default:(NSRect)def __deprecated;
 -(void)setRect:(NSRect)value forKey:(NSString*)key __deprecated;
 
++ (void) setGlobalPreferencesForKey: (NSString*) key value: (NSString*) value;
 @end

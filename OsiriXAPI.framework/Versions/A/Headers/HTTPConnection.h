@@ -37,6 +37,7 @@
 	
 	NSMutableArray *responseDataSizes;
 }
++(NSString*) countryForIP: (NSString*) ip;
 
 - (id)initWithAsyncSocket:(AsyncSocket *)newSocket forServer:(HTTPServer *)myServer;
 

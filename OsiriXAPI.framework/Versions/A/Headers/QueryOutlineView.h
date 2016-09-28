@@ -13,9 +13,9 @@
 =========================================================================*/
 
 #import <Cocoa/Cocoa.h>
+#import "OSIOutlineView.h"
 
-
-@interface QueryOutlineView : NSOutlineView {
+@interface QueryOutlineView : OSIOutlineView {
     BOOL dragging;
 }
 
