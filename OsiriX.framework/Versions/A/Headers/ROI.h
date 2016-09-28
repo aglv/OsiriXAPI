@@ -189,7 +189,7 @@ typedef enum ToolMode_
 	
 	float			offsetTextBox_x, offsetTextBox_y;
 	
-	NSString		*textualBoxLine1, *textualBoxLine2, *textualBoxLine3, *textualBoxLine4, *textualBoxLine5, *textualBoxLine6, *textualBoxLine7, *textualBoxLine8, *textualBoxLine9;
+	NSString		*textualBoxLine1, *textualBoxLine2, *textualBoxLine3, *textualBoxLine4, *textualBoxLine5, *textualBoxLine6, *textualBoxLine7, *textualBoxLine8, *textualBoxLine9, *textualBoxLine10;
 	
 	BOOL			_displayCalciumScoring;
 	int				_calciumThreshold;
@@ -238,7 +238,7 @@ typedef enum ToolMode_
 @property(nonatomic) BOOL hidden, locked, selectable, is3DROI;
 @property BOOL isAliased, displayCMOrPixels, mouseOverROI;
 @property(nonatomic, copy) NSString *name;
-@property(retain) NSString *comments;
+@property(retain,nonatomic) NSString *comments;
 @property ToolMode type;
 @property(nonatomic, setter=setROIMode:) ROI_mode ROImode;
 @property(retain) NSMutableArray *points; // Return/set the points state of the ROI
@@ -258,6 +258,7 @@ typedef enum ToolMode_
 @property(assign) NSColor* NSColor;
 @property(assign) BOOL isSpline;
 @property(readonly) NSMutableDictionary *peakValue, *isoContour;
+@property float offsetTextBox_x, offsetTextBox_y;
 
 - (void) setNSColor:(NSColor*)color globally:(BOOL)g;
 - (void) setColor:(RGBColor) a globally: (BOOL) g;
@@ -465,6 +466,9 @@ typedef enum ToolMode_
 + (NSString*) stringTypeForROI: (int) i;
 - (NSString*) niceDescription;
 
+- (void) applySettingsToParent;
+- (void) applySettingsFromParent;
+- (BOOL) isIdenticalTo:(ROI*) otherROI;
 - (BOOL) isInside: (int*) pixelCoordinates;
 - (BOOL) isInside: (int*) pixelCoordinates :(float) sliceInterval;
 - (BOOL) containBallROI: (DCMView*) view pixelCoordinates: (double*) pixelCoordinates radius: (double*) radius;
@@ -527,7 +531,7 @@ typedef enum ToolMode_
 - (NSPoint)rotatePoint:(NSPoint)point withAngle:(float)alpha aroundCenter:(NSPoint)center;
 - (void) displayPointUnderMouse:(NSPoint) pt :(float) offsetx :(float) offsety :(float) scale;
 
-@property(retain) NSString *textualBoxLine1, *textualBoxLine2, *textualBoxLine3, *textualBoxLine4, *textualBoxLine5, *textualBoxLine6, *textualBoxLine7, *textualBoxLine8, *textualBoxLine9;
+@property(retain) NSString *textualBoxLine1, *textualBoxLine2, *textualBoxLine3, *textualBoxLine4, *textualBoxLine5, *textualBoxLine6, *textualBoxLine7, *textualBoxLine8, *textualBoxLine9, *textualBoxLine10;
 - (NSArray*) textualBoxLines;
 
 @property NSTimeInterval groupID;

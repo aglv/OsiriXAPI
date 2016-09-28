@@ -26,7 +26,11 @@
 	NSString *cachedModalites, *cacheYearOldAcquisition, *cacheYearOld;
     NSColor *cachedColor;
     NSArray *cachedPresentationStates;
+    NSArray *cacheROIs;
+    NSManagedObject *cachedROISRSeries;
+    NSSet *cacheKeyImages;
     BOOL reentry;
+    int hasKeyImages, hasROIs;
 }
 
 @property(nonatomic, retain) NSString* accessionNumber;
@@ -119,6 +123,7 @@
 - (void) reapplyAnnotationsFromDICOMSR;
 - (NSComparisonResult) compareName:(DicomStudy*)study;
 - (NSArray*) roiImages;
+- (NSArray*) imagesWithROIs;
 - (NSArray*) allSeries;
 - (NSArray*) generateDICOMSCImagesForKeyImages: (BOOL) keyImages andROIImages: (BOOL) ROIImages;
 - (void) setNSColor:(NSColor *)c;
@@ -130,6 +135,8 @@
 - (NSString *)hostname; // Match DCMTKQueryNode
 + (NSArray*) comparativeStudiesForStudy: (id) studySelectedID;
 - (NSArray*) studiesForThisPatient;
+- (BOOL) hasROIs;
+- (BOOL) hasKeyImages;
 @end
 
 @interface DicomStudy (CoreDataGeneratedAccessors)

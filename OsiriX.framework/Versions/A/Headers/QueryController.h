@@ -176,7 +176,8 @@ enum
 - (void) clearQuery:(id)sender;
 - (int) dicomEcho:(NSDictionary*) aServer;
 - (IBAction) verify:(id)sender;
-- (void) refresh: (id) sender;
+//- (void) refresh: (id) sender;
+//- (void) executeRefresh: (id) sender;
 - (IBAction) pressButtons:(id) sender;
 - (NSArray*) localSeries:(id) item;
 - (NSArray*) localStudy:(id) item;
@@ -190,7 +191,6 @@ enum
 - (void) displayAndRetrieveQueryResults: (NSDictionary*) instance;
 - (void) autoQueryThread:(NSDictionary*) d;
 - (void) autoQueryTimerFunction:(NSTimer*) t;
-- (void) executeRefresh: (id) sender;
 - (void)view:(NSView*)view recursiveBindEnableToObject:(id)obj withKeyPath:(NSString*)keyPath;
 - (void) pressStateCellForRow: (int) clickedRow column: (int) clickedColumn event: (NSEvent*) event;
 @end

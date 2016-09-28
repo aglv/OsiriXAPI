@@ -13,6 +13,7 @@
 =========================================================================*/
 
 #import <Cocoa/Cocoa.h>
+#import "DCMView.h"
 
 NSString* sopInstanceUIDDecode( unsigned char *r, int length);
 void* sopInstanceUIDEncode( NSString *sopuid);
@@ -101,11 +102,13 @@ void* sopInstanceUIDEncode( NSString *sopuid);
 - (void) setInDatabaseFolder:(NSNumber*) f;
 - (NSString*) path;
 - (void) setPath:(NSString*) p;
+- (NSImage*) imageAsScreenCapture:(NSRect)frame annotationsLevel: (annotationsLevel) annotationsLevel;
 - (NSImage*) imageAsScreenCapture:(NSRect)frame;
 - (NSImage*) imageAsScreenCapture;
 - (NSDictionary*) imageAsDICOMScreenCapture:(DICOMExport*) exporter;
 - (NSDictionary*) imageAsDICOMScreenCapture:(DICOMExport*) exporter exporterForRGB: (DICOMExport*) exporterRGB;
 - (NSArray*) ROIsDescription;
+- (NSArray*) ROIs;
 - (NSImage*) thumbnailIfAlreadyAvailable;
 - (void) setThumbnail:(NSImage*)image;
 - (NSString*) completePathWithDownload:(BOOL) download supportNonLocalDatabase: (BOOL) supportNonLocalDatabase;

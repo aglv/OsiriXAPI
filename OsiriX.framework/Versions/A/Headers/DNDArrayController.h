@@ -10,7 +10,11 @@
 	IBOutlet SFAuthorizationView	*_authView;
 	
 	NSTableColumn *sortedColumn;
+    
+    BOOL dontAcceptFirstRowChange;
 }
+
+@property BOOL dontAcceptFirstRowChange;
 
 // table view drag and drop support
 

@@ -141,6 +141,7 @@ extern AppController* OsiriX;
     
     long updateTotalData, updateReceivedData;
     NSMutableData *updateData;
+    id appNapActivity;
     
     // DICOM Definition parser
     BOOL getCurrentModule;
@@ -156,6 +157,7 @@ extern AppController* OsiriX;
 @property(readonly) XMLRPCInterface *XMLRPCServer;
 @property(readonly) BonjourPublisher* bonjourPublisher;
 @property(readonly) int lastColumns, lastRows, lastCount;
+@property(retain) id appNapActivity;
 
 + (BOOL) isFDACleared;
 + (BOOL) willExecutePlugin;
@@ -165,6 +167,7 @@ extern AppController* OsiriX;
 + (BOOL) hasMacOSXLeopard;
 + (BOOL) hasOSXElCapitan;
 + (BOOL) hasOSXYosemite;
++ (BOOL) hasMacOSSierra;
 + (BOOL) isOSXYosemite;
 + (int) isUnsupportedOS;
 + (BOOL) hasMacOSXMaverick;

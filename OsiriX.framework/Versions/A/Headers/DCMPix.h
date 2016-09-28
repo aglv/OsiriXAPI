@@ -85,6 +85,10 @@ extern "C"
     double				pixelSpacingX, pixelSpacingY, pixelRatio, estimatedRadiographicMagnificationFactor;
 	BOOL				pixelSpacingFromUltrasoundRegions;
 
+// RT DOSE
+    double              doseGridScaling;
+    NSString            *doseUnit, *doseType;
+    
 //	photointerpretation
 	BOOL				isRGB, inverseVal;
 
@@ -270,7 +274,8 @@ Note setter is different to not break existing usage. :-( */
 @property(readonly) short stack, stackMode;
 @property BOOL generated;
 @property(retain) NSString *generatedName;
-@property(retain) NSString *sourceFile;
+@property(retain) NSString *sourceFile, *doseUnit, *doseType;
+@property double doseGridScaling;
 
 @property(readonly) NSArray *VOILUT_tables;
 

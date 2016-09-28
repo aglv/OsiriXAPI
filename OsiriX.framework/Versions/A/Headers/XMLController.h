@@ -58,6 +58,7 @@
 	
 	BOOL						dontListenToIndexChange;
     NSMutableArray              *modificationsToApplyArray, *modifiedFields, *modifiedValues;
+    NSMutableDictionary         *cache;
     
     DICOMFieldMenu *DICOMField;
     NSString *addDICOMFieldTextField;

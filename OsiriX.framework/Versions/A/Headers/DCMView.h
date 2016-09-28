@@ -35,9 +35,9 @@ extern NSString *pasteBoardOsiriXPlugin;
 extern NSString *OsirixPluginPboardUTI;
 extern int CLUTBARS, ANNOTATIONS, SOFTWAREINTERPOLATION_MAX, DISPLAYCROSSREFERENCELINES;
 
-enum { annotNone = 0, annotGraphics, annotBase, annotFull };
-enum { barHide = 0, barOrigin, barFused, barBoth };
-enum { syncroOFF = 0, syncroABS = 1, syncroREL = 2, syncroLOC = 3, syncroRatio = 4};
+typedef enum { annotNone = 0, annotGraphics, annotBase, annotFull} annotationsLevel;
+typedef enum { barHide = 0, barOrigin, barFused, barBoth} CLUTBarMode;
+typedef enum { syncroOFF = 0, syncroABS = 1, syncroREL = 2, syncroLOC = 3, syncroRatio = 4} SyncMode;
 
 typedef enum {DCMViewTextAlignLeft, DCMViewTextAlignCenter, DCMViewTextAlignRight} DCMViewTextAlign;
 typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 3} InterpolationMode;
@@ -50,6 +50,7 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
 @class DICOMExport;
 @class DicomImage, DicomSeries, DicomStudy;
 @class DCMObject;
+@class ViewerController;
 
 @interface DCMExportPlugin: NSObject
 - (void) finalize:(DCMObject*) dcmDst withSourceObject:(DCMObject*) dcmObject;
@@ -203,7 +204,6 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
 	
 	GLString		*showDescriptionInLargeText, *warningNotice, *flippedNotice;
     float           previousScalingFactor;
-	
 	//Context for rendering to iChat
 //	NSOpenGLContext *_alternateContext;
 	
@@ -272,7 +272,7 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
     
     GLString *studyDateBox;
     
-    int annotationType;
+    annotationsLevel annotationType;
     
     NSArray *cleanedOutDcmPixArray;
     
@@ -319,14 +319,15 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
 @property (readonly) BOOL volumicSeries;
 @property (nonatomic) NSTimeInterval timeIntervalForDrag;
 @property(readonly) BOOL isKeyView, mouseDragging;
-@property int annotationType;
+@property annotationsLevel annotationType;
 @property(readonly) int volumicData;
 
++ (CGFloat) getDeltaY: (CGFloat) deltaY event: (NSEvent*) theEvent;
 + (void) setDontListenToSyncMessage: (BOOL) v;
 + (BOOL) noPropagateSettingsInSeriesForModality: (DicomImage*) imageObj;
 + (void) purgeStringTextureCache;
 + (void) setDefaults;
-+ (void) setCLUTBARS:(int) c ANNOTATIONS:(int) a;
++ (void) setCLUTBARS:(CLUTBarMode) c ANNOTATIONS:(annotationsLevel) a;
 + (void)setPluginOverridesMouse: (BOOL)override DEPRECATED_ATTRIBUTE;
 + (void) computePETBlendingCLUT;
 + (NSString*) findWLWWPreset: (float) wl :(float) ww :(DCMPix*) pix;
@@ -495,6 +496,7 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
 - (void) roiLoadFromFilesArray: (NSArray*) filenames;
 - (id)windowController;
 - (BOOL)is2DViewer;
+- (ViewerController*) viewer;
 - (NSPoint) positionWithoutRotation: (NSPoint) tPt;
 - (IBAction)realSize:(id)sender;
 - (IBAction)scaleToFit:(id)sender;

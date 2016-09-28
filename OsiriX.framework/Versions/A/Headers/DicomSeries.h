@@ -14,6 +14,7 @@
 
 
 #import <Cocoa/Cocoa.h>
+#import "DCMView.h"
 
 #define THUMBNAILSIZE 160
 
@@ -25,6 +26,8 @@
 {
 	NSNumber	*dicomTime;
     NSImage     *thumbnailImage;
+    NSArray     *imagesWithROIsCache;
+    int         hasKeyImages, hasROIs;
 }
 
 @property(nonatomic, retain, readonly) NSNumber* dicomTime;
@@ -76,6 +79,15 @@
 - (NSString*) type;
 - (NSImage*) thumbnailImage;
 - (NSString*) ROIsDescription;
+- (NSArray*) imagesWithROIs;
+- (void) purgeCaches;
+- (NSArray*) imagesAsScreenCapture;
+- (NSArray*) imagesAsScreenCapture:(NSRect)frame;
+- (NSArray*) imagesAsScreenCapture:(NSRect)frame dicomImages:(NSArray*) dcmImages;
+- (NSArray*) imagesAsScreenCapture:(NSRect)frame dicomImages:(NSArray*) dcmImages annotationsLevel: (annotationsLevel) annotationsLevel;
++ (NSRect) frameForImageAsScreenCapture;
+- (BOOL) hasROIs;
+- (BOOL) hasKeyImages;
 @end
 
 @interface DicomSeries (CoreDataGeneratedAccessors)

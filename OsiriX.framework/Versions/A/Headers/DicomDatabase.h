@@ -128,6 +128,7 @@ extern NSString* const DicomDatabaseLogEntryEntityName;
 -(void) loadAlbumsFromPath:(NSString*) path;
 -(void) addStudies:(NSArray*)dicomStudies toAlbum:(DicomAlbum*)dicomAlbum;
 -(NSArray*) reindexObjects: (NSArray*) objects;
+-(void) turnImagesAndSeriesIntoFault;
 
 #pragma mark Add files
 -(NSArray*)addFilesAtPaths:(NSArray*)paths;

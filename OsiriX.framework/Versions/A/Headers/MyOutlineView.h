@@ -14,10 +14,11 @@
 =========================================================================*/
 
 
-
 #import <Cocoa/Cocoa.h>
+#import "OSIOutlineView.h"
+
 /** \brief OutlineView for BrowserController */
-@interface MyOutlineView : NSOutlineView
+@interface MyOutlineView : OSIOutlineView
 {
 }
 

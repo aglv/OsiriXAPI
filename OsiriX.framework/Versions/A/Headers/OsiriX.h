@@ -3621,6 +3621,7 @@
 #include <OsiriXAPI/CalciumScoringWindowController.h>
 #include <OsiriXAPI/Camera.h>
 #include <OsiriXAPI/Centerline.h>
+#include <OsiriXAPI/CGSPrivate.h>
 #include <OsiriXAPI/CLUTOpacityView.h>
 #include <OsiriXAPI/ColorTransferView.h>
 #include <OsiriXAPI/ColorView.h>
@@ -3730,6 +3731,10 @@
 #include <OsiriXAPI/ITKSegmentation3DController.h>
 #include <OsiriXAPI/ITKTransform.h>
 #include <OsiriXAPI/JPEGExif.h>
+#include <OsiriXAPI/KeyImagesButtonCell.h>
+#include <OsiriXAPI/KeyImagesScrollView.h>
+#include <OsiriXAPI/KeyImagesWindow.h>
+#include <OsiriXAPI/KeyImagesWindowController.h>
 #include <OsiriXAPI/KeyObjectController.h>
 #include <OsiriXAPI/KeyObjectPopupController.h>
 #include <OsiriXAPI/KeyObjectReport.h>
@@ -3801,6 +3806,7 @@
 #include <OsiriXAPI/OSIFloatVolumeData.h>
 #include <OsiriXAPI/OSIGeometry.h>
 #include <OsiriXAPI/OSIMaskROI.h>
+#include <OsiriXAPI/OSIOutlineView.h>
 #include <OsiriXAPI/OSIPathExtrusionROI.h>
 #include <OsiriXAPI/OSIPathROI.h>
 #include <OsiriXAPI/OSIPlanarBrushROI.h>

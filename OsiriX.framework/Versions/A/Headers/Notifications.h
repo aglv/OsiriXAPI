@@ -14,8 +14,10 @@
 
 #import <Cocoa/Cocoa.h>
 
+extern NSString* const OsirixViewerControllerPreviewMatrixRebuild;
 extern NSString* const OsirixUpdateWLWWMenuNotification;
 extern NSString* const OsirixChangeWLWWNotification;
+extern NSString* const OsirixROICreateNotification;
 extern NSString* const OsirixROIChangeNotification;
 extern NSString* const OsirixCloseViewerNotification;
 extern NSString* const OsirixUpdate2dCLUTMenuNotification;
