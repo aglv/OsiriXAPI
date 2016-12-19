@@ -83,7 +83,7 @@ extern "C"
 //	planar configuration
 	long				planarConf;
     double				pixelSpacingX, pixelSpacingY, pixelRatio, estimatedRadiographicMagnificationFactor;
-	BOOL				pixelSpacingFromUltrasoundRegions;
+	BOOL				pixelSpacingFromUltrasoundRegions, dontCorrectMagnification;
 
 // RT DOSE
     double              doseGridScaling;
@@ -484,6 +484,7 @@ Note setter is different to not break existing usage. :-( */
 - (long) maskID;
 - (void) maskTime:(float)newMaskTime;
 - (float) maskTime;
+- (void) convertExternalOwnedtoSelfOwned;
 - (BOOL) hasOrientation;
 - (void) getDataFromNSImage:(NSImage*) otherImage;
 - (NSPoint) originDeltaWith:(DCMPix*) pix1;
@@ -638,7 +639,7 @@ Note setter is different to not break existing usage. :-( */
 
 /** Sets the ThickSlabController */
 - (void) setThickSlabController:( ThickSlabController*) ts;
-
+- (ThickSlabController*) thickSlabController;
 
 /** Sets the fixed8bitsWLWW flag */
 - (void) setFixed8bitsWLWW:(BOOL) f;

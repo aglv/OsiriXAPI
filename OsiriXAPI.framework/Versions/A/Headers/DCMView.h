@@ -91,7 +91,7 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
 	
 	float			mprVector[ 3], mprPoint[ 3];
     
-    NSTimeInterval  timeIntervalForDrag;
+    NSTimeInterval  timeIntervalForDrag, mouseDownStart;
 	
 	short			thickSlabMode, thickSlabStacks;
 	
@@ -105,7 +105,7 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
 	
     char            listType;
     
-    short           curImage, startImage;
+    short           curImage, startImage, previousRGB;
     
     ToolMode        currentTool, currentToolRight, currentMouseEventTool;
     
@@ -202,7 +202,7 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
 	
 	BOOL			scaleToFitNoReentry;
 	
-	GLString		*showDescriptionInLargeText, *warningNotice, *flippedNotice;
+	GLString		*showDescriptionInLargeText, *flippedNotice;
     float           previousScalingFactor;
 	//Context for rendering to iChat
 //	NSOpenGLContext *_alternateContext;

@@ -34,6 +34,7 @@
 -(void)processStudyHtml: (NSString*) xid;
 -(void)processPasswordForgottenHtml;
 -(void)processAccountHtml;
+-(void)processClearCaches;
 
 -(void)processAdminIndexHtml;
 -(void)processAdminUserHtml;

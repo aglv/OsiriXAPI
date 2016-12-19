@@ -329,7 +329,7 @@ ASC_printRejectParameters(
 
 void 
 ASC_printRejectParameters(
-    ostream &out, 
+    std::ostream &out, 
     T_ASC_RejectParameters *rej);
 
 OFCondition 
@@ -414,13 +414,13 @@ OFCondition
 ASC_setTransportLayer(T_ASC_Network *network, DcmTransportLayer *newLayer, int takeoverOwnership);
 
 void 
-ASC_dumpParameters(T_ASC_Parameters * params, ostream& outstream);
+ASC_dumpParameters(T_ASC_Parameters * params, std::ostream& outstream);
 
 void 
-ASC_dumpPresentationContext(T_ASC_PresentationContext * presentationContext, ostream& outstream);
+ASC_dumpPresentationContext(T_ASC_PresentationContext * presentationContext, std::ostream& outstream);
 
 void
-ASC_dumpConnectionParameters(T_ASC_Association *association, ostream& outstream);
+ASC_dumpConnectionParameters(T_ASC_Association *association, std::ostream& outstream);
 
 void ASC_activateCallback(T_ASC_Parameters *params, DUL_ModeCallback *cb);
 

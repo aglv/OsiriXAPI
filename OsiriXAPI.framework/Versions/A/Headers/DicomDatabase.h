@@ -103,6 +103,7 @@ extern NSString* const DicomDatabaseLogEntryEntityName;
 // these paths are inside dataBaseDirPath
 -(NSString*)dataDirPath;
 -(NSString*)incomingDirPath;
+-(NSString*)uniqueDcmFileInIncomingDirPath;
 -(NSString*)errorsDirPath;
 -(NSString*)decompressionDirPath;
 -(NSString*)toBeIndexedDirPath;
@@ -144,6 +145,7 @@ extern NSString* const DicomDatabaseLogEntryEntityName;
 -(NSArray*)addFilesDescribedInDictionaries:(NSArray*)dicomFilesArray postNotifications:(BOOL)postNotifications rereadExistingItems:(BOOL)rereadExistingItems generatedByOsiriX:(BOOL)generatedByOsiriX importedFiles: (BOOL) importedFiles returnArray: (BOOL) returnArray;
 -(NSArray*)addFilesAtPaths:(NSArray*)paths postNotifications:(BOOL)postNotifications dicomOnly:(BOOL)dicomOnly rereadExistingItems:(BOOL)rereadExistingItems generatedByOsiriX:(BOOL)generatedByOsiriX importedFiles: (BOOL) importedFiles returnArray: (BOOL) returnArray dicomFileDictionary: (NSArray*) dicomFilesArray;
 #pragma mark Incoming
++(BOOL)checkIfFileSystemFreeSizeLimitReachedAtPath: (NSString*) path;
 -(BOOL)checkIfFileSystemFreeSizeLimitReached;
 -(BOOL) hasFilesToImport;
 -(NSInteger)importFilesFromIncomingDir;

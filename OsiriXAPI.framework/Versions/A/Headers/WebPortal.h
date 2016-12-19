@@ -100,6 +100,7 @@
 -(void)deleteSessionId:(NSString*)sid;
 -(WebPortalSession*)sessionForId:(NSString*)sid;
 -(WebPortalSession*)sessionForUsername:(NSString*)username token:(NSString*)token;
+-(void)clearSessions;
 -(id)sessionForUsername:(NSString*)username token:(NSString*)token doConsume: (BOOL) doConsume;
 
 -(NSString*)URL;

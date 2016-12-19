@@ -60,7 +60,7 @@
 -(void)splitStringAtCharacterFromSet:(NSCharacterSet*)charset intoChunks:(NSString**)part1 :(NSString**)part2 separator:(unichar*)separator;
 
 -(NSString*)md5;
-
+-(NSString*)sha1;
 @end
 
 @interface NSAttributedString (N2)

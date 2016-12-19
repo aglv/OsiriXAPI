@@ -101,7 +101,13 @@
 @interface N2ManagedObjectContext : NSManagedObjectContext {
     
 	N2ManagedDatabase* _database;
+    NSString *allocatedByStack;
 }
 
 @property(readonly) N2ManagedDatabase* database;
+@property(readonly) NSString *allocatedByStack;
+
++ (int) dicomManagedObjectContextCounter;
++ (int) webManagedObjectContextCounter;
 @end
+

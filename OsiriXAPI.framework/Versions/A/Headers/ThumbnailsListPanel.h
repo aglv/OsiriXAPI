@@ -17,7 +17,7 @@
 
 @interface ThumbnailsListPanel : NSWindowController
 {	
-	NSView                  *thumbnailsView;
+	NSScrollView            *thumbnailsView;
 //    NSView                  *superView;
 	long					screen;
 	ViewerController		*viewer;
@@ -27,8 +27,8 @@
 @property (readonly) ViewerController *viewer;
 
 + (long) fixedWidth;
-- (void) setThumbnailsView :(NSView*) tb viewer:(ViewerController*) v;
-- (void) thumbnailsListWillClose :(NSView*) tb;
+- (void) setThumbnailsView :(NSScrollView*) tb viewer:(ViewerController*) v;
+- (void) thumbnailsListWillClose :(NSScrollView*) tb;
 - (id)initForScreen: (long) s;
 - (NSView*) thumbnailsView;
 + (void) checkScreenParameters;

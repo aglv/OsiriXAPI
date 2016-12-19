@@ -30,7 +30,6 @@
     NSManagedObject *cachedROISRSeries;
     NSSet *cacheKeyImages;
     BOOL reentry;
-    int hasKeyImages, hasROIs;
 }
 
 @property(nonatomic, retain) NSString* accessionNumber;
@@ -47,6 +46,8 @@
 @property(nonatomic, retain) NSString* dictateURL;
 @property(nonatomic, retain) NSNumber* expanded;
 @property(nonatomic, retain) NSNumber* hasDICOM;
+@property(nonatomic, retain) NSNumber* hasKeyImages;
+@property(nonatomic, retain) NSNumber* hasROIs;
 @property(nonatomic, retain) NSString* id;
 @property(nonatomic, retain) NSString* institutionName;
 @property(nonatomic, retain) NSNumber* lockedStudy;
@@ -135,8 +136,8 @@
 - (NSString *)hostname; // Match DCMTKQueryNode
 + (NSArray*) comparativeStudiesForStudy: (id) studySelectedID;
 - (NSArray*) studiesForThisPatient;
-- (BOOL) hasROIs;
-- (BOOL) hasKeyImages;
+- (BOOL) computeHasROIs;
+- (BOOL) computeHasKeyImages;
 @end
 
 @interface DicomStudy (CoreDataGeneratedAccessors)

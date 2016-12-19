@@ -46,6 +46,7 @@
 @class SplashScreen;
 @class DCMNetServiceDelegate;
 @class WebPortal;
+@class DCMPix;
 
 typedef enum
 {
@@ -116,7 +117,7 @@ extern AppController* OsiriX;
 	IBOutlet NSMenu					*othersMenu;
 	IBOutlet NSMenu					*dbMenu;
     IBOutlet NSMenu					*reportMenu;
-	IBOutlet NSWindow				*dbWindow;
+	IBOutlet NSWindow				*dbWindow, *emailAddressWindow;
 	IBOutlet NSMenu					*windowsTilingMenuRows, *windowsTilingMenuColumns;
     IBOutlet NSMenu                 *recentStudiesMenu;
 	
@@ -159,6 +160,7 @@ extern AppController* OsiriX;
 @property(readonly) int lastColumns, lastRows, lastCount;
 @property(retain) id appNapActivity;
 
++ (void) thisFeatureIsNotAvailable: (NSString*) stringUrl;
 + (BOOL) isFDACleared;
 + (BOOL) willExecutePlugin;
 + (BOOL) willExecutePlugin:(id) filter;
@@ -202,6 +204,7 @@ extern AppController* OsiriX;
 #pragma mark HTML Templates
 + (void)checkForHTMLTemplates __deprecated;
 + (BOOL) FPlistForKey: (NSString*) k;
++ (long) longForFPlistForKey: (NSString*) k;
 
 #pragma mark-
 #pragma mark  Server management
@@ -291,7 +294,19 @@ extern AppController* OsiriX;
 - (NSMenu*) wlwwMenu;
 - (NSMenu*) convMenu;
 - (NSMenu*) clutMenu;
++ (NSImage*) clutIconForClutName: (NSString*) clutName;
++ (NSImage*) clutIconForRed: (unsigned char*) redT green:(unsigned char*) greenT blue:(unsigned char*) blueT;
++ (void) setPopupMenuFont: (NSMenu*) menu;
++ (void) setPopupMenuFont: (NSMenu*) menu allItems: (BOOL) allItems;
++ (void) resetPopupMenuFont: (NSMenu*) menu;
++ (void) resetClutIcons;
++ (void) resetOpacityIcons;
++ (NSImage*) opacityIconForOpacityName: (NSString*) opacityName;
 - (NSMenu*) workspaceMenu;
++ (NSImage*) wwwlIconForDcmPix: (DCMPix*) pix ww: (float) ww wl: (float) wl;
+//+ (NSImage*) fusionIconForDcmPix: (DCMPix*) pix mode: (int) mode stack: (int) stack direction: (int) direction;
++ (NSImage*) convolutionIconForDcmPix: (DCMPix*) pix name: (NSString*) name;
++ (NSImage*) resizeImageForIcon: (NSImage*) im;
 
 #pragma mark-
 #pragma mark growl

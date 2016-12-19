@@ -24,6 +24,7 @@
     N2ConnectionListener* _listener;
 	
     NSNetService* _bonjour;
+    BOOL published;
     
 	NSLock* dicomSendLock;
 }

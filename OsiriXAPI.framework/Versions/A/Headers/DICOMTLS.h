@@ -22,12 +22,12 @@ typedef enum
 	IgnorePeerCertificate
 } TLSCertificateVerificationType;
 
-#define TLSTESTFILE @"/tmp/OsiriX-DcmTLSTransportLayer"
-#define TLS_SEED_FILE @"/tmp/OsiriXTLSSeed"
-#define TLS_WRITE_SEED_FILE "/tmp/OsiriXTLSSeedWrite"
-#define TLS_PRIVATE_KEY_FILE @"/tmp/TLSKey"
-#define TLS_CERTIFICATE_FILE @"/tmp/TLSCert"
-#define TLS_TRUSTED_CERTIFICATES_DIR @"/tmp/TLSTrustedCert" 
+#define TLSTESTFILE @"/private/tmp/OsiriX-DcmTLSTransportLayer"
+#define TLS_SEED_FILE @"/private/tmp/OsiriXTLSSeed"
+#define TLS_WRITE_SEED_FILE "/private/tmp/OsiriXTLSSeedWrite"
+#define TLS_PRIVATE_KEY_FILE @"/private/tmp/TLSKey"
+#define TLS_CERTIFICATE_FILE @"/private/tmp/TLSCert"
+#define TLS_TRUSTED_CERTIFICATES_DIR @"/private/tmp/TLSTrustedCert" 
 #define TLS_KEYCHAIN_IDENTITY_NAME_CLIENT @"com.osirixviewer.dicomtlsclient"
 #define TLS_KEYCHAIN_IDENTITY_NAME_SERVER @"com.osirixviewer.dicomtlsserver"
 

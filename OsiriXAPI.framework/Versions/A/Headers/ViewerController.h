@@ -65,7 +65,7 @@ enum
 
 /** \brief Window Controller for 2D Viewer*/
 
-@interface ViewerController : OSIWindowController  <NSWindowDelegate, NSSplitViewDelegate, NSToolbarDelegate>
+@interface ViewerController : OSIWindowController  <NSWindowDelegate, NSSplitViewDelegate, NSToolbarDelegate, NSMenuDelegate>
 {
 	NSRecursiveLock	*roiLock;
 	NSConditionLock *flipDataThread, *convThread;
@@ -173,8 +173,6 @@ enum
 	IBOutlet NSMatrix		*customVectors, *customOrigin;
 
     IBOutlet NSWindow       *setWLWWWindow;
-    IBOutlet NSTextField    *wlset, *fromset;
-    IBOutlet NSTextField    *wwset, *toset;
 			
     IBOutlet NSWindow       *addWLWWWindow;
     IBOutlet NSTextField    *newName;
@@ -682,6 +680,7 @@ enum
 - (IBAction) endNameWLWW:(id) sender;
 - (IBAction) endSetWLWW:(id) sender;
 - (IBAction) updateSetWLWW:(id) sender;
+- (IBAction) setWLWW:(id) sender forDCMViews: (NSArray*) dcmViews;
 - (IBAction) endConv:(id) sender;
 - (IBAction) endCLUT:(id) sender;
 - (IBAction) endBlendingType:(id) sender;

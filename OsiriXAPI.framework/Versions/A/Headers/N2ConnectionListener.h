@@ -26,11 +26,14 @@ extern NSString* N2ConnectionListenerOpenedConnection;
     CFSocketRef ipv6socket;	
 	NSMutableArray* _clients;
     BOOL _threadPerConnection;
+    BOOL _tlsFlag;
 }
 
 @property BOOL threadPerConnection;
 
 - (id)initWithPort:(NSInteger)port connectionClass:(Class)classs;
+- (id)initWithPort:(NSInteger)port tls:(BOOL) tls connectionClass:(Class)classs;
+
 - (id)initWithPath:(NSString*)path connectionClass:(Class)classs;
 
 - (in_port_t)port;
