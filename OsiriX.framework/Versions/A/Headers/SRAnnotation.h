@@ -13,13 +13,14 @@
 =========================================================================*/
 
 
-#import <Cocoa/Cocoa.h>
-
 #ifdef __cplusplus
 #include "dsrdoc.h"
 #else
 typedef char DSRDocument;
 #endif
+
+#import <Cocoa/Cocoa.h>
+
 
 #import "ROI.h"
 #import "DicomImage.h"
@@ -45,7 +46,7 @@ typedef char DSRDocument;
  * @param path Path to file 
  * @param image the image related to the ROI array
  */
-+ (NSString*) archiveROIsAsDICOM:(NSArray *)rois toPath:(NSString *)path  forImage:(id)image;
++ (NSString*) archiveROIsAsDICOM:(NSArray *)rois toPath:(NSString *)path  forImage:(DicomImage*)image;
 
 
 + (NSString*) getImageRefSOPInstanceUID:(NSString*) path;

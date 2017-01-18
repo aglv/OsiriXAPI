@@ -27,7 +27,6 @@
 	NSNumber	*dicomTime;
     NSImage     *thumbnailImage;
     NSArray     *imagesWithROIsCache;
-    int         hasKeyImages, hasROIs;
 }
 
 @property(nonatomic, retain, readonly) NSNumber* dicomTime;
@@ -48,6 +47,8 @@
 @property(nonatomic, retain) NSNumber* numberOfKeyImages;
 @property(nonatomic, retain) NSNumber* rotationAngle;
 @property(nonatomic, retain) NSNumber* scale;
+@property(nonatomic, retain) NSNumber* hasROIs;
+@property(nonatomic, retain) NSNumber* hasKeyImages;
 @property(nonatomic, retain) NSString* seriesDescription;
 @property(nonatomic, retain) NSString* seriesDICOMUID;
 @property(nonatomic, retain) NSString* seriesInstanceUID;
@@ -86,8 +87,6 @@
 - (NSArray*) imagesAsScreenCapture:(NSRect)frame dicomImages:(NSArray*) dcmImages;
 - (NSArray*) imagesAsScreenCapture:(NSRect)frame dicomImages:(NSArray*) dcmImages annotationsLevel: (annotationsLevel) annotationsLevel;
 + (NSRect) frameForImageAsScreenCapture;
-- (BOOL) hasROIs;
-- (BOOL) hasKeyImages;
 @end
 
 @interface DicomSeries (CoreDataGeneratedAccessors)

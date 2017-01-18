@@ -43,4 +43,5 @@
 -(N2DirectoryEnumerator*)enumeratorAtPath:(NSString*)path filesOnly:(BOOL)filesOnly;
 -(N2DirectoryEnumerator*)enumeratorAtPath:(NSString*)path filesOnly:(BOOL)filesOnly recursive:(BOOL)recursive;
 
+- (unsigned long) crc32ForPath: (NSString*) path;
 @end

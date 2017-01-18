@@ -23,6 +23,7 @@
     ViewerController *viewer;
     int previousIndex;
     NSString *previousStudyInstanceUID;
+    BOOL hidden;
 }
 
 @property (retain) ViewerController *viewer;

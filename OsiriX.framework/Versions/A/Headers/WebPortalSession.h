@@ -41,6 +41,7 @@ extern NSString* const SessionDontDisplayUser;
 -(NSString*)newChallenge;
 -(NSString*)challenge;
 -(void)deleteChallenge;
+-(NSTimeInterval)mostRecentToken;
 
 @end
 

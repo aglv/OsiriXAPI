@@ -125,7 +125,7 @@ extern NSString* O2AlbumDragType;
 	int								subFrom, subTo, subInterval, subMax;
 	
 	IBOutlet NSWindow				*subOpenWindow;
-	IBOutlet NSMatrix				*subOpenMatrix3D, *subOpenMatrix4D, *supOpenButtons;
+	IBOutlet NSMatrix				*subOpenMatrix3D, *subOpenMatrix4D;
 	
 	IBOutlet NSWindow				*subSeriesWindow;
 	IBOutlet NSButton				*subSeriesOKButton;
@@ -221,7 +221,7 @@ extern NSString* O2AlbumDragType;
     NSArray                         *ROIsAndKeyImagesCache, *ROIsImagesCache, *KeyImagesCache;
     BOOL                            ROIsAndKeyImagesCacheSameSeries, ROIsImagesCacheSameSeries;
     
-    BOOL                            _computingNumberOfStudiesForAlbums;
+    NSLock                          *computingNumberOfStudiesForAlbumsLock;
 	
 	IBOutlet NSTableView* _activityTableView;
 	id _activityHelper;
@@ -397,6 +397,7 @@ extern NSString* O2AlbumDragType;
 - (void) setNetworkLogs;
 - (BOOL) isNetworkLogsActive;
 - (void) computeTimeInterval;
+- (IBAction) print: (id) sender;
 - (void) ReadDicomCDRom:(id) sender __deprecated;
 - (NSString*) INCOMINGPATH __deprecated;
 - (NSString*) TEMPPATH __deprecated;
@@ -477,10 +478,12 @@ extern NSString* O2AlbumDragType;
 - (void) browserPrepareForClose;
 - (IBAction) endReBuildDatabase:(id) sender;
 - (IBAction) ReBuildDatabaseSheet: (id)sender;
+- (IBAction)rebuildSQLFile:(id)sender;
 - (void) previewSliderAction:(id) sender;
 - (void) addHelpMenu;
 + (NSString*) _findFirstDicomdirOnCDMedia: (NSString*)startDirectory __deprecated;
 + (BOOL)isItCD:(NSString*) path;
++ (NSArray*) zipExtensions;
 - (void)storeSCPComplete:(id)sender;
 - (void) changeStateValueTo: (int) tag forStudies: (NSArray*) studies;
 - (NSMutableArray *) filesForDatabaseOutlineSelection :(NSMutableArray*) correspondingDicomFile;
@@ -577,7 +580,7 @@ extern NSString* O2AlbumDragType;
 - (BOOL) selectAlbumWithName: (NSString*) name;
 - (NSArray *)databaseSelection;
 
-+ (void) asyncWADOXMLDownloadURL:(NSURL*) url;
++ (BOOL) asyncWADOXMLDownloadURL:(NSURL*) url;
 
 - (void) refreshMatrix:(id) sender;
 - (void)updateReportToolbarIcon:(NSNotification *)note;

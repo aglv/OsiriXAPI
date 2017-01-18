@@ -21,6 +21,8 @@
 @interface DCMTKQueryNode : DCMTKServiceClassUser <NSCopying>
 {
 	NSMutableArray *_children;
+    NSString *childrenSynchronized;
+    
 	NSString *_uid;
 	NSString *_theDescription;
 	NSString *_name, *_rawName;
@@ -45,6 +47,12 @@
     NSUInteger _countOfSuboperations, _countOfSuccessfulSuboperations;
     NSMutableDictionary *miscDictionary;
     DcmDataset *originalDataset;
+    
+    NSMutableData *wadoRSData;
+    unsigned long wadoRSSize, wadoRSReceivedSize;
+    BOOL wadoRSConnectionActive;
+    NSString *incomingPath, *wadoRSBoundary;
+    NSThread *mainThread;
 }
 
 @property( readonly) DcmDataset *originalDataset;
@@ -53,7 +61,7 @@
 @property BOOL isAutoRetrieve;
 @property BOOL noSmartMode;
 @property NSUInteger countOfSuboperations, countOfSuccessfulSuboperations;
-@property (retain) NSString *abstractSyntax;
+@property (retain) NSString *abstractSyntax, *incomingPath, *wadoRSBoundary;
 
 + (id)queryNodeWithDataset:(DcmDataset *)dataset
 			callingAET:(NSString *)myAET  

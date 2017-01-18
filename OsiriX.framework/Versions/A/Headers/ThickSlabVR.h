@@ -89,6 +89,7 @@
     vtkCamera							*aCamera;
 	
 	float								*dstFloatR, *dstFloatG, *dstFloatB;
+    float                               *maxDstFloatR, *maxDstFloatG, *maxDstFloatB;
 	long								ifrom, ito, isize;
 	BOOL								isRGB;
 	

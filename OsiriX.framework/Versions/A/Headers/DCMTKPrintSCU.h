@@ -65,8 +65,8 @@
     OFBool                    _annotationIllumination;
     const char *              _annotationString;
 
-    unsigned int          _illumination;
-    unsigned int          _reflection;
+//    unsigned int          _illumination;
+//    unsigned int          _reflection;
 
 }
 

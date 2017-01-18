@@ -50,6 +50,7 @@
 	IBOutlet NSTextField				*exportDCMSeriesName;
 	
 	BOOL								exportAllViews;
+    BOOL                                dontChangeMPRPosition;
 	
     float lodDisplayed;
     int engine;
@@ -91,6 +92,7 @@
 @property(readonly) EndoscopyVRController *vrController;
 @property float lodDisplayed;
 @property int engine;
+@property BOOL dontChangeMPRPosition;
 
 - (id) initWithPixList: (NSMutableArray*) pix :(NSArray*) files :(NSData*) vData :(ViewerController*) bC : (ViewerController*) vC;
 - (BOOL) is2DViewer;

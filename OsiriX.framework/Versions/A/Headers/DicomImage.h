@@ -42,6 +42,7 @@ void* sopInstanceUIDEncode( NSString *sopuid);
 	NSString	*extension;
 	NSString	*modality;
 	NSString	*fileType;
+    NSString    *cachedSRPath;
     
     NSImage*    _thumbnail;
     
