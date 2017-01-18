@@ -16,7 +16,8 @@ enum
 {
 	CMOVERetrieveMode = 0,
 	CGETRetrieveMode = 1,
-	WADORetrieveMode = 2
+	WADORetrieveMode = 2,
+    WADORSRetrieveMode = 3
 };
 
 #import <Cocoa/Cocoa.h>
@@ -27,6 +28,7 @@ enum
 	NSNetServiceBrowser *_dicomNetBrowser;
 	NSMutableArray *_dicomServices;
 	NSNetService *publisher;
+    BOOL browserRunning;
 }
 + (NSString*) gethostnameAndPort: (int*) port forService:(NSNetService*) sender;
 + (NSArray *) DICOMServersList;

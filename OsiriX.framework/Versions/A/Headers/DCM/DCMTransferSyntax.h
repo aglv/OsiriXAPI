@@ -43,6 +43,7 @@ NSMutableDictionary *transferSyntaxDict;
 +(id)JPEGLSLosslessTransferSyntax;
 +(id)JPEGLSLossyTransferSyntax;
 +(id)RLETransferSyntax;
++(id)MPEG2TransferSyntax;
 +(id)MPEG4TransferSyntax;
 +(id)MPEG4BDTransferSyntax;
 +(BOOL)isMPEGTransferSyntax: (NSString*) s;
