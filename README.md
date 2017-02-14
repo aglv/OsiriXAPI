@@ -9,5 +9,4 @@ My technique for OsiriX API linking in plugin (and preferences) targets is:
 
 Currently, this is OsiriXAPI.framework from OsiriX Lite 8.0.2, renamed to
 OsiriX.framework, with some extra headers from the OsiriX project (the OsiriX
-DCM framework), reorganized to group certain headers (into DCM, DCMTK and CharLS
-directories) and with patched \#includes.
+DCM framework), reorganized and with patched \#includes.
