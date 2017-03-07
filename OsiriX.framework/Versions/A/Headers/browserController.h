@@ -344,7 +344,7 @@ extern NSString* O2AlbumDragType;
 - (NSArray*) albums;
 - (NSManagedObjectID*) currentAlbumID: (DicomDatabase*) d;
 - (DicomStudy*) selectedStudy;
-- (NSArray*) selectedStudies;
+- (NSArray*) selectedStudies __attribute__((deprecated("is only available in OsiriX")));
 - (DicomSeries*) selectedSeries;
 - (BOOL) shouldTerminate: (id) sender;
 - (void) databaseOpenStudy: (NSManagedObject*) item;
