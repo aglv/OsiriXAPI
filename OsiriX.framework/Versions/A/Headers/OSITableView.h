@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
+__deprecated_msg("only in OsiriX")
 @interface OSITableView : NSTableView
 {
     BOOL protectRecursiveReloadData;

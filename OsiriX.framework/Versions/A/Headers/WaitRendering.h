@@ -41,7 +41,7 @@
 }
 
 - (id) init:(NSString*) s;
-- (id) initWithString:(NSString*) str;
+- (id) initWithString:(NSString*) str __deprecated_msg("only in OsiriX");
 - (BOOL) run;
 - (void) start;
 - (BOOL) started;

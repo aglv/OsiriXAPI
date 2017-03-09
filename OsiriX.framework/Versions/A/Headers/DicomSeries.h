@@ -26,7 +26,7 @@
 {
 	NSNumber	*dicomTime;
     NSImage     *thumbnailImage;
-    NSArray     *imagesWithROIsCache;
+    NSArray     *imagesWithROIsCache __deprecated_msg("only in OsiriX");
 }
 
 @property(nonatomic, retain, readonly) NSNumber* dicomTime;
@@ -47,8 +47,8 @@
 @property(nonatomic, retain) NSNumber* numberOfKeyImages;
 @property(nonatomic, retain) NSNumber* rotationAngle;
 @property(nonatomic, retain) NSNumber* scale;
-@property(nonatomic, retain) NSNumber* hasROIs;
-@property(nonatomic, retain) NSNumber* hasKeyImages;
+@property(nonatomic, retain) NSNumber* hasROIs __deprecated_msg("only in OsiriX");
+@property(nonatomic, retain) NSNumber* hasKeyImages __deprecated_msg("only in OsiriX");
 @property(nonatomic, retain) NSString* seriesDescription;
 @property(nonatomic, retain) NSString* seriesDICOMUID;
 @property(nonatomic, retain) NSString* seriesInstanceUID;
@@ -80,13 +80,13 @@
 - (NSString*) type;
 - (NSImage*) thumbnailImage;
 - (NSString*) ROIsDescription;
-- (NSArray*) imagesWithROIs;
-- (void) purgeCaches;
-- (NSArray*) imagesAsScreenCapture;
-- (NSArray*) imagesAsScreenCapture:(NSRect)frame;
-- (NSArray*) imagesAsScreenCapture:(NSRect)frame dicomImages:(NSArray*) dcmImages;
-- (NSArray*) imagesAsScreenCapture:(NSRect)frame dicomImages:(NSArray*) dcmImages annotationsLevel: (annotationsLevel) annotationsLevel;
-+ (NSRect) frameForImageAsScreenCapture;
+- (NSArray*) imagesWithROIs __deprecated_msg("only in OsiriX");
+- (void) purgeCaches __deprecated_msg("only in OsiriX");
+- (NSArray*) imagesAsScreenCapture __deprecated_msg("only in OsiriX");
+- (NSArray*) imagesAsScreenCapture:(NSRect)frame __deprecated_msg("only in OsiriX");
+- (NSArray*) imagesAsScreenCapture:(NSRect)frame dicomImages:(NSArray*) dcmImages __deprecated_msg("only in OsiriX");
+- (NSArray*) imagesAsScreenCapture:(NSRect)frame dicomImages:(NSArray*) dcmImages annotationsLevel: (annotationsLevel) annotationsLevel __deprecated_msg("only in OsiriX");
++ (NSRect) frameForImageAsScreenCapture __deprecated_msg("only in OsiriX");
 @end
 
 @interface DicomSeries (CoreDataGeneratedAccessors)

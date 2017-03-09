@@ -50,7 +50,7 @@
 	IBOutlet NSTextField				*exportDCMSeriesName;
 	
 	BOOL								exportAllViews;
-    BOOL                                dontChangeMPRPosition;
+    BOOL                                dontChangeMPRPosition __deprecated_msg("only in OsiriX");
 	
     float lodDisplayed;
     int engine;
@@ -92,7 +92,7 @@
 @property(readonly) EndoscopyVRController *vrController;
 @property float lodDisplayed;
 @property int engine;
-@property BOOL dontChangeMPRPosition;
+@property BOOL dontChangeMPRPosition __deprecated_msg("only in OsiriX");
 
 - (id) initWithPixList: (NSMutableArray*) pix :(NSArray*) files :(NSData*) vData :(ViewerController*) bC : (ViewerController*) vC;
 - (BOOL) is2DViewer;

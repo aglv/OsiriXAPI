@@ -173,7 +173,9 @@ enum
 	IBOutlet NSMatrix		*customVectors, *customOrigin;
 
     IBOutlet NSWindow       *setWLWWWindow;
-			
+    IBOutlet NSTextField    *wlset __deprecated_msg("removed in OsiriX"), *fromset __deprecated_msg("removed in OsiriX");
+    IBOutlet NSTextField    *wwset __deprecated_msg("removed in OsiriX"), *toset __deprecated_msg("removed in OsiriX");
+    
     IBOutlet NSWindow       *addWLWWWindow;
     IBOutlet NSTextField    *newName;
     IBOutlet NSTextField    *wl;
@@ -358,21 +360,21 @@ enum
     long                    numberOfImagesForSeriesAtInit;
     
     BOOL                    willAdjustNSSlider;
-    NSTimeInterval          willAdjustNSSliderTimeInterval;
+    NSTimeInterval          willAdjustNSSliderTimeInterval __deprecated_msg("only in OsiriX");
     BOOL                    movieViewer; // Will contain 4D dataset
     
-    KeyImagesWindowController *keysCtrl;
+    KeyImagesWindowController *keysCtrl __deprecated_msg("only in OsiriX");
     
-    BOOL preFlipped;
+    BOOL preFlipped __deprecated_msg("only in OsiriX");
     
-    NSTimer *autoKeyImageTimer;
-    NSPoint previousMousePosition;
-    NSTimeInterval autoKeyImageChangeImageDataTime;
+    NSTimer *autoKeyImageTimer __deprecated_msg("only in OsiriX");
+    NSPoint previousMousePosition __deprecated_msg("only in OsiriX");
+    NSTimeInterval autoKeyImageChangeImageDataTime __deprecated_msg("only in OsiriX");
 }
-@property BOOL preFlipped;
+@property BOOL preFlipped __deprecated_msg("only in OsiriX");
 @property(retain) NSCalendarDate *injectionDateTime;
 @property(readonly) NSSlider *slider;
-@property(readonly) KeyImagesWindowController *keysCtrl;
+@property(readonly) KeyImagesWindowController *keysCtrl __deprecated_msg("only in OsiriX");
 @property(readonly) short currentOrientationTool, originalOrientation;
 @property(readonly) NSTimer	*timer;
 @property(readonly) NSButton *keyImageCheck;
@@ -456,7 +458,7 @@ enum
 */
 - (void) waitIncrementBy:(id) waitWindow :(long) val;
 
-+ (void) addAutoKeyEvent: (NSString*) event forImage: (DicomImage*) image;
++ (void) addAutoKeyEvent: (NSString*) event forImage: (DicomImage*) image __deprecated_msg("only in OsiriX");
 
 /** End the wait window */
 - (void) endWaitWindow:(id) waitWindow;
@@ -602,7 +604,7 @@ enum
 - (IBAction) shutterOnOff:(id) sender;
 - (void) setImageIndex:(long) i;
 - (void) setImage:(DicomImage*) image;
-- (void) setPix:(DCMPix*) pix;
+- (void) setPix:(DCMPix*) pix __deprecated_msg("only in OsiriX");
 - (long) imageIndex;
 - (IBAction) editSUVinjectionTime:(id)sender;
 - (IBAction) ok:(id)sender;
@@ -647,12 +649,12 @@ enum
 - (void) contextualDictionaryPath:(NSString *)newContextualDictionaryPath;
 - (NSString *) contextualDictionaryPath;
 - (void) contextualMenuEvent:(id)sender;
-- (ViewerController*) loadSelectedSeries: (id) series rightClick: (BOOL) rightClick;
+- (ViewerController*) loadSelectedSeries: (id) series rightClick: (BOOL) rightClick  __deprecated_msg("ViewerController only in OsiriX");
 - (IBAction) setAxialOrientation:(id) sender;
 - (IBAction) reSyncOrigin:(id) sender;
 - (void) loadROI:(long) mIndex;
 - (void) saveROI:(long) mIndex;
-- (void) saveROI;
+- (void) saveROI __deprecated_msg("only in OsiriX");
 - (IBAction) roiCopyInfo:(NSMenuItem*) menuItem;
 - (void) setMatrixVisible: (BOOL) visible;
 - (BOOL) matrixIsVisible;
@@ -680,7 +682,7 @@ enum
 - (IBAction) endNameWLWW:(id) sender;
 - (IBAction) endSetWLWW:(id) sender;
 - (IBAction) updateSetWLWW:(id) sender;
-- (IBAction) setWLWW:(id) sender forDCMViews: (NSArray*) dcmViews;
+- (IBAction) setWLWW:(id) sender forDCMViews: (NSArray*) dcmViews __deprecated_msg("only in OsiriX");
 - (IBAction) endConv:(id) sender;
 - (IBAction) endCLUT:(id) sender;
 - (IBAction) endBlendingType:(id) sender;
@@ -689,7 +691,7 @@ enum
 - (id) viewCinit:(NSMutableArray*)f :(NSMutableArray*) d :(NSData*) v;
 - (id) initWithPix:(NSMutableArray*)f withFiles:(NSMutableArray*) d withVolume:(NSData*) v;
 - (id) initWithPix:(NSMutableArray*)f withFiles:(NSMutableArray*)d withVolume:(NSData*) v movie:(BOOL) movie;
-- (id) initWithPix:(NSMutableArray*)f withFiles:(NSMutableArray*)d withVolume:(NSData*) v movie:(BOOL) movie preFlipped: (BOOL) preFlipped;
+- (id) initWithPix:(NSMutableArray*)f withFiles:(NSMutableArray*)d withVolume:(NSData*) v movie:(BOOL) movie preFlipped: (BOOL) preFlipped __deprecated_msg("only in OsiriX");
 - (void) speedSliderAction:(id) sender;
 - (void) setupToolbar;
 - (NSToolbar*) toolbar;
@@ -853,7 +855,7 @@ enum
 - (DicomStudy *)currentStudy;
 - (DicomSeries *)currentSeries;
 - (DicomImage *)currentImage;
-- (DicomImage *)imageAtIndex: (NSUInteger) i;
+- (DicomImage *)imageAtIndex: (NSUInteger) i __deprecated_msg("only in OsiriX");
 
 - (NSArray*)roisWithName:(NSString*)name;
 - (NSArray*)roisWithName:(NSString*)name in4D:(BOOL)in4D;
@@ -869,7 +871,7 @@ enum
 - (void)setWindowFrame:(NSRect)rect showWindow:(BOOL) showWindow;
 - (void)setWindowFrame:(NSRect)rect showWindow:(BOOL) showWindow animate: (BOOL) animate;
 
-- (BOOL) goToPrevious: (BOOL) previous ROIsImage: (BOOL) ROIsImage keyImage: (BOOL) keyImage inStudy: (BOOL) study loop: (BOOL) loop;
+- (BOOL) goToPrevious: (BOOL) previous ROIsImage: (BOOL) ROIsImage keyImage: (BOOL) keyImage inStudy: (BOOL) study loop: (BOOL) loop __deprecated_msg("only in OsiriX");
 
 - (void) revertSeries:(id) sender;
 - (void) executeRevert;

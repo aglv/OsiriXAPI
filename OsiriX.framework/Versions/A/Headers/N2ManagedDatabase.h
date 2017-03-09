@@ -101,13 +101,13 @@
 @interface N2ManagedObjectContext : NSManagedObjectContext {
     
 	N2ManagedDatabase* _database;
-    NSString *allocatedByStack;
+    NSString *allocatedByStack __deprecated_msg("only in OsiriX");
 }
 
 @property(readonly) N2ManagedDatabase* database;
-@property(readonly) NSString *allocatedByStack;
+@property(readonly) NSString *allocatedByStack __deprecated_msg("only in OsiriX");
 
-+ (int) dicomManagedObjectContextCounter;
-+ (int) webManagedObjectContextCounter;
++ (int) dicomManagedObjectContextCounter __deprecated_msg("only in OsiriX");
++ (int) webManagedObjectContextCounter __deprecated_msg("only in OsiriX");
 @end
 

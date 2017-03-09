@@ -11,10 +11,10 @@
 	
 	NSTableColumn *sortedColumn;
     
-    BOOL dontAcceptFirstRowChange;
+    BOOL dontAcceptFirstRowChange __deprecated_msg("only in OsiriX");
 }
 
-@property BOOL dontAcceptFirstRowChange;
+@property BOOL dontAcceptFirstRowChange __deprecated_msg("only in OsiriX");
 
 // table view drag and drop support
 

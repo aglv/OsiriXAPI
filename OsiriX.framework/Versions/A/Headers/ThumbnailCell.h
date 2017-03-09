@@ -29,7 +29,7 @@
 
 + (float) thumbnailCellWidth;
 + (void) resetThumbnailCellWidth;
-+ (BOOL) drawAnnotationsForROIsAndKeyimages: (DicomSeries*) series inRect: (NSRect) imageRect;
-+ (BOOL) drawAnnotationsForROIs: (BOOL) imagesWithROIs andKeyimages: (BOOL) imagesWithKeys inRect: (NSRect) imageRect;
-+ (void) hasThisObject: (id) object ROIs:(BOOL*)imagesWithROIs orIsKey:(BOOL*)imagesWithKeys;
++ (BOOL) drawAnnotationsForROIsAndKeyimages: (DicomSeries*) series inRect: (NSRect) imageRect __deprecated_msg("only in OsiriX");
++ (BOOL) drawAnnotationsForROIs: (BOOL) imagesWithROIs andKeyimages: (BOOL) imagesWithKeys inRect: (NSRect) imageRect __deprecated_msg("only in OsiriX");
++ (void) hasThisObject: (id) object ROIs:(BOOL*)imagesWithROIs orIsKey:(BOOL*)imagesWithKeys __deprecated_msg("only in OsiriX");
 @end

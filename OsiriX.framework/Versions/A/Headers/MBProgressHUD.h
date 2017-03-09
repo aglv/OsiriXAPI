@@ -134,6 +134,7 @@ enum {
  *   indicator view.
  * - If also the detailsLabelText property is set then another label is placed below the first label.
  */
+__deprecated_msg("only in OsiriX")
 #if (TARGET_IPHONE_SIMULATOR || TARGET_OS_IPHONE)
 @interface MBProgressHUD : UIView
 #else   // !(TARGET_IPHONE_SIMULATOR || TARGET_OS_IPHONE)

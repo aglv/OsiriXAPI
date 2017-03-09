@@ -34,7 +34,7 @@
 -(void)processStudyHtml: (NSString*) xid;
 -(void)processPasswordForgottenHtml;
 -(void)processAccountHtml;
--(void)processClearCaches;
+-(void)processClearCaches __deprecated_msg("only in OsiriX");
 
 -(void)processAdminIndexHtml;
 -(void)processAdminUserHtml;

@@ -15,6 +15,7 @@ typedef char* DcmDataset;
 typedef char* DcmMetaInfo;
 #endif
 
+__deprecated_msg("only in OsiriX")
 @interface DicomBridge : NSObject
 {
     NSDictionary *dictionary;

@@ -103,7 +103,7 @@ extern NSString* const DicomDatabaseLogEntryEntityName;
 // these paths are inside dataBaseDirPath
 -(NSString*)dataDirPath;
 -(NSString*)incomingDirPath;
--(NSString*)uniqueDcmFileInIncomingDirPath;
+-(NSString*)uniqueDcmFileInIncomingDirPath __deprecated_msg("only in OsiriX");
 -(NSString*)errorsDirPath;
 -(NSString*)decompressionDirPath;
 -(NSString*)toBeIndexedDirPath;
@@ -129,7 +129,7 @@ extern NSString* const DicomDatabaseLogEntryEntityName;
 -(void) loadAlbumsFromPath:(NSString*) path;
 -(void) addStudies:(NSArray*)dicomStudies toAlbum:(DicomAlbum*)dicomAlbum;
 -(NSArray*) reindexObjects: (NSArray*) objects;
--(void) turnImagesAndSeriesIntoFault;
+-(void) turnImagesAndSeriesIntoFault __deprecated_msg("only in OsiriX");
 
 #pragma mark Add files
 -(NSArray*)addFilesAtPaths:(NSArray*)paths;
@@ -145,7 +145,7 @@ extern NSString* const DicomDatabaseLogEntryEntityName;
 -(NSArray*)addFilesDescribedInDictionaries:(NSArray*)dicomFilesArray postNotifications:(BOOL)postNotifications rereadExistingItems:(BOOL)rereadExistingItems generatedByOsiriX:(BOOL)generatedByOsiriX importedFiles: (BOOL) importedFiles returnArray: (BOOL) returnArray;
 -(NSArray*)addFilesAtPaths:(NSArray*)paths postNotifications:(BOOL)postNotifications dicomOnly:(BOOL)dicomOnly rereadExistingItems:(BOOL)rereadExistingItems generatedByOsiriX:(BOOL)generatedByOsiriX importedFiles: (BOOL) importedFiles returnArray: (BOOL) returnArray dicomFileDictionary: (NSArray*) dicomFilesArray;
 #pragma mark Incoming
-+(BOOL)checkIfFileSystemFreeSizeLimitReachedAtPath: (NSString*) path;
++(BOOL)checkIfFileSystemFreeSizeLimitReachedAtPath: (NSString*) path __deprecated_msg("only in OsiriX");
 -(BOOL)checkIfFileSystemFreeSizeLimitReached;
 -(BOOL) hasFilesToImport;
 -(NSInteger)importFilesFromIncomingDir;

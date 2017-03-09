@@ -69,7 +69,7 @@
 	
 	BOOL								flipData, lowQuality;
 
-	float								tableFloatR[256], tableFloatG[256], tableFloatB[256];
+	float								tableFloatR[256] __deprecated_msg("only in OsiriX"), tableFloatG[256] __deprecated_msg("only in OsiriX"), tableFloatB[256] __deprecated_msg("only in OsiriX");
 	float								tableBlendingFloatR[256], tableBlendingFloatG[256], tableBlendingFloatB[256];
 	float								opacityTable[ 256];
 	

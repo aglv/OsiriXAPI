@@ -14,6 +14,7 @@
 
 #import <Cocoa/Cocoa.h>
 
+__deprecated_msg("only in OsiriX")
 @interface KeyImagesScrollView : NSScrollView
 
 @end

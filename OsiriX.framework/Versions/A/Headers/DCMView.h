@@ -91,7 +91,7 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
 	
 	float			mprVector[ 3], mprPoint[ 3];
     
-    NSTimeInterval  timeIntervalForDrag, mouseDownStart;
+    NSTimeInterval  timeIntervalForDrag, mouseDownStart __deprecated_msg("only in OsiriX");
 	
 	short			thickSlabMode, thickSlabStacks;
 	
@@ -105,7 +105,7 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
 	
     char            listType;
     
-    short           curImage, startImage, previousRGB;
+    short           curImage, startImage, previousRGB __deprecated_msg("only in OsiriX");
     
     ToolMode        currentTool, currentToolRight, currentMouseEventTool;
     
@@ -322,7 +322,7 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
 @property annotationsLevel annotationType;
 @property(readonly) int volumicData;
 
-+ (CGFloat) getDeltaY: (CGFloat) deltaY event: (NSEvent*) theEvent;
++ (CGFloat) getDeltaY: (CGFloat) deltaY event: (NSEvent*) theEvent __deprecated_msg("only in OsiriX");
 + (void) setDontListenToSyncMessage: (BOOL) v;
 + (BOOL) noPropagateSettingsInSeriesForModality: (DicomImage*) imageObj;
 + (void) purgeStringTextureCache;
@@ -496,7 +496,7 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
 - (void) roiLoadFromFilesArray: (NSArray*) filenames;
 - (id)windowController;
 - (BOOL)is2DViewer;
-- (ViewerController*) viewer;
+- (ViewerController*) viewer __deprecated_msg("only in OsiriX");
 - (NSPoint) positionWithoutRotation: (NSPoint) tPt;
 - (IBAction)realSize:(id)sender;
 - (IBAction)scaleToFit:(id)sender;

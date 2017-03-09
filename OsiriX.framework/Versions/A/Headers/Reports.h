@@ -21,10 +21,10 @@
 @interface Reports : NSObject
 {
 	NSMutableString *templateName;
-    NSString *templateFilename;
+    NSString *templateFilename __deprecated_msg("only in OsiriX");
 }
 
-@property (retain) NSString *templateFilename;
+@property (retain) NSString *templateFilename __deprecated_msg("only in OsiriX");
 
 + (NSString*) getUniqueFilename:(DicomStudy*) study;
 + (NSString*) getOldUniqueFilename:(NSManagedObject*) study;

@@ -33,7 +33,7 @@
 
 -(BOOL)applyFileModeOfParentToItemAtPath:(NSString*)path;
 
--(NSArray*)filesWithExtension: (NSString*) extension inDirectory: (NSString*) directory;
+-(NSArray*)filesWithExtension: (NSString*) extension inDirectory: (NSString*) directory __deprecated_msg("only in OsiriX");
 
 -(NSString*)destinationOfAliasAtPath:(NSString*)path;
 -(NSString*)destinationOfAliasOrSymlinkAtPath:(NSString*)path;
@@ -43,5 +43,5 @@
 -(N2DirectoryEnumerator*)enumeratorAtPath:(NSString*)path filesOnly:(BOOL)filesOnly;
 -(N2DirectoryEnumerator*)enumeratorAtPath:(NSString*)path filesOnly:(BOOL)filesOnly recursive:(BOOL)recursive;
 
-- (unsigned long) crc32ForPath: (NSString*) path;
+- (unsigned long) crc32ForPath: (NSString*) path __deprecated_msg("only in OsiriX");
 @end

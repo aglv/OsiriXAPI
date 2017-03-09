@@ -39,14 +39,14 @@ typedef char DSRDocument;
  * @param path File path
  */
 + (NSData *) roiFromDICOM:(NSString *)path;
-+ (BOOL) hasRoiFromDICOM:(NSString *)path;
++ (BOOL) hasRoiFromDICOM:(NSString *)path __deprecated_msg("only in OsiriX");
 
 /** Creates a DICOM SR from an array of ROIs
  * @param rois Array of ROI to archive
  * @param path Path to file 
  * @param image the image related to the ROI array
  */
-+ (NSString*) archiveROIsAsDICOM:(NSArray *)rois toPath:(NSString *)path  forImage:(DicomImage*)image;
++ (NSString*) archiveROIsAsDICOM:(NSArray *)rois toPath:(NSString *)path  forImage:(DicomImage*)image __deprecated_msg("only in OsiriX");
 
 
 + (NSString*) getImageRefSOPInstanceUID:(NSString*) path;

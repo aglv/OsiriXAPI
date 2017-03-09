@@ -117,7 +117,8 @@ extern AppController* OsiriX;
 	IBOutlet NSMenu					*othersMenu;
 	IBOutlet NSMenu					*dbMenu;
     IBOutlet NSMenu					*reportMenu;
-	IBOutlet NSWindow				*dbWindow, *emailAddressWindow;
+	IBOutlet NSWindow				*dbWindow;
+    IBOutlet NSWindow				*emailAddressWindow __deprecated_msg("only in OsiriX");
 	IBOutlet NSMenu					*windowsTilingMenuRows, *windowsTilingMenuColumns;
     IBOutlet NSMenu                 *recentStudiesMenu;
 	
@@ -142,7 +143,7 @@ extern AppController* OsiriX;
     
     long updateTotalData, updateReceivedData;
     NSMutableData *updateData;
-    id appNapActivity;
+    id appNapActivity __deprecated_msg("only in OsiriX");
     
     // DICOM Definition parser
     BOOL getCurrentModule;
@@ -158,9 +159,9 @@ extern AppController* OsiriX;
 @property(readonly) XMLRPCInterface *XMLRPCServer;
 @property(readonly) BonjourPublisher* bonjourPublisher;
 @property(readonly) int lastColumns, lastRows, lastCount;
-@property(retain) id appNapActivity;
+@property(retain) id appNapActivity __deprecated_msg("only in OsiriX");
 
-+ (void) thisFeatureIsNotAvailable: (NSString*) stringUrl;
++ (void) thisFeatureIsNotAvailable: (NSString*) stringUrl __deprecated_msg("only in OsiriX");
 + (BOOL) isFDACleared;
 + (BOOL) willExecutePlugin;
 + (BOOL) willExecutePlugin:(id) filter;
@@ -169,7 +170,7 @@ extern AppController* OsiriX;
 + (BOOL) hasMacOSXLeopard;
 + (BOOL) hasOSXElCapitan;
 + (BOOL) hasOSXYosemite;
-+ (BOOL) hasMacOSSierra;
++ (BOOL) hasMacOSSierra __deprecated_msg("only in OsiriX");
 + (BOOL) isOSXYosemite;
 + (int) isUnsupportedOS;
 + (BOOL) hasMacOSXMaverick;
@@ -204,7 +205,7 @@ extern AppController* OsiriX;
 #pragma mark HTML Templates
 + (void)checkForHTMLTemplates __deprecated;
 + (BOOL) FPlistForKey: (NSString*) k;
-+ (long) longForFPlistForKey: (NSString*) k;
++ (long) longForFPlistForKey: (NSString*) k __deprecated_msg("only in OsiriX");
 
 #pragma mark-
 #pragma mark  Server management
@@ -294,19 +295,19 @@ extern AppController* OsiriX;
 - (NSMenu*) wlwwMenu;
 - (NSMenu*) convMenu;
 - (NSMenu*) clutMenu;
-+ (NSImage*) clutIconForClutName: (NSString*) clutName;
-+ (NSImage*) clutIconForRed: (unsigned char*) redT green:(unsigned char*) greenT blue:(unsigned char*) blueT;
-+ (void) setPopupMenuFont: (NSMenu*) menu;
-+ (void) setPopupMenuFont: (NSMenu*) menu allItems: (BOOL) allItems;
-+ (void) resetPopupMenuFont: (NSMenu*) menu;
-+ (void) resetClutIcons;
-+ (void) resetOpacityIcons;
-+ (NSImage*) opacityIconForOpacityName: (NSString*) opacityName;
++ (NSImage*) clutIconForClutName: (NSString*) clutName __deprecated_msg("only in OsiriX");
++ (NSImage*) clutIconForRed: (unsigned char*) redT green:(unsigned char*) greenT blue:(unsigned char*) blueT __deprecated_msg("only in OsiriX");
++ (void) setPopupMenuFont: (NSMenu*) menu __deprecated_msg("only in OsiriX");
++ (void) setPopupMenuFont: (NSMenu*) menu allItems: (BOOL) allItems __deprecated_msg("only in OsiriX");
++ (void) resetPopupMenuFont: (NSMenu*) menu __deprecated_msg("only in OsiriX");
++ (void) resetClutIcons __deprecated_msg("only in OsiriX");
++ (void) resetOpacityIcons __deprecated_msg("only in OsiriX");
++ (NSImage*) opacityIconForOpacityName: (NSString*) opacityName __deprecated_msg("only in OsiriX");
 - (NSMenu*) workspaceMenu;
-+ (NSImage*) wwwlIconForDcmPix: (DCMPix*) pix ww: (float) ww wl: (float) wl;
-//+ (NSImage*) fusionIconForDcmPix: (DCMPix*) pix mode: (int) mode stack: (int) stack direction: (int) direction;
-+ (NSImage*) convolutionIconForDcmPix: (DCMPix*) pix name: (NSString*) name;
-+ (NSImage*) resizeImageForIcon: (NSImage*) im;
++ (NSImage*) wwwlIconForDcmPix: (DCMPix*) pix ww: (float) ww wl: (float) wl __deprecated_msg("only in OsiriX");
+//+ (NSImage*) fusionIconForDcmPix: (DCMPix*) pix mode: (int) mode stack: (int) stack direction: (int) direction __deprecated_msg("only in OsiriX");
++ (NSImage*) convolutionIconForDcmPix: (DCMPix*) pix name: (NSString*) name __deprecated_msg("only in OsiriX");
++ (NSImage*) resizeImageForIcon: (NSImage*) im __deprecated_msg("only in OsiriX");
 
 #pragma mark-
 #pragma mark growl

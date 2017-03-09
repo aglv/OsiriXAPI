@@ -43,7 +43,7 @@ NSMutableDictionary *transferSyntaxDict;
 +(id)JPEGLSLosslessTransferSyntax;
 +(id)JPEGLSLossyTransferSyntax;
 +(id)RLETransferSyntax;
-+(id)MPEG2TransferSyntax;
++(id)MPEG2TransferSyntax __deprecated_msg("only in OsiriX");
 +(id)MPEG4TransferSyntax;
 +(id)MPEG4BDTransferSyntax;
 +(BOOL)isMPEGTransferSyntax: (NSString*) s;

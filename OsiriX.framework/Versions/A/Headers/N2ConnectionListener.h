@@ -26,13 +26,13 @@ extern NSString* N2ConnectionListenerOpenedConnection;
     CFSocketRef ipv6socket;	
 	NSMutableArray* _clients;
     BOOL _threadPerConnection;
-    BOOL _tlsFlag;
+    BOOL _tlsFlag __deprecated_msg("only in OsiriX");
 }
 
 @property BOOL threadPerConnection;
 
 - (id)initWithPort:(NSInteger)port connectionClass:(Class)classs;
-- (id)initWithPort:(NSInteger)port tls:(BOOL) tls connectionClass:(Class)classs;
+- (id)initWithPort:(NSInteger)port tls:(BOOL) tls connectionClass:(Class)classs __deprecated_msg("only in OsiriX");
 
 - (id)initWithPath:(NSString*)path connectionClass:(Class)classs;
 

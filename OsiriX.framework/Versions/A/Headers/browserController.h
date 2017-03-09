@@ -96,7 +96,7 @@ extern NSString* O2AlbumDragType;
     NSManagedObjectContext* _cachedAlbumsContext;
     NSString                *selectedAlbumName;
 	
-	NSArray							*outlineViewArray, *originalOutlineViewArray, *outlineViewArrayStudyInstanceUIDs;
+	NSArray							*outlineViewArray, *originalOutlineViewArray, *outlineViewArrayStudyInstanceUIDs __deprecated_msg("only in OsiriX");
 	NSArray							*matrixViewArray;
 	
 	NSString						*_searchString;
@@ -126,6 +126,7 @@ extern NSString* O2AlbumDragType;
 	
 	IBOutlet NSWindow				*subOpenWindow;
 	IBOutlet NSMatrix				*subOpenMatrix3D, *subOpenMatrix4D;
+    IBOutlet NSMatrix				*supOpenButtons __deprecated_msg("removed in OsiriX");
 	
 	IBOutlet NSWindow				*subSeriesWindow;
 	IBOutlet NSButton				*subSeriesOKButton;
@@ -221,7 +222,8 @@ extern NSString* O2AlbumDragType;
     NSArray                         *ROIsAndKeyImagesCache, *ROIsImagesCache, *KeyImagesCache;
     BOOL                            ROIsAndKeyImagesCacheSameSeries, ROIsImagesCacheSameSeries;
     
-    NSLock                          *computingNumberOfStudiesForAlbumsLock;
+    BOOL                            _computingNumberOfStudiesForAlbums __deprecated_msg("removed in OsiriX");
+    NSLock                          *computingNumberOfStudiesForAlbumsLock __deprecated_msg("only in OsiriX");
 	
 	IBOutlet NSTableView* _activityTableView;
 	id _activityHelper;
@@ -302,7 +304,7 @@ extern NSString* O2AlbumDragType;
 @property(readonly) NSPredicate *filterPredicate;
 @property(readonly) NSString *filterPredicateDescription;
 @property(retain) NSDate *distantTimeIntervalStart, *distantTimeIntervalEnd;
-@property(retain) NSDate *timeIntervalStart, *timeIntervalEnd;
+@property(retain) NSDate *timeIntervalStart __deprecated_msg("only in OsiriX"), *timeIntervalEnd __deprecated_msg("only in OsiriX");
 @property(nonatomic, retain) NSString *modalityFilter;
 @property(nonatomic) int timeIntervalType;
 @property(readonly) NSMutableDictionary *databaseIndexDictionary;
@@ -310,15 +312,15 @@ extern NSString* O2AlbumDragType;
 @property int distantSearchType;
 @property(readonly) NSMutableArray *comparativeRetrieveQueue;
 
-+ (void) buildReportsMenu: (NSPopUpButton*) reportTemplatesListPopUpButton;
++ (void) buildReportsMenu: (NSPopUpButton*) reportTemplatesListPopUpButton __deprecated_msg("only in OsiriX");
 + (void) resetPreferences;
 + (NSMenu*) buildStateTextMenu;
 + (NSMenu*) buildStateTextMenuWithEdit: (BOOL) editItem;
 + (void)initializeBrowserControllerClass;
 + (unsigned int)_currentModifierFlags;
 + (BrowserController*) currentBrowser;
-+ (NSMutableString*) replaceNotAdmitted: (NSMutableString*) name __deprecated;
-+ (NSString*) stringByReplaceNotAdmitted: (NSString*) name;
++ (NSMutableString*) replaceNotAdmitted: (NSMutableString*) name __deprecated_msg("deprecated in OsiriX");
++ (NSString*) stringByReplaceNotAdmitted: (NSString*) name __deprecated_msg("only in OsiriX");
 + (NSDictionary*) statesDictionary;
 + (NSImage *)createStateDotWithColor:(NSColor *)c alpha: (float) alpha;
 + (void) updateActivity;
@@ -344,7 +346,7 @@ extern NSString* O2AlbumDragType;
 - (NSArray*) albums;
 - (NSManagedObjectID*) currentAlbumID: (DicomDatabase*) d;
 - (DicomStudy*) selectedStudy;
-- (NSArray*) selectedStudies __attribute__((deprecated("is only available in OsiriX")));
+- (NSArray*) selectedStudies __deprecated_msg("only in OsiriX");
 - (DicomSeries*) selectedSeries;
 - (BOOL) shouldTerminate: (id) sender;
 - (void) databaseOpenStudy: (NSManagedObject*) item;
@@ -397,7 +399,7 @@ extern NSString* O2AlbumDragType;
 - (void) setNetworkLogs;
 - (BOOL) isNetworkLogsActive;
 - (void) computeTimeInterval;
-- (IBAction) print: (id) sender;
+- (IBAction) print: (id) sender __deprecated_msg("only in OsiriX");
 - (void) ReadDicomCDRom:(id) sender __deprecated;
 - (NSString*) INCOMINGPATH __deprecated;
 - (NSString*) TEMPPATH __deprecated;
@@ -478,12 +480,12 @@ extern NSString* O2AlbumDragType;
 - (void) browserPrepareForClose;
 - (IBAction) endReBuildDatabase:(id) sender;
 - (IBAction) ReBuildDatabaseSheet: (id)sender;
-- (IBAction)rebuildSQLFile:(id)sender;
+- (IBAction)rebuildSQLFile:(id)sender __deprecated_msg("only in OsiriX");
 - (void) previewSliderAction:(id) sender;
 - (void) addHelpMenu;
 + (NSString*) _findFirstDicomdirOnCDMedia: (NSString*)startDirectory __deprecated;
 + (BOOL)isItCD:(NSString*) path;
-+ (NSArray*) zipExtensions;
++ (NSArray*) zipExtensions __deprecated_msg("only in OsiriX");
 - (void)storeSCPComplete:(id)sender;
 - (void) changeStateValueTo: (int) tag forStudies: (NSArray*) studies;
 - (NSMutableArray *) filesForDatabaseOutlineSelection :(NSMutableArray*) correspondingDicomFile;
@@ -580,13 +582,13 @@ extern NSString* O2AlbumDragType;
 - (BOOL) selectAlbumWithName: (NSString*) name;
 - (NSArray *)databaseSelection;
 
-+ (BOOL) asyncWADOXMLDownloadURL:(NSURL*) url;
++ (BOOL) asyncWADOXMLDownloadURL:(NSURL*) url __deprecated_msg("only in OsiriX");
 
 - (void) refreshMatrix:(id) sender;
 - (void)updateReportToolbarIcon:(NSNotification *)note;
 
 #ifndef OSIRIX_LIGHT
-- (IBAction) exportROIAndKeyImagesAsDICOMSeries: (id) sender;
+- (IBAction) exportROIAndKeyImagesAsDICOMSeries: (id) sender __deprecated_msg("only in OsiriX");
 - (IBAction) paste: (id)sender;
 - (IBAction) pasteImageForDicomImage: (DicomImage*) image;
 - (void) decompressDICOMJPEG: (NSArray*) array __deprecated;
@@ -599,7 +601,7 @@ extern NSString* O2AlbumDragType;
 - (IBAction) attachReport: (id) sender;
 - (IBAction)importRawData:(id)sender;
 - (void) pdfPreview:(id)sender;
-- (IBAction) burnDICOM:(id) sender;
+- (IBAction) burnDICOM:(id) sender __deprecated_msg("only in OsiriX");
 - (IBAction) anonymizeDICOM:(id) sender;
 - (IBAction)retrieveSelectedPODStudies:(id) sender;
 - (void) queryDICOM:(id) sender;

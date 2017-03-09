@@ -189,7 +189,7 @@ typedef enum ToolMode_
 	
 	float			offsetTextBox_x, offsetTextBox_y;
 	
-	NSString		*textualBoxLine1, *textualBoxLine2, *textualBoxLine3, *textualBoxLine4, *textualBoxLine5, *textualBoxLine6, *textualBoxLine7, *textualBoxLine8, *textualBoxLine9, *textualBoxLine10;
+	NSString		*textualBoxLine1, *textualBoxLine2, *textualBoxLine3, *textualBoxLine4, *textualBoxLine5, *textualBoxLine6, *textualBoxLine7, *textualBoxLine8, *textualBoxLine9, *textualBoxLine10 __deprecated_msg("only in OsiriX");
 	
 	BOOL			_displayCalciumScoring;
 	int				_calciumThreshold;
@@ -466,9 +466,9 @@ typedef enum ToolMode_
 + (NSString*) stringTypeForROI: (int) i;
 - (NSString*) niceDescription;
 
-- (void) applySettingsToParent;
-- (void) applySettingsFromParent;
-- (BOOL) isIdenticalTo:(ROI*) otherROI;
+- (void) applySettingsToParent __deprecated_msg("only in OsiriX");
+- (void) applySettingsFromParent __deprecated_msg("only in OsiriX");
+- (BOOL) isIdenticalTo:(ROI*) otherROI __deprecated_msg("only in OsiriX");
 - (BOOL) isInside: (int*) pixelCoordinates;
 - (BOOL) isInside: (int*) pixelCoordinates :(float) sliceInterval;
 - (BOOL) containBallROI: (DCMView*) view pixelCoordinates: (double*) pixelCoordinates radius: (double*) radius;
@@ -531,7 +531,7 @@ typedef enum ToolMode_
 - (NSPoint)rotatePoint:(NSPoint)point withAngle:(float)alpha aroundCenter:(NSPoint)center;
 - (void) displayPointUnderMouse:(NSPoint) pt :(float) offsetx :(float) offsety :(float) scale;
 
-@property(retain) NSString *textualBoxLine1, *textualBoxLine2, *textualBoxLine3, *textualBoxLine4, *textualBoxLine5, *textualBoxLine6, *textualBoxLine7, *textualBoxLine8, *textualBoxLine9, *textualBoxLine10;
+@property(retain) NSString *textualBoxLine1, *textualBoxLine2, *textualBoxLine3, *textualBoxLine4, *textualBoxLine5, *textualBoxLine6, *textualBoxLine7, *textualBoxLine8, *textualBoxLine9, *textualBoxLine10 __deprecated_msg("only in OsiriX");
 - (NSArray*) textualBoxLines;
 
 @property NSTimeInterval groupID;

@@ -15,6 +15,7 @@
 #import <Cocoa/Cocoa.h>
 #import "ViewerController.h"
 
+__deprecated_msg("only in OsiriX")
 @interface KeyImagesWindowController : NSWindowController
 {
     IBOutlet NSScrollView *scrollView;
@@ -23,7 +24,7 @@
     ViewerController *viewer;
     int previousIndex;
     NSString *previousStudyInstanceUID;
-    BOOL hidden;
+    BOOL hidden __deprecated_msg("only in OsiriX");
 }
 
 @property (retain) ViewerController *viewer;
