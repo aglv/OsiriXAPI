@@ -241,7 +241,7 @@ typedef enum ToolMode_
 @property(retain,nonatomic) NSString *comments;
 @property ToolMode type;
 @property(nonatomic, setter=setROIMode:) ROI_mode ROImode;
-@property(retain) NSMutableArray *points; // Return/set the points state of the ROI
+@property(retain) NSMutableArray<MyPoint *> *points; // Return/set the points state of the ROI
 @property(readonly) NSMutableArray *zPositions;
 @property BOOL clickInTextBox;
 @property(nonatomic, setter=setROIRect:) NSRect rect; // To create a Rectangular ROI (tROI) or an Oval ROI (tOval) or a 2DPoint
