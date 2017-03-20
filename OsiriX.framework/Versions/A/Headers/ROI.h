@@ -95,6 +95,7 @@ typedef enum ToolMode_
 @class StringTexture;
 @class DCMObject;
 @class DCMUSRegion;
+@class MyPoint;
 
 /** \brief Region of Interest
 * 
@@ -133,7 +134,7 @@ typedef enum ToolMode_
 	int				textureUpLeftCornerX,textureUpLeftCornerY,textureDownRightCornerX,textureDownRightCornerY;
 	int				textureFirstPoint;
 	
-	NSMutableArray  *points;
+	NSMutableArray<MyPoint *> *points;
 	NSMutableArray  *zPositions;
 	NSRect			rect;
     float           zLocation;
