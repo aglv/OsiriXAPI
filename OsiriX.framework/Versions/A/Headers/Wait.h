@@ -32,8 +32,8 @@
 	NSTimeInterval lastTimeFrame, lastTimeFrameUpdate, firstTime, displayedTime;
     IOPMAssertionID assertionID;
 }
-+ (Wait*) showWithString: (NSString*) str;
-+ (Wait*) showWithString: (NSString*) str maxProgress: (int) maxValue showCancel: (BOOL) showCancel;
++ (Wait*) showWithString: (NSString*) str __deprecated_msg("only in OsiriX");
++ (Wait*) showWithString: (NSString*) str maxProgress: (int) maxValue showCancel: (BOOL) showCancel __deprecated_msg("only in OsiriX");
 
 - (void)incrementBy:(double)delta;
 - (void)increment;

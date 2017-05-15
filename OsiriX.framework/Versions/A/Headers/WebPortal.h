@@ -101,7 +101,7 @@
 -(void)deleteSessionId:(NSString*)sid;
 -(WebPortalSession*)sessionForId:(NSString*)sid;
 -(WebPortalSession*)sessionForUsername:(NSString*)username token:(NSString*)token;
--(void)clearSessions;
+-(void)clearSessions __deprecated_msg("only in OsiriX");
 -(id)sessionForUsername:(NSString*)username token:(NSString*)token doConsume: (BOOL) doConsume;
 
 -(NSString*)URL;

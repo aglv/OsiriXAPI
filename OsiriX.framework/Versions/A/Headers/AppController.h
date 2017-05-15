@@ -120,7 +120,8 @@ extern NSString* getMacAddress(void);
 	IBOutlet NSMenu					*othersMenu;
 	IBOutlet NSMenu					*dbMenu;
     IBOutlet NSMenu					*reportMenu;
-	IBOutlet NSWindow				*dbWindow, *emailAddressWindow;
+	IBOutlet NSWindow				*dbWindow;
+    IBOutlet NSWindow				*emailAddressWindow __deprecated_msg("only in OsiriX");
 	IBOutlet NSMenu					*windowsTilingMenuRows, *windowsTilingMenuColumns;
     IBOutlet NSMenu                 *recentStudiesMenu;
 	
@@ -145,25 +146,26 @@ extern NSString* getMacAddress(void);
     
     long updateTotalData, updateReceivedData;
     NSMutableData *updateData;
-    id appNapActivity;
+
+    id appNapActivity __deprecated_msg("only in OsiriX");
     
     // DICOM Definition parser
-    BOOL getCurrentModule, applicationDidFinishLaunching;
+    BOOL getCurrentModule, applicationDidFinishLaunching __deprecated_msg("only in OsiriX");
     NSString *previousContent, *previousOriginal, *currentFile, *currentModule;
     NSMutableDictionary *DICOMDefinitionDict;
     NSDictionary *currentAttribute;
     NSMutableDictionary *currentIDElements;
 }
 
-@property BOOL checkAllWindowsAreVisibleIsOff, isSessionInactive, showRestartNeeded, applicationDidFinishLaunching;
+@property BOOL checkAllWindowsAreVisibleIsOff, isSessionInactive, showRestartNeeded, applicationDidFinishLaunching __deprecated_msg("only in OsiriX")\;
 @property(readonly) NSMenu *filtersMenu, *recentStudiesMenu, *windowsTilingMenuRows, *windowsTilingMenuColumns;
 @property(readonly) NSNetService* dicomBonjourPublisher;
 @property(readonly) XMLRPCInterface *XMLRPCServer;
 @property(readonly) BonjourPublisher* bonjourPublisher;
 @property(readonly) int lastColumns, lastRows, lastCount;
-@property(retain) id appNapActivity;
+@property(retain) id appNapActivity __deprecated_msg("only in OsiriX");
 
-+ (void) thisFeatureIsNotAvailable: (NSString*) stringUrl;
++ (void) thisFeatureIsNotAvailable: (NSString*) stringUrl __deprecated_msg("only in OsiriX");
 + (BOOL) isFDACleared;
 + (BOOL) willExecutePlugin;
 + (BOOL) willExecutePlugin:(id) filter;
@@ -172,10 +174,9 @@ extern NSString* getMacAddress(void);
 + (BOOL) hasMacOSXLeopard;
 + (BOOL) hasOSXElCapitan;
 + (BOOL) hasOSXYosemite;
-+ (BOOL) hasMacOSSierra;
-+ (BOOL) hasMacOSSierra10122;
-+ (BOOL) hasMacOSX: (NSString*) vers;
-+ (BOOL) isOSXYosemite;
++ (BOOL) hasMacOSSierra __deprecated_msg("only in OsiriX");
++ (BOOL) hasMacOSSierra10122 __deprecated_msg("only in OsiriX");
++ (BOOL) hasMacOSX: (NSString*) vers __deprecated_msg("only in OsiriX");
 + (int) isUnsupportedOS;
 + (BOOL) hasMacOSXMaverick;
 + (NSArray*) IPv4Address;
@@ -183,9 +184,9 @@ extern NSString* getMacAddress(void);
 + (NSString*) getRK;
 + (void) restartOsiriX;
 + (NSDictionary*) loadRegistrationDictionary;
-+ (NSImage*) webBrowserIcon;
-+ (NSData*) encodeData:(NSData*) dataIn;
-+ (NSData*) decodeData:(NSData*) dataIn;
++ (NSImage*) webBrowserIcon __deprecated_msg("only in OsiriX");
++ (NSData*) encodeData:(NSData*) dataIn __deprecated_msg("only in OsiriX");
++ (NSData*) decodeData:(NSData*) dataIn __deprecated_msg("only in OsiriX");
 
 #pragma mark-
 #pragma mark initialization of the main event loop singleton
@@ -212,7 +213,7 @@ extern NSString* getMacAddress(void);
 #pragma mark HTML Templates
 + (void)checkForHTMLTemplates __deprecated;
 + (BOOL) FPlistForKey: (NSString*) k;
-+ (long) longForFPlistForKey: (NSString*) k;
++ (long) longForFPlistForKey: (NSString*) k __deprecated_msg("only in OsiriX");
 
 #pragma mark-
 #pragma mark  Server management
@@ -287,7 +288,7 @@ extern NSString* getMacAddress(void);
 + (void) setUSETOOLBARPANEL: (BOOL) b;
 + (NSRect) usefullRectForScreen: (NSScreen*) screen;
 + (NSArray*) sortObjects: (NSArray*) objects accordingToSeriesDescriptionsArray: (NSArray*) seriesDescriptionsOrder;
-+ (NSArray*) sortObjects: (NSArray*) objects accordingToSeriesDescriptionsArray: (NSArray*) seriesDescriptionsOrder oneSeriesPerSeriesDescription: (BOOL) oneSeriesPerSeriesDescription;
++ (NSArray*) sortObjects: (NSArray*) objects accordingToSeriesDescriptionsArray: (NSArray*) seriesDescriptionsOrder oneSeriesPerSeriesDescription: (BOOL) oneSeriesPerSeriesDescription __deprecated_msg("only in OsiriX");
 - (NSMutableArray*) orderedWindowsAccordingToPositionByRows: (NSArray*) a;
 - (void) addStudyToRecentStudiesMenu: (NSManagedObjectID*) studyID;
 - (void) loadRecentStudy: (id) sender;
@@ -303,20 +304,20 @@ extern NSString* getMacAddress(void);
 - (NSMenu*) wlwwMenu;
 - (NSMenu*) convMenu;
 - (NSMenu*) clutMenu;
-+ (NSImage*) clutIconForClutName: (NSString*) clutName;
-+ (NSImage*) clutIconForRed: (unsigned char*) redT green:(unsigned char*) greenT blue:(unsigned char*) blueT;
-+ (void) setPopupMenuFont: (NSMenu*) menu;
-+ (void) setPopupMenuFont: (NSMenu*) menu allItems: (BOOL) allItems;
-+ (void) resetPopupMenuFont: (NSMenu*) menu;
-+ (void) resetClutIcons;
-+ (void) resetOpacityIcons;
-+ (NSImage*) opacityIconForOpacityName: (NSString*) opacityName;
++ (NSImage*) clutIconForClutName: (NSString*) clutName __deprecated_msg("only in OsiriX");
++ (NSImage*) clutIconForRed: (unsigned char*) redT green:(unsigned char*) greenT blue:(unsigned char*) blueT __deprecated_msg("only in OsiriX");
++ (void) setPopupMenuFont: (NSMenu*) menu __deprecated_msg("only in OsiriX");
++ (void) setPopupMenuFont: (NSMenu*) menu allItems: (BOOL) allItems __deprecated_msg("only in OsiriX");
++ (void) resetPopupMenuFont: (NSMenu*) menu __deprecated_msg("only in OsiriX");
++ (void) resetClutIcons __deprecated_msg("only in OsiriX");
++ (void) resetOpacityIcons __deprecated_msg("only in OsiriX");
++ (NSImage*) opacityIconForOpacityName: (NSString*) opacityName __deprecated_msg("only in OsiriX");
 - (NSMenu*) workspaceMenu;
-+ (NSImage*) wwwlIconForDcmPix: (DCMPix*) pix ww: (float) ww wl: (float) wl;
-//+ (NSImage*) fusionIconForDcmPix: (DCMPix*) pix mode: (int) mode stack: (int) stack direction: (int) direction;
-+ (NSImage*) convolutionIconForDcmPix: (DCMPix*) pix name: (NSString*) name;
-+ (NSImage*) resizeImageForIcon: (NSImage*) im;
-+ (NSRect) visibleFrameForScreen: (NSScreen*) screen;
++ (NSImage*) wwwlIconForDcmPix: (DCMPix*) pix ww: (float) ww wl: (float) wl __deprecated_msg("only in OsiriX");
+//+ (NSImage*) fusionIconForDcmPix: (DCMPix*) pix mode: (int) mode stack: (int) stack direction: (int) direction __deprecated_msg("only in OsiriX");
++ (NSImage*) convolutionIconForDcmPix: (DCMPix*) pix name: (NSString*) name __deprecated_msg("only in OsiriX");
++ (NSImage*) resizeImageForIcon: (NSImage*) im __deprecated_msg("only in OsiriX");
++ (NSRect) visibleFrameForScreen: (NSScreen*) screen __deprecated_msg("only in OsiriX");
 
 #pragma mark-
 #pragma mark growl

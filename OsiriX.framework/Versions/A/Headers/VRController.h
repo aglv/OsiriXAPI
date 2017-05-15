@@ -202,8 +202,8 @@
 - (float) factor;
 - (void) remove3DPointROI: (ROI*) removedROI;
 - (void) remove3DPoint: (NSNotification*) note;
-- (BOOL) add2DPoint: (float) x : (float) y : (float) z :(float*) mm;
-- (BOOL) add2DPoint: (float) x : (float) y : (float) z :(float*) mm :(RGBColor) rgb;
+- (BOOL) add2DPoint: (float) x : (float) y : (float) z :(float*) mm __deprecated_msg("BOOL only in OsiriX");
+- (BOOL) add2DPoint: (float) x : (float) y : (float) z :(float*) mm :(RGBColor) rgb __deprecated_msg("BOOL only in OsiriX");
 - (void) remove2DPoint: (float) x : (float) y : (float) z;
 - (NSMutableArray*) roi2DPointsArray;
 - (NSMutableArray*) sliceNumber2DPointsArray;

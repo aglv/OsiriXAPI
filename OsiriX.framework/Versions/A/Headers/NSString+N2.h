@@ -63,7 +63,7 @@
 -(void)splitStringAtCharacterFromSet:(NSCharacterSet*)charset intoChunks:(NSString**)part1 :(NSString**)part2 separator:(unichar*)separator;
 
 -(NSString*)md5;
--(NSString*)sha1;
+-(NSString*)sha1 __deprecated_msg("only in OsiriX");
 @end
 
 @interface NSAttributedString (N2)

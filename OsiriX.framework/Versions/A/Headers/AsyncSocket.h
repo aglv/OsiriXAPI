@@ -184,7 +184,7 @@ typedef enum AsyncSocketError AsyncSocketError;
 	
 	long theUserData;
 }
-+ (unsigned long) asyncSocketCounter;
++ (unsigned long) asyncSocketCounter __deprecated_msg("only in OsiriX");
 - (id)init;
 - (id)initWithDelegate:(id)delegate;
 - (id)initWithDelegate:(id)delegate userData:(long)userData;

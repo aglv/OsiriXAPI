@@ -84,11 +84,12 @@ extern "C"
 //	planar configuration
 	long				planarConf;
     double				pixelSpacingX, pixelSpacingY, pixelRatio, estimatedRadiographicMagnificationFactor;
-	BOOL				pixelSpacingFromUltrasoundRegions, dontCorrectMagnification;
+    BOOL				pixelSpacingFromUltrasoundRegions;
+    BOOL                dontCorrectMagnification __deprecated_msg("only in OsiriX");
 
 // RT DOSE
-    double              doseGridScaling;
-    NSString            *doseUnit, *doseType;
+    double              doseGridScaling __deprecated_msg("only in OsiriX");
+    NSString            *doseUnit __deprecated_msg("only in OsiriX"), *doseType __deprecated_msg("only in OsiriX");
     
 //	photointerpretation
 	BOOL				isRGB, inverseVal;
@@ -275,8 +276,8 @@ Note setter is different to not break existing usage. :-( */
 @property(readonly) short stack, stackMode;
 @property BOOL generated;
 @property(retain) NSString *generatedName;
-@property(retain) NSString *sourceFile, *doseUnit, *doseType;
-@property double doseGridScaling;
+@property(retain) NSString *sourceFile, *doseUnit __deprecated_msg("only in OsiriX"), *doseType __deprecated_msg("only in OsiriX");
+@property double doseGridScaling __deprecated_msg("only in OsiriX");
 
 @property(readonly) NSArray *VOILUT_tables;
 
@@ -485,7 +486,7 @@ Note setter is different to not break existing usage. :-( */
 - (long) maskID;
 - (void) maskTime:(float)newMaskTime;
 - (float) maskTime;
-- (void) convertExternalOwnedtoSelfOwned;
+- (void) convertExternalOwnedtoSelfOwned __deprecated_msg("only in OsiriX");
 - (BOOL) hasOrientation;
 - (void) getDataFromNSImage:(NSImage*) otherImage;
 - (NSPoint) originDeltaWith:(DCMPix*) pix1;
@@ -640,7 +641,7 @@ Note setter is different to not break existing usage. :-( */
 
 /** Sets the ThickSlabController */
 - (void) setThickSlabController:( ThickSlabController*) ts;
-- (ThickSlabController*) thickSlabController;
+- (ThickSlabController*) thickSlabController __deprecated_msg("only in OsiriX");
 
 /** Sets the fixed8bitsWLWW flag */
 - (void) setFixed8bitsWLWW:(BOOL) f;

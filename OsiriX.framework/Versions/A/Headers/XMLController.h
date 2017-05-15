@@ -58,7 +58,7 @@
 	
 	BOOL						dontListenToIndexChange;
     NSMutableArray              *modificationsToApplyArray, *modifiedFields, *modifiedValues;
-    NSMutableDictionary         *cache;
+    NSMutableDictionary         *cache __deprecated_msg("only in OsiriX");
     
     DICOMFieldMenu *DICOMField;
     NSString *addDICOMFieldTextField;
@@ -66,7 +66,7 @@
 
 @property (retain) NSString *addDICOMFieldTextField;
 @property (retain) DICOMFieldMenu *DICOMField;
-@property int editingLevel;
+@property int editingLevel __deprecated_msg("only in OsiriX");
 
 - (BOOL) modificationsToApply;
 

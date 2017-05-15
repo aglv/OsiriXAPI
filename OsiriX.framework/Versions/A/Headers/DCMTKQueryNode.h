@@ -22,7 +22,7 @@
 @interface DCMTKQueryNode : DCMTKServiceClassUser <NSCopying, NSURLSessionDelegate>
 {
 	NSMutableArray *_children;
-    NSString *childrenSynchronized;
+    NSString *childrenSynchronized __deprecated_msg("only in OsiriX");
     
 	NSString *_uid;
 	NSString *_theDescription;
@@ -49,12 +49,12 @@
     NSMutableDictionary *miscDictionary;
     DcmDataset *originalDataset;
     
-    NSMutableData *wadoRSData;
-    unsigned long wadoRSSize, wadoRSReceivedSize;
-    BOOL wadoRSConnectionActive;
-    NSString *incomingPath, *wadoRSBoundary;
-    NSThread *mainThread;
-    NSTimeInterval childrenTimeInterval;
+    NSMutableData *wadoRSData __deprecated_msg("only in OsiriX");
+    unsigned long wadoRSSize __deprecated_msg("only in OsiriX"), wadoRSReceivedSize __deprecated_msg("only in OsiriX");
+    BOOL wadoRSConnectionActive __deprecated_msg("only in OsiriX");
+    NSString *incomingPath __deprecated_msg("only in OsiriX"), *wadoRSBoundary __deprecated_msg("only in OsiriX");
+    NSThread *mainThread __deprecated_msg("only in OsiriX");
+    NSTimeInterval childrenTimeInterval __deprecated_msg("only in OsiriX");
 }
 
 @property( readonly) DcmDataset *originalDataset;
@@ -64,14 +64,14 @@
 @property BOOL isAutoRetrieve;
 @property BOOL noSmartMode;
 @property NSUInteger countOfSuboperations, countOfSuccessfulSuboperations;
-@property (retain) NSString *abstractSyntax, *incomingPath, *wadoRSBoundary;
+@property (retain) NSString *abstractSyntax, *incomingPath __deprecated_msg("only in OsiriX"), *wadoRSBoundary __deprecated_msg("only in OsiriX");
 
-+ (NSURLSession*) dicomWebURLSession;
++ (NSURLSession*) dicomWebURLSession __deprecated_msg("only in OsiriX");
 
-+ (void) errorMessage:(NSArray*) msg;
-+ (void) errorURL:(NSArray*) msg;
++ (void) errorMessage:(NSArray*) msg __deprecated_msg("only in OsiriX");
++ (void) errorURL:(NSArray*) msg __deprecated_msg("only in OsiriX");
 
-+ (NSString*) boundaryFromHeaders: (NSDictionary*) headers;
++ (NSString*) boundaryFromHeaders: (NSDictionary*) headers __deprecated_msg("only in OsiriX");
 
 + (id)queryNodeWithDataset:(DcmDataset *)dataset
 			callingAET:(NSString *)myAET  

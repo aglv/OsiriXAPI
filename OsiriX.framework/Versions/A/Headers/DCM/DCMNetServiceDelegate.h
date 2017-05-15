@@ -16,8 +16,8 @@ enum
 {
 	CMOVERetrieveMode = 0,
 	CGETRetrieveMode = 1,
-	WADORetrieveMode = 2,
-    WADORSRetrieveMode = 3
+	WADORetrieveMode = 2 __deprecated_msg("only in OsiriX"),
+    WADORSRetrieveMode = 3 __deprecated_msg("only in OsiriX")
 };
 
 #import <Cocoa/Cocoa.h>
@@ -28,7 +28,7 @@ enum
 	NSNetServiceBrowser *_dicomNetBrowser;
 	NSMutableArray *_dicomServices;
 	NSNetService *publisher;
-    BOOL browserRunning;
+    BOOL browserRunning __deprecated_msg("only in OsiriX");
 }
 + (NSString*) gethostnameAndPort: (int*) port forService:(NSNetService*) sender;
 + (NSArray *) DICOMServersList;

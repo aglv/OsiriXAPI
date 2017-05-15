@@ -30,7 +30,7 @@
 -(NSImage*)imageByScalingProportionallyToSize:(NSSize)targetSize;
 -(NSImage*)imageByScalingProportionallyToSizeUsingNSImage:(NSSize)targetSize;
 -(NSImage*)imageByScalingProportionallyToSize:(NSSize)targetSize retinaSupport: (BOOL) retinaSupport;
--(NSImage*)imageByScalingToSize:(NSSize)targetSize retinaSupport: (BOOL) retinaSupport proportionally: (BOOL) proportionally;
+-(NSImage*)imageByScalingToSize:(NSSize)targetSize retinaSupport: (BOOL) retinaSupport proportionally: (BOOL) proportionally __deprecated_msg("only in OsiriX");
 -(NSImage*)imageByScalingProportionallyUsingNSImage:(float)ratio;
 -(NSData*)getDataOfType:(NSBitmapImageFileType)type compressionFactor:(float)factor;
 

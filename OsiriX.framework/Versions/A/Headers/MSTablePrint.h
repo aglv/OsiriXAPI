@@ -25,6 +25,7 @@
 
 #define LEVELPREFIX @"  "
 
+__deprecated_msg("only in OsiriX")
 @interface MSTablePrint : NSObject {
     NSTextTable *table;
     NSTextAlignment alignment;

@@ -15,6 +15,7 @@
 #import <Cocoa/Cocoa.h>
 #import "ViewerController.h"
 
+__deprecated_msg("only in OsiriX")
 @interface KeyImagesWindowController : NSWindowController
 {
     IBOutlet NSScrollView *scrollView;

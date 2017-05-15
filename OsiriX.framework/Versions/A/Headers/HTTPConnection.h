@@ -38,7 +38,7 @@
 	NSMutableArray *responseDataSizes;
 }
 +(NSString*) countryForIP: (NSString*) ip;
-+ (NSArray*) recentNonces;
++ (NSArray*) recentNonces __deprecated_msg("only in OsiriX");
 
 - (id)initWithAsyncSocket:(AsyncSocket *)newSocket forServer:(HTTPServer *)myServer;
 

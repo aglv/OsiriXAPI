@@ -96,6 +96,7 @@ typedef enum ToolMode_
 @class StringTexture;
 @class DCMObject;
 @class DCMUSRegion;
+@class MyPoint;
 
 /** \brief Region of Interest
 * 
@@ -134,7 +135,7 @@ typedef enum ToolMode_
 	int				textureUpLeftCornerX,textureUpLeftCornerY,textureDownRightCornerX,textureDownRightCornerY;
 	int				textureFirstPoint;
 	
-	NSMutableArray  *points;
+	NSMutableArray<MyPoint *> *points;
 	NSMutableArray  *zPositions;
 	NSRect			rect;
     float           zLocation;
@@ -190,7 +191,7 @@ typedef enum ToolMode_
 	
 	float			offsetTextBox_x, offsetTextBox_y;
 	
-	NSString		*textualBoxLine1, *textualBoxLine2, *textualBoxLine3, *textualBoxLine4, *textualBoxLine5, *textualBoxLine6, *textualBoxLine7, *textualBoxLine8, *textualBoxLine9, *textualBoxLine10;
+	NSString		*textualBoxLine1, *textualBoxLine2, *textualBoxLine3, *textualBoxLine4, *textualBoxLine5, *textualBoxLine6, *textualBoxLine7, *textualBoxLine8, *textualBoxLine9, *textualBoxLine10 __deprecated_msg("only in OsiriX");
 	
 	BOOL			_displayCalciumScoring;
 	int				_calciumThreshold;
@@ -241,11 +242,11 @@ typedef enum ToolMode_
 @property(nonatomic) int originalIndexForAlias;
 @property(nonatomic) BOOL hidden, locked, selectable, is3DROI;
 @property BOOL isAliased, displayCMOrPixels, mouseOverROI;
-@property(nonatomic, copy) NSString *name, *localFontName;
+@property(nonatomic, copy) NSString *name, *localFontName __deprecated_msg("only in OsiriX");
 @property(retain,nonatomic) NSString *comments;
 @property ToolMode type;
 @property(nonatomic, setter=setROIMode:) ROI_mode ROImode;
-@property(retain) NSMutableArray *points; // Return/set the points state of the ROI
+@property(retain) NSMutableArray<MyPoint *> *points; // Return/set the points state of the ROI
 @property(readonly) NSMutableArray *zPositions;
 @property BOOL clickInTextBox;
 @property(nonatomic, setter=setROIRect:) NSRect rect; // To create a Rectangular ROI (tROI) or an Oval ROI (tOval) or a 2DPoint
@@ -262,7 +263,7 @@ typedef enum ToolMode_
 @property(assign) NSColor* NSColor;
 @property(assign) BOOL isSpline;
 @property(readonly) NSMutableDictionary *peakValue, *isoContour;
-@property float offsetTextBox_x, offsetTextBox_y, localFontHeight, localFontSize;
+@property float offsetTextBox_x, offsetTextBox_y, localFontHeight __deprecated_msg("only in OsiriX"), localFontSize __deprecated_msg("only in OsiriX");
 
 - (void) setNSColor:(NSColor*)color globally:(BOOL)g;
 - (void) setColor:(RGBColor) a globally: (BOOL) g;
@@ -473,9 +474,9 @@ typedef enum ToolMode_
 + (NSString*) stringTypeForROI: (int) i;
 - (NSString*) niceDescription;
 
-- (void) applySettingsToParent;
-- (void) applySettingsFromParent;
-- (BOOL) isIdenticalTo:(ROI*) otherROI;
+- (void) applySettingsToParent __deprecated_msg("only in OsiriX");
+- (void) applySettingsFromParent __deprecated_msg("only in OsiriX");
+- (BOOL) isIdenticalTo:(ROI*) otherROI __deprecated_msg("only in OsiriX");
 - (BOOL) isInside: (int*) pixelCoordinates;
 - (BOOL) isInside: (int*) pixelCoordinates :(float) sliceInterval;
 - (BOOL) containBallROI: (DCMView*) view pixelCoordinates: (double*) pixelCoordinates radius: (double*) radius;
@@ -538,7 +539,7 @@ typedef enum ToolMode_
 - (NSPoint)rotatePoint:(NSPoint)point withAngle:(float)alpha aroundCenter:(NSPoint)center;
 - (void) displayPointUnderMouse:(NSPoint) pt :(float) offsetx :(float) offsety :(float) scale;
 
-@property(retain) NSString *textualBoxLine1, *textualBoxLine2, *textualBoxLine3, *textualBoxLine4, *textualBoxLine5, *textualBoxLine6, *textualBoxLine7, *textualBoxLine8, *textualBoxLine9, *textualBoxLine10;
+@property(retain) NSString *textualBoxLine1, *textualBoxLine2, *textualBoxLine3, *textualBoxLine4, *textualBoxLine5, *textualBoxLine6, *textualBoxLine7, *textualBoxLine8, *textualBoxLine9, *textualBoxLine10 __deprecated_msg("only in OsiriX");
 - (NSArray*) textualBoxLines;
 
 @property NSTimeInterval groupID;

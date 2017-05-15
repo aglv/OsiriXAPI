@@ -8,8 +8,9 @@
 
 #import <Cocoa/Cocoa.h>
 
+__deprecated_msg("only in OsiriX")
 @interface OSIOutlineView : NSOutlineView
 {
-    BOOL protectRecursiveReloadData;
+    BOOL protectRecursiveReloadData __deprecated_msg("only in OsiriX");
 }
 @end

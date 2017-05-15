@@ -26,11 +26,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSString *originHostname;
 @property (nullable, nonatomic, retain) NSString *type;
 @property (nullable, nonatomic, retain) NSString *studyName;
-@property (nullable, nonatomic, retain) NSString *studyUID;
-@property (nullable, nonatomic, retain) NSString *studyAccessionNumber;
+@property (nullable, nonatomic, retain) NSString *studyUID __deprecated_msg("only in OsiriX");
+@property (nullable, nonatomic, retain) NSString *studyAccessionNumber __deprecated_msg("only in OsiriX");
 @property (nullable, nonatomic, retain) NSNumber *numberError;
 @property (nullable, nonatomic, retain) NSString *patientName;
-@property (nullable, nonatomic, retain) NSString *patientID;
+@property (nullable, nonatomic, retain) NSString *patientID __deprecated_msg("only in OsiriX");
 @property (nullable, nonatomic, retain) NSNumber *numberPending;
 @property (nullable, nonatomic, retain) NSDate *endTime;
 @property (nullable, nonatomic, retain) NSNumber *numberImages;

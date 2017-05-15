@@ -123,7 +123,7 @@
 - (void)recordFlyThru;
 
 // 3D Points
-- (BOOL) add2DPoint: (float) x : (float) y : (float) z;
+- (BOOL) add2DPoint: (float) x : (float) y : (float) z __deprecated_msg("BOOL only in OsiriX");
 - (void) remove2DPoint: (float) x : (float) y : (float) z;
 - (void) add3DPoint: (NSNotification*) note;
 - (void) remove3DPointROI: (ROI*) removedROI;

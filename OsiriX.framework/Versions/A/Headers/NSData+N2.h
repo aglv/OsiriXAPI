@@ -24,10 +24,10 @@
 -(NSString*)base64;
 -(NSString*)hex;
 -(NSData*)md5;
-+(NSData*)dataWithShort:(unsigned short)s;
-+(NSData*)dataWithLong:(unsigned long)s;
--(NSString*)dataAsStringWithEncoding: (NSStringEncoding) encoding;
-- (NSArray *)multipartArrayWithBoundary:(NSString *)boundary;
-- (NSArray *)multipartArrayWithBoundary:(NSString *)boundary latestPosition: (unsigned long*) latestPosition;
-- (NSArray *)multipartArray;
++(NSData*)dataWithShort:(unsigned short)s __deprecated_msg("only in OsiriX");
++(NSData*)dataWithLong:(unsigned long)s __deprecated_msg("only in OsiriX");
+-(NSString*)dataAsStringWithEncoding: (NSStringEncoding) encoding __deprecated_msg("only in OsiriX");
+- (NSArray *)multipartArrayWithBoundary:(NSString *)boundary __deprecated_msg("only in OsiriX");
+- (NSArray *)multipartArrayWithBoundary:(NSString *)boundary latestPosition: (unsigned long*) latestPosition __deprecated_msg("only in OsiriX");
+- (NSArray *)multipartArray __deprecated_msg("only in OsiriX");
 @end

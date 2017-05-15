@@ -49,7 +49,7 @@ extern NSString* const SessionDontDisplayUser;
 -(NSString*)newChallenge;
 -(NSString*)challenge;
 -(void)deleteChallenge;
--(NSTimeInterval)mostRecentToken;
+-(NSTimeInterval)mostRecentToken __deprecated_msg("only in OsiriX");
 
 @end
 

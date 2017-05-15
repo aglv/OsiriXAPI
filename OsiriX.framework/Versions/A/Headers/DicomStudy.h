@@ -26,9 +26,9 @@
 	NSString *cachedModalites, *cacheYearOldAcquisition, *cacheYearOld;
     NSColor *cachedColor;
     NSArray *cachedPresentationStates;
-    NSArray *cacheROIs;
-    NSManagedObject *cachedROISRSeries;
-    NSSet *cacheKeyImages;
+    NSArray *cacheROIs __deprecated_msg("only in OsiriX");
+    NSManagedObject *cachedROISRSeries __deprecated_msg("only in OsiriX");
+    NSSet *cacheKeyImages __deprecated_msg("only in OsiriX");
     BOOL reentry;
 }
 
@@ -46,8 +46,8 @@
 @property(nonatomic, retain) NSString* dictateURL;
 @property(nonatomic, retain) NSNumber* expanded;
 @property(nonatomic, retain) NSNumber* hasDICOM;
-@property(nonatomic, retain) NSNumber* hasKeyImages;
-@property(nonatomic, retain) NSNumber* hasROIs;
+@property(nonatomic, retain) NSNumber* hasKeyImages __deprecated_msg("only in OsiriX");
+@property(nonatomic, retain) NSNumber* hasROIs __deprecated_msg("only in OsiriX");
 @property(nonatomic, retain) NSString* id;
 @property(nonatomic, retain) NSString* institutionName;
 @property(nonatomic, retain) NSNumber* lockedStudy;
@@ -124,7 +124,7 @@
 - (void) reapplyAnnotationsFromDICOMSR;
 - (NSComparisonResult) compareName:(DicomStudy*)study;
 - (NSArray*) roiImages;
-- (NSArray*) imagesWithROIs;
+- (NSArray*) imagesWithROIs __deprecated_msg("only in OsiriX");
 - (NSArray*) allSeries;
 - (NSArray*) generateDICOMSCImagesForKeyImages: (BOOL) keyImages andROIImages: (BOOL) ROIImages;
 - (void) setNSColor:(NSColor *)c;
@@ -136,10 +136,10 @@
 - (NSString *)hostname; // Match DCMTKQueryNode
 + (NSArray*) comparativeStudiesForStudy: (id) studySelectedID;
 - (NSArray*) studiesForThisPatient;
-- (BOOL) computeHasROIs;
-- (BOOL) computeHasKeyImages;
-- (NSImage*) thumbnailImage;
-- (NSData*) thumbnail;
+- (BOOL) computeHasROIs __deprecated_msg("only in OsiriX");
+- (BOOL) computeHasKeyImages __deprecated_msg("only in OsiriX");
+- (NSImage*) thumbnailImage __deprecated_msg("only in OsiriX");
+- (NSData*) thumbnail __deprecated_msg("only in OsiriX");
 @end
 
 @interface DicomStudy (CoreDataGeneratedAccessors)

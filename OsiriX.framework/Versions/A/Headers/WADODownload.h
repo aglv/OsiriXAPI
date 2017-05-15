@@ -27,7 +27,7 @@
     NSTimeInterval firstReceivedTime, lastStatusUpdate;
     NSString *baseStatus, *incomingPath;
     NSMutableArray *filesToIndexDirectly;
-    NSThread *mainThread;
+    NSThread *mainThread __deprecated_msg("only in OsiriX");
 }
 
 @property BOOL _abortAssociation, showErrorMessage;

@@ -11,7 +11,7 @@
 + (BOOL)setPasswordForHTTPServer:(NSString *)password;
 
 + (void)createNewIdentity;
-+ (void)createNewIdentityFor: (NSString*) identityName;
++ (void)createNewIdentityFor: (NSString*) identityName __deprecated_msg("only in OsiriX");
 + (NSArray *)SSLIdentityAndCertificates;
 
 + (NSString *)applicationTemporaryDirectory;

@@ -15,6 +15,7 @@ typedef char* DcmDataset;
 typedef char* DcmMetaInfo;
 #endif
 
+__deprecated_msg("only in OsiriX")
 @interface DicomBridge : NSObject
 {
     NSString *originalFilePath; // if available
@@ -72,4 +73,5 @@ typedef char* DcmMetaInfo;
 - (DcmMetaInfo*) dcmMetaInfo: (DcmMetaInfo *) dataset;
 - (DcmDataset*) dcmDataset;
 - (DcmDataset*) dcmDataset: (DcmDataset *) dataset;
+
 @end

@@ -42,7 +42,7 @@ void* sopInstanceUIDEncode( NSString *sopuid);
 	NSString	*extension;
 	NSString	*modality;
 	NSString	*fileType;
-    NSString    *cachedSRPath;
+    NSString    *cachedSRPath __deprecated_msg("only in OsiriX");
     
     NSImage*    _thumbnail;
     
@@ -103,13 +103,13 @@ void* sopInstanceUIDEncode( NSString *sopuid);
 - (void) setInDatabaseFolder:(NSNumber*) f;
 - (NSString*) path;
 - (void) setPath:(NSString*) p;
-- (NSImage*) imageAsScreenCapture:(NSRect)frame annotationsLevel: (annotationsLevel) annotationsLevel;
+- (NSImage*) imageAsScreenCapture:(NSRect)frame annotationsLevel: (annotationsLevel) annotationsLevel __deprecated_msg("only in OsiriX");
 - (NSImage*) imageAsScreenCapture:(NSRect)frame;
 - (NSImage*) imageAsScreenCapture;
 - (NSDictionary*) imageAsDICOMScreenCapture:(DICOMExport*) exporter;
 - (NSDictionary*) imageAsDICOMScreenCapture:(DICOMExport*) exporter exporterForRGB: (DICOMExport*) exporterRGB;
 - (NSArray*) ROIsDescription;
-- (NSArray*) ROIs;
+- (NSArray*) ROIs __deprecated_msg("only in OsiriX");
 - (NSImage*) thumbnailIfAlreadyAvailable;
 - (void) setThumbnail:(NSImage*)image;
 - (NSString*) completePathWithDownload:(BOOL) download supportNonLocalDatabase: (BOOL) supportNonLocalDatabase;

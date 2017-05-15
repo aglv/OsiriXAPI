@@ -34,7 +34,10 @@ typedef struct N3Vector N3Vector;
 // A N3Line is an infinite line throught space
 struct N3Line {
     N3Vector point; // the line goes through this point
-    N3Vector vector; // this is the direction of the line, the line is not valid if this is N3VectorZero, try to keep this of unit length... I wish I would have called this direction...
+    union {
+        N3Vector direction; // this is the direction of the line, the line is not valid if this is N3VectorZero, try to keep this of unit length...
+        N3Vector vector __deprecated; // original name for direction vector
+    };
 };
 typedef struct N3Line N3Line;
 

@@ -24,7 +24,7 @@
     NSString *_studyID;
 }
 
-- (NSString*) patientUID;
+- (NSString*) patientUID __deprecated_msg("removed in OsiriX");
 - (NSNumber*) stateText;
 - (NSString*) studyID;
 - (NSString*) studyInstanceUID;// Match DicomStudy

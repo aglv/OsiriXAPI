@@ -14,10 +14,12 @@
 
 #import <Cocoa/Cocoa.h>
 
+__deprecated_msg("only in OsiriX")
 @interface KeyImagesButtonCell : NSButtonCell
 {
     BOOL rightClick;
 }
+
 @property BOOL rightClick;
 
 @end
