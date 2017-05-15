@@ -9,7 +9,7 @@
 	<key>CFBundleExecutable</key>
 	<string>OsiriXAPI</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.osirix.OsiriXAPI</string>
+	<string>com.osirix.api</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundlePackageType</key>
