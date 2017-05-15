@@ -603,6 +603,7 @@ extern NSString* O2AlbumDragType;
 - (void) refreshMatrix:(id) sender;
 - (void)updateReportToolbarIcon:(NSNotification *)note;
 
+#ifndef OSIRIX_DECOMPRESS
 - (IBAction) exportROIAndKeyImagesAsDICOMSeries: (id) sender __deprecated_msg("only in OsiriX");
 - (IBAction) paste: (id)sender;
 - (IBAction) pasteImageForDicomImage: (DicomImage*) image;
@@ -616,7 +617,7 @@ extern NSString* O2AlbumDragType;
 - (IBAction) attachReport: (id) sender;
 - (IBAction)importRawData:(id)sender;
 - (void) pdfPreview:(id)sender;
-- (IBAction) burnDICOM:(id) sender __deprecated_msg("only in OsiriX");
+- (IBAction) burnDICOM:(id) sender;
 - (IBAction) anonymizeDICOM:(id) sender;
 - (IBAction)retrieveSelectedPODStudies:(id) sender;
 - (void) queryDICOM:(id) sender;

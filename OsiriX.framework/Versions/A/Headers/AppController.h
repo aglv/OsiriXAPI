@@ -157,7 +157,7 @@ extern NSString* getMacAddress(void);
     NSMutableDictionary *currentIDElements;
 }
 
-@property BOOL checkAllWindowsAreVisibleIsOff, isSessionInactive, showRestartNeeded, applicationDidFinishLaunching __deprecated_msg("only in OsiriX")\;
+@property BOOL checkAllWindowsAreVisibleIsOff, isSessionInactive, showRestartNeeded, applicationDidFinishLaunching __deprecated_msg("only in OsiriX");
 @property(readonly) NSMenu *filtersMenu, *recentStudiesMenu, *windowsTilingMenuRows, *windowsTilingMenuColumns;
 @property(readonly) NSNetService* dicomBonjourPublisher;
 @property(readonly) XMLRPCInterface *XMLRPCServer;

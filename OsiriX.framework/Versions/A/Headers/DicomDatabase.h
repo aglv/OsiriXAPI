@@ -26,30 +26,30 @@ extern NSString* const O2ScreenCapturesSeriesName;
 	N2MutableUInteger* _dataFileIndex;
 	NSString* _baseDirPath;
 	NSString* _dataBaseDirPath;
-    NSTimeInterval lastDatabaseDirPathCheck;
-    NSString* _lastDataDirPathCheck;
+    NSTimeInterval lastDatabaseDirPathCheck __deprecated_msg("only in OsiriX");
+    NSString* _lastDataDirPathCheck __deprecated_msg("only in OsiriX");
     NSString* _sourcePath;
 	NSString* _name;
 	NSRecursiveLock* _processFilesLock;
 	NSRecursiveLock* _importFilesFromIncomingDirLock;
 	BOOL _isFileSystemFreeSizeLimitReached;
 	NSTimeInterval _timeOfLastIsFileSystemFreeSizeLimitReachedVerification;
-    NSTimeInterval _lastCleanForFreeSpaceTimeInterval;
+    NSTimeInterval _lastCleanForFreeSpaceTimeInterval __deprecated_msg("only in OsiriX"), _timeOfLastModification __deprecated_msg("removed in OsiriX");
 	char baseDirPathC[4096], incomingDirPathC[4096], tempDirPathC[4096]; // these paths are used from the DICOM listener
     BOOL _isReadOnly, _hasPotentiallySlowDataAccess;
     // compression/decompression
     NSMutableArray* _decompressQueue;
     NSMutableArray* _compressQueue;
     NSThread* _compressDecompressThread;
-    NSMutableArray *compressingSOPs;
+    NSMutableArray *compressingSOPs __deprecated_msg("only in OsiriX");
 	// +Routing
 	NSMutableArray* _routingSendQueues;
 	NSRecursiveLock* _routingLock;
 	// +Clean
 	NSRecursiveLock* _cleanLock;
-    NSString* uniqueTmpfolder;
+    NSString* uniqueTmpfolder __deprecated_msg("only in OsiriX");
     
-    BOOL protectionAgainstReentry;
+    BOOL protectionAgainstReentry __deprecated_msg("only in OsiriX");
     volatile BOOL _deallocating;
 }
 
@@ -64,35 +64,36 @@ extern NSString* const O2ScreenCapturesSeriesName;
 +(DicomDatabase*)defaultDatabase;
 +(DicomDatabase*)databaseAtPath:(NSString*)path;
 +(DicomDatabase*)databaseAtPath:(NSString*)path name:(NSString*)name;
-+(DicomDatabase*)databaseAtPath:(NSString*)path name:(NSString*)name createIfNecessary:(BOOL)create;
++(DicomDatabase*)databaseAtPath:(NSString*)path name:(NSString*)name createIfNecessary:(BOOL)create __deprecated_msg("only in OsiriX");
 +(DicomDatabase*)existingDatabaseAtPath:(NSString*)path;
 +(DicomDatabase*)databaseForContext:(NSManagedObjectContext*)c; // hopefully one day this will be __deprecated
 +(DicomDatabase*)activeLocalDatabase;
 +(void)setActiveLocalDatabase:(DicomDatabase*)ldb;
 
-@property(readonly,retain) NSString* baseDirPath, *uniqueTmpfolder; // OsiriX Data
+@property(readonly,retain) NSString* baseDirPath, *uniqueTmpfolder __deprecated_msg("only in OsiriX"); // OsiriX Data
 @property(readonly,retain) NSString* dataBaseDirPath; // depends on the content of the file at baseDirPath/DBFOLDER_LOCATION
 @property(readwrite,retain,nonatomic) NSString* name, *sourcePath;
+@property(readwrite) NSTimeInterval timeOfLastModification __deprecated_msg("removed in OsiriX");
 @property(nonatomic) BOOL isReadOnly;
-@property(readonly) NSMutableArray *compressingSOPs;
+@property(readonly) NSMutableArray *compressingSOPs __deprecated_msg("only in OsiriX");
 @property BOOL hasPotentiallySlowDataAccess;
-@property (nonatomic) NSTimeInterval timeOfLastIsFileSystemFreeSizeLimitReachedVerification, lastCleanForFreeSpaceTimeInterval;
-@property (nonatomic) BOOL isFileSystemFreeSizeLimitReached;
+@property (nonatomic) NSTimeInterval timeOfLastIsFileSystemFreeSizeLimitReachedVerification __deprecated_msg("only in OsiriX"), lastCleanForFreeSpaceTimeInterval __deprecated_msg("only in OsiriX");
+@property (nonatomic) BOOL isFileSystemFreeSizeLimitReached __deprecated_msg("only in OsiriX");
 
 -(BOOL)isLocal;
--(NSArray*)localObjectsForDistantObject: (DCMTKQueryNode*) o;
--(id)localObjectForDistantObject: (DCMTKQueryNode*) o;
--(NSArray*)childrenArray: (id)item onlyImages: (BOOL)onlyImages;
--(NSArray*)childrenArray: (id)item onlyImages: (BOOL)onlyImages retrieveDistant: (BOOL) retrieveDistant;
--(NSArray*) childrenArray: (id)item onlyImages: (BOOL)onlyImages retrieveDistant: (BOOL) retrieveDistant includeLocalizers: (BOOL) includeLocalizers;
--(NSArray*)childrenArray: (id) item;
--(NSArray*)imagesArray: (id) item preferredObject: (int) preferredObject onlyImages:(BOOL) onlyImages;
--(NSArray*)imagesArray: (id) item preferredObject: (int) preferredObject;
--(NSArray*)imagesArray: (id) item onlyImages:(BOOL) onlyImages;
--(NSArray*)imagesArray: (id) item;
--(NSArray*)imagesPathArray: (id) item;
+-(NSArray*)localObjectsForDistantObject: (DCMTKQueryNode*) o __deprecated_msg("only in OsiriX");
+-(id)localObjectForDistantObject: (DCMTKQueryNode*) o __deprecated_msg("only in OsiriX");
+-(NSArray*)childrenArray: (id)item onlyImages: (BOOL)onlyImages __deprecated_msg("only in OsiriX");
+-(NSArray*)childrenArray: (id)item onlyImages: (BOOL)onlyImages retrieveDistant: (BOOL) retrieveDistant __deprecated_msg("only in OsiriX");
+-(NSArray*) childrenArray: (id)item onlyImages: (BOOL)onlyImages retrieveDistant: (BOOL) retrieveDistant includeLocalizers: (BOOL) includeLocalizers __deprecated_msg("only in OsiriX");
+-(NSArray*)childrenArray: (id) item __deprecated_msg("only in OsiriX");
+-(NSArray*)imagesArray: (id) item preferredObject: (int) preferredObject onlyImages:(BOOL) onlyImages __deprecated_msg("only in OsiriX");
+-(NSArray*)imagesArray: (id) item preferredObject: (int) preferredObject __deprecated_msg("only in OsiriX");
+-(NSArray*)imagesArray: (id) item onlyImages:(BOOL) onlyImages __deprecated_msg("only in OsiriX");
+-(NSArray*)imagesArray: (id) item __deprecated_msg("only in OsiriX");
+-(NSArray*)imagesPathArray: (id) item __deprecated_msg("only in OsiriX");
 
--(NSArray*) validateStudiesPatientUIDs: (NSArray*) distantStudies;
+-(NSArray*) validateStudiesPatientUIDs: (NSArray*) distantStudies __deprecated_msg("only in OsiriX");
 -(DataNodeIdentifier*)dataNodeIdentifier;
 
 #pragma mark Entities
@@ -125,6 +126,9 @@ extern NSString* const DicomDatabaseLogEntryEntityName;
 -(NSString*)dumpDirPath;
 -(NSString*)pagesDirPath;
 -(NSString*)htmlTemplatesDirPath;
+- (NSString *)statesDirPath __deprecated_msg("removed in OsiriX");
+- (NSString *)clutsDirPath __deprecated_msg("removed in OsiriX");
+- (NSString *)presetsDirPath __deprecated_msg("removed in OsiriX");
 // these paths are used from the DICOM listener
 -(const char*)baseDirPathC;
 -(const char*)incomingDirPathC;
@@ -132,7 +136,7 @@ extern NSString* const DicomDatabaseLogEntryEntityName;
 
 -(NSUInteger)computeDataFileIndex; // this method should be private, but is declared because called from deprecated api
 -(NSString*)uniquePathForNewDataFileWithExtension:(NSString*)ext;
--(NSString*)uniquePathForNewDataFileWithExtension:(NSString*)ext forStore: (NSPersistentStore*) store;
+-(NSString*)uniquePathForNewDataFileWithExtension:(NSString*)ext forStore: (NSPersistentStore*) store __deprecated_msg("only in OsiriX");
 
 #pragma mark Albums
 -(void)addDefaultAlbums;
@@ -141,13 +145,13 @@ extern NSString* const DicomDatabaseLogEntryEntityName;
 -(void) saveAlbumsToPath:(NSString*) path;
 -(void) loadAlbumsFromPath:(NSString*) path;
 -(void) addStudies:(NSArray*)dicomStudies toAlbum:(DicomAlbum*)dicomAlbum;
--(NSArray*) reindexObjects: (NSArray*) objects;
+-(NSArray*) reindexObjects: (NSArray*) objects __deprecated_msg("only in OsiriX");
 -(void) turnImagesAndSeriesIntoFault __deprecated_msg("only in OsiriX");
 
 #pragma mark Add files
 -(NSArray*)addFilesAtPaths:(NSArray*)paths;
 -(NSArray*)addFilesAtPaths:(NSArray*)paths postNotifications:(BOOL)postNotifications;
--(NSArray*)addFilesAtPaths:(NSArray*)paths postNotifications:(BOOL)postNotifications dicomOnly:(BOOL)dicomOnly;
+-(NSArray*)addFilesAtPaths:(NSArray*)paths postNotifications:(BOOL)postNotifications dicomOnly:(BOOL)dicomOnly __deprecated_msg("only in OsiriX");
 -(NSArray*)addFilesAtPaths:(NSArray*)paths postNotifications:(BOOL)postNotifications dicomOnly:(BOOL)dicomOnly rereadExistingItems:(BOOL)rereadExistingItems;	
 -(NSArray*)addFilesAtPaths:(NSArray*)paths postNotifications:(BOOL)postNotifications dicomOnly:(BOOL)dicomOnly rereadExistingItems:(BOOL)rereadExistingItems generatedByOsiriX:(BOOL)generatedByOsiriX;
 -(NSArray*)addFilesAtPaths:(NSArray*)paths postNotifications:(BOOL)postNotifications dicomOnly:(BOOL)dicomOnly rereadExistingItems:(BOOL)rereadExistingItems generatedByOsiriX:(BOOL)generatedByOsiriX returnArray: (BOOL) returnArray;
@@ -156,10 +160,12 @@ extern NSString* const DicomDatabaseLogEntryEntityName;
 -(NSArray*)addFilesDescribedInDictionaries:(NSArray*)dicomFilesArray postNotifications:(BOOL)postNotifications rereadExistingItems:(BOOL)rereadExistingItems generatedByOsiriX:(BOOL)generatedByOsiriX; // returns NSArray<NSManagedObjectID>
 -(NSArray*)addFilesDescribedInDictionaries:(NSArray*)dicomFilesArray postNotifications:(BOOL)postNotifications rereadExistingItems:(BOOL)rereadExistingItems generatedByOsiriX:(BOOL)generatedByOsiriX returnArray: (BOOL) returnArray;
 -(NSArray*)addFilesDescribedInDictionaries:(NSArray*)dicomFilesArray postNotifications:(BOOL)postNotifications rereadExistingItems:(BOOL)rereadExistingItems generatedByOsiriX:(BOOL)generatedByOsiriX importedFiles: (BOOL) importedFiles returnArray: (BOOL) returnArray;
--(NSArray*)addFilesAtPaths:(NSArray*)paths postNotifications:(BOOL)postNotifications dicomOnly:(BOOL)dicomOnly rereadExistingItems:(BOOL)rereadExistingItems generatedByOsiriX:(BOOL)generatedByOsiriX importedFiles: (BOOL) importedFiles returnArray: (BOOL) returnArray dicomFileDictionary: (NSArray*) dicomFilesArray;
+-(NSArray*)addFilesAtPaths:(NSArray*)paths postNotifications:(BOOL)postNotifications dicomOnly:(BOOL)dicomOnly rereadExistingItems:(BOOL)rereadExistingItems generatedByOsiriX:(BOOL)generatedByOsiriX importedFiles: (BOOL) importedFiles returnArray: (BOOL) returnArray dicomFileDictionary: (NSArray*) dicomFilesArray __deprecated_msg("only in OsiriX");
+
 #pragma mark Incoming
+-(BOOL)isFileSystemFreeSizeLimitReached __deprecated_msg("removed in OsiriX");
 +(BOOL)checkIfFileSystemFreeSizeLimitReachedAtPath: (NSString*) path __deprecated_msg("only in OsiriX");
--(BOOL)checkIfFileSystemFreeSizeLimitReached;
+-(BOOL)checkIfFileSystemFreeSizeLimitReached __deprecated_msg("only in OsiriX");
 -(BOOL) hasFilesToImport;
 -(NSInteger)importFilesFromIncomingDir;
 -(NSInteger)importFilesFromIncomingDir: (NSNumber*) showGUI;
@@ -190,7 +196,7 @@ extern NSString* const DicomDatabaseLogEntryEntityName;
 -(void)rebuildSqlFile;
 -(void)checkForHtmlTemplates;
 
-- (NSSet*) deleteObjectIDs: (NSArray*) objectsToDelete;
+- (NSSet*) deleteObjectIDs: (NSArray*) objectsToDelete __deprecated_msg("only in OsiriX");
 
 // methods to overload when one needs to ask for confirmation about autorouting
 -(BOOL)allowAutoroutingWithPostNotifications:(BOOL)postNotifications rereadExistingItems:(BOOL)rereadExistingItems;
