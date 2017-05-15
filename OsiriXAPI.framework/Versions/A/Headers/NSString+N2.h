@@ -19,15 +19,17 @@
 
 @interface NSString (N2)
 
+-(NSString*)stringBetweenString:(NSString*) aStr andString:(NSString*) bStr;
+-(NSArray*)stringsBetweenString:(NSString*) aStr andString:(NSString*) bStr;
 -(NSString*)markedString;
--(NSString *)stringByTruncatingToLength:(NSInteger)theWidth;
+-(NSString*)stringByTruncatingToLength:(NSInteger)theWidth;
 +(NSString*)sizeString:(unsigned long long)size;
 +(NSString*)timeString:(NSTimeInterval)time;
 +(NSString*)timeString:(NSTimeInterval)time maxUnits:(NSInteger)maxUnits;
 +(NSString*)dateString:(NSTimeInterval)date;
 -(NSString*)stringByTrimmingStartAndEnd;
 
--(NSString*)urlEncodedString __deprecated; // use 
+-(NSString*)urlEncodedString;
 -(NSString*)xmlEscapedString;
 -(NSString*)xmlUnescapedString;
 
@@ -44,10 +46,11 @@
 
 -(BOOL)contains:(NSString*)str;
 
+-(NSString*)stringAfterString:(NSString*) aStr;
 -(NSString*)stringByPrefixingLinesWithString:(NSString*)prefix;
 +(NSString*)stringByRepeatingString:(NSString*)string times:(NSUInteger)times;
 -(NSString*)suspendedString;
-
+-(BOOL)validURL;
 -(NSRange)range;
 
 //-(NSString*)resolvedPathString;

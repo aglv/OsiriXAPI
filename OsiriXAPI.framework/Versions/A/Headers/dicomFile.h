@@ -55,6 +55,7 @@
 + (BOOL) isDICOMFile:(NSString *) file compressed:(BOOL*) compressed; /**< Test for DICOM file format, returns YES for compressed BOOL if Transfer syntax is compressed. */
 + (BOOL) isDICOMFile:(NSString *) file compressed:(BOOL*) compressed image:(BOOL*) image;
 + (BOOL) isDICOMFile:(NSString *) file compressed:(BOOL*) compressed image:(BOOL*) image SOP:(NSString**) SOP;
++ (BOOL) isDICOMFile:(NSString *) file compressed:(BOOL*) compressed transferSyntax:(int*) ts image:(BOOL*) image SOP:(NSString**) SOP;
 + (BOOL) isXMLDescriptedFile:(NSString *) file; /**< Test for XML descripted  file format */
 + (BOOL) isXMLDescriptorFile:(NSString *) file; /**< Test for XML descriptor file format. Fake DICOM for other files with XML descriptor*/
 + (void) setFilesAreFromCDMedia: (BOOL) f; /**< Set flag for filesAreFromCDMedia */
@@ -72,7 +73,7 @@
 + (char *) replaceBadCharacter:(char *) str encoding: (NSStringEncoding) encoding; /**< Same as NSreplaceBadCharacter, but using char* and encodings */
 + (NSString *) stringWithBytes:(char *) str encodings: (NSStringEncoding*) encoding; /**< Convert char* str with NSStringEncoding* encoding to NSString */ 
 + (NSString *) stringWithBytes:(char *) str encodings: (NSStringEncoding*) encoding replaceBadCharacters: (BOOL) replace; /**< Convert char* str with NSStringEncoding* encoding to NSString */ 
-
++ (BOOL) isModalityInCombine: (NSString*) modality;
 - (NSPDFImageRep*) PDFImageRep; /**< Get a PDFImageRep from DICOM SR file */
 - (long) NoOfFrames; /**< Number of frames in the file */
 - (long) getWidth; /**<  Returns image width */

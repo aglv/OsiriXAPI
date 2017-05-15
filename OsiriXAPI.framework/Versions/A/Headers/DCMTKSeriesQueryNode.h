@@ -17,6 +17,7 @@
 #import "DCMTKQueryNode.h"
 #import "DCMTKStudyQueryNode.h"
 
+#ifndef OSIRIX_LIGHT
 /** \brief Series level DCMTKQueryNode */
 @interface DCMTKSeriesQueryNode : DCMTKQueryNode <NSCopying>
 {
@@ -32,3 +33,4 @@
 - (NSString*) seriesDICOMUID;
 
 @end
+#endif

@@ -68,6 +68,7 @@ enum SendServerType { osirixServer, offisServer };
 + (void) sendFiles:(NSArray *)files;
 + (void) sendFiles:(NSArray *)files toNode: (NSDictionary*) node;
 + (void) sendFiles:(NSArray *)files toNode: (NSDictionary*) node usingSyntax: (int) syntax;
++ (NSArray*) changeTransferSyntaxTo: (int) newSyntax quality: (int) opt_Quality forFiles: (NSArray*) filesToSend tmpFiles:(NSArray**) tmpFiles;
 - (void) sendDICOMFilesOffis:(NSDictionary *) dict;
 + (int) sendControllerObjects;
 - (id)initWithFiles:(NSArray *)files;

@@ -22,11 +22,11 @@
 #ifndef OFTEMPF_H
 #define OFTEMPF_H
 
-#include "dcmtk/config/osconfig.h"   /* make sure OS specific configuration is included first */
+#include "osconfig.h"   /* make sure OS specific configuration is included first */
 
-#include "dcmtk/ofstd/ofcond.h"
-#include "dcmtk/ofstd/ofstring.h"
-#include "dcmtk/ofstd/oftypes.h"     /* for OFBool */
+#include "ofcond.h"
+#include "ofstring.h"
+#include "oftypes.h"     /* for OFBool */
 
 BEGIN_EXTERN_C
 #ifdef HAVE_SYS_STAT_H

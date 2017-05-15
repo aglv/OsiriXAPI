@@ -137,12 +137,12 @@
 #define OFXML_H
 
 // DCMTK: we need this header file at the beginning of each file
-#include "dcmtk/config/osconfig.h"
+#include "osconfig.h"
 
 // DCMTK: we want to use our own standard include wrappers
 #define INCLUDE_CSTDLIB
-#include "dcmtk/ofstd/ofstdinc.h"
-#include "dcmtk/ofstd/ofdefine.h"
+#include "ofstdinc.h"
+#include "ofdefine.h"
 
 #ifdef _UNICODE
 // If you comment the next "define" line then the library will never "switch to" _UNICODE (wchar_t*) mode (16/32 bits per characters).

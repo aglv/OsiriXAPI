@@ -32,5 +32,9 @@
 -(void)saveReportAsDicomAtPath:(NSString*)path;
 -(NSString*)saveReportAsDicomInTmp;
 -(BOOL) addToReportROIs:(BOOL) rois andKeyImages:(BOOL) keys;
+- (BOOL) addToReportCurrentImage;
++(NSString*) imageBlockForDicomImage: (DicomImage*) image;
++(NSString*) imageBlockForImage: (NSImage*) im withDicomImage: (DicomImage*) image;
 +(NSArray*) acceptedExtensions;
+- (NSString*) HTMLReport;
 @end

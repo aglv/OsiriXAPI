@@ -36,6 +36,7 @@
 
 // forward declarations
 class DcmItem;
+class DcmJsonFormat;
 class DcmOutputStream;
 class DcmInputStream;
 class DcmWriteCache;
@@ -199,6 +200,17 @@ extern DCMTK_DCMDATA_EXPORT OFGlobal<OFBool> dcmIgnoreFileMetaInformationGroupLe
  */
 extern DCMTK_DCMDATA_EXPORT OFGlobal<OFBool> dcmReplaceWrongDelimitationItem; /* default OFFalse */
 
+/** This flag enables the "silent" conversion of illegal OB/OW elements
+ *  with undefined length (other than PixelData) to SQ elements while reading.
+ *  The default behaviour is to reject such elements with an error message.
+ */
+extern DCMTK_DCMDATA_EXPORT OFGlobal<OFBool> dcmConvertUndefinedLengthOBOWtoSQ; /* default OFFalse */
+
+/** This flag enables the "silent" conversion of incorrectly encoded
+ *  VOI LUT Sequence elements with VR=OW and explicit length into a sequence.
+ *  This incorrect encoding was detected "in the wild" in 2016.
+ */
+extern DCMTK_DCMDATA_EXPORT OFGlobal<OFBool> dcmConvertVOILUTSequenceOWtoSQ; /* default OFFalse */
 
 /** Abstract base class for most classes in module dcmdata. As a rule of thumb,
  *  everything that is either a dataset or that can be identified with a DICOM
@@ -350,6 +362,7 @@ class DCMTK_DCMDATA_EXPORT DcmObject
 
     /** set parent of this object. NULL means no parent.
      *  NB: This method is used by derived classes for internal purposes only.
+     *  @param parent pointer to the parent of this object
      */
     inline void setParent(DcmObject *parent) { Parent = parent; }
 
@@ -453,6 +466,14 @@ class DCMTK_DCMDATA_EXPORT DcmObject
     virtual OFCondition writeXML(STD_NAMESPACE ostream&out,
                                  const size_t flags = 0);
 
+    /** write object in JSON format to a stream
+     *  @param out output stream to which the JSON document is written
+     *  @param format used to format and customize the output
+     *  @return status, always returns EC_Illegal Call
+     */
+    virtual OFCondition writeJson(STD_NAMESPACE ostream&out,
+                                  DcmJsonFormat &format);
+
     /** special write method for creation of digital signatures (abstract)
      *  @param outStream DICOM output stream
      *  @param oxfer output transfer syntax
@@ -508,11 +529,7 @@ class DCMTK_DCMDATA_EXPORT DcmObject
      *  @param autocorrect correct value length if OFTrue
      *  @return status, EC_Normal if value length is correct, an error code otherwise
      */
-    
-#ifdef verify
 #undef verify
-#endif
-    
     virtual OFCondition verify(const OFBool autocorrect = OFFalse) = 0;
 
     /** this method is only used in container classes derived from this class,

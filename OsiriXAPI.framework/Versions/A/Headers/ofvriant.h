@@ -22,7 +22,7 @@
 #ifndef OFVARIANT_H
 #define OFVARIANT_H
 
-#include "dcmtk/config/osconfig.h"    /* make sure OS specific configuration is included first */
+#include "osconfig.h"    /* make sure OS specific configuration is included first */
 
 /** @file
  *  Declares OFvariant and related functionality.
@@ -376,13 +376,13 @@ ReturnType OFvisit( FN&& fn, const OFvariant<Alternatives...>& v )
 #elif !defined(DOXYGEN) // fallback implementation
 
 // Include the actual implementation (that emulates variadic templates)
-#include "dcmtk/ofstd/variadic/variant.h"
+#include "variant.h"
 
 #else // NOT C++11 && NOT DOXYGEN
 
 /** A class template that represents a type-safe union.
- *  <b><em>#include</em> "dcmtk/ofstd/ofvriant.h"</b> for using this class<br>
- *  @headerfile ofvriant.h "dcmtk/ofstd/ofvriant.h"
+ *  <b><em>#include</em> "ofvriant.h"</b> for using this class<br>
+ *  @headerfile ofvriant.h "ofvriant.h"
  *  @tparam Alternatives a set of types that may be stored in this variant. All types must be (possibly
  *    cv-qualified) object types.
  *  @details

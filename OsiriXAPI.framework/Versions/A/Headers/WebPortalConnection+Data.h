@@ -24,6 +24,7 @@
 -(void)getWidth:(CGFloat*)width height:(CGFloat*)height fromImagesArray:(NSArray*)imagesArray minSize:(NSSize)minSize maxSize:(NSSize)maxSize;
 
 -(void)processLoginHtml;
+-(void)processDoubleAuthenticationLoginHtml;
 -(void)processIndexHtml;
 -(void)processMainHtml;
 -(void)processStudyListHtml;
@@ -43,7 +44,9 @@
 -(void)processSeriesJson;
 -(void)processAlbumsJson;
 -(void)processSeriesListJson;
-
+-(void)processHTMLReportTemplate;
+-(void)processHTMLReport;
+-(void)processHTMLReportFrontMost2DViewerImage;
 -(BOOL)processWado;
 
 -(void)processWeasisJnlp;
@@ -57,7 +60,12 @@
 -(void)processImageAsScreenCapture: (BOOL) asDisplayed;
 -(void)processMovie;
 
-- (id)objectWithXID:(NSString*)xid;
+-(id)objectWithXID:(NSString*)xid;
+-(id)objectWithXID:(NSString*)xid compareToDistant: (BOOL) compareToDistant checkUserAutorisation: (BOOL) checkUserAutorisation;
+-(void)receiveReportHtmlAsPOST;
 
+-(void) addDoubleAuthenticationUserEvent: (NSString*) username;
+-(NSTimeInterval) delayForDoubleAuthenticationUser: (NSString*) username;
+- (void) resetDoubleAuthenticationEventsForUser:(NSString*) username;
 @end
 

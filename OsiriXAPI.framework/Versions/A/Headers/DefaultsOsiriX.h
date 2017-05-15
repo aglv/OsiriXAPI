@@ -27,7 +27,7 @@ typedef enum HotKeyActions {DefaultWWWLHotKeyAction = 0, FullDynamicWWWLHotKeyAc
 	ClosedPolygonHotKeyAction, PencilHotKeyAction, ThreeDPointHotKeyAction, PlainToolHotKeyAction,
     BoneRemovalHotKeyAction, Rotate3DHotKeyAction, Camera3DotKeyAction, scissors3DHotKeyAction, RepulsorHotKeyAction, SelectorHotKeyAction, EmptyHotKeyAction, UnreadHotKeyAction, ReviewedHotKeyAction, DictatedHotKeyAction, ValidatedHotKeyAction, OrthoMPRCrossHotKeyAction, Preset1OpacityHotKeyAction, Preset2OpacityHotKeyAction, Preset3OpacityHotKeyAction, Preset4OpacityHotKeyAction, Preset5OpacityHotKeyAction, Preset6OpacityHotKeyAction, Preset7OpacityHotKeyAction, Preset8OpacityHotKeyAction, Preset9OpacityHotKeyAction, FullScreenAction, Sync3DAction, SetKeyImageAction, ThreeDBallHotKeyAction, OvalAngleHotKeyAction, PreviousROIsOrKeyImageAction, NextROIsOrKeyImageAction, FuseDeFusePETSPECTCTAction, AxialResliceAction, CoronalResliceAction,SagittalResliceAction,ActivateInactivateThickSlabAction,
     
-    Preset1CLUTHotKeyAction, Preset2CLUTHotKeyAction, Preset3CLUTHotKeyAction, Preset4CLUTHotKeyAction, Preset5CLUTHotKeyAction, Preset6CLUTHotKeyAction, Preset7CLUTHotKeyAction, Preset8CLUTHotKeyAction, Preset9CLUTHotKeyAction,
+    Preset1CLUTHotKeyAction, Preset2CLUTHotKeyAction, Preset3CLUTHotKeyAction, Preset4CLUTHotKeyAction, Preset5CLUTHotKeyAction, Preset6CLUTHotKeyAction, Preset7CLUTHotKeyAction, Preset8CLUTHotKeyAction, Preset9CLUTHotKeyAction, Preset3DPositionHotKeyAction,
     
     LastAction // Key this enum ALWAYS as last enum !
 } HotKeyActions;
@@ -46,4 +46,6 @@ typedef enum HotKeyActions {DefaultWWWLHotKeyAction = 0, FullDynamicWWWLHotKeyAc
 + (void) DNSResolve:(id) o;
 + (NSArray*) currentHostNames;
 + (NSArray*) currentHostAddresses;
++ (void) addCLUT: (NSString*) filename dictionary: (NSMutableDictionary*) clutValues;
++ (long) vramSize;
 @end

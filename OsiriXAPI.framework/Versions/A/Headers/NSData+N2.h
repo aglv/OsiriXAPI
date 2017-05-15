@@ -28,5 +28,6 @@
 +(NSData*)dataWithLong:(unsigned long)s;
 -(NSString*)dataAsStringWithEncoding: (NSStringEncoding) encoding;
 - (NSArray *)multipartArrayWithBoundary:(NSString *)boundary;
+- (NSArray *)multipartArrayWithBoundary:(NSString *)boundary latestPosition: (unsigned long*) latestPosition;
 - (NSArray *)multipartArray;
 @end

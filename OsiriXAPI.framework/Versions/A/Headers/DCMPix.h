@@ -59,6 +59,7 @@ extern "C"
 	NSString            *sourceFile, *URIRepresentationAbsoluteString, *imageType;
 	BOOL				isBonjour, fileTypeHasPrefixDICOM, isSigned;
     int                 numberOfFrames;
+    int                 originalPhotoInterpret;
     
 	NSArray				*pixArray;
     NSManagedObjectID	*imageObjectID;	/**< Core data object ID for image */

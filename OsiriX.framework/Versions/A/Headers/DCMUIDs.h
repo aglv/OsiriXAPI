@@ -89,6 +89,12 @@ static NSString *DCM_JPEGLossless15Retired = @"1.2.840.10008.1.2.4.58";
 static NSString *DCM_JPEGLSLossless = @"1.2.840.10008.1.2.4.80";
 static NSString *DCM_JPEGLSLossy = @"1.2.840.10008.1.2.4.81";
 
+static NSString *DCM_MPEG2Main = @"1.2.840.10008.1.2.4.100";
+static NSString *DCM_MPEG4 = @"1.2.840.10008.1.2.4.102";
+static NSString *DCM_MPEG4BD = @"1.2.840.10008.1.2.4.103";
+static NSString *DCM_JPEG2000Part2MulticomponentLosslessOnly = @"1.2.840.10008.1.2.4.92";
+static NSString *DCM_JPEG2000Part2Multicomponent = @"1.2.840.10008.1.2.4.93";
+
 static NSString *DCM_ModalityWorklistInformationModelFIND = @"1.2.840.10008.5.1.4.31";
 static NSString *DCM_GeneralPurposeWorklistInformationModelFIND = @"1.2.840.10008.5.1.4.32.1";
 static NSString *DCM_PatientRootQueryRetrieveInformationModelFIND = @"1.2.840.10008.5.1.4.1.2.1.1";

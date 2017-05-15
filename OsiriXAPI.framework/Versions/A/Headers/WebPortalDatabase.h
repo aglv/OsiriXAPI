@@ -23,9 +23,11 @@
 
 extern NSString* const WebPortalDatabaseUserEntityName;
 extern NSString* const WebPortalDatabaseStudyEntityName;
+extern NSString* const WebPortalDatabaseRecentStudyEntityName;
 
 -(NSEntityDescription*)userEntity;
 -(NSEntityDescription*)studyEntity;
+-(NSEntityDescription*)recentStudyEntity;
 
 -(NSArray*)usersWithPredicate:(NSPredicate*)p;
 

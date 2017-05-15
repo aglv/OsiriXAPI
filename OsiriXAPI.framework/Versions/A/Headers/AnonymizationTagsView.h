@@ -32,4 +32,5 @@
 -(NSButton*)checkBoxForObject:(id)object;
 -(N2TextField*)textFieldForObject:(id)object;
 
+-(void)addButtonAction:(NSButton*)sender;
 @end

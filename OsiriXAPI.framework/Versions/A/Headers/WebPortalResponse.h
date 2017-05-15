@@ -104,7 +104,7 @@
 
 @interface DicomStudyTransformer : WebPortalProxyObjectTransformer
 +(id)create;
-+ (void) clearOtherStudiesForThisPatientCache;
+//+ (void) clearOtherStudiesForThisPatientCache;
 @end
 
 

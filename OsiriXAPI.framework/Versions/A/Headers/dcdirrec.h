@@ -136,20 +136,20 @@ class DcmDicomDir;
  */
 class DCMTK_DCMDATA_EXPORT DcmDirectoryRecord : public DcmItem
 {
-
+    
     friend class DcmDicomDir;
-
+    
 public:
     /// default constructor
     DcmDirectoryRecord();
-
+    
     /** constructor
      *  @param tag attribute tag
      *  @param len length of the attribute value
      */
     DcmDirectoryRecord(const DcmTag &tag,
                        const Uint32 len);
-
+    
     /** constructor
      *  @param recordType record type
      *  @param referencedFileID referenced file ID in DICOM format
@@ -160,7 +160,7 @@ public:
                        const char *referencedFileID,     // DICOM format with '\\'
                        const OFFilename &sourceFileName, // OS format
                        DcmFileFormat* fileFormat = NULL);
-
+    
     /** constructor
      *  @param recordTypeName record type as string
      *  @param referencedFileID referenced file ID in DICOM format
@@ -171,28 +171,28 @@ public:
                        const char *referencedFileID,     // DICOM format with '\\'
                        const OFFilename &sourceFileName, // OS format
                        DcmFileFormat* fileFormat = NULL);
-
+    
     /** copy constructor
      *  @param oldDirRec element to be copied
      */
     DcmDirectoryRecord(const DcmDirectoryRecord &oldDirRec);
-
+    
     /** assignment operator
      *  @param obj the directory record to be copied
      */
     DcmDirectoryRecord &operator=(const DcmDirectoryRecord &obj);
-
+    
     /// destructor
     virtual ~DcmDirectoryRecord();
-
+    
     /** clone method
      *  @return deep copy of this object
      */
     virtual DcmObject *clone() const
     {
-      return new DcmDirectoryRecord(*this);
+        return new DcmDirectoryRecord(*this);
     }
-
+    
     /** Virtual object copying. This method can be used for DcmObject
      *  and derived classes to get a deep copy of an object. Internally
      *  the assignment operator is called if the given DcmObject parameter
@@ -206,7 +206,7 @@ public:
      *  @return EC_Normal if copying was successful, error otherwise
      */
     virtual OFCondition copyFrom(const DcmObject& rhs);
-
+    
     /** return identifier for this class. Every class derived from this class
      *  returns a unique value of type enum DcmEVR for this call. This is used
      *  as a "poor man's RTTI" to correctly identify instances derived from
@@ -214,17 +214,17 @@ public:
      *  @return type identifier of this class
      */
     virtual DcmEVR ident() const;
-
+    
     /// returns current status flag
     inline OFCondition error() const { return errorFlag; }
-
+    
     /** mode specifying whether the SpecificCharacterSet (0008,0005) element should be
      *  checked by convertCharacterSet() or not, i.e.\ whether this element might be
      *  present on this dataset-level.
      *  @return always returns OFTrue, i.e.\ SpecificCharacterSet should be checked
      */
     virtual OFBool checkForSpecificCharacterSet() const { return OFTrue; }
-
+    
     /** convert all element values that are contained in this record and that are
      *  affected by SpecificCharacterSet from the given source character set to the given
      *  destination character set. The defined terms for a particular character set can
@@ -237,23 +237,18 @@ public:
      *  @param fromCharset name of the source character set(s) used for the conversion
      *  @param toCharset name of the destination character set used for the conversion.
      *    Only a single value is permitted (i.e. no code extensions).
-     *  @param transliterate mode specifying whether a character that cannot be
-     *    represented in the destination character encoding is approximated through one
-     *    or more characters that look similar to the original one
+     *  @param flags optional flag used to customize the conversion (see DCMTypes::CF_xxx)
      *  @param updateCharset if OFTrue, the SpecificCharacterSet (0008,0005) element is
      *    updated, i.e.\ the current value is either replaced or a new element is inserted
      *    or the existing element is deleted. If OFFalse the SpecificCharacterSet element
      *    remains unchanged.
-     *  @param discardIllegal mode specifying whether characters that cannot be represented
-     *    in the destination character encoding will be silently discarded
      *  @return status, EC_Normal if successful, an error code otherwise
      */
     virtual OFCondition convertCharacterSet(const OFString &fromCharset,
                                             const OFString &toCharset,
-                                            const OFBool transliterate = OFFalse,
-                                            const OFBool updateCharset = OFFalse,
-                                            const OFBool discardIllegal = OFFalse);
-
+                                            const size_t flags = 0,
+                                            const OFBool updateCharset = OFFalse);
+    
     /** convert all element values that are contained in this record and that are
      *  affected by SpecificCharacterSet to the given destination character set. If not
      *  disabled, the source character set is determined automatically from the value of
@@ -263,20 +258,15 @@ public:
      *  denotes the default character repertoire, which is ASCII (7-bit).
      *  @param toCharset name of the destination character set used for the conversion.
      *    Only a single value is permitted (i.e. no code extensions).
-     *  @param transliterate mode specifying whether a character that cannot be
-     *    represented in the destination character encoding is approximated through one
-     *    or more characters that look similar to the original one
+     *  @param flags optional flag used to customize the conversion (see DCMTypes::CF_xxx)
      *  @param ignoreCharset if OFTrue, the value of SpecificCharacterSet is ignored.
      *    Also see checkForSpecificCharacterSet().
-     *  @param discardIllegal mode specifying whether characters that cannot be represented
-     *    in the destination character encoding will be silently discarded
      *  @return status, EC_Normal if successful, an error code otherwise
      */
     virtual OFCondition convertCharacterSet(const OFString &toCharset,
-                                            const OFBool transliterate = OFFalse,
-                                            const OFBool ignoreCharset = OFFalse,
-                                            const OFBool discardIllegal = OFFalse);
-
+                                            const size_t flags = 0,
+                                            const OFBool ignoreCharset = OFFalse);
+    
     /** convert all element values that are contained in this record and that are
      *  affected by SpecificCharacterSet from the currently selected source character
      *  set to the currently selected destination character set. Since the Basic
@@ -288,7 +278,7 @@ public:
      *  @return status, EC_Normal if successful, an error code otherwise
      */
     virtual OFCondition convertCharacterSet(DcmSpecificCharacterSet &converter);
-
+    
     /** print all elements of the item to a stream
      *  @param out output stream
      *  @param flags optional flag used to customize the output (see DCMTypes::PF_xxx)
@@ -301,7 +291,7 @@ public:
                        const int level = 0,
                        const char *pixelFileName = NULL,
                        size_t *pixelCounter = NULL);
-
+    
     /** This function reads the information of all attributes which
      *  are captured in the input stream and captures this information
      *  in elementList. Each attribute is represented as an element
@@ -319,7 +309,7 @@ public:
                              const E_TransferSyntax xfer,
                              const E_GrpLenEncoding glenc = EGL_noChange,
                              const Uint32 maxReadLength = DCM_MaxReadLength);
-
+    
     /** write object in XML format
      *  @param out output stream to which the XML document is written
      *  @param flags optional flag used to customize the output (see DCMTypes::XF_xxx)
@@ -327,14 +317,14 @@ public:
      */
     virtual OFCondition writeXML(STD_NAMESPACE ostream&out,
                                  const size_t flags = 0);
-
-
+    
+    
     /** check the currently stored element value
      *  @param autocorrect correct value length if OFTrue
      *  @return status, EC_Normal if value length is correct, an error code otherwise
      */
     virtual OFCondition verify(const OFBool autocorrect = OFFalse);
-
+    
     /** a complex, stack-based, hierarchical search method. It allows for a search
      *  for a DICOM object with a given attribute within a given container,
      *  hierarchically, from a starting position identified through a cursor stack.
@@ -360,22 +350,22 @@ public:
                                DcmStack &resultStack,               // inout
                                E_SearchMode mode = ESM_fromHere,    // in
                                OFBool searchIntoSub = OFTrue);      // in
-
+    
     /// get record type of this directory record
     virtual E_DirRecType getRecordType();
-
+    
     /** if this directory record references an MRDR (multi-reference directory record),
      *  return pointer to the MRDR referenced by this object.
      *  @return pointer to MRDR referenced by this object or NULL of no MRDR referenced
      */
     virtual DcmDirectoryRecord* getReferencedMRDR();
-
+    
     /** create a reference from this record to an MRDR
      *  @param mrdr pointer to MRDR
      *  @return EC_Normal upon success, an error code otherwise
      */
     virtual OFCondition assignToMRDR(DcmDirectoryRecord *mrdr );    // in
-
+    
     /** open a DICOM file and make this directory record into a directory
      *  record for that DICOM file. The most relevant record keys
      *  (SOP Class UID, SOP instance UID, Transfer Syntax UID) are inserted
@@ -386,10 +376,10 @@ public:
      */
     virtual OFCondition assignToSOPFile(const char *referencedFileID,
                                         const OFFilename &sourceFileName);
-
+    
     /// return number of directory records that are child record of this one
     virtual unsigned long cardSub() const;
-
+    
     /** insert a child directory record
      *  @param dirRec directory record to be inserted. Must be allocated on heap, ownership is
      *    transferred to this object
@@ -401,7 +391,7 @@ public:
     virtual OFCondition insertSub(DcmDirectoryRecord* dirRec,
                                   unsigned long where = DCM_EndOfListIndex,
                                   OFBool before = OFFalse);
-
+    
     /** insert new directory child record at the current position.
      *  The current position is stored internally in the 'lowerLevelList' member variable.
      *  @param dirRec new child record to be inserted
@@ -411,20 +401,20 @@ public:
      */
     virtual OFCondition insertSubAtCurrentPos(DcmDirectoryRecord *dirRec,
                                               OFBool before = OFFalse);
-
+    
     /** access child directory record. Returns a pointer to the object maintained
      *  as a child, not a copy.
      *  @param num index, must be < cardSub()
      *  @return pointer to child directory record or NULL if not found
      */
     virtual DcmDirectoryRecord* getSub(const unsigned long num);
-
+    
     /** get next directory child record starting at a given record
      *  @param dirRec record to start from (goto first record if NULL)
      *  @return pointer to next record if successful, NULL otherwise
      */
     virtual DcmDirectoryRecord* nextSub(const DcmDirectoryRecord *dirRec);
-
+    
     /** remove child directory record. If found, the record is not deleted but
      *  returned to the caller who is responsible for further management of the
      *  DcmDirectoryRecord object.
@@ -432,7 +422,7 @@ public:
      *  @return pointer to DcmDirectoryRecord if found, NULL otherwise
      */
     virtual DcmDirectoryRecord* removeSub(const unsigned long num);
-
+    
     /** remove child directory record. If found, the record is not deleted but
      *  returned to the caller who is responsible for further management of the
      *  DcmDirectoryRecord object.
@@ -440,41 +430,41 @@ public:
      *  @return pointer to element if found, NULL otherwise
      */
     virtual DcmDirectoryRecord* removeSub(DcmDirectoryRecord *dirRec);
-
+    
     /** remove child directory record and delete file referenced by that record, if any
      *  @param num index number of element, must be < cardSub()
      *  @return status, EC_Normal upon success, an error code otherwise
      */
     virtual OFCondition deleteSubAndPurgeFile(const unsigned long num);
-
+    
     /** remove child directory record and delete file referenced by that record, if any
      *  @param dirRec pointer to element to be removed from list
      *  @return status, EC_Normal upon success, an error code otherwise
      */
     virtual OFCondition deleteSubAndPurgeFile(DcmDirectoryRecord *dirRec);
-
+    
     /// revert the list of child directory records to default constructed (empty) state
     virtual OFCondition clearSub();
-
+    
     /** store the filename from which this directory record was read from
      *  @param fname filename, must not be empty
      */
     virtual void setRecordsOriginFile(const OFFilename &fname);
-
+    
     /// get the filename from which this directory record was read from, empty if not set
     virtual const OFFilename &getRecordsOriginFile();
-
+    
     /// get the offset in file of this directory record
     Uint32 getFileOffset() const;
-
+    
 protected:
-
+    
     // side-effect-free conversion routines:
     E_DirRecType        recordNameToType(const char *recordTypeName);
     char*               buildFileName(const char *origName, char *destName);
     OFCondition         checkHierarchy(const E_DirRecType upperRecord,
                                        const E_DirRecType lowerRecord);
-
+    
     // access to data elements within the Directory Records:
     OFCondition         setRecordType(E_DirRecType newType);
     E_DirRecType        lookForRecordType();
@@ -485,13 +475,13 @@ protected:
     OFCondition         setRecordInUseFlag(const Uint16 newFlag);
     Uint16              lookForRecordInUseFlag();
     Uint32              setFileOffset(Uint32 position);
-
+    
     // access to MRDR data element:
     OFCondition         setNumberOfReferences(Uint32 newRefNum);
     Uint32              lookForNumberOfReferences();
     Uint32              increaseRefNum();
     Uint32              decreaseRefNum();
-
+    
     // misc:
     /** Load all necessary info for this directory record.
      *  @param referencedFileID file ID that is being referenced, may be NULL
@@ -505,27 +495,27 @@ protected:
     OFCondition         masterInsertSub(DcmDirectoryRecord *dirRec,
                                         const unsigned long where = DCM_EndOfListIndex);
     OFCondition         purgeReferencedFile();
-
+    
 private:
-
+    
     /// filename (path) of the file from which this directory record was read
     OFFilename recordsOriginFile;
-
+    
     /// list of child directory records, kept in a sequence of items
     DcmSequenceOfItems *lowerLevelList;
-
+    
     /// directory record type of this record
     E_DirRecType DirRecordType;
-
+    
     /// pointer to multi-referenced directory record (MRDR) if this record refers to one, NULL otherwise
     DcmDirectoryRecord *referencedMRDR;
-
+    
     /// number of other directory records referring to this one; used for MRDR records
     Uint32 numberOfReferences;
-
+    
     /// byte offset at which the start of this directory record resides in the file from which it was read
     Uint32 offsetInFile;
-
+    
 };
 
 

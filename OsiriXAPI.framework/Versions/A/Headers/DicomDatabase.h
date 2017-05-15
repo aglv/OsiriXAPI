@@ -20,7 +20,7 @@ extern NSString* const CurrentDatabaseVersion;
 extern NSString* const OsirixDataDirName;
 extern NSString* const O2ScreenCapturesSeriesName;
 
-@class N2MutableUInteger, DicomAlbum, DataNodeIdentifier;
+@class N2MutableUInteger, DicomAlbum, DataNodeIdentifier, DCMTKQueryNode;
 
 @interface DicomDatabase : N2ManagedDatabase {
 	N2MutableUInteger* _dataFileIndex;
@@ -80,7 +80,19 @@ extern NSString* const O2ScreenCapturesSeriesName;
 @property (nonatomic) BOOL isFileSystemFreeSizeLimitReached;
 
 -(BOOL)isLocal;
+-(NSArray*)localObjectsForDistantObject: (DCMTKQueryNode*) o;
+-(id)localObjectForDistantObject: (DCMTKQueryNode*) o;
+-(NSArray*)childrenArray: (id)item onlyImages: (BOOL)onlyImages;
+-(NSArray*)childrenArray: (id)item onlyImages: (BOOL)onlyImages retrieveDistant: (BOOL) retrieveDistant;
+-(NSArray*) childrenArray: (id)item onlyImages: (BOOL)onlyImages retrieveDistant: (BOOL) retrieveDistant includeLocalizers: (BOOL) includeLocalizers;
+-(NSArray*)childrenArray: (id) item;
+-(NSArray*)imagesArray: (id) item preferredObject: (int) preferredObject onlyImages:(BOOL) onlyImages;
+-(NSArray*)imagesArray: (id) item preferredObject: (int) preferredObject;
+-(NSArray*)imagesArray: (id) item onlyImages:(BOOL) onlyImages;
+-(NSArray*)imagesArray: (id) item;
+-(NSArray*)imagesPathArray: (id) item;
 
+-(NSArray*) validateStudiesPatientUIDs: (NSArray*) distantStudies;
 -(DataNodeIdentifier*)dataNodeIdentifier;
 
 #pragma mark Entities
@@ -104,6 +116,7 @@ extern NSString* const DicomDatabaseLogEntryEntityName;
 -(NSString*)dataDirPath;
 -(NSString*)incomingDirPath;
 -(NSString*)uniqueDcmFileInIncomingDirPath;
+-(NSString*)uniqueDcmFileInIncomingDirPathStartingWithDot: (BOOL) startingWithDot;
 -(NSString*)errorsDirPath;
 -(NSString*)decompressionDirPath;
 -(NSString*)toBeIndexedDirPath;

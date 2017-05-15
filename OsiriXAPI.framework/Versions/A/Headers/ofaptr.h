@@ -23,7 +23,7 @@
 #ifndef OFAPTR_H
 #define OFAPTR_H
 
-#include "dcmtk/config/osconfig.h"    /* make sure OS specific configuration is included first */
+#include "osconfig.h"    /* make sure OS specific configuration is included first */
 
 #if defined(HAVE_STL) || defined(HAVE_STL_AUTO_PTR)
 // std::auto_ptr has an identicaly interface so it can be used as an alternative
@@ -33,7 +33,7 @@
 #else
 
 #define INCLUDE_CSTDDEF               /* For NULL */
-#include "dcmtk/ofstd/ofstdinc.h"
+#include "ofstdinc.h"
 
 /** internal class, don't ever use this directly!
  *  This is needed to make the following code work:

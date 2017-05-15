@@ -479,7 +479,7 @@ const typename OFtuple_element<Element,OFPair<K,V> >::type& OFget( const OFPair<
 struct OFtuple_nil;
 
 // include generated forward declaration for OFtuple.
-#include "variadic/tuplefwd.h"
+#include "tuplefwd.h"
 #else // DOXYGEN
 /** A function template to access an element of a tuple.
  *  @tparam Index the index of the element that should be accessed.
@@ -557,7 +557,7 @@ OFin_place_tag OFin_place(OFintegral_constant<size_t,I>&) { return OFin_place();
  *  @details Tools for in-place construction of objects, e.g. certain OFvariant alternatives.
  *  @defgroup OFin_place_helpers Tools for in-place construction
  *  @details
- *  <b><em style="color:#7f0000">#include</em> <span class="keyword">"dcmtk/ofstd/ofutil.h"</span></b><br><br>
+ *  <b><em style="color:#7f0000">#include</em> <span class="keyword">"ofutil.h"</span></b><br><br>
  *  @copydoc OFin_place_helpers_brief
  *  <table class="memberdecls">
  *    <tr class="heading">

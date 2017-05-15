@@ -52,9 +52,9 @@
 #define DCMSR_TRACE(msg) /*std::cout << msg*/
 #define DCMSR_DEBUG(msg) /*std::cout << msg*/
 #define DCMSR_INFO(msg)  /*std::cout << msg*/
-#define DCMSR_WARN(msg)  std::cout << msg
-#define DCMSR_ERROR(msg) std::cout << msg
-#define DCMSR_FATAL(msg) std::cout << msg
+#define DCMSR_WARN(msg)  std::cout << msg << std::endl
+#define DCMSR_ERROR(msg) std::cout << msg << std::endl
+#define DCMSR_FATAL(msg) std::cout << msg << std::endl
 
 // include this file in doxygen documentation
 

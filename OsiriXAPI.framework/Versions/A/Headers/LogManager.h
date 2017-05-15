@@ -22,6 +22,7 @@
 	NSMutableDictionary *_currentLogs;
 }
 
++ (void) logToFileNetworkEvent: (NSManagedObject*) logEntry;
 + (id) currentLogManager;
 - (void) resetLogs;
 - (void) addLogLine: (NSDictionary*) dict;

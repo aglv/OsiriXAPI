@@ -28,13 +28,13 @@
 #ifndef OFTEST_H
 #define OFTEST_H
 
-#include "dcmtk/config/osconfig.h"
-#include "dcmtk/ofstd/ofconapp.h"   /* for OFCommandLine */
-#include "dcmtk/ofstd/ofconsol.h"   /* for CERR */
-#include "dcmtk/ofstd/oflist.h"     /* for class OFList */
-#include "dcmtk/ofstd/ofstream.h"   /* for class OFOStringStream */
-#include "dcmtk/ofstd/ofstring.h"   /* for class OFString */
-#include "dcmtk/ofstd/oftypes.h"    /* for OFBool */
+#include "osconfig.h"
+#include "ofconapp.h"   /* for OFCommandLine */
+#include "ofconsol.h"   /* for CERR */
+#include "oflist.h"     /* for class OFList */
+#include "ofstream.h"   /* for class OFOStringStream */
+#include "ofstring.h"   /* for class OFString */
+#include "oftypes.h"    /* for OFBool */
 
 #ifdef OFTEST_OFSTD_ONLY
 

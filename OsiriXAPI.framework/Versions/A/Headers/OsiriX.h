@@ -114,6 +114,7 @@
 #include <OsiriXAPI/dcistrmf.h>
 #include <OsiriXAPI/dcistrmz.h>
 #include <OsiriXAPI/dcitem.h>
+#include <OsiriXAPI/dcjson.h>
 #include <OsiriXAPI/dclist.h>
 #include <OsiriXAPI/dcmetinf.h>
 #include <OsiriXAPI/dcobject.h>
@@ -182,7 +183,6 @@
 #include <OsiriXAPI/vrscan.h>
 #include <OsiriXAPI/vrscani.h>
 #include <OsiriXAPI/vrscanl.h>
-#include <OsiriXAPI/dcspchrs.h>
 #include <OsiriXAPI/ofalgo.h>
 #include <OsiriXAPI/ofalign.h>
 #include <OsiriXAPI/ofaptr.h>
@@ -198,6 +198,7 @@
 #include <OsiriXAPI/ofdate.h>
 #include <OsiriXAPI/ofdatime.h>
 #include <OsiriXAPI/ofdefine.h>
+#include <OsiriXAPI/ofdiag.h>
 #include <OsiriXAPI/ofexbl.h>
 #include <OsiriXAPI/ofexport.h>
 #include <OsiriXAPI/offile.h>
@@ -206,7 +207,6 @@
 #include <OsiriXAPI/ofgrp.h>
 #include <OsiriXAPI/oflimits.h>
 #include <OsiriXAPI/oflist.h>
-#include <OsiriXAPI/oflogfil.h>
 #include <OsiriXAPI/ofmap.h>
 #include <OsiriXAPI/ofmath.h>
 #include <OsiriXAPI/ofmem.h>
@@ -3664,6 +3664,7 @@
 #include <OsiriXAPI/AnonymizationTagsView.h>
 #include <OsiriXAPI/AnonymizationTemplateNamePanelController.h>
 #include <OsiriXAPI/AnonymizationViewController.h>
+#include <OsiriXAPI/AppController+TouchBar.h>
 #include <OsiriXAPI/AppController.h>
 #include <OsiriXAPI/AppControllerDCMTKCategory.h>
 #include <OsiriXAPI/BackwardCompatibleNSTableHeaderView.h>
@@ -3674,6 +3675,7 @@
 #include <OsiriXAPI/BrowserController+Activity.h>
 #include <OsiriXAPI/BrowserController+Sources+Copy.h>
 #include <OsiriXAPI/BrowserController+Sources.h>
+#include <OsiriXAPI/BrowserController+TouchBar.h>
 #include <OsiriXAPI/browserController.h>
 #include <OsiriXAPI/BrowserControllerDCMTKCategory.h>
 #include <OsiriXAPI/BrowserControllerWindow.h>
@@ -3780,9 +3782,12 @@
 #include <OsiriXAPI/HangingProtocolController.h>
 #include <OsiriXAPI/HistogramWindow.h>
 #include <OsiriXAPI/HistoView.h>
+#include <OsiriXAPI/HorizontalPanTouchBarItem.h>
+#include <OsiriXAPI/HorizontalPanTouchBarItemView.h>
 #include <OsiriXAPI/HornRegistration.h>
 #include <OsiriXAPI/IChatTheatreDelegate.h>
 #include <OsiriXAPI/IChatTheatreHelpWindowController.h>
+#include <OsiriXAPI/IconTextScrubberItemView.h>
 #include <OsiriXAPI/ImageAndTextCell.h>
 #include <OsiriXAPI/Interpolation3D.h>
 #include <OsiriXAPI/iPhoto.h>
@@ -3822,6 +3827,7 @@
 #include <OsiriXAPI/MoveManager.h>
 #include <OsiriXAPI/MPR2DController.h>
 #include <OsiriXAPI/MPR2DView.h>
+#include <OsiriXAPI/MPRController+TouchBar.h>
 #include <OsiriXAPI/MPRController.h>
 #include <OsiriXAPI/MPRDCMView.h>
 #include <OsiriXAPI/MPRFinalView.h>
@@ -3922,6 +3928,7 @@
 #include <OsiriXAPI/ReportPluginFilter.h>
 #include <OsiriXAPI/Reports.h>
 #include <OsiriXAPI/ROI.h>
+#include <OsiriXAPI/ROI3DSettingsWindow+TouchBar.h>
 #include <OsiriXAPI/ROI3DSettingsWindow.h>
 #include <OsiriXAPI/ROIDefaultsWindow.h>
 #include <OsiriXAPI/ROIManagerController.h>
@@ -3977,8 +3984,10 @@
 #include <OsiriXAPI/ToolButtonCell.h>
 #include <OsiriXAPI/UsersArrayController.h>
 #include <OsiriXAPI/ViewerController+CPP.h>
+#include <OsiriXAPI/ViewerController+TouchBar.h>
 #include <OsiriXAPI/ViewerController.h>
 #include <OsiriXAPI/VRController+StereoVision.h>
+#include <OsiriXAPI/VRController+TouchBar.h>
 #include <OsiriXAPI/VRController.h>
 #include <OsiriXAPI/VRControllerVPRO.h>
 #include <OsiriXAPI/VRFlyThruAdapter+StereoVision.h>

@@ -19,6 +19,8 @@
 
 @interface WebPortal (EmailLog)
 
++(BOOL)isExternalIPAddress:(NSString*) string;
+
 -(void)emailNotifications;
 -(BOOL)sendNotificationsEmailsTo:(NSArray*)users aboutStudies:(NSArray*)filteredStudies predicate:(NSString*)predicate customText:(NSString*)customText;
 -(BOOL)sendNotificationsEmailsTo:(NSArray*)users aboutStudies:(NSArray*)filteredStudies predicate:(NSString*)predicate customText:(NSString*)customText from:(WebPortalUser*) from;

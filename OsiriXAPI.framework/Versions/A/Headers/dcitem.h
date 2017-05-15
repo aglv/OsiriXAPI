@@ -33,8 +33,9 @@
 
 
 // forward declarations
-class DcmSequenceOfItems;
 class DcmElement;
+class DcmJsonFormat;
+class DcmSequenceOfItems;
 class DcmSpecificCharacterSet;
 
 
@@ -262,6 +263,14 @@ class DCMTK_DCMDATA_EXPORT DcmItem
     virtual OFCondition writeXML(STD_NAMESPACE ostream&out,
                                  const size_t flags = 0);
 
+    /** write object in JSON format
+     *  @param out output stream to which the JSON document is written
+     *  @param format used to format and customize the output
+     *  @return status, EC_Normal if successful, an error code otherwise
+     */
+    virtual OFCondition writeJson(STD_NAMESPACE ostream&out,
+                                  DcmJsonFormat &format);
+
     /** special write method for creation of digital signatures
      *  @param outStream DICOM output stream
      *  @param oxfer output transfer syntax
@@ -318,22 +327,17 @@ class DCMTK_DCMDATA_EXPORT DcmItem
      *  @param fromCharset name of the source character set(s) used for the conversion
      *  @param toCharset name of the destination character set used for the conversion.
      *    Only a single value is permitted (i.e. no code extensions).
-     *  @param transliterate mode specifying whether a character that cannot be
-     *    represented in the destination character encoding is approximated through one
-     *    or more characters that look similar to the original one
+     *  @param flags optional flag used to customize the conversion (see DCMTypes::CF_xxx)
      *  @param updateCharset if OFTrue, the SpecificCharacterSet (0008,0005) element is
      *    updated, i.e.\ the current value is either replaced or a new element is inserted
      *    or the existing element is deleted. If OFFalse the SpecificCharacterSet element
      *    remains unchanged.
-     *  @param discardIllegal mode specifying whether characters that cannot be represented
-     *    in the destination character encoding will be silently discarded
      *  @return status, EC_Normal if successful, an error code otherwise
      */
     virtual OFCondition convertCharacterSet(const OFString &fromCharset,
                                             const OFString &toCharset,
-                                            const OFBool transliterate = OFFalse,
-                                            const OFBool updateCharset = OFFalse,
-                                            const OFBool discardIllegal = OFFalse);
+                                            const size_t flags = 0,
+                                            const OFBool updateCharset = OFFalse);
 
     /** convert all element values that are contained in this item and that are affected
      *  by SpecificCharacterSet to the given destination character set. If not disabled,
@@ -344,19 +348,14 @@ class DCMTK_DCMDATA_EXPORT DcmItem
      *  default character repertoire, which is ASCII (7-bit).
      *  @param toCharset name of the destination character set used for the conversion.
      *    Only a single value is permitted (i.e. no code extensions).
-     *  @param transliterate mode specifying whether a character that cannot be
-     *    represented in the destination character encoding is approximated through one
-     *    or more characters that look similar to the original one
+     *  @param flags optional flag used to customize the conversion (see DCMTypes::CF_xxx)
      *  @param ignoreCharset if OFTrue, the value of SpecificCharacterSet is ignored.
      *    Also see checkForSpecificCharacterSet().
-     *  @param discardIllegal mode specifying whether characters that cannot be represented
-     *    in the destination character encoding will be silently discarded
      *  @return status, EC_Normal if successful, an error code otherwise
      */
     virtual OFCondition convertCharacterSet(const OFString &toCharset,
-                                            const OFBool transliterate = OFFalse,
-                                            const OFBool ignoreCharset = OFFalse,
-                                            const OFBool discardIllegal = OFFalse);
+                                            const size_t flags = 0,
+                                            const OFBool ignoreCharset = OFFalse);
 
     /** convert all element values that are contained in this item and that are affected
      *  by SpecificCharacterSet from the currently selected source character set to the
@@ -369,7 +368,8 @@ class DCMTK_DCMDATA_EXPORT DcmItem
     /** convert all element values that are contained in this item and that are affected
      *  by SpecificCharacterSet to UTF-8 (Unicode). The value of the SpecificCharacterSet
      *  (0008,0005) element is updated, set or deleted automatically if needed. The
-     *  transliteration mode is disabled - see convertCharacterSet().
+     *  transliteration mode is disabled, i.e. the conversion flags are explicitly set to
+     *  0 - see convertCharacterSet().
      *  @return status, EC_Normal if successful, an error code otherwise
      */
     virtual OFCondition convertToUTF8();

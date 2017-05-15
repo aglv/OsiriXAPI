@@ -138,6 +138,8 @@
 - (NSArray*) studiesForThisPatient;
 - (BOOL) computeHasROIs;
 - (BOOL) computeHasKeyImages;
+- (NSImage*) thumbnailImage;
+- (NSData*) thumbnail;
 @end
 
 @interface DicomStudy (CoreDataGeneratedAccessors)

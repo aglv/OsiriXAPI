@@ -93,6 +93,7 @@
 -(NSData*)dataForPath:(NSString*)rel;
 +(NSData*)dataForPath:(NSString*)file;
 +(NSString*)pathForPath:(NSString*)path;
++(NSString*) pathForPath:(NSString*)file includeInMemoryFiles: (BOOL) includeInMemoryFiles;
 -(NSString*)stringForPath:(NSString*)file;
 
 -(WebPortalSession*)newSession;

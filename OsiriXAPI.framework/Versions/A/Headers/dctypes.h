@@ -1,6 +1,6 @@
 /*
  *
- *  Copyright (C) 1994-2014, OFFIS e.V.
+ *  Copyright (C) 1994-2016, OFFIS e.V.
  *  All rights reserved.  See COPYRIGHT file for details.
  *
  *  This software and supporting documentation were developed by
@@ -24,11 +24,12 @@
 #define DCTYPES_H
 
 #include "osconfig.h"    /* make sure OS specific configuration is included first */
+//#include "oflog.h"
 #include "dcdefine.h"
-#include "oftypes.h"
 
 #define INCLUDE_CSTDLIB
 #include "ofstdinc.h"
+#include "oftypes.h"
 
 BEGIN_EXTERN_C
 #ifdef HAVE_SYS_TYPES_H
@@ -38,28 +39,21 @@ BEGIN_EXTERN_C
 END_EXTERN_C
 
 /*
-** Logging
-*/
+ ** Logging
+ */
 
 //extern DCMTK_DCMDATA_EXPORT OFLogger DCM_dcmdataLogger;
-//
-//#define DCMDATA_TRACE(msg) OFLOG_TRACE(DCM_dcmdataLogger, msg)
-//#define DCMDATA_DEBUG(msg) OFLOG_DEBUG(DCM_dcmdataLogger, msg)
-//#define DCMDATA_INFO(msg)  OFLOG_INFO(DCM_dcmdataLogger, msg)
-//#define DCMDATA_WARN(msg)  OFLOG_WARN(DCM_dcmdataLogger, msg)
-//#define DCMDATA_ERROR(msg) OFLOG_ERROR(DCM_dcmdataLogger, msg)
-//#define DCMDATA_FATAL(msg) OFLOG_FATAL(DCM_dcmdataLogger, msg)
 
 #define DCMDATA_TRACE(msg) /*std::cout << msg*/
 #define DCMDATA_DEBUG(msg) /*std::cout << msg*/
 #define DCMDATA_INFO(msg) /*std::cout << msg*/
-#define DCMDATA_WARN(msg) std::cout << msg
-#define DCMDATA_ERROR(msg) std::cout << msg
-#define DCMDATA_FATAL(msg) std::cout << msg
+#define DCMDATA_WARN(msg) std::cout << msg << std::endl
+#define DCMDATA_ERROR(msg) std::cout << msg << std::endl
+#define DCMDATA_FATAL(msg) std::cout << msg << std::endl
 
 /*
-** Macro Definitions
-*/
+ ** Macro Definitions
+ */
 
 /// XML namespace URI for the dcmtk
 #define DCMTK_XML_NAMESPACE_URI "http://dicom.offis.de/dcmtk"
@@ -91,8 +85,8 @@ END_EXTERN_C
 
 
 /*
-** Enumerated Types
-*/
+ ** Enumerated Types
+ */
 
 /// encoding type for sequences and sequence items
 typedef enum {
@@ -178,64 +172,79 @@ typedef enum {
  */
 struct DCMTK_DCMDATA_EXPORT DCMTypes
 {
-  public:
-
+public:
+    
     /** @name print() flags.
      *  These flags can be combined and passed to the print() methods.
      */
     //@{
-
+    
     /// shorten long tag values (e.g. long texts, pixel data)
     static const size_t PF_shortenLongTagValues;
-
+    
     /// show hierarchical tree structure of the dataset
     static const size_t PF_showTreeStructure;
-
+    
     /// do not map well-known UID numbers to UID names (e.g. Transfer Syntax and SOP Class)
     static const size_t PF_doNotMapUIDsToNames;
-
+    
     /// quote non-ASCII string content as XML markup
     static const size_t PF_convertToMarkup;
-
+    
     /// quote non-ASCII string content as octal numbers
     static const size_t PF_convertToOctalNumbers;
-
+    
     /// use ANSI escape codes for output
     static const size_t PF_useANSIEscapeCodes;
     //@}
-
+    
     /** @name writeXML() flags.
      *  These flags can be combined and passed to the writeXML() methods.
      */
     //@{
-
+    
     /// add document type definition (DTD). DCMTK-specific format only.
     static const size_t XF_addDocumentType;
-
+    
     /// write binary data to XML output file. DCMTK-specific format only.
     static const size_t XF_writeBinaryData;
-
+    
     /// encode binary data as Base64 (MIME).
     /// - For the DCMTK-specific format, the default is to use hex numbers.
     /// - For the Native DICOM Model, the default is to use a UUID reference.
     static const size_t XF_encodeBase64;
-
+    
     /// use XML namespace URI. The value depends on the selected output format.
     static const size_t XF_useXMLNamespace;
-
+    
     /// embed content of document type definition. DCMTK-specific format only.
     static const size_t XF_embedDocumentType;
-
+    
     /// don't write name of the DICOM data elements. DCMTK-specific format only.
     static const size_t XF_omitDataElementName;
-
+    
     /// convert non-ASCII characters to numeric values. DCMTK-specific format only.
     static const size_t XF_convertNonASCII;
-
+    
     /// write data in "Native DICOM Model" format as defined for Application Hosting (DICOM part 19).
     /// The default is to use the DCMTK-specific format.
     static const size_t XF_useNativeModel;
-
+    
+    //@}
+    
+    /** @name convertCharacterSet() flags.
+     *  These flags can be combined and passed to the convertCharacterSet() methods.
+     */
+    //@{
+    
+    /// try to approximate characters that cannot be represented through similar
+    /// looking characters.  See DcmSpecificCharacterSet::getTransliterationMode().
+    static const size_t CF_transliterate;
+    
+    /// discard characters that cannot be represented in destination character set.
+    /// See DcmSpecificCharacterSet::getDiscardIllegalSequenceMode().
+    static const size_t CF_discardIllegal;
+    
     //@}
 };
 

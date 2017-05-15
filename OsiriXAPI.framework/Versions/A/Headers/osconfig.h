@@ -1,6 +1,8 @@
 /* include/osconfig.h.  Generated from osconfig.h.in by configure.  */
 /* include/osconfig.h.in.  Generated from configure.in by autoheader.  */
 
+#include "cfunix.h"
+
 #ifndef OSCONFIG_H
 #define OSCONFIG_H
 
@@ -1094,5 +1096,8 @@ typedef unsigned short ushort;
 DCMTK was configured to use the C++11 STL, but your compiler is not configured\
 for building with C++11 features.
 #endif
+
+// an ISO 9660 format only allows 8 characters in file name
+#define MAX_FNAME_COMPONENT_SIZE 24 // ANR 2017 Feb 16
 
 #endif /* OSCONFIG_H */

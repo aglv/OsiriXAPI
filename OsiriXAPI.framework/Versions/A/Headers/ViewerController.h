@@ -287,7 +287,8 @@ enum
 	
 	BOOL					windowWillClose;
 	BOOL					postprocessed;
-	
+    BOOL                    subtract1seriesToOther4DSeriesApplied;
+    
 	NSRect					standardRect;
 	
 	// Brush ROI Filter
@@ -368,8 +369,14 @@ enum
     NSTimer *autoKeyImageTimer;
     NSPoint previousMousePosition;
     NSTimeInterval autoKeyImageChangeImageDataTime;
+    
+    NSInteger firstROIorKeyImage;
+    
+    NSString *sortedByKey;
+    BOOL sortedInAscending;
 }
-@property BOOL preFlipped;
+@property BOOL preFlipped, sortedInAscending;
+@property(retain) NSString *sortedByKey;
 @property(retain) NSCalendarDate *injectionDateTime;
 @property(readonly) NSSlider *slider;
 @property(readonly) KeyImagesWindowController *keysCtrl;
@@ -398,6 +405,12 @@ enum
 
 @property(retain) NSNumber* flagListPODComparatives;
 @property BOOL movieViewer;
+
+@property (retain) NSSliderTouchBarItem *thickSlabSliderTouchBarItem;
+@property (retain) NSScrubber *reconstructionToolsScrubber;
+@property (retain) NSScrubber *seriesThumbnailsScrubber;
+@property (retain) NSSliderTouchBarItem *ROIsThicknessSliderTouchBarItem;
+@property (retain) NSSliderTouchBarItem *ROIsOpacitySliderTouchBarItem;
 
 /** Array of all 2D Viewers */
 + (NSMutableArray*) getDisplayed2DViewers;
@@ -705,6 +718,7 @@ enum
 - (float) highLighted;
 - (void) setHighLighted: (float) b;
 - (void) syncThumbnails;
+- (BOOL) syncWithViewer: (ViewerController*) v;
 - (void) checkBuiltMatrixPreview;
 - (void)comparativeRefresh:(NSString*) patientUID;
 

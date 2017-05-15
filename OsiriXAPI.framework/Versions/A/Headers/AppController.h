@@ -104,9 +104,12 @@ extern "C"
 //@end
 //#endif
 
+#define REGPHPURL @"reg/reg.php"
+
 @class AppController, ToolbarPanelController, ThumbnailsListPanel, BonjourPublisher;
 
 extern AppController* OsiriX;
+extern NSString* getMacAddress(void);
 
 @interface AppController : NSObject	<NSNetServiceBrowserDelegate, NSNetServiceDelegate, NSSoundDelegate, NSMenuDelegate> // GrowlApplicationBridgeDelegate
 {
@@ -145,14 +148,14 @@ extern AppController* OsiriX;
     id appNapActivity;
     
     // DICOM Definition parser
-    BOOL getCurrentModule;
+    BOOL getCurrentModule, applicationDidFinishLaunching;
     NSString *previousContent, *previousOriginal, *currentFile, *currentModule;
     NSMutableDictionary *DICOMDefinitionDict;
     NSDictionary *currentAttribute;
     NSMutableDictionary *currentIDElements;
 }
 
-@property BOOL checkAllWindowsAreVisibleIsOff, isSessionInactive, showRestartNeeded;
+@property BOOL checkAllWindowsAreVisibleIsOff, isSessionInactive, showRestartNeeded, applicationDidFinishLaunching;
 @property(readonly) NSMenu *filtersMenu, *recentStudiesMenu, *windowsTilingMenuRows, *windowsTilingMenuColumns;
 @property(readonly) NSNetService* dicomBonjourPublisher;
 @property(readonly) XMLRPCInterface *XMLRPCServer;
@@ -170,6 +173,8 @@ extern AppController* OsiriX;
 + (BOOL) hasOSXElCapitan;
 + (BOOL) hasOSXYosemite;
 + (BOOL) hasMacOSSierra;
++ (BOOL) hasMacOSSierra10122;
++ (BOOL) hasMacOSX: (NSString*) vers;
 + (BOOL) isOSXYosemite;
 + (int) isUnsupportedOS;
 + (BOOL) hasMacOSXMaverick;
@@ -178,6 +183,9 @@ extern AppController* OsiriX;
 + (NSString*) getRK;
 + (void) restartOsiriX;
 + (NSDictionary*) loadRegistrationDictionary;
++ (NSImage*) webBrowserIcon;
++ (NSData*) encodeData:(NSData*) dataIn;
++ (NSData*) decodeData:(NSData*) dataIn;
 
 #pragma mark-
 #pragma mark initialization of the main event loop singleton
@@ -279,6 +287,7 @@ extern AppController* OsiriX;
 + (void) setUSETOOLBARPANEL: (BOOL) b;
 + (NSRect) usefullRectForScreen: (NSScreen*) screen;
 + (NSArray*) sortObjects: (NSArray*) objects accordingToSeriesDescriptionsArray: (NSArray*) seriesDescriptionsOrder;
++ (NSArray*) sortObjects: (NSArray*) objects accordingToSeriesDescriptionsArray: (NSArray*) seriesDescriptionsOrder oneSeriesPerSeriesDescription: (BOOL) oneSeriesPerSeriesDescription;
 - (NSMutableArray*) orderedWindowsAccordingToPositionByRows: (NSArray*) a;
 - (void) addStudyToRecentStudiesMenu: (NSManagedObjectID*) studyID;
 - (void) loadRecentStudy: (id) sender;
@@ -307,6 +316,7 @@ extern AppController* OsiriX;
 //+ (NSImage*) fusionIconForDcmPix: (DCMPix*) pix mode: (int) mode stack: (int) stack direction: (int) direction;
 + (NSImage*) convolutionIconForDcmPix: (DCMPix*) pix name: (NSString*) name;
 + (NSImage*) resizeImageForIcon: (NSImage*) im;
++ (NSRect) visibleFrameForScreen: (NSScreen*) screen;
 
 #pragma mark-
 #pragma mark growl

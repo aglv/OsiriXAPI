@@ -48,7 +48,7 @@ using OFunique_ptr = std::unique_ptr<ARGS...>;
 #else
 #define OF_SHARED_PTR_COUNTER_TYPE size_t
 #define OF_SHARED_PTR_NEED_MUTEX 1
-#include "dcmtk/ofstd/ofthread.h"
+#include "ofthread.h"
 #endif
 
 #ifdef HAVE_WINDOWS_H

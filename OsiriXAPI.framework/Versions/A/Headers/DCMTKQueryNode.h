@@ -16,9 +16,10 @@
 #import <Cocoa/Cocoa.h>
 #import "DCMTKServiceClassUser.h"
 
+#ifndef OSIRIX_LIGHT
 @class DCMCalendarDate;
 /** \brief Base class for query nodes */
-@interface DCMTKQueryNode : DCMTKServiceClassUser <NSCopying>
+@interface DCMTKQueryNode : DCMTKServiceClassUser <NSCopying, NSURLSessionDelegate>
 {
 	NSMutableArray *_children;
     NSString *childrenSynchronized;
@@ -53,15 +54,24 @@
     BOOL wadoRSConnectionActive;
     NSString *incomingPath, *wadoRSBoundary;
     NSThread *mainThread;
+    NSTimeInterval childrenTimeInterval;
 }
 
 @property( readonly) DcmDataset *originalDataset;
 @property( readonly) NSMutableDictionary *miscDictionary;
+@property( readonly) NSTimeInterval childrenTimeInterval;
 @property BOOL dontCatchExceptions;
 @property BOOL isAutoRetrieve;
 @property BOOL noSmartMode;
 @property NSUInteger countOfSuboperations, countOfSuccessfulSuboperations;
 @property (retain) NSString *abstractSyntax, *incomingPath, *wadoRSBoundary;
+
++ (NSURLSession*) dicomWebURLSession;
+
++ (void) errorMessage:(NSArray*) msg;
++ (void) errorURL:(NSArray*) msg;
+
++ (NSString*) boundaryFromHeaders: (NSDictionary*) headers;
 
 + (id)queryNodeWithDataset:(DcmDataset *)dataset
 			callingAET:(NSString *)myAET  
@@ -134,3 +144,4 @@
 + (dispatch_semaphore_t)semaphoreForServerHostAndPort:(NSString*)key;
 
 @end
+#endif

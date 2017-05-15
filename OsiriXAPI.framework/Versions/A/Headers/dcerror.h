@@ -161,6 +161,10 @@ extern DCMTK_DCMDATA_EXPORT const OFConditionConst EC_MissingAttribute;
 extern DCMTK_DCMDATA_EXPORT const OFConditionConst EC_InternalError;
 /// Invalid character, e.g. non-ASCII character used but no Specific Character Set defined
 extern DCMTK_DCMDATA_EXPORT const OFConditionConst EC_InvalidCharacter;
+/// Illegal element with OB or OW Value Representation and undefined length encountered
+extern DCMTK_DCMDATA_EXPORT const OFConditionConst EC_UndefinedLengthOBOW;
+/// Illegal VOI LUT Sequence element with OB or OW Value Representation and explicit length encountered
+extern DCMTK_DCMDATA_EXPORT const OFConditionConst EC_VOI_LUT_OBOW;
 //@}
 
 // status code constants
@@ -173,6 +177,5 @@ extern DCMTK_DCMDATA_EXPORT const unsigned short EC_CODE_CannotConvertCharacterS
 extern DCMTK_DCMDATA_EXPORT const unsigned short EC_CODE_CannotConvertToXML;
 /// error, cannot determine start fragment (of compressed pixel data)
 extern DCMTK_DCMDATA_EXPORT const unsigned short EC_CODE_CannotDetermineStartFragment;
-
 
 #endif /* !DCERROR_H */

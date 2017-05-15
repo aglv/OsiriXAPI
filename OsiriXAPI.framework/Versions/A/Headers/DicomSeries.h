@@ -27,6 +27,7 @@
 	NSNumber	*dicomTime;
     NSImage     *thumbnailImage;
     NSArray     *imagesWithROIsCache;
+    int         latestDistantNumberOfImages;
 }
 
 @property(nonatomic, retain, readonly) NSNumber* dicomTime;
@@ -63,17 +64,24 @@
 @property(nonatomic, retain) NSNumber* yOffset;
 @property(nonatomic, retain) NSSet* images;
 @property(nonatomic, retain) DicomStudy* study;
+@property int latestDistantNumberOfImages;
 
 - (int) multiframesNumber;
 - (NSSet*) paths;
 - (NSSet*) keyImages;
+- (NSArray*) sortedKeyImages;
 - (NSArray*) sortedImages;
+- (NSInteger) firstKeyOrROIImage;
+- (NSInteger) lastKeyOrROIImage;
+- (NSInteger) nextKeyOrROIImageTo: (NSInteger) index;
+- (NSInteger) nextKeyOrROIImageTo: (NSInteger) index forward: (BOOL) forward;
 - (NSComparisonResult) compareName:(DicomSeries*)series;
 - (NSNumber*) noFilesExcludingMultiFrames;
 - (NSNumber*) rawNoFiles;
 - (DicomSeries*) previousSeries;
 - (DicomSeries*) nextSeries;
 - (NSArray*) sortDescriptorsForImages;
++ (NSArray*) sortDescriptorsForImages;
 - (NSString*) uniqueFilename;
 - (BOOL) isDistant;
 + (void) recomputeLocalizersSeriesInstanceUIDForStudies: (NSSet*) studiesSet;

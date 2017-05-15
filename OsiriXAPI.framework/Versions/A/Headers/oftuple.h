@@ -41,6 +41,9 @@ using OFtuple = std::tuple<Args...>;
 #elif !defined(DOXYGEN) // fallback implementations
 
 #include <cstdarg>
+#include "ofdiag.h"
+#include DCMTK_DIAGNOSTIC_PUSH
+#include DCMTK_DIAGNOSTIC_IGNORE_MISMATCHED_TAGS
 
 // Implementation of OFignore: struct OFignore_t
 // that can be constructed and assigned to anything
@@ -142,7 +145,7 @@ private:
     // members, since these are accessed via free standing
     // functions (OFget, ...) only. Therefore this API
     // has to be declared OFtuple_contents friend.
-#include "variadic/tuplefrd.h"
+#include "tuplefrd.h"
     template<typename,typename>
     friend class OFtuple_content;
     template<typename T,size_t N>
@@ -367,11 +370,12 @@ OFtuple<> OFtie();
 // The comparators and OFswap instead only need an
 // implementation / overload for the maximum number
 // of elements currently supported.
-#include "variadic/tuple.h"
+#include "tuple.h"
+#include DCMTK_DIAGNOSTIC_POP
 
 #else // NOT C++11 && NOT DOXYGEN
 /** A class template that implements generic tuples.
- *  @headerfile dcmtk/ofstd/oftuple.h "dcmtk/ofstd/oftuple.h"
+ *  @headerfile oftuple.h "oftuple.h"
  *  @tparam Types a sequence of element types that
  *    shall be contained in the tuple. An empty sequence
  *    is allowed.
@@ -549,7 +553,7 @@ OFtuple<> OFtie();
  *  <h3>Usage Example:</h3>
  *  @code{.cpp}
  *  // Include this file to use OFtuple
- *  #include "dcmtk/ofstd/oftuple.h"
+ *  #include "oftuple.h"
  *
  *  // A metatemplate for printing all elements of a tuple
  *  // Note: This works on any tuple type, not just OFtuple
