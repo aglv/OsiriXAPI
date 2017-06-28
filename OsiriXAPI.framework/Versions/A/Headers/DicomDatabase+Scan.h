@@ -20,5 +20,5 @@
 
 -(BOOL)scanAtPath:(NSString*)path;
 +(NSString*)_findDicomdirIn:(NSArray*)allpaths;
-
+-(NSArray*)scanDicomdirAt:(NSString*)path withPaths:(NSArray*)allpaths pathsToScanAnyway:(NSMutableArray*)pathsToScanAnyway;
 @end

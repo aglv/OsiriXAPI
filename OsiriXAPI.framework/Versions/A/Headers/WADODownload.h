@@ -18,7 +18,7 @@
 
 @interface WADODownload : NSObject
 {
-	volatile int32_t WADOThreads __attribute__ ((aligned (4)));
+	int WADOThreads;
     int WADOTotal, countOfSuccesses;
     int WADOGrandTotal, WADOBaseTotal;
     unsigned long totalData, receivedData;
@@ -27,6 +27,7 @@
     NSTimeInterval firstReceivedTime, lastStatusUpdate;
     NSString *baseStatus, *incomingPath;
     NSMutableArray *filesToIndexDirectly;
+    NSThread *mainThread;
 }
 
 @property BOOL _abortAssociation, showErrorMessage;

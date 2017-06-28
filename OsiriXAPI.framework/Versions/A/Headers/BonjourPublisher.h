@@ -13,7 +13,7 @@
 =========================================================================*/
 
 #import <Cocoa/Cocoa.h>
-#import "BrowserController.h"
+#import "browserController.h"
 
 /** \brief  Shares DB with Bonjour */
 
@@ -24,6 +24,7 @@
     N2ConnectionListener* _listener;
 	
     NSNetService* _bonjour;
+    BOOL published;
     
 	NSLock* dicomSendLock;
 }

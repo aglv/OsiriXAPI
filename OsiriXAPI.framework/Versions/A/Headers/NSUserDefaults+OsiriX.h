@@ -14,6 +14,15 @@
 
 #import <Cocoa/Cocoa.h>
 
+typedef enum  UseScreenPart
+{
+    entireScreen = 0,
+    leftPart,
+    rightPart,
+    twoThirdLeft,
+    twoThirdRight
+    
+} UseScreenPart;
 
 @interface NSUserDefaults (OsiriX)
 
@@ -36,6 +45,8 @@ extern NSString* const O2NonViewerScreensDefaultsKey;
 -(NSArray*)screensUsedForViewers;
 -(BOOL)screenIsUsedForViewers:(NSScreen*)screen;
 -(void)screen:(NSScreen*)screen setIsUsedForViewers:(BOOL)flag;
+-(UseScreenPart) screenPartForScreen: (NSScreen*) screen;
+-(void) setScreenPart: (UseScreenPart) part forScreen: (NSScreen*) screen;
 #endif
 
 #pragma mark Bonjour Sharing

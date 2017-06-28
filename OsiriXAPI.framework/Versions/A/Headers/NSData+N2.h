@@ -24,5 +24,10 @@
 -(NSString*)base64;
 -(NSString*)hex;
 -(NSData*)md5;
-
++(NSData*)dataWithShort:(unsigned short)s;
++(NSData*)dataWithLong:(unsigned long)s;
+-(NSString*)dataAsStringWithEncoding: (NSStringEncoding) encoding;
+- (NSArray *)multipartArrayWithBoundary:(NSString *)boundary;
+- (NSArray *)multipartArrayWithBoundary:(NSString *)boundary latestPosition: (unsigned long*) latestPosition;
+- (NSArray *)multipartArray;
 @end

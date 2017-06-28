@@ -69,6 +69,7 @@ enum OsiriXBlendingTypes {BlendingPlugin = -1, BlendingFusion = 1, BlendingSubtr
 + (void) setWindowAppearance: (NSWindow*) window;
 + (NSColor*) darkAppearanceFontColor;
 + (NSColor*) darkAppearanceBackgroundColor;
++ (NSColor*) darkAppearanceBlackColor;
 + (float) darkAppearanceFontColorWhiteLevel;
 
 - (NSMutableArray*) pixList;

@@ -13,7 +13,8 @@
  =========================================================================*/
 
 #import <Cocoa/Cocoa.h>
+#import "OSIOutlineView.h"
 
-@interface XMLOutlineView : NSOutlineView
+@interface XMLOutlineView : OSIOutlineView
 
 @end

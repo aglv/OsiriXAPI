@@ -13,7 +13,7 @@
 =========================================================================*/
 
 #import <Cocoa/Cocoa.h>
-#import "BrowserController.h"
+#import "browserController.h"
 #import "WaitRendering.h"
 
 /** \brief  Searches and retrieves Bonjour shared databases */

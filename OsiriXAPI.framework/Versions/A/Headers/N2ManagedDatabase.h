@@ -50,13 +50,11 @@
 //-(void)writeLock;
 //-(BOOL)tryWriteLock;
 //-(void)writeUnlock;
-
++ (NSDictionary*) storeOptions;
 +(NSString*) modelName;
 -(BOOL) deleteSQLFileIfOpeningFailed;
 -(BOOL) dumpSqlFile;
 -(NSManagedObjectModel*)managedObjectModel;
-//-(NSMutableDictionary*)persistentStoreCoordinatorsDictionary;
--(BOOL)migratePersistentStoresAutomatically; // default implementation returns YES
 -(NSPersistentStore*) addPersistentStoreWithPath: (NSString*) sqlFilePath;
 -(void) removeAllSecondaryStores;
 
@@ -101,7 +99,13 @@
 @interface N2ManagedObjectContext : NSManagedObjectContext {
     
 	N2ManagedDatabase* _database;
+    NSString *allocatedByStack;
 }
 
 @property(readonly) N2ManagedDatabase* database;
+@property(readonly) NSString *allocatedByStack;
+
++ (int) dicomManagedObjectContextCounter;
++ (int) webManagedObjectContextCounter;
 @end
+

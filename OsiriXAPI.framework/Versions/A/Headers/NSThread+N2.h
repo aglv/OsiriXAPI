@@ -59,5 +59,6 @@ extern NSString* const NSThreadProgressDetailsKey;
 extern NSString* const NSThreadSubthreadsAwareProgressKey;
 -(CGFloat)subthreadsAwareProgress;
 
+-(NSInteger)getThreadNum;
 @end
 

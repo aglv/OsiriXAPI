@@ -119,6 +119,12 @@
 @property (retain) NSDictionary *resetDictionary;
 @property BOOL frameZoomed;
 
+@property (retain) NSSliderTouchBarItem *thickSlabSliderTouchBarItem;
+@property (retain) NSSliderTouchBarItem *ROIsThicknessSliderTouchBarItem;
+@property (retain) NSSliderTouchBarItem *ROIsOpacitySliderTouchBarItem;
+@property (retain) NSCustomTouchBarItem *horizontalPanTouchBarItem;
+@property CGFloat previousHorizontalTranslationOnTouchBar;
+
 + (double) angleBetweenVector:(float*) a andPlane:(float*) orientation;
 
 - (id)initWithDCMPixList:(NSMutableArray*)pix filesList:(NSMutableArray*)files volumeData:(NSData*)volume viewerController:(ViewerController*)viewer fusedViewerController:(ViewerController*)fusedViewer;
@@ -150,4 +156,5 @@
 - (void) setROIToolTag:(ToolMode) roitype;
 - (IBAction) roiGetInfo:(id) sender;
 - (void) setupToolbar;
+- (void) setClippingRangeThicknessInMm:(float) c;
 @end

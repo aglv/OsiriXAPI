@@ -137,7 +137,7 @@ public:
    *  on the given output stream.
    *  @param out output stream
    */
-  virtual void dumpConnectionParameters(ostream &out) = 0;
+  virtual void dumpConnectionParameters(std::ostream &out) = 0;
 
   /** returns an error string for a given error code.
    *  @param code error code
@@ -309,7 +309,7 @@ public:
    *  on the given output stream.
    *  @param out output stream
    */
-  virtual void dumpConnectionParameters(ostream &out);
+  virtual void dumpConnectionParameters(std::ostream &out);
 
   /** returns an error string for a given error code.
    *  @param code error code

@@ -184,7 +184,7 @@ typedef enum AsyncSocketError AsyncSocketError;
 	
 	long theUserData;
 }
-
++ (unsigned long) asyncSocketCounter;
 - (id)init;
 - (id)initWithDelegate:(id)delegate;
 - (id)initWithDelegate:(id)delegate userData:(long)userData;

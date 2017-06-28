@@ -44,7 +44,8 @@ extern void _N2LogExceptionImpl(NSException* e, BOOL logStack, const char* pf);
 #define N2LogExceptionWithStackTrace(e, ...) _N2LogExceptionImpl(e, YES, __PRETTY_FUNCTION__, ## __VA_ARGS__)
 
 extern void N2LogStackTrace(NSString* format, ...);
-
+extern NSString* N2StackTraceString();
+    
 #ifdef __cplusplus
 }
 #endif

@@ -74,4 +74,6 @@
 
 - (N3AffineTransform)pixToDicomTransform; // converts points in the DCMPix's coordinate space ("Slice Coordinates") into the DICOM space (patient space with mm units)
 
+- (NSColor*)borderColor;
+
 @end

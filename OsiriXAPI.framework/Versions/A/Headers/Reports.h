@@ -15,6 +15,13 @@
 #import <Foundation/Foundation.h>
 #import <Carbon/Carbon.h>
 
+enum {kMicrosoftWordReport = 0,
+    kRTFReport = 1,
+    kPagesReport = 2,
+    kPluginReport = 3,
+    kOpenOfficeReport = 5,
+    kHTMLReport = 6};
+
 @class DicomStudy;
 
 /** \brief reports */

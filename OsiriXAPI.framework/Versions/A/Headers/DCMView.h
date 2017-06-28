@@ -91,7 +91,7 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
 	
 	float			mprVector[ 3], mprPoint[ 3];
     
-    NSTimeInterval  timeIntervalForDrag;
+    NSTimeInterval  timeIntervalForDrag, mouseDownStart;
 	
 	short			thickSlabMode, thickSlabStacks;
 	
@@ -105,7 +105,7 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
 	
     char            listType;
     
-    short           curImage, startImage;
+    short           curImage, startImage, previousRGB;
     
     ToolMode        currentTool, currentToolRight, currentMouseEventTool;
     
@@ -202,7 +202,7 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
 	
 	BOOL			scaleToFitNoReentry;
 	
-	GLString		*showDescriptionInLargeText, *warningNotice, *flippedNotice;
+	GLString		*showDescriptionInLargeText, *flippedNotice;
     float           previousScalingFactor;
 	//Context for rendering to iChat
 //	NSOpenGLContext *_alternateContext;
@@ -279,12 +279,28 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
     NSTimeInterval firstDisplay;
     
     NSString *mousePosUSRegion;
+    
+    BOOL stickToCenter;
+    
+    // SeriesLevel
+    NSNumber *scaleSeriesToSave, *rotationAngleSeriesToSave, *displayStyleSeriesToSave, *yFlippedSeriesToSave, *xFlippedSeriesToSave;
+    NSNumber *xOffsetSeriesToSave, *yOffsetSeriesToSave, *windowWidthSeriesToSave, *windowLevelSeriesToSave;
+    id seriesToSave;
+    
+    // Image Level
+    NSNumber *scaleToSave, *rotationAngleToSave, *xOffsetToSave, *yOffsetToSave;
+    NSNumber *windowWidthToSave, *windowLevelToSave, *yFlippedToSave, *xFlippedToSave;
+    id imageToSave;
+    BOOL savedImageParameters;
+    
 }
 
+@property(retain) NSNumber *scaleToSave, *rotationAngleToSave, *xOffsetToSave, *yOffsetToSave, *yFlippedToSave, *xFlippedToSave, *windowWidthToSave, *windowLevelToSave;
+@property(retain) NSNumber *scaleSeriesToSave, *rotationAngleSeriesToSave, *displayStyleSeriesToSave, *yFlippedSeriesToSave, *xFlippedSeriesToSave, *xOffsetSeriesToSave, *yOffsetSeriesToSave, *windowWidthSeriesToSave, *windowLevelSeriesToSave;
 @property NSRect drawingFrameRect;
 @property(retain) NSArray *cleanedOutDcmPixArray;
 @property(readonly) NSMutableArray *rectArray, *curRoiList;
-@property BOOL COPYSETTINGSINSERIES, flippedData, showDescriptionInLarge, syncOnLocationImpossible;
+@property BOOL COPYSETTINGSINSERIES, flippedData, showDescriptionInLarge, syncOnLocationImpossible, colorTransfer, stickToCenter;
 @property(nonatomic) BOOL whiteBackground;
 @property(retain) NSMutableArray *dcmPixList, *dcmRoiList;
 @property(readonly) NSArray *dcmFilesList;
@@ -357,10 +373,12 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
 
 - (unsigned char*) getRawPixelsViewWidth:(long*) width height:(long*) height spp:(long*) spp bpp:(long*) bpp screenCapture:(BOOL) screenCapture force8bits:(BOOL) force8bits removeGraphical:(BOOL) removeGraphical squarePixels:(BOOL) squarePixels allowSmartCropping:(BOOL) allowSmartCropping origin:(float*) imOrigin spacing:(float*) imSpacing;
 - (unsigned char*) getRawPixelsViewWidth:(long*) width height:(long*) height spp:(long*) spp bpp:(long*) bpp screenCapture:(BOOL) screenCapture force8bits:(BOOL) force8bits removeGraphical:(BOOL) removeGraphical squarePixels:(BOOL) squarePixels allowSmartCropping:(BOOL) allowSmartCropping origin:(float*) imOrigin spacing:(float*) imSpacing offset:(int*) offset isSigned:(BOOL*) isSigned;
+- (unsigned char*) getRawPixelsWidth:(long*) width height:(long*) height spp:(long*) spp bpp:(long*) bpp screenCapture:(BOOL) screenCapture force8bits:(BOOL) force8bits removeGraphical:(BOOL) removeGraphical squarePixels:(BOOL) squarePixels allTiles:(BOOL) allTiles allowSmartCropping:(BOOL) allowSmartCropping origin:(float*) imOrigin spacing:(float*) imSpacing offset:(int*) offset isSigned:(BOOL*) isSigned limitResolution:(BOOL) limitResolution;
 
 - (void) blendingPropagate;
 - (void) subtract:(DCMView*) bV;
 - (void) subtract:(DCMView*) bV absolute:(BOOL) abs;
+- (void) subtractDCMPix:(DCMPix*) pix absolute:(BOOL) abs;
 - (void) multiply:(DCMView*) bV;
 - (GLuint *) loadTextureIn:(GLuint *) texture blending:(BOOL) blending colorBuf: (unsigned char**) colorBufPtr textureX:(long*) tX textureY:(long*) tY redTable:(unsigned char*) rT greenTable:(unsigned char*) gT blueTable:(unsigned char*) bT textureWidth: (long*) tW textureHeight:(long*) tH resampledBaseAddr:(char**) rAddr resampledBaseAddrSize:(int*) rBAddrSize;
 - (short)syncro;

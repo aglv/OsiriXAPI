@@ -65,7 +65,7 @@ enum
 
 /** \brief Window Controller for 2D Viewer*/
 
-@interface ViewerController : OSIWindowController  <NSWindowDelegate, NSSplitViewDelegate, NSToolbarDelegate>
+@interface ViewerController : OSIWindowController  <NSWindowDelegate, NSSplitViewDelegate, NSToolbarDelegate, NSMenuDelegate>
 {
 	NSRecursiveLock	*roiLock;
 	NSConditionLock *flipDataThread, *convThread;
@@ -173,8 +173,6 @@ enum
 	IBOutlet NSMatrix		*customVectors, *customOrigin;
 
     IBOutlet NSWindow       *setWLWWWindow;
-    IBOutlet NSTextField    *wlset, *fromset;
-    IBOutlet NSTextField    *wwset, *toset;
 			
     IBOutlet NSWindow       *addWLWWWindow;
     IBOutlet NSTextField    *newName;
@@ -289,7 +287,8 @@ enum
 	
 	BOOL					windowWillClose;
 	BOOL					postprocessed;
-	
+    BOOL                    subtract1seriesToOther4DSeriesApplied;
+    
 	NSRect					standardRect;
 	
 	// Brush ROI Filter
@@ -370,8 +369,14 @@ enum
     NSTimer *autoKeyImageTimer;
     NSPoint previousMousePosition;
     NSTimeInterval autoKeyImageChangeImageDataTime;
+    
+    NSInteger firstROIorKeyImage;
+    
+    NSString *sortedByKey;
+    BOOL sortedInAscending;
 }
-@property BOOL preFlipped;
+@property BOOL preFlipped, sortedInAscending;
+@property(retain) NSString *sortedByKey;
 @property(retain) NSCalendarDate *injectionDateTime;
 @property(readonly) NSSlider *slider;
 @property(readonly) KeyImagesWindowController *keysCtrl;
@@ -400,6 +405,12 @@ enum
 
 @property(retain) NSNumber* flagListPODComparatives;
 @property BOOL movieViewer;
+
+@property (retain) NSSliderTouchBarItem *thickSlabSliderTouchBarItem;
+@property (retain) NSScrubber *reconstructionToolsScrubber;
+@property (retain) NSScrubber *seriesThumbnailsScrubber;
+@property (retain) NSSliderTouchBarItem *ROIsThicknessSliderTouchBarItem;
+@property (retain) NSSliderTouchBarItem *ROIsOpacitySliderTouchBarItem;
 
 /** Array of all 2D Viewers */
 + (NSMutableArray*) getDisplayed2DViewers;
@@ -682,6 +693,7 @@ enum
 - (IBAction) endNameWLWW:(id) sender;
 - (IBAction) endSetWLWW:(id) sender;
 - (IBAction) updateSetWLWW:(id) sender;
+- (IBAction) setWLWW:(id) sender forDCMViews: (NSArray*) dcmViews;
 - (IBAction) endConv:(id) sender;
 - (IBAction) endCLUT:(id) sender;
 - (IBAction) endBlendingType:(id) sender;
@@ -706,6 +718,7 @@ enum
 - (float) highLighted;
 - (void) setHighLighted: (float) b;
 - (void) syncThumbnails;
+- (BOOL) syncWithViewer: (ViewerController*) v;
 - (void) checkBuiltMatrixPreview;
 - (void)comparativeRefresh:(NSString*) patientUID;
 

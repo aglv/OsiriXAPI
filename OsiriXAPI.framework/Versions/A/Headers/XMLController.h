@@ -66,6 +66,7 @@
 
 @property (retain) NSString *addDICOMFieldTextField;
 @property (retain) DICOMFieldMenu *DICOMField;
+@property int editingLevel;
 
 - (BOOL) modificationsToApply;
 

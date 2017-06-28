@@ -15,6 +15,7 @@
 #import <Cocoa/Cocoa.h>
 #import "DCMTKQueryNode.h"
 
+#ifndef OSIRIX_LIGHT
 /** \brief Study level DCMTKQueryNode */
 @interface DCMTKStudyQueryNode : DCMTKQueryNode {
     BOOL _sortChildren;
@@ -23,6 +24,7 @@
     NSString *_studyID;
 }
 
+- (NSString*) patientUID;
 - (NSNumber*) stateText;
 - (NSString*) studyID;
 - (NSString*) studyInstanceUID;// Match DicomStudy
@@ -33,3 +35,4 @@
 - (BOOL) isHidden;
 - (void) setHidden: (BOOL) h;
 @end
+#endif

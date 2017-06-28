@@ -123,7 +123,6 @@ class vtkMyCallback;
 	vtkTexture					*texture;
 	
     vtkActor					*outlineRect;
-    vtkPolyDataMapper			*mapOutline;
     vtkOutlineFilter			*outlineData;
 	vtkOrientationMarkerWidget	*orientationWidget;
 	

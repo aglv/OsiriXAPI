@@ -14,9 +14,12 @@
 
 
 #import <Cocoa/Cocoa.h>
+#import <WebKit/WebKit.h>
+
 #include <Accelerate/Accelerate.h>
 
-#define ALPHASTATECOLOR 0.6
+
+#define ALPHASTATECOLOR 0.5
 
 @class DicomDatabase;
 @class MPR2DController,NSCFDate, DicomStudy, DicomSeries;
@@ -47,7 +50,7 @@ extern NSString* O2AlbumDragType;
 
 @interface BrowserController : NSWindowController
 #if (MAC_OS_X_VERSION_MAX_ALLOWED > MAC_OS_X_VERSION_10_5)
-<NSTableViewDelegate, NSDrawerDelegate, NSMatrixDelegate, NSToolbarDelegate, NSMenuDelegate,NSSplitViewDelegate>   //NSObject
+<NSTableViewDelegate, NSDrawerDelegate, NSMatrixDelegate, NSToolbarDelegate, NSMenuDelegate, NSSplitViewDelegate, WebPolicyDelegate>   //NSObject
 #endif
 {
 	DicomDatabase*					_database;
@@ -103,7 +106,7 @@ extern NSString* O2AlbumDragType;
 	
 	IBOutlet NSTextField			*databaseDescription;
 	IBOutlet MyOutlineView          *databaseOutline;
-	NSMenu							*columnsMenu;
+	NSMenu							*columnsMenu, *contextualReportMenu;
 	IBOutlet BrowserMatrix			*oMatrix;
 	IBOutlet NSTableView			*albumTable;
 	
@@ -125,7 +128,7 @@ extern NSString* O2AlbumDragType;
 	int								subFrom, subTo, subInterval, subMax;
 	
 	IBOutlet NSWindow				*subOpenWindow;
-	IBOutlet NSMatrix				*subOpenMatrix3D, *subOpenMatrix4D, *supOpenButtons;
+	IBOutlet NSMatrix				*subOpenMatrix3D, *subOpenMatrix4D;
 	
 	IBOutlet NSWindow				*subSeriesWindow;
 	IBOutlet NSButton				*subSeriesOKButton;
@@ -221,15 +224,17 @@ extern NSString* O2AlbumDragType;
     NSArray                         *ROIsAndKeyImagesCache, *ROIsImagesCache, *KeyImagesCache;
     BOOL                            ROIsAndKeyImagesCacheSameSeries, ROIsImagesCacheSameSeries;
     
-    BOOL                            _computingNumberOfStudiesForAlbums;
+    NSLock                          *computingNumberOfStudiesForAlbumsLock;
 	
 	IBOutlet NSTableView* _activityTableView;
 	id _activityHelper;
     
     IBOutlet NSSplitView *bannerSplit;
-    IBOutlet NSButton *banner;
-    NSMutableArray *bannersArray;
+    IBOutlet WebView *bannerWebView;
+    NSDictionary *bannerDict;
+    NSSize bannerWebViewSize;
     int bannerIndex;
+    
     
     NSTimeInterval _timeIntervalOfLastLoadIconsDisplayIcons;
     NSThread *matrixLoadIconsThread;
@@ -244,7 +249,7 @@ extern NSString* O2AlbumDragType;
     BOOL dontSelectStudyFromComparativeStudies;
     NSTimeInterval lastRefreshComparativeStudies; //Refresh the studies after X minutes
     
-    NSMutableArray *comparativeRetrieveQueue; //Retrieve Queue: don't retrieve the same study multiple times
+    NSMutableArray *comparativeRetrieveQueue, *comparativeSeriesRetrieveQueue; //Retrieve Queue: don't retrieve the same study multiple times
     DCMTKStudyQueryNode *comparativeStudyWaited; //The study to be selected or opened
     ViewerController *comparativeStudyWaitedViewer; //The destination viewer
     NSTimeInterval comparativeStudyWaitedTime; //The time when the study to be selected or opened was activated
@@ -308,7 +313,16 @@ extern NSString* O2AlbumDragType;
 @property(readonly) NSMutableDictionary *databaseIndexDictionary;
 @property(readonly) PluginManagerController *pluginManagerController;
 @property int distantSearchType;
-@property(readonly) NSMutableArray *comparativeRetrieveQueue;
+@property(readonly) NSMutableArray *comparativeRetrieveQueue, *comparativeSeriesRetrieveQueue;
+
+// NSTouchBar
+@property(retain) NSPopoverTouchBarItem *modalityFilterPopoverTouchBarItem;
+@property(retain) NSPopoverTouchBarItem *timeIntervalFilterPopoverTouchBarItem;
+@property(retain) NSPopoverTouchBarItem *statusPopoverTouchBarItem;
+@property(retain) NSScrubber *modalityScrubber;
+@property(retain) NSScrubber *timeIntervalScrubber;
+@property(retain) NSScrubber *statusScrubber;
+@property(retain) NSScrubber *thumbnailsScrubber;
 
 + (void) buildReportsMenu: (NSPopUpButton*) reportTemplatesListPopUpButton;
 + (void) resetPreferences;
@@ -362,7 +376,7 @@ extern NSString* O2AlbumDragType;
 - (NSPredicate*) smartAlbumPredicate:(NSManagedObject*) album;
 - (NSPredicate*) smartAlbumPredicateString:(NSString*) string;
 - (void) executeActionsForState: (NSNumber*) c;
-- (void) pressStateCellForRow: (int) clickedRow column: (int) clickedColumn event: (NSEvent*) event;
+- (void) pressCellForRow: (int) clickedRow column: (int) clickedColumn event: (NSEvent*) event identifier:(NSString*) identifier;
 - (void) rightClickCommentCellForRow: (int) clickedRow column: (int) clickedColumn event: (NSEvent*) event;
 - (void) emptyDeleteQueueThread;
 - (void) emptyDeleteQueue:(id) sender;
@@ -388,15 +402,17 @@ extern NSString* O2AlbumDragType;
 - (BOOL) isBonjour: (NSManagedObjectContext*) c __deprecated;
 - (NSString *) localDocumentsDirectory __deprecated;
 - (void) alternateButtonPressed: (NSNotification*)n;
-- (NSArray*) childrenArray: (id) item;
-- (NSArray*) childrenArray: (id) item onlyImages:(BOOL) onlyImages;
-- (NSArray*) imagesArray: (id) item;
-- (NSArray*) imagesArray: (id) item preferredObject: (int) preferredObject;
-- (NSArray*) imagesArray: (id) item onlyImages:(BOOL) onlyImages;
-- (NSArray*) imagesArray: (id) item preferredObject: (int) preferredObject onlyImages:(BOOL) onlyImages;
+- (NSArray*) childrenArray: (id) item __deprecated;
+- (NSArray*) childrenArray: (id) item onlyImages:(BOOL) onlyImages __deprecated;
+- (NSArray*) imagesArray: (id) item __deprecated;
+- (NSArray*) imagesArray: (id) item preferredObject: (int) preferredObject __deprecated;
+- (NSArray*) imagesArray: (id) item onlyImages:(BOOL) onlyImages __deprecated;
+- (NSArray*) imagesArray: (id) item preferredObject: (int) preferredObject onlyImages:(BOOL) onlyImages __deprecated;
+- (NSArray*) imagesPathArray: (NSManagedObject*) item __deprecated;
 - (void) setNetworkLogs;
 - (BOOL) isNetworkLogsActive;
 - (void) computeTimeInterval;
+- (IBAction) print: (id) sender;
 - (void) ReadDicomCDRom:(id) sender __deprecated;
 - (NSString*) INCOMINGPATH __deprecated;
 - (NSString*) TEMPPATH __deprecated;
@@ -477,10 +493,12 @@ extern NSString* O2AlbumDragType;
 - (void) browserPrepareForClose;
 - (IBAction) endReBuildDatabase:(id) sender;
 - (IBAction) ReBuildDatabaseSheet: (id)sender;
+- (IBAction)rebuildSQLFile:(id)sender;
 - (void) previewSliderAction:(id) sender;
 - (void) addHelpMenu;
 + (NSString*) _findFirstDicomdirOnCDMedia: (NSString*)startDirectory __deprecated;
 + (BOOL)isItCD:(NSString*) path;
++ (NSArray*) zipExtensions;
 - (void)storeSCPComplete:(id)sender;
 - (void) changeStateValueTo: (int) tag forStudies: (NSArray*) studies;
 - (NSMutableArray *) filesForDatabaseOutlineSelection :(NSMutableArray*) correspondingDicomFile;
@@ -512,7 +530,7 @@ extern NSString* O2AlbumDragType;
 - (void)selectStudyWithObjectID:(NSManagedObjectID*)oid;
 - (BOOL) selectThisStudy: (id)study;
 - (BOOL) selectThisStudy: (NSManagedObject*)study changeAlbumIfNecessary: (BOOL) changeAlbumIfNecessary;
-
+- (NSArray*) outlineViewArray;
 - (void) previewPerformAnimation:(id) sender;
 - (void) matrixDisplayIcons:(id) sender;
 - (void) selectDatabaseOutline;
@@ -529,8 +547,6 @@ extern NSString* O2AlbumDragType;
 - (NSArray*) albumArray;
 - (void) refreshAlbums;
 - (void) waitForRunningProcesses;
-
-- (NSArray*) imagesPathArray: (NSManagedObject*) item;
 
 - (void) autoCleanDatabaseFreeSpace:(id) sender __deprecated;
 - (void) autoCleanDatabaseDate:(id) sender __deprecated;
@@ -577,8 +593,9 @@ extern NSString* O2AlbumDragType;
 - (BOOL) selectAlbumWithName: (NSString*) name;
 - (NSArray *)databaseSelection;
 
-+ (void) asyncWADOXMLDownloadURL:(NSURL*) url;
++ (BOOL) asyncWADOXMLDownloadURL:(NSURL*) url;
 
+- (void) refreshMatrixThumbnail: (NSManagedObject*) object;
 - (void) refreshMatrix:(id) sender;
 - (void)updateReportToolbarIcon:(NSNotification *)note;
 
@@ -616,8 +633,8 @@ extern NSString* O2AlbumDragType;
 - (NSDictionary*) PACSOnDemandDictionaryForThisSmartAlbumName: (NSString*) albumName;
 - (void) initAnimationSlider;
 
-+ (id) localObjectForDistantObject: (DCMTKQueryNode*) o;
-+ (NSArray*) localObjectsForDistantObject: (DCMTKQueryNode*) o;
++ (id) localObjectForDistantObject: (DCMTKQueryNode*) o __deprecated;
++ (NSArray*) localObjectsForDistantObject: (DCMTKQueryNode*) o __deprecated;
 - (void) setSearchString: (NSString *)searchString;
 
 + (NSString*) DateTimeWithSecondsFormat:(NSDate*) t;

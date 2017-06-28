@@ -27,7 +27,7 @@
 	NSNumber	*dicomTime;
     NSImage     *thumbnailImage;
     NSArray     *imagesWithROIsCache;
-    int         hasKeyImages, hasROIs;
+    int         latestDistantNumberOfImages;
 }
 
 @property(nonatomic, retain, readonly) NSNumber* dicomTime;
@@ -48,6 +48,8 @@
 @property(nonatomic, retain) NSNumber* numberOfKeyImages;
 @property(nonatomic, retain) NSNumber* rotationAngle;
 @property(nonatomic, retain) NSNumber* scale;
+@property(nonatomic, retain) NSNumber* hasROIs;
+@property(nonatomic, retain) NSNumber* hasKeyImages;
 @property(nonatomic, retain) NSString* seriesDescription;
 @property(nonatomic, retain) NSString* seriesDICOMUID;
 @property(nonatomic, retain) NSString* seriesInstanceUID;
@@ -62,17 +64,24 @@
 @property(nonatomic, retain) NSNumber* yOffset;
 @property(nonatomic, retain) NSSet* images;
 @property(nonatomic, retain) DicomStudy* study;
+@property int latestDistantNumberOfImages;
 
 - (int) multiframesNumber;
 - (NSSet*) paths;
 - (NSSet*) keyImages;
+- (NSArray*) sortedKeyImages;
 - (NSArray*) sortedImages;
+- (NSInteger) firstKeyOrROIImage;
+- (NSInteger) lastKeyOrROIImage;
+- (NSInteger) nextKeyOrROIImageTo: (NSInteger) index;
+- (NSInteger) nextKeyOrROIImageTo: (NSInteger) index forward: (BOOL) forward;
 - (NSComparisonResult) compareName:(DicomSeries*)series;
 - (NSNumber*) noFilesExcludingMultiFrames;
 - (NSNumber*) rawNoFiles;
 - (DicomSeries*) previousSeries;
 - (DicomSeries*) nextSeries;
 - (NSArray*) sortDescriptorsForImages;
++ (NSArray*) sortDescriptorsForImages;
 - (NSString*) uniqueFilename;
 - (BOOL) isDistant;
 + (void) recomputeLocalizersSeriesInstanceUIDForStudies: (NSSet*) studiesSet;
@@ -86,8 +95,6 @@
 - (NSArray*) imagesAsScreenCapture:(NSRect)frame dicomImages:(NSArray*) dcmImages;
 - (NSArray*) imagesAsScreenCapture:(NSRect)frame dicomImages:(NSArray*) dcmImages annotationsLevel: (annotationsLevel) annotationsLevel;
 + (NSRect) frameForImageAsScreenCapture;
-- (BOOL) hasROIs;
-- (BOOL) hasKeyImages;
 @end
 
 @interface DicomSeries (CoreDataGeneratedAccessors)

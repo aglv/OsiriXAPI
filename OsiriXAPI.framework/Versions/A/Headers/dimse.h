@@ -1028,7 +1028,7 @@ void DIMSE_printNCreateRSP(FILE * f, T_DIMSE_N_CreateRSP * rsp);
 void DIMSE_printNDeleteRQ(FILE * f, T_DIMSE_N_DeleteRQ * req);
 void DIMSE_printNDeleteRSP(FILE * f, T_DIMSE_N_DeleteRSP * rsp);
 
-void DIMSE_printMessage(ostream& outstream, T_DIMSE_Message &msg, DcmItem *dataset=NULL);
+void DIMSE_printMessage(std::ostream& outstream, T_DIMSE_Message &msg, DcmItem *dataset=NULL);
 
 
 #endif

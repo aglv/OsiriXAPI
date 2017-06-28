@@ -12,7 +12,7 @@
  PURPOSE.
  =========================================================================*/
 
-#import "BrowserController.h"
+#import "browserController.h"
 #import "NoVibrancyTableView.h"
 
 @interface BrowserController (Activity)

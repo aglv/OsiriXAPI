@@ -25,6 +25,7 @@
 -(NSString*)tmpFilePathInDir:(NSString*)dirPath;
 -(NSString*)tmpDirPath;
 -(NSString*)tmpFilePathInTmp;
+-(NSString*)tmpFilePathInTmpWithExtension: (NSString*) ext;
 -(NSString*)confirmDirectoryAtPath:(NSString*)dirPath;
 -(NSString*)confirmNoIndexDirectoryAtPath:(NSString*)path;
 -(NSUInteger)sizeAtPath:(NSString*)path;
@@ -43,4 +44,5 @@
 -(N2DirectoryEnumerator*)enumeratorAtPath:(NSString*)path filesOnly:(BOOL)filesOnly;
 -(N2DirectoryEnumerator*)enumeratorAtPath:(NSString*)path filesOnly:(BOOL)filesOnly recursive:(BOOL)recursive;
 
+- (unsigned long) crc32ForPath: (NSString*) path;
 @end
