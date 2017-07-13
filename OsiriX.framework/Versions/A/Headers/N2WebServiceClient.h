@@ -27,9 +27,9 @@ enum HTTPMethod {
 
 -(id)initWithURL:(NSURL*)url;
 
--(NSData*)requestWithURL:(NSURL*)url method:(HTTPMethod)method content:(NSData*)content headers:(NSDictionary*)headers context:(id)context;
--(NSData*)requestWithMethod:(HTTPMethod)method content:(NSData*)content headers:(NSDictionary*)headers;
--(NSData*)requestWithMethod:(HTTPMethod)method content:(NSData*)content headers:(NSDictionary*)headers context:(id)context;
+-(NSData*)requestWithURL:(NSURL*)url method:(enum HTTPMethod)method content:(NSData*)content headers:(NSDictionary*)headers context:(id)context;
+-(NSData*)requestWithMethod:(enum HTTPMethod)method content:(NSData*)content headers:(NSDictionary*)headers;
+-(NSData*)requestWithMethod:(enum HTTPMethod)method content:(NSData*)content headers:(NSDictionary*)headers context:(id)context;
 -(NSData*)getWithParameters:(NSDictionary*)params;
 -(NSData*)postWithContent:(NSData*)content;
 -(NSData*)postWithParameters:(NSDictionary*)params;
