@@ -5,7 +5,7 @@
   All rights reserved.
   Distributed under GNU - LGPL
   
-  See http://www.osirix-viewer.com/copyright.html for details.
+  See https://www.osirix-viewer.com/copyright.html for details.
 
      This software is distributed WITHOUT ANY WARRANTY; without even
      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
@@ -25,12 +25,15 @@
 	IBOutlet NSTextField		 *text, *elapsed;
 	IBOutlet NSButton			 *abort;
 	
-	SendController * _target;
-	NSDate  *startTime;
+	NSTimeInterval startTime;
 	BOOL	cancel, aborted;
-	NSModalSession session;
 	NSTimeInterval lastTimeFrame, lastTimeFrameUpdate, firstTime, displayedTime;
     IOPMAssertionID assertionID;
+    
+    NSRect windowFrameRect;
+    BOOL closed, ticktack;
+    
+    NSTimeInterval lastDisplay;
 }
 + (Wait*) showWithString: (NSString*) str;
 + (Wait*) showWithString: (NSString*) str maxProgress: (int) maxValue showCancel: (BOOL) showCancel;

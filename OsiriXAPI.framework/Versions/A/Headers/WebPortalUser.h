@@ -5,7 +5,7 @@
   All rights reserved.
   Distributed under GNU - LGPL
   
-  See http://www.osirix-viewer.com/copyright.html for details.
+  See https://www.osirix-viewer.com/copyright.html for details.
 
      This software is distributed WITHOUT ANY WARRANTY; without even
      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
@@ -17,7 +17,7 @@
 #define HASHPASSWORD @"**********"
 
 /** \brief  Core Data Entity for a web user */
-@class WebPortalStudy;
+@class WebPortalStudy, DicomDatabase;
 
 @interface WebPortalUser : NSManagedObject {
 }
@@ -26,6 +26,7 @@
 @property (nonatomic, retain) NSNumber * autoDelete;
 @property (nonatomic, retain) NSNumber * canAccessPatientsOtherStudies;
 @property (nonatomic, retain) NSNumber * canSeeAlbums;
+@property (nonatomic, retain) NSNumber * canDeleteStudy;
 @property (nonatomic, retain) NSDate * creationDate;
 @property (nonatomic, retain) NSDate * deletionDate;
 @property (nonatomic, retain) NSNumber * downloadZIP;
@@ -73,6 +74,8 @@
 +(NSArray*)studiesForUser: (WebPortalUser*) user predicate:(NSPredicate*)predicate sortBy:(NSString*)sortValue;
 +(NSArray*)studiesForUser: (WebPortalUser*) user predicate:(NSPredicate*)predicate sortBy:(NSString*)sortValue fetchLimit:(int) fetchLimit fetchOffset:(int) fetchOffset numberOfStudies:(int*) numberOfStudies;
 +(NSArray*)studiesForUser: (WebPortalUser*) user album:(NSString*)albumName sortBy:(NSString*)sortValue sortOrder:(NSComparisonResult) sortOrder fetchLimit:(int) fetchLimit fetchOffset:(int) fetchOffset numberOfStudies:(int*) numberOfStudies;
++(NSArray*)studiesForUser: (WebPortalUser*) user album:(NSString*)albumName sortBy:(NSString*)sortValue sortOrder:(NSComparisonResult) sortOrder fetchLimit:(int) fetchLimit fetchOffset:(int) fetchOffset numberOfStudies:(int*) numberOfStudies dicomDatabase: (DicomDatabase*) dicomDatabase;
++(NSArray*)studiesForUser: (WebPortalUser*) user predicate:(NSPredicate*)predicate sortBy:(NSString*)sortValue fetchLimit:(int) fetchLimit fetchOffset:(int) fetchOffset numberOfStudies:(int*) numberOfStudies dicomDatabase: (DicomDatabase*) dicomDatabase;
 
 -(NSArray*)studiesForAlbum:(NSString*)albumName;
 -(NSArray*)studiesForAlbum:(NSString*)albumName sortBy:(NSString*)sortValue;
@@ -81,6 +84,8 @@
 +(NSArray*)studiesForUser: (WebPortalUser*) user album:(NSString*)albumName;
 +(NSArray*)studiesForUser: (WebPortalUser*) user album:(NSString*)albumName sortBy:(NSString*)sortValue;
 +(NSArray*)studiesForUser: (WebPortalUser*) user album:(NSString*)albumName sortBy:(NSString*)sortValue fetchLimit:(int) fetchLimit fetchOffset:(int) fetchOffset numberOfStudies:(int*) numberOfStudies;
+
++ (void) purgeStudiesForUserCache;
 @end
 
 @interface WebPortalUser (CoreDataGeneratedAccessors)

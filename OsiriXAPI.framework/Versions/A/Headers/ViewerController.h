@@ -5,7 +5,7 @@
   All rights reserved.
   Distributed under GNU - LGPL
   
-  See http://www.osirix-viewer.com/copyright.html for details.
+  See https://www.osirix-viewer.com/copyright.html for details.
 
      This software is distributed WITHOUT ANY WARRANTY; without even
      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
@@ -53,15 +53,34 @@
 
 extern BOOL SyncButtonBehaviorIsBetweenStudies;
 
-enum
+typedef enum _OrientationVector
 {
+    eUnknownOrientationVector = -1,
 	eSagittalPos = 0,		// 0
 	eSagittalNeg,			// 1
 	eCoronalPos,			// 2
 	eCoronalNeg,			// 3
 	eAxialPos,				// 4
 	eAxialNeg				// 5
-};
+} OrientationVector;
+
+typedef enum _Orientation
+{
+    eUnknownOrientation = -1,
+    eAxial = 0,         // 0
+    eCoronal,			// 1
+    eSagittal,			// 2
+} Orientation;
+
+typedef enum _ThickSlabMode
+{
+    thickSlabOff = 0,		// 0
+    thickSlabMean,			// 1
+    thickSlabMIP,			// 2
+    thickSlabMinIP,			// 3
+    thickSlabVRUp,			// 4
+    thickSlabVRDown			// 5
+} ThickSlabMode;
 
 /** \brief Window Controller for 2D Viewer*/
 
@@ -263,7 +282,8 @@ enum
 	NSMutableArray			*fileList[ MAX4D];
     NSMutableArray          *pixList[ MAX4D], *roiList[ MAX4D], *copyRoiList[ MAX4D];
 	NSData					*volumeData[ MAX4D];
-	short					curMovieIndex, maxMovieIndex, orientationVector;
+	short					curMovieIndex, maxMovieIndex;
+    OrientationVector       orientationVector;
     NSToolbar               *toolbar;
 	
 	float					direction;
@@ -374,6 +394,8 @@ enum
     
     NSString *sortedByKey;
     BOOL sortedInAscending;
+    
+    int setOrientationResliceRecursiveProtection;
 }
 @property BOOL preFlipped, sortedInAscending;
 @property(retain) NSString *sortedByKey;
@@ -616,6 +638,7 @@ enum
 - (void) setImageIndex:(long) i;
 - (void) setImage:(DicomImage*) image;
 - (void) setPix:(DCMPix*) pix;
++ (void) preferencesUpdated;
 - (long) imageIndex;
 - (IBAction) editSUVinjectionTime:(id)sender;
 - (IBAction) ok:(id)sender;
@@ -653,7 +676,7 @@ enum
 - (void) roiLoadFromSeries: (NSString*) filename;
 - (void) offsetMatrixSetting: (int) twentyFiveCodes;
 - (IBAction) mergeBrushROI: (id) sender;
-- (IBAction) mergeBrushROI: (id) sender ROIs: (NSArray*) s;
+- (ROI*) mergeBrushROI: (id) sender ROIs: (NSArray*) s;
 - (IBAction) subSumSlider:(id) sender;
 - (IBAction) subSharpen:(id) sender;
 - (void) displayWarningIfGantryTitled;
@@ -675,6 +698,8 @@ enum
 - (BOOL) FullScreenON;
 - (void) setROITool:(id) sender;
 - (void) setROIToolTag:(ToolMode) roitype;
+- (void) setToolTag:(ToolMode) toolTag;
+- (ToolMode) ROIToolTag;
 - (void) changeImageData:(NSMutableArray*)f :(NSMutableArray*)d :(NSData*) v :(BOOL) applyTransition;
 - (ViewerController*) copyViewerWindow;
 - (void) copyVolumeData: (NSData**) vD andDCMPix: (NSMutableArray **) newPixList forMovieIndex: (int) v;
@@ -712,6 +737,7 @@ enum
 - (float) frameRate;
 - (void) adjustSlider;
 - (void) sliderFusionAction:(id) sender;
+- (void) sliderFusionAdd:(int) value;
 - (void) popFusionAction:(id) sender;
 - (void) propagateSettings;
 - (void) setCurWLWWMenu:(NSString*)s ;
@@ -899,8 +925,8 @@ enum
 - (IBAction) fullScreenMenu:(id) sender;
 - (int) imageIndexOfROI:(ROI*) c;
 - (void)exportTextFieldDidChange:(NSNotification *)note;
-- (short) orientationVector;
-- (short) orthogonalOrientation;
+- (OrientationVector) orientationVector;
+- (Orientation) orthogonalOrientation;
 // functions s that plugins can also play with globals
 + (ViewerController *) draggedController;
 + (void) setDraggedController:(ViewerController *) controller;

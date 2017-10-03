@@ -5,7 +5,7 @@
   All rights reserved.
   Distributed under GNU - LGPL
   
-  See http://www.osirix-viewer.com/copyright.html for details.
+  See https://www.osirix-viewer.com/copyright.html for details.
 
      This software is distributed WITHOUT ANY WARRANTY; without even
      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
@@ -64,7 +64,7 @@ enum burnerDestination
 - (IBAction) ok:(id)sender;
 - (IBAction) cancel:(id)sender;
 - (IBAction) setAnonymizedCheck: (id) sender;
-- (id) initWithFiles:(NSArray *)theFiles;
+- (id)initWithObjects:(NSArray *)managedObjects;
 - (id)initWithFiles:(NSArray *)theFiles managedObjects:(NSArray *)managedObjects;
 - (IBAction)burn:(id)sender;
 - (void)setCDTitle: (NSString *)title;

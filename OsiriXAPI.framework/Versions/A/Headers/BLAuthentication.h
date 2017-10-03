@@ -28,6 +28,7 @@
 // executes pathToCommand with privileges
 - (BOOL)executeCommand:(NSString *)pathToCommand withArgs:(NSArray *)arguments;
 - (BOOL)executeCommand:(NSString *)pathToCommand withArgs:(NSArray *)arguments wait: (BOOL) wait;
+- (BOOL)executeCommand:(NSString *)pathToCommand withArgs:(NSArray *)arguments wait: (BOOL) wait pipe: (FILE**) pipe;
 // kills the process specified by commandFromPS
 - (BOOL)killProcess:(NSString *)commandFromPS;
 @end

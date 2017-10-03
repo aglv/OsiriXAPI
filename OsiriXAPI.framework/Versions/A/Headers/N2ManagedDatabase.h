@@ -5,7 +5,7 @@
  All rights reserved.
  Distributed under GNU - LGPL
  
- See http://www.osirix-viewer.com/copyright.html for details.
+ See https://www.osirix-viewer.com/copyright.html for details.
  
  This software is distributed WITHOUT ANY WARRANTY; without even
  the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
@@ -26,8 +26,11 @@
     
     NSTimeInterval timeOfLastModification;
     NSThread *associatedThread;
+    BOOL isSaving;
+    NSTimer *shareBetweenComputersTimer;
+    NSMutableArray *postN2ManagedDatabaseNotificationArray;
 }
-
+@property BOOL isSaving;
 @property(readonly) NSThread* associatedThread;
 @property(readonly) NSPersistentStore *mainStore;
 @property(readonly,retain) NSString* sqlFilePath;
@@ -82,7 +85,7 @@
 -(NSUInteger)countObjectsForEntity:(id)e predicate:(NSPredicate*)p;
 -(NSUInteger)countObjectsForEntity:(id)e predicate:(NSPredicate*)p error:(NSError**)err;
 -(id)newObjectForEntity:(id)e;
-
+-(void) sqlFileChanged;
 -(BOOL)save;
 -(BOOL)save:(NSError**)err;
 

@@ -5,7 +5,7 @@
  All rights reserved.
  Distributed under GNU - LGPL
  
- See http://www.osirix-viewer.com/copyright.html for details.
+ See https://www.osirix-viewer.com/copyright.html for details.
  
  This software is distributed WITHOUT ANY WARRANTY; without even
  the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
@@ -28,6 +28,12 @@ typedef enum HotKeyActions {DefaultWWWLHotKeyAction = 0, FullDynamicWWWLHotKeyAc
     BoneRemovalHotKeyAction, Rotate3DHotKeyAction, Camera3DotKeyAction, scissors3DHotKeyAction, RepulsorHotKeyAction, SelectorHotKeyAction, EmptyHotKeyAction, UnreadHotKeyAction, ReviewedHotKeyAction, DictatedHotKeyAction, ValidatedHotKeyAction, OrthoMPRCrossHotKeyAction, Preset1OpacityHotKeyAction, Preset2OpacityHotKeyAction, Preset3OpacityHotKeyAction, Preset4OpacityHotKeyAction, Preset5OpacityHotKeyAction, Preset6OpacityHotKeyAction, Preset7OpacityHotKeyAction, Preset8OpacityHotKeyAction, Preset9OpacityHotKeyAction, FullScreenAction, Sync3DAction, SetKeyImageAction, ThreeDBallHotKeyAction, OvalAngleHotKeyAction, PreviousROIsOrKeyImageAction, NextROIsOrKeyImageAction, FuseDeFusePETSPECTCTAction, AxialResliceAction, CoronalResliceAction,SagittalResliceAction,ActivateInactivateThickSlabAction,
     
     Preset1CLUTHotKeyAction, Preset2CLUTHotKeyAction, Preset3CLUTHotKeyAction, Preset4CLUTHotKeyAction, Preset5CLUTHotKeyAction, Preset6CLUTHotKeyAction, Preset7CLUTHotKeyAction, Preset8CLUTHotKeyAction, Preset9CLUTHotKeyAction, Preset3DPositionHotKeyAction,
+    
+    FirstImageHotKeyAction, LastImageHotKeyAction,
+    
+    ActivateInactivateThickSlabActionInMIP, ActivateInactivateThickSlabActionInMean, ActivateInactivateThickSlabActionInMinIP,
+    
+    ActivateInactivatePropagateAction, ActivateInactivateSyncSlabAction,
     
     LastAction // Key this enum ALWAYS as last enum !
 } HotKeyActions;

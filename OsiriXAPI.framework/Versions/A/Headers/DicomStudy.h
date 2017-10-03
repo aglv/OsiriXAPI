@@ -5,7 +5,7 @@
   All rights reserved.
   Distributed under GNU - LGPL
   
-  See http://www.osirix-viewer.com/copyright.html for details.
+  See https://www.osirix-viewer.com/copyright.html for details.
 
      This software is distributed WITHOUT ANY WARRANTY; without even
      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
@@ -27,9 +27,14 @@
     NSColor *cachedColor;
     NSArray *cachedPresentationStates;
     NSArray *cacheROIs;
-    NSManagedObject *cachedROISRSeries;
+    DicomSeries *cachedROISRSeries;
     NSSet *cacheKeyImages;
     BOOL reentry;
+    
+    BOOL cachedIsIncompleStudy;
+    NSTimeInterval cachedIsIncompleStudyDate;
+    
+    int numberOfSeries;
 }
 
 @property(nonatomic, retain) NSString* accessionNumber;
@@ -67,6 +72,11 @@
 @property(nonatomic, retain) NSSet* albums;
 @property(nonatomic, retain) NSSet* series;
 
+@property(nonatomic, retain) NSNumber* dateTimeZone, *dateAddedTimeZone, *dateOfBirthTimeZone, *dateOpenedTimeZone;
+
++ (NSDate*) convertDate:(NSDate*) date withTimeZone:(NSNumber*) savedTimeZone;
++ (NSNumber*) timeZoneForDate:(NSDate*) date;
+
 + (NSRecursiveLock*) dbModifyLock;
 + (NSString*) formattedPatientName: (NSString*) n;
 + (NSString*) soundex: (NSString*) s;
@@ -82,6 +92,8 @@
 - (NSSet*) paths;
 - (NSSet*) keyImages;
 - (NSArray*) roiAndKeyImages;
+- (NSArray*) roiAndKeyImagesWithOnlyROIsDisplayedInKeyImagesWindow;
+- (NSArray*) roiAndKeyImagesWithROIsDisplayedInKeyImagesWindow: (BOOL) displayedInKeyImagesWindow;
 - (NSString*) yearOld;
 - (NSString*) yearOldAcquisition;
 - (NSSet*) images;
@@ -94,15 +106,19 @@
 - (NSArray*) imageSeries;
 - (NSArray*) imageSeriesContainingPixels:(BOOL) pixels;
 - (NSArray*) imageSeriesContainingPixels:(BOOL) pixels includeLocalizersSeries: (BOOL) includeLocalizersSeries;
+- (NSArray*) imageSeriesContainingPixels:(BOOL) pixels includeLocalizersSeries: (BOOL) includeLocalizersSeries sorted:(BOOL) sorted;
 - (NSArray*) keyObjectSeries;
 - (NSArray*) keyObjects;
 - (NSArray*) presentationStateSeries;
 - (NSArray*) presentationStateObjects;
 - (NSArray*) presentationStateDictionaries;
 - (NSArray*) waveFormSeries;
+- (NSString*) roiPathForImage: (DicomImage*) image inArray: (NSArray*) roisArray commentsArray: (NSArray*) commentsArray;
 - (NSString*) roiPathForImage: (DicomImage*) image inArray: (NSArray*) roisArray;
 - (NSString*) roiPathForImage: (DicomImage*) image;
+- (DicomImage*) roiForImage: (DicomImage*) image inArray: (NSArray*) roisArray commentsArray: (NSArray*) commentsArray;
 - (DicomImage*) roiForImage: (DicomImage*) image inArray: (NSArray*) roisArray;
+- (NSArray*) OsiriXSRSeries;
 - (DicomSeries*) roiSRSeries;
 - (DicomSeries*) localizersSeries;
 - (DicomSeries*) reportSRSeries;
@@ -110,7 +126,9 @@
 - (DicomSeries*) windowsStateSRSeries;
 - (DicomImage*) reportImage;
 - (DicomImage*) annotationsSRImage;
+- (DicomImage *) SRImageWithSeriesID: (int) seriesID seriesDescription: (NSString*) seriesDescription;
 - (void) archiveReportAsDICOMSR;
++ (void) setArchiveAnnotationsAsDICOMSR: (BOOL) v;
 - (void) archiveAnnotationsAsDICOMSR;
 - (void) archiveWindowsStateAsDICOMSR;
 - (NSArray*) allWindowsStateSRSeries;
@@ -125,6 +143,7 @@
 - (NSComparisonResult) compareName:(DicomStudy*)study;
 - (NSArray*) roiImages;
 - (NSArray*) imagesWithROIs;
+- (NSArray*) imagesWithROIsDisplayedInKeyImagesWindow: (BOOL) displayedInKeyImagesWindow;
 - (NSArray*) allSeries;
 - (NSArray*) generateDICOMSCImagesForKeyImages: (BOOL) keyImages andROIImages: (BOOL) ROIImages;
 - (void) setNSColor:(NSColor *)c;
@@ -140,6 +159,8 @@
 - (BOOL) computeHasKeyImages;
 - (NSImage*) thumbnailImage;
 - (NSData*) thumbnail;
+- (NSNumber*) noSeries;
+- (void) refresh;
 @end
 
 @interface DicomStudy (CoreDataGeneratedAccessors)

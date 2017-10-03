@@ -5,7 +5,7 @@
  All rights reserved.
  Distributed under GNU - LGPL
  
- See http://www.osirix-viewer.com/copyright.html for details.
+ See https://www.osirix-viewer.com/copyright.html for details.
  
  This software is distributed WITHOUT ANY WARRANTY; without even
  the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
@@ -61,6 +61,7 @@
 
 +(NSDictionary*)fetchDicomDestinationInfoForAddress:(NSString*)address port:(NSInteger)port;
 -(NSDictionary*)fetchDicomDestinationInfo;
+-(NSString*)fetchDatabaseVersion;
 
 -(void)storeScuImages:(NSArray*)dicomImages toDestinationAETitle:(NSString*)aet address:(NSString*)address port:(NSInteger)port transferSyntax:(int)exsTransferSyntax;
 

@@ -5,7 +5,7 @@
   All rights reserved.
   Distributed under GNU - LGPL
   
-  See http://www.osirix-viewer.com/copyright.html for details.
+  See https://www.osirix-viewer.com/copyright.html for details.
 
      This software is distributed WITHOUT ANY WARRANTY; without even
      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
@@ -48,10 +48,14 @@
 	BOOL dontReenterCrossReferenceLines;
 	
 	BOOL dontCheckRoiChange;
+    
+    ROI *edited2DPointROI;
+    NSRect edited2DPointROIPosition;
 }
 
 @property (readonly) DCMPix *pix;
 @property (retain) Camera *camera;
+@property (retain) ROI *edited2DPointROI;
 @property float angleMPR, fromIntervalExport, toIntervalExport, LOD;
 @property int viewExport;
 @property (nonatomic) BOOL displayCrossLines, dontUseAutoLOD;

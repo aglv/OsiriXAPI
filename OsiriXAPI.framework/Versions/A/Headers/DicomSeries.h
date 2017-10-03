@@ -5,7 +5,7 @@
   All rights reserved.
   Distributed under GNU - LGPL
   
-  See http://www.osirix-viewer.com/copyright.html for details.
+  See https://www.osirix-viewer.com/copyright.html for details.
 
      This software is distributed WITHOUT ANY WARRANTY; without even
      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
@@ -26,7 +26,7 @@
 {
 	NSNumber	*dicomTime;
     NSImage     *thumbnailImage;
-    NSArray     *imagesWithROIsCache;
+    NSArray     *imagesWithROIsCache, *imagesWithROIsDisplayedInKeyImagesWindowCache;
     int         latestDistantNumberOfImages;
 }
 
@@ -66,6 +66,8 @@
 @property(nonatomic, retain) DicomStudy* study;
 @property int latestDistantNumberOfImages;
 
+@property(nonatomic, retain) NSNumber* dateTimeZone, *dateAddedTimeZone, *dateOpenedTimeZone;
+
 - (int) multiframesNumber;
 - (NSSet*) paths;
 - (NSSet*) keyImages;
@@ -85,15 +87,18 @@
 - (NSString*) uniqueFilename;
 - (BOOL) isDistant;
 + (void) recomputeLocalizersSeriesInstanceUIDForStudies: (NSSet*) studiesSet;
++ (void) recomputeSeriesUIDForSeries: (DicomSeries*) series;
 - (NSString*) type;
 - (NSImage*) thumbnailImage;
 - (NSString*) ROIsDescription;
 - (NSArray*) imagesWithROIs;
+- (NSArray*) imagesWithROIsDisplayedInKeyImagesWindow: (BOOL) imagesWithROIsDisplayedInKeyImagesWindow;
 - (void) purgeCaches;
 - (NSArray*) imagesAsScreenCapture;
 - (NSArray*) imagesAsScreenCapture:(NSRect)frame;
 - (NSArray*) imagesAsScreenCapture:(NSRect)frame dicomImages:(NSArray*) dcmImages;
 - (NSArray*) imagesAsScreenCapture:(NSRect)frame dicomImages:(NSArray*) dcmImages annotationsLevel: (annotationsLevel) annotationsLevel;
+-(NSArray*) imagesAsScreenCapture:(NSRect)frame dicomImages:(NSArray*) dcmImages annotationsLevel: (annotationsLevel) annotationsLevel cinteRate: (NSInteger*) cineRate;
 + (NSRect) frameForImageAsScreenCapture;
 @end
 

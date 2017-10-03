@@ -5,7 +5,7 @@
   All rights reserved.
   Distributed under GNU - LGPL
   
-  See http://www.osirix-viewer.com/copyright.html for details.
+  See https://www.osirix-viewer.com/copyright.html for details.
 
      This software is distributed WITHOUT ANY WARRANTY; without even
      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
@@ -292,6 +292,7 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
     NSNumber *windowWidthToSave, *windowLevelToSave, *yFlippedToSave, *xFlippedToSave;
     id imageToSave;
     BOOL savedImageParameters;
+    NSTimeInterval lastBecomeMainWindowTime;
     
 }
 
@@ -303,7 +304,7 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
 @property BOOL COPYSETTINGSINSERIES, flippedData, showDescriptionInLarge, syncOnLocationImpossible, colorTransfer, stickToCenter;
 @property(nonatomic) BOOL whiteBackground;
 @property(retain) NSMutableArray *dcmPixList, *dcmRoiList;
-@property(readonly) NSArray *dcmFilesList;
+@property(retain) NSArray *dcmFilesList;
 @property long syncSeriesIndex;
 @property(nonatomic)float syncRelativeDiff, studyColorR, studyColorG, studyColorB;
 @property(nonatomic) long blendingMode;
@@ -384,7 +385,8 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
 - (short)syncro;
 - (void)setSyncro:(short) s;
 
-// checks to see if tool is for ROIs.  maybe better name - (BOOL)isToolforROIs:(long)tool
+// checks to see if tool is for ROIs.
++ (BOOL) isToolforROIs:(ToolMode)tool;
 - (BOOL) roiTool:(long) tool;
 - (void) prepareToRelease;
 - (void) orientationCorrectedToView:(float*) correctedOrientation;

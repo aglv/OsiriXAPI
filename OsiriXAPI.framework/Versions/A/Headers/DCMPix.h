@@ -5,7 +5,7 @@
   All rights reserved.
   Distributed under GNU - LGPL
   
-  See http://www.osirix-viewer.com/copyright.html for details.
+  See https://www.osirix-viewer.com/copyright.html for details.
 
      This software is distributed WITHOUT ANY WARRANTY; without even
      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
@@ -103,7 +103,7 @@ extern "C"
 
 // DICOM params needed for SUV calculations
 	float				patientsWeight, repetitionTime, diffusionbvalue, echoTime, flipAngle;
-	NSString			*laterality, *viewPosition, *patientPosition, *acquisitionDate, *SOPClassUID, *frameofReferenceUID, *rescaleType;
+	NSString			*laterality, *viewPosition, *patientPosition, *acquisitionDate, *SOPClassUID, *frameofReferenceUID, *rescaleType, *bodyPartExamined;
 	BOOL				hasSUV, SUVConverted, displaySUVValue;
 	NSString			*units, *decayCorrection;
 	float				decayFactor, factorPET2SUV, radionuclideTotalDose, radionuclideTotalDoseCorrected;
@@ -140,7 +140,8 @@ extern "C"
 	BOOL				convolution, updateToBeApplied;
 	short				kernelsize;
 	float				normalization, kernel[25];
-	float				cineRate;
+    
+	float				cineRate, nominalInterval, triggerTime;
 
 //slice
     double				sliceInterval, sliceLocation, sliceThickness, spacingBetweenSlices;
@@ -182,7 +183,7 @@ extern "C"
 
 /** Papyrus Loading variables */	
 	
-	NSString			*modalityString, *studyInstanceUID;
+	NSString			*modalityString, *studyInstanceUID, *patientOrientation;
 	unsigned short      *shortRed, *shortGreen, *shortBlue;
 	unsigned short		clutEntryR, clutEntryG, clutEntryB;
 	unsigned short		clutDepthR, clutDepthG, clutDepthB;
@@ -195,18 +196,25 @@ extern "C"
     
     BOOL                isHologic;
     
+    BOOL                sigmoidVOILUT;
+    
 // Ophtalmic fundus images
     
     NSString            *referencedSOPInstanceUID;
     float               referenceCoordinates[ 4];
+    
+    BOOL                RGBAlphaMaskComputed;
+    
+    NSRect              contentFrameRect; // computeCTFrameRect
 }
 
 @property long frameNo;
+@property NSRect contentFrameRect;
 @property (setter=setID:) long ID;
 @property (readonly) NSRecursiveLock *checking;
 @property (nonatomic) float minValueOfSeries, maxValueOfSeries, factorPET2SUV;
-@property (retain, nonatomic) NSString *modalityString, *studyInstanceUID;
-@property (retain) NSString* imageType, *referencedSOPInstanceUID, *yearOld, *yearOldAcquisition;
+@property (retain, nonatomic) NSString *modalityString, *studyInstanceUID, *patientOrientation;
+@property (retain) NSString* imageType, *referencedSOPInstanceUID, *yearOld, *yearOldAcquisition, *bodyPartExamined;
 
 // Dimensions in pixels
 @property (nonatomic) long pwidth, pheight;
@@ -293,7 +301,7 @@ Note setter is different to not break existing usage. :-( */
 @property(retain) NSCalendarDate *radiopharmaceuticalStartTime;
 @property BOOL SUVConverted, needToCompute8bitRepresentation;
 @property(readonly) BOOL hasSUV;
-@property float decayFactor;
+@property(nonatomic)float decayFactor, nominalInterval, triggerTime;
 @property(retain) NSString *units, *decayCorrection;
 @property BOOL displaySUVValue;
 @property BOOL isLUT12Bit;
@@ -355,6 +363,7 @@ Note setter is different to not break existing usage. :-( */
 * @param restore  
 * @param addition  
 */
+- (void) fillROI:(ROI*) roi newVal :(float) newVal outside :(BOOL) outside;
 - (void) fillROI:(ROI*) roi newVal:(float) newVal minValue:(float) minValue maxValue:(float) maxValue outside:(BOOL) outside orientationStack:(long) orientationStack stackNo:(long) stackNo restore:(BOOL) restore addition:(BOOL) addition;
 - (void) fillROI:(ROI*) roi newVal:(float) newVal minValue:(float) minValue maxValue:(float) maxValue outside:(BOOL) outside orientationStack:(long) orientationStack stackNo:(long) stackNo restore:(BOOL) restore addition:(BOOL) addition spline:(BOOL) spline;
 - (void) fillROI:(ROI*) roi newVal :(float) newVal minValue :(float) minValue maxValue :(float) maxValue outside :(BOOL) outside orientationStack :(long) orientationStack stackNo :(long) stackNo restore :(BOOL) restore addition:(BOOL) addition spline:(BOOL) spline clipMin: (NSPoint) clipMin clipMax: (NSPoint) clipMax;
@@ -506,12 +515,18 @@ Note setter is different to not break existing usage. :-( */
 - (BOOL) is3DPlane;
 - (void) orientationCorrected:(float*) correctedOrientation rotation:(float) rotation xFlipped: (BOOL) xFlipped yFlipped: (BOOL) yFlipped;
 + (NSPoint) rotatePoint:(NSPoint)pt aroundPoint:(NSPoint)c angle:(float)a;
+- (void) computeCineRateFromNominalIntervalForCount: (float) numberOfImagesInSeries;
 - (float) normalization;
 - (short) kernelsize;
+- (float) defaultWL; // = savedWL, or fullWL if not available
+- (float) defaultWW;  // = savedWW, or fullWW if not available
+- (void) computeAlphaMaskIfNeeded;
 + (void) clearDcmPixCache;
+- (DCMPix*) renderWithScale:(float) scale;
 - (DCMPix*) renderWithRotation:(float) r scale:(float) scale xFlipped:(BOOL) xF yFlipped: (BOOL) yF;
 - (DCMPix*) renderWithRotation:(float) r scale:(float) scale xFlipped:(BOOL) xF yFlipped: (BOOL) yF backgroundOffset: (float) bgO;
 - (NSRect) usefulRectWithRotation:(float) r scale:(float) scale xFlipped:(BOOL) xF yFlipped: (BOOL) yF;
+- (NSRect) usefulRectWithRotation:(float) r scale:(float) scale xFlipped:(BOOL) xF yFlipped: (BOOL) yF useContentFrameRect:(BOOL)useContentFrameRect;
 - (DCMPix*) mergeWithDCMPix:(DCMPix*) o offset:(NSPoint) oo;
 - (DCMPix*) renderInRectSize:(NSSize) rectSize atPosition:(NSPoint) oo rotation:(float) r scale:(float) scale xFlipped:(BOOL) xF yFlipped: (BOOL) yF;
 - (DCMPix*) renderInRectSize:(NSSize) rectSize atPosition:(NSPoint) oo rotation:(float) r scale:(float) scale xFlipped:(BOOL) xF yFlipped: (BOOL) yF smartCrop: (BOOL) smartCrop;

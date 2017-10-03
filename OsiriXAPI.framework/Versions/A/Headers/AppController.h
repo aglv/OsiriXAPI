@@ -5,7 +5,7 @@
   All rights reserved.
   Distributed under GNU - LGPL
   
-  See http://www.osirix-viewer.com/copyright.html for details.
+  See https://www.osirix-viewer.com/copyright.html for details.
 
      This software is distributed WITHOUT ANY WARRANTY; without even
      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
@@ -153,6 +153,9 @@ extern NSString* getMacAddress(void);
     NSMutableDictionary *DICOMDefinitionDict;
     NSDictionary *currentAttribute;
     NSMutableDictionary *currentIDElements;
+    
+    IBOutlet NSWindow *notAvailableWindow;
+    IBOutlet NSTextField *notAvailableText;
 }
 
 @property BOOL checkAllWindowsAreVisibleIsOff, isSessionInactive, showRestartNeeded, applicationDidFinishLaunching;
@@ -163,7 +166,9 @@ extern NSString* getMacAddress(void);
 @property(readonly) int lastColumns, lastRows, lastCount;
 @property(retain) id appNapActivity;
 
++ (BOOL) hostReachable:(NSString*) host;
 + (void) thisFeatureIsNotAvailable: (NSString*) stringUrl;
++ (NSString*) MACAddress;
 + (BOOL) isFDACleared;
 + (BOOL) willExecutePlugin;
 + (BOOL) willExecutePlugin:(id) filter;
@@ -186,6 +191,7 @@ extern NSString* getMacAddress(void);
 + (NSImage*) webBrowserIcon;
 + (NSData*) encodeData:(NSData*) dataIn;
 + (NSData*) decodeData:(NSData*) dataIn;
++ (void) clearEvents;
 
 #pragma mark-
 #pragma mark initialization of the main event loop singleton
@@ -196,6 +202,7 @@ extern NSString* getMacAddress(void);
 #else
 + (int) displayVeryImportantNotice32:(id) sender;
 #endif
++ (NSString*) hVersion;
 + (NSURL*) baseURL;
 + (AppController*) sharedAppController; /**< Return the shared AppController instance */
 + (void) resizeWindowWithAnimation:(NSWindow*) window newSize: (NSRect) newWindowFrame;
@@ -260,6 +267,8 @@ extern NSString* getMacAddress(void);
 
 - (id) splashScreen;
 
+- (void) releaseObject: (id) obj afterDelay: (int) delay;
+
 #pragma mark-
 #pragma mark window routines
 - (IBAction) updateViews:(id) sender;  /**< Update Viewers */
@@ -303,6 +312,7 @@ extern NSString* getMacAddress(void);
 - (NSMenu*) wlwwMenu;
 - (NSMenu*) convMenu;
 - (NSMenu*) clutMenu;
+- (NSTimeInterval) runningTimeInterval;
 + (NSImage*) clutIconForClutName: (NSString*) clutName;
 + (NSImage*) clutIconForRed: (unsigned char*) redT green:(unsigned char*) greenT blue:(unsigned char*) blueT;
 + (void) setPopupMenuFont: (NSMenu*) menu;

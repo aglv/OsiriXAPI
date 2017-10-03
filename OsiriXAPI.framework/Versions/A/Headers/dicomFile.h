@@ -5,7 +5,7 @@
   All rights reserved.
   Distributed under GNU - LGPL
   
-  See http://www.osirix-viewer.com/copyright.html for details.
+  See https://www.osirix-viewer.com/copyright.html for details.
 
      This software is distributed WITHOUT ANY WARRANTY; without even
      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
@@ -130,6 +130,7 @@
 - (BOOL) separateCardiac4D; /**< Returns the SEPARATECARDIAC4D default. If YES separates cardiac studies into separate gated series. */
 - (BOOL) containsString: (NSString*) s inArray: (NSArray*) a;
 + (BOOL) containsLocalizerInString: (NSString*) str;
++ (NSString*) seriesInstanceUIDForFile: (NSString*) file;
 @end
 
 

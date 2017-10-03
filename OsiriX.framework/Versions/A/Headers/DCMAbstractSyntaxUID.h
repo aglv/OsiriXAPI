@@ -5,7 +5,7 @@
   All rights reserved.
   Distributed under GNU - LGPL
   
-  See http://www.osirix-viewer.com/copyright.html for details.
+  See https://www.osirix-viewer.com/copyright.html for details.
 
      This software is distributed WITHOUT ANY WARRANTY; without even
      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
@@ -82,6 +82,7 @@ htt://www.pixelmed.com
 + (NSString *)XRay3DCraniofacialImageStorage;
 + (NSString *)PETImageStorage;
 + (NSString *)RTImageStorage;
++ (NSString *)SRStoragePrefix;
 + (BOOL)isImageStorage:(NSString *)sopClassUID;
 + (NSArray *)imageSyntaxes;
 + (NSArray *)hiddenImageSyntaxes;
@@ -131,7 +132,7 @@ htt://www.pixelmed.com
 
 + (NSString *)MRSpectroscopyStorage;
 + (BOOL) isSpectroscopy:(NSString *)sopClassUID;
-
++ (BOOL) isSiemensCSAPrivateNonImageStorage:(NSString *)sopClassUID;
 + (NSString *)rawDataStorage;
 + (BOOL) isRawData:(NSString *)sopClassUID ;
 

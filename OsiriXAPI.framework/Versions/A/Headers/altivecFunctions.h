@@ -5,7 +5,7 @@
   All rights reserved.
   Distributed under GNU - LGPL
   
-  See http://www.osirix-viewer.com/copyright.html for details.
+  See https://www.osirix-viewer.com/copyright.html for details.
 
      This software is distributed WITHOUT ANY WARRANTY; without even
      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
@@ -30,8 +30,6 @@ extern "C"
 	extern void vmin(vector float *a, vector float *b, vector float *r, long size);
 	extern void vmin8(vector unsigned char *a, vector unsigned char *b, vector unsigned char *r, long size);
 	#else
-	extern void vmaxIntel( vFloat *a, vFloat *b, vFloat *r, long size);
-	extern void vminIntel( vFloat *a, vFloat *b, vFloat *r, long size);
 	extern void vmax8Intel( vUInt8 *a, vUInt8 *b, vUInt8 *r, long size);
 	extern void vmin8Intel( vUInt8 *a, vUInt8 *b, vUInt8 *r, long size);
 	#endif

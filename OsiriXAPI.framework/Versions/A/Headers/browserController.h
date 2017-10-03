@@ -5,7 +5,7 @@
   All rights reserved.
   Distributed under GNU - LGPL
   
-  See http://www.osirix-viewer.com/copyright.html for details.
+  See https://www.osirix-viewer.com/copyright.html for details.
 
      This software is distributed WITHOUT ANY WARRANTY; without even
      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
@@ -50,7 +50,7 @@ extern NSString* O2AlbumDragType;
 
 @interface BrowserController : NSWindowController
 #if (MAC_OS_X_VERSION_MAX_ALLOWED > MAC_OS_X_VERSION_10_5)
-<NSTableViewDelegate, NSDrawerDelegate, NSMatrixDelegate, NSToolbarDelegate, NSMenuDelegate, NSSplitViewDelegate, WebPolicyDelegate>   //NSObject
+<NSTableViewDelegate, NSDrawerDelegate, NSMatrixDelegate, NSToolbarDelegate, NSMenuDelegate, NSSplitViewDelegate, WebPolicyDelegate, WKNavigationDelegate>   //NSObject
 #endif
 {
 	DicomDatabase*					_database;
@@ -280,6 +280,8 @@ extern NSString* O2AlbumDragType;
     IBOutlet NSTableView *stateMenuTableView;
     IBOutlet NSArrayController *stateMenuArrayController;
     BOOL needToRebuildColorStudy;
+    
+    NSString *openedStudyInstanceUID;
 }
 
 @property(retain) NSArray *unifyStudiesMenu;
@@ -301,7 +303,7 @@ extern NSString* O2AlbumDragType;
 @property(readonly) BonjourBrowser *bonjourBrowser;
 @property(readonly) const char *cfixedDocumentsDirectory __deprecated, *cfixedIncomingDirectory __deprecated, *cfixedTempNoIndexDirectory __deprecated, *cfixedIncomingNoIndexDirectory __deprecated;
 
-@property(retain) NSString *searchString, *CDpassword, *pathToEncryptedFile, *passwordForExportEncryption, *temporaryNotificationEmail, *customTextNotificationEmail, *comparativePatientUID, *smartAlbumDistantName, *distantStudyMessage, *distantSearchString, *selectedAlbumName;
+@property(retain) NSString *searchString, *CDpassword, *pathToEncryptedFile, *passwordForExportEncryption, *temporaryNotificationEmail, *customTextNotificationEmail, *comparativePatientUID, *smartAlbumDistantName, *distantStudyMessage, *distantSearchString, *selectedAlbumName, *openedStudyInstanceUID;
 @property(retain) NSPredicate *fetchPredicate, *testPredicate;
 @property(retain) NSArray *comparativeStudies;
 @property(readonly) NSPredicate *filterPredicate;
@@ -345,6 +347,7 @@ extern NSString* O2AlbumDragType;
 + (void) encryptFileOrFolder: (NSString*) srcFolder inZIPFile: (NSString*) destFile password: (NSString*) password deleteSource: (BOOL) deleteSource;
 + (void) encryptFileOrFolder: (NSString*) srcFolder inZIPFile: (NSString*) destFile password: (NSString*) password deleteSource: (BOOL) deleteSource showGUI: (BOOL) showGUI;
 + (void) encryptFiles: (NSArray*) srcFiles inZIPFile: (NSString*) destFile password: (NSString*) password;
++ (int) localTotalNumberOfRawFiles: (NSArray*) localStudies;
 - (IBAction) createDatabaseFolder:(id) sender;
 - (IBAction) addAlbum:(id)sender;
 - (IBAction) deleteAlbum: (id)sender;
@@ -643,6 +646,7 @@ extern NSString* O2AlbumDragType;
 + (NSString*) DateTimeFormat:(NSDate*) d __deprecated;
 + (NSString*) TimeFormat:(NSDate*) t;
 
++ (BOOL) isIdenticalLocalStudy: (DicomStudy*) localStudy toDistantStudy: (DCMTKStudyQueryNode*) distantStudy;
 - (int) findObject:(NSString*) request table:(NSString*) table execute: (NSString*) execute elements:(NSString**) elements __deprecated;
 
 // - (void) executeSend :(NSArray*) samePatientArray server:(NSDictionary*) server dictionary:(NSDictionary*) dict __deprecated;
@@ -654,7 +658,6 @@ extern NSString* O2AlbumDragType;
 OsirixNewStudySelectedNotification with userinfo key @"Selected Study" posted when a newStudy is selected in the browser
 @"Close All Viewers" posted when close open windows if option key pressed.	
 @"DCMImageTilingHasChanged" when image tiling has changed
-OsirixAddToDBNotification posted when files are added to the DB
 */
 
 +(NSInteger)_scrollerStyle:(NSScroller*)scroller;

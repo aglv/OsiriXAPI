@@ -5,7 +5,7 @@
   All rights reserved.
   Distributed under GNU - LGPL
   
-  See http://www.osirix-viewer.com/copyright.html for details.
+  See https://www.osirix-viewer.com/copyright.html for details.
 
      This software is distributed WITHOUT ANY WARRANTY; without even
      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
@@ -47,7 +47,7 @@ enum SendServerType { osirixServer, offisServer };
 @class DCMTKStoreSCU;
 
 /** \brief Window Controller for DICOM Send */
-@interface SendController : NSWindowController
+@interface SendController : NSWindowController <NSMenuDelegate>
 {
 	NSArray				*_files;
 	NSString			*_numberFiles;

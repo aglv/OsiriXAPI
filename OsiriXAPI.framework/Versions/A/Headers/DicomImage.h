@@ -5,7 +5,7 @@
   All rights reserved.
   Distributed under GNU - LGPL
   
-  See http://www.osirix-viewer.com/copyright.html for details.
+  See https://www.osirix-viewer.com/copyright.html for details.
 
      This software is distributed WITHOUT ANY WARRANTY; without even
      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
@@ -43,6 +43,7 @@ void* sopInstanceUIDEncode( NSString *sopuid);
 	NSString	*modality;
 	NSString	*fileType;
     NSString    *cachedSRPath;
+    NSString    *cachedSeriesInstanceUID;
     
     NSImage*    _thumbnail;
     
@@ -86,9 +87,11 @@ void* sopInstanceUIDEncode( NSString *sopuid);
 @property(nonatomic, retain) NSNumber* zoom;
 @property(nonatomic, retain) DicomSeries* series;
 
++ (NSArray*) uniquePathsForDicomImageArray: (NSArray*) images;
 - (NSNumber*) isImageStorage;
 + (NSData*) sopInstanceUIDEncodeString:(NSString*) s;
 - (NSString*) uniqueFilename;
+- (NSString*) seriesInstanceUID;
 - (NSNumber*) numberOfSeries;
 - (NSSet*) paths;
 - (NSString*) completePath;

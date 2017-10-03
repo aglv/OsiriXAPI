@@ -5,7 +5,7 @@
   All rights reserved.
   Distributed under GNU - LGPL
   
-  See http://www.osirix-viewer.com/copyright.html for details.
+  See https://www.osirix-viewer.com/copyright.html for details.
 
      This software is distributed WITHOUT ANY WARRANTY; without even
      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
@@ -231,6 +231,9 @@ typedef enum ToolMode_
     NSString        *localFontName;
     
     NSPoint         arh1, arh2, arh3;
+    
+    NSMutableArray  *stringTags; // An array containing a list of NSStrings : store private strings in this array
+    BOOL            dontDisplayInKeyImagesWindow;
 }
 
 @property NSPoint imageOrigin;
@@ -240,13 +243,13 @@ typedef enum ToolMode_
 @property(nonatomic) float opacity, zLocation;
 @property(nonatomic) int originalIndexForAlias;
 @property(nonatomic) BOOL hidden, locked, selectable, is3DROI;
-@property BOOL isAliased, displayCMOrPixels, mouseOverROI;
+@property BOOL isAliased, displayCMOrPixels, mouseOverROI, dontDisplayInKeyImagesWindow;
 @property(nonatomic, copy) NSString *name, *localFontName;
 @property(retain,nonatomic) NSString *comments;
 @property ToolMode type;
 @property(nonatomic, setter=setROIMode:) ROI_mode ROImode;
 @property(retain) NSMutableArray *points; // Return/set the points state of the ROI
-@property(readonly) NSMutableArray *zPositions;
+@property(readonly) NSMutableArray *zPositions, *stringTags;
 @property BOOL clickInTextBox;
 @property(nonatomic, setter=setROIRect:) NSRect rect; // To create a Rectangular ROI (tROI) or an Oval ROI (tOval) or a 2DPoint
 @property(nonatomic, retain) DCMPix *pix; // The DCMPix associated to this ROI
@@ -286,7 +289,7 @@ typedef enum ToolMode_
 - (void) prepareForRelease;
 - (void) resetCache;
 - (NSMutableArray *) roiList;
-
+- (BOOL) invertBrushROI;
 + (BOOL) splineForROI;
 
 /** Load User Defaults */
@@ -303,6 +306,7 @@ typedef enum ToolMode_
 - (id) initWithType: (long) itype :(float) ipixelSpacing :(NSPoint) iimageOrigin;
 - (id) initWithType: (long) itype inView: (DCMView*) v;
 + (id) roiWithType: (long) itype inView: (DCMView*) v;
++ (id) roiWithTexture: (unsigned char*)tBuff rect:(NSRect) rect inView:(DCMView *)v;
 
 /** Create a new ROI, needs the current pixel resolution  x and y and image origin* @param itype ROI Type
 * @param ipixelSpacingx  Pixel width
@@ -386,8 +390,8 @@ typedef enum ToolMode_
 */
 + (NSPoint) pointBetweenPoint:(NSPoint) a and:(NSPoint) b ratio: (float) r;
 
-
-+ (NSMutableArray*) resamplePoints: (NSArray*) points number:(int) no;
++ (NSMutableArray*)resamplePoints:(NSArray*)points number:(int)no;
++ (NSMutableArray*)resamplePoints:(NSArray*)points number:(int)no closeROI:(BOOL)closeROI;
 
 + (NSString*) formattedLengthForCM: (float) lCm;
 

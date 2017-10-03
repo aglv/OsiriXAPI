@@ -5,7 +5,7 @@
   All rights reserved.
   Distributed under GNU - LGPL
   
-  See http://www.osirix-viewer.com/copyright.html for details.
+  See https://www.osirix-viewer.com/copyright.html for details.
 
      This software is distributed WITHOUT ANY WARRANTY; without even
      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
@@ -21,6 +21,7 @@
 -(id)keyForObject:(id)obj;
 -(id)deepMutableCopy;
 -(NSDictionary*)dictionaryWithLowercaseKeys;
-- (id)objectForCaseInsensitiveKey:(NSString *)key;
-+ (NSDictionary *)dictionaryWithContentsOfData:(NSData *)data;
+-(id)objectForCaseInsensitiveKey:(NSString *)key;
+-(NSDictionary*)dictionaryByAddingObject:(id) obj forKey:(id) key;
++(NSDictionary*)dictionaryWithContentsOfData:(NSData *)data;
 @end

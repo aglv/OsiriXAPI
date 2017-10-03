@@ -5,7 +5,7 @@
  All rights reserved.
  Distributed under GNU - LGPL
  
- See http://www.osirix-viewer.com/copyright.html for details.
+ See https://www.osirix-viewer.com/copyright.html for details.
  
  This software is distributed WITHOUT ANY WARRANTY; without even
  the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
@@ -46,6 +46,7 @@ extern const int32_t CPRCurvedPathControlTokenNone;
 + (CPRCurvedPathControlToken)controlTokenForNodeIndex:(NSInteger)nodeIndex;
 
 - (id)init;
+- (BOOL) isEqualToPath:(CPRCurvedPath*) other;
 
 - (void)addNode:(NSPoint)point transform:(N3AffineTransform)transform; // adds the point to z = 0 in the arbitrary coordinate space
 - (void)insertPatientNode:(N3Vector)node atIndex:(NSUInteger)index; // adds the point to z = 0 in the arbitrary coordinate space to a given index

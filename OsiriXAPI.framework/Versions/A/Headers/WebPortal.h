@@ -5,7 +5,7 @@
  All rights reserved.
  Distributed under GNU - LGPL
  
- See http://www.osirix-viewer.com/copyright.html for details.
+ See https://www.osirix-viewer.com/copyright.html for details.
  
  This software is distributed WITHOUT ANY WARRANTY; without even
  the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
@@ -66,7 +66,7 @@
 
 @property(readonly) BOOL isAcceptingConnections;
 
-@property(readonly) NSMutableArray *runLoops, *runLoopsLoad;
+@property(readonly) NSMutableArray *runLoops, *runLoopsLoad, *httpThreads;
 
 @property (nonatomic) BOOL usesSSL;
 @property (nonatomic) NSInteger portNumber;
