@@ -21,6 +21,7 @@
 	NSString* _sqlFileName;
 	NSString* _address;
 	NSInteger _port;
+    BOOL _TLS;
 	NSHost* _host;
 	NSRecursiveLock* _updateLock;
 	NSTimer* _updateTimer;
@@ -38,9 +39,11 @@
 @property(retain) NSString *remoteDBPathToLoad;
 
 +(RemoteDicomDatabase*)databaseForLocation:(NSString*)location port:(NSUInteger)port name:(NSString*)name update:(BOOL)flagUpdate;
++(RemoteDicomDatabase*)databaseForLocation:(NSString*)location port:(NSUInteger)port tls:(BOOL)tls name:(NSString*)name update:(BOOL)flagUpdate;
 
 -(id)initWithLocation:(NSString*)location port:(NSUInteger)port;
 -(id)initWithHost:(NSHost*)host port:(NSInteger)port update:(BOOL)flagUpdate;
+-(id)initWithHost:(NSHost*)host port:(NSInteger)port TLS: (BOOL) tls update:(BOOL)flagUpdate;
 
 -(NSThread*) initiateUpdate;
 -(NSThread*) forceInitiateUpdate;

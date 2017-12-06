@@ -49,7 +49,10 @@
     int prepareMoveForDataSetLevel;
 }
 
-@property (retain) NSString *callingAET;
+@property(retain) NSString *callingAET;
+@property(readonly) NSArray *findArray;
+@property(readonly) NSEnumerator *findEnumerator;
+@property(retain, nonatomic) NSString *specificCharacterSet;
 
 + (id)allocRequestDataHandler;
 

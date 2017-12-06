@@ -16,9 +16,10 @@
 #import <Cocoa/Cocoa.h>
 #import "DCMTKServiceClassUser.h"
 
+#ifndef OSIRIX_LIGHT
 @class DCMCalendarDate;
 /** \brief Base class for query nodes */
-@interface DCMTKQueryNode : DCMTKServiceClassUser <NSCopying>
+@interface DCMTKQueryNode : DCMTKServiceClassUser <NSCopying, NSURLSessionDelegate>
 {
 	NSMutableArray *_children;
     NSString *childrenSynchronized __deprecated_msg("only in OsiriX");
@@ -53,15 +54,24 @@
     BOOL wadoRSConnectionActive __deprecated_msg("only in OsiriX");
     NSString *incomingPath __deprecated_msg("only in OsiriX"), *wadoRSBoundary __deprecated_msg("only in OsiriX");
     NSThread *mainThread __deprecated_msg("only in OsiriX");
+    NSTimeInterval childrenTimeInterval __deprecated_msg("only in OsiriX");
 }
 
 @property( readonly) DcmDataset *originalDataset;
 @property( readonly) NSMutableDictionary *miscDictionary;
+@property( readonly) NSTimeInterval childrenTimeInterval;
 @property BOOL dontCatchExceptions;
 @property BOOL isAutoRetrieve;
 @property BOOL noSmartMode;
 @property NSUInteger countOfSuboperations, countOfSuccessfulSuboperations;
 @property (retain) NSString *abstractSyntax, *incomingPath __deprecated_msg("only in OsiriX"), *wadoRSBoundary __deprecated_msg("only in OsiriX");
+
++ (NSURLSession*) dicomWebURLSession __deprecated_msg("only in OsiriX");
+
++ (void) errorMessage:(NSArray*) msg __deprecated_msg("only in OsiriX");
++ (void) errorURL:(NSArray*) msg __deprecated_msg("only in OsiriX");
+
++ (NSString*) boundaryFromHeaders: (NSDictionary*) headers __deprecated_msg("only in OsiriX");
 
 + (id)queryNodeWithDataset:(DcmDataset *)dataset
 			callingAET:(NSString *)myAET  
@@ -134,3 +144,4 @@
 + (dispatch_semaphore_t)semaphoreForServerHostAndPort:(NSString*)key;
 
 @end
+#endif

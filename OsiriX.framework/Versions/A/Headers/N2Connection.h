@@ -42,6 +42,8 @@ enum N2ConnectionStatus {
     NSTimeInterval lastEventTimeInterval;
 }
 
+@property(readonly) NSInputStream *inputStream;
+@property(readonly) NSOutputStream *outputStream;
 @property(readonly) NSString* address;
 @property(readonly) NSTimeInterval lastEventTimeInterval;
 @property(nonatomic) NSInteger status;

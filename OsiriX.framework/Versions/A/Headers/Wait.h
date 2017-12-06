@@ -36,6 +36,7 @@
 + (Wait*) showWithString: (NSString*) str maxProgress: (int) maxValue showCancel: (BOOL) showCancel __deprecated_msg("only in OsiriX");
 
 - (void)incrementBy:(double)delta;
+- (void)increment;
 - (NSProgressIndicator*) progress;
 - (id) initWithString:(NSString*) str;
 - (BOOL) aborted;

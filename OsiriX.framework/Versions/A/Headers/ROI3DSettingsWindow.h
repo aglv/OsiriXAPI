@@ -23,7 +23,12 @@
 }
 
 @property (retain, nonatomic) NSColor *isoContourColor, *peakValueColor;
+@property (retain) NSSliderTouchBarItem *isoContourMinTouchBarItem, *isoContourMaxTouchBarItem;
 
 - (IBAction)togglePopover:(NSButton*)sender;
 - (id) init;
+
+-(float) minValueOfSeries;
+-(float) maxValueOfSeries;
+
 @end

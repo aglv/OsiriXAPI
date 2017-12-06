@@ -138,6 +138,8 @@
 - (NSArray*) studiesForThisPatient;
 - (BOOL) computeHasROIs __deprecated_msg("only in OsiriX");
 - (BOOL) computeHasKeyImages __deprecated_msg("only in OsiriX");
+- (NSImage*) thumbnailImage __deprecated_msg("only in OsiriX");
+- (NSData*) thumbnail __deprecated_msg("only in OsiriX");
 @end
 
 @interface DicomStudy (CoreDataGeneratedAccessors)

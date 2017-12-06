@@ -25,6 +25,9 @@
 
 @property(retain,readwrite) NSMutableArray *downloadQueue;
 
++ (PluginManager*) sharedInstance;
++ (void) startCheckForPluginsUpdatesVerbose: (BOOL) verbose;
+
 + (int) compareVersion: (NSString *) v1 withVersion: (NSString *) v2;
 + (NSMutableDictionary*) plugins;
 + (NSMutableDictionary*) pluginsDict;

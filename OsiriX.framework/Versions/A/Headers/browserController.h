@@ -14,9 +14,11 @@
 
 
 #import <Cocoa/Cocoa.h>
+#import <WebKit/WebKit.h>
+
 #include <Accelerate/Accelerate.h>
 
-#define ALPHASTATECOLOR 0.6
+#define ALPHASTATECOLOR 0.5
 
 @class DicomDatabase;
 @class MPR2DController,NSCFDate, DicomStudy, DicomSeries;
@@ -47,7 +49,7 @@ extern NSString* O2AlbumDragType;
 
 @interface BrowserController : NSWindowController
 #if (MAC_OS_X_VERSION_MAX_ALLOWED > MAC_OS_X_VERSION_10_5)
-<NSTableViewDelegate, NSDrawerDelegate, NSMatrixDelegate, NSToolbarDelegate, NSMenuDelegate,NSSplitViewDelegate>   //NSObject
+<NSTableViewDelegate, NSDrawerDelegate, NSMatrixDelegate, NSToolbarDelegate, NSMenuDelegate, NSSplitViewDelegate, WebPolicyDelegate>   //NSObject
 #endif
 {
 	DicomDatabase*					_database;
@@ -103,7 +105,7 @@ extern NSString* O2AlbumDragType;
 	
 	IBOutlet NSTextField			*databaseDescription;
 	IBOutlet MyOutlineView          *databaseOutline;
-	NSMenu							*columnsMenu;
+	NSMenu							*columnsMenu, *contextualReportMenu __deprecated_msg("only in OsiriX");
 	IBOutlet BrowserMatrix			*oMatrix;
 	IBOutlet NSTableView			*albumTable;
 	
@@ -229,8 +231,11 @@ extern NSString* O2AlbumDragType;
 	id _activityHelper;
     
     IBOutlet NSSplitView *bannerSplit;
-    IBOutlet NSButton *banner;
-    NSMutableArray *bannersArray;
+    IBOutlet NSButton *banner __deprecated_msg("removed in OsiriX");
+    NSMutableArray *bannersArray __deprecated_msg("removed in OsiriX");
+    IBOutlet WebView *bannerWebView __deprecated_msg("only in OsiriX");
+    NSDictionary *bannerDict __deprecated_msg("only in OsiriX");
+    NSSize bannerWebViewSize __deprecated_msg("only in OsiriX");
     int bannerIndex;
     
     NSTimeInterval _timeIntervalOfLastLoadIconsDisplayIcons;
@@ -246,7 +251,7 @@ extern NSString* O2AlbumDragType;
     BOOL dontSelectStudyFromComparativeStudies;
     NSTimeInterval lastRefreshComparativeStudies; //Refresh the studies after X minutes
     
-    NSMutableArray *comparativeRetrieveQueue; //Retrieve Queue: don't retrieve the same study multiple times
+    NSMutableArray *comparativeRetrieveQueue, *comparativeSeriesRetrieveQueue __deprecated_msg("only in OsiriX"); //Retrieve Queue: don't retrieve the same study multiple times
     DCMTKStudyQueryNode *comparativeStudyWaited; //The study to be selected or opened
     ViewerController *comparativeStudyWaitedViewer; //The destination viewer
     NSTimeInterval comparativeStudyWaitedTime; //The time when the study to be selected or opened was activated
@@ -310,7 +315,16 @@ extern NSString* O2AlbumDragType;
 @property(readonly) NSMutableDictionary *databaseIndexDictionary;
 @property(readonly) PluginManagerController *pluginManagerController;
 @property int distantSearchType;
-@property(readonly) NSMutableArray *comparativeRetrieveQueue;
+@property(readonly) NSMutableArray *comparativeRetrieveQueue, *comparativeSeriesRetrieveQueue __deprecated_msg("only in OsiriX");
+
+// NSTouchBar
+@property(retain) NSPopoverTouchBarItem *modalityFilterPopoverTouchBarItem __deprecated_msg("only in OsiriX");
+@property(retain) NSPopoverTouchBarItem *timeIntervalFilterPopoverTouchBarItem __deprecated_msg("only in OsiriX");
+@property(retain) NSPopoverTouchBarItem *statusPopoverTouchBarItem __deprecated_msg("only in OsiriX");
+@property(retain) NSScrubber *modalityScrubber __deprecated_msg("only in OsiriX");
+@property(retain) NSScrubber *timeIntervalScrubber __deprecated_msg("only in OsiriX");
+@property(retain) NSScrubber *statusScrubber __deprecated_msg("only in OsiriX");
+@property(retain) NSScrubber *thumbnailsScrubber __deprecated_msg("only in OsiriX");
 
 + (void) buildReportsMenu: (NSPopUpButton*) reportTemplatesListPopUpButton __deprecated_msg("only in OsiriX");
 + (void) resetPreferences;
@@ -364,7 +378,8 @@ extern NSString* O2AlbumDragType;
 - (NSPredicate*) smartAlbumPredicate:(NSManagedObject*) album;
 - (NSPredicate*) smartAlbumPredicateString:(NSString*) string;
 - (void) executeActionsForState: (NSNumber*) c;
-- (void) pressStateCellForRow: (int) clickedRow column: (int) clickedColumn event: (NSEvent*) event;
+- (void)pressStateCellForRow:(int)clickedRow column:(int)clickedColumn event:(NSEvent *) event __deprecated_msg("removed in OsiriX");
+- (void)pressCellForRow:(int)clickedRow column:(int)clickedColumn event:(NSEvent *) event identifier:(NSString *)identifier __deprecated_msg("only in OsiriX");
 - (void) rightClickCommentCellForRow: (int) clickedRow column: (int) clickedColumn event: (NSEvent*) event;
 - (void) emptyDeleteQueueThread;
 - (void) emptyDeleteQueue:(id) sender;
@@ -390,12 +405,13 @@ extern NSString* O2AlbumDragType;
 - (BOOL) isBonjour: (NSManagedObjectContext*) c __deprecated;
 - (NSString *) localDocumentsDirectory __deprecated;
 - (void) alternateButtonPressed: (NSNotification*)n;
-- (NSArray*) childrenArray: (id) item;
-- (NSArray*) childrenArray: (id) item onlyImages:(BOOL) onlyImages;
-- (NSArray*) imagesArray: (id) item;
-- (NSArray*) imagesArray: (id) item preferredObject: (int) preferredObject;
-- (NSArray*) imagesArray: (id) item onlyImages:(BOOL) onlyImages;
-- (NSArray*) imagesArray: (id) item preferredObject: (int) preferredObject onlyImages:(BOOL) onlyImages;
+- (NSArray*) childrenArray: (id) item __deprecated_msg("deprecated in OsiriX");
+- (NSArray*) childrenArray: (id) item onlyImages:(BOOL) onlyImages __deprecated_msg("deprecated in OsiriX");
+- (NSArray*) imagesArray: (id) item __deprecated_msg("deprecated in OsiriX");
+- (NSArray*) imagesArray: (id) item preferredObject: (int) preferredObject __deprecated_msg("deprecated in OsiriX");
+- (NSArray*) imagesArray: (id) item onlyImages:(BOOL) onlyImages __deprecated_msg("deprecated in OsiriX");
+- (NSArray*) imagesArray: (id) item preferredObject: (int) preferredObject onlyImages:(BOOL) onlyImages __deprecated_msg("deprecated in OsiriX");
+- (NSArray*) imagesPathArray: (NSManagedObject*) item __deprecated_msg("deprecated in OsiriX");
 - (void) setNetworkLogs;
 - (BOOL) isNetworkLogsActive;
 - (void) computeTimeInterval;
@@ -517,6 +533,7 @@ extern NSString* O2AlbumDragType;
 - (void)selectStudyWithObjectID:(NSManagedObjectID*)oid;
 - (BOOL) selectThisStudy: (id)study;
 - (BOOL) selectThisStudy: (NSManagedObject*)study changeAlbumIfNecessary: (BOOL) changeAlbumIfNecessary;
+- (NSArray *)outlineViewArray __deprecated_msg("only in OsiriX");
 
 - (void) previewPerformAnimation:(id) sender;
 - (void) matrixDisplayIcons:(id) sender;
@@ -534,8 +551,6 @@ extern NSString* O2AlbumDragType;
 - (NSArray*) albumArray;
 - (void) refreshAlbums;
 - (void) waitForRunningProcesses;
-
-- (NSArray*) imagesPathArray: (NSManagedObject*) item;
 
 - (void) autoCleanDatabaseFreeSpace:(id) sender __deprecated;
 - (void) autoCleanDatabaseDate:(id) sender __deprecated;
@@ -584,10 +599,11 @@ extern NSString* O2AlbumDragType;
 
 + (BOOL) asyncWADOXMLDownloadURL:(NSURL*) url __deprecated_msg("only in OsiriX");
 
+- (void) refreshMatrixThumbnail: (NSManagedObject*) object __deprecated_msg("only in OsiriX");
 - (void) refreshMatrix:(id) sender;
 - (void)updateReportToolbarIcon:(NSNotification *)note;
 
-#ifndef OSIRIX_LIGHT
+#ifndef OSIRIX_DECOMPRESS
 - (IBAction) exportROIAndKeyImagesAsDICOMSeries: (id) sender __deprecated_msg("only in OsiriX");
 - (IBAction) paste: (id)sender;
 - (IBAction) pasteImageForDicomImage: (DicomImage*) image;
@@ -601,7 +617,7 @@ extern NSString* O2AlbumDragType;
 - (IBAction) attachReport: (id) sender;
 - (IBAction)importRawData:(id)sender;
 - (void) pdfPreview:(id)sender;
-- (IBAction) burnDICOM:(id) sender __deprecated_msg("only in OsiriX");
+- (IBAction) burnDICOM:(id) sender;
 - (IBAction) anonymizeDICOM:(id) sender;
 - (IBAction)retrieveSelectedPODStudies:(id) sender;
 - (void) queryDICOM:(id) sender;
@@ -621,8 +637,8 @@ extern NSString* O2AlbumDragType;
 - (NSDictionary*) PACSOnDemandDictionaryForThisSmartAlbumName: (NSString*) albumName;
 - (void) initAnimationSlider;
 
-+ (id) localObjectForDistantObject: (DCMTKQueryNode*) o;
-+ (NSArray*) localObjectsForDistantObject: (DCMTKQueryNode*) o;
++ (id) localObjectForDistantObject: (DCMTKQueryNode*) o __deprecated_msg("deprecated in OsiriX");
++ (NSArray*) localObjectsForDistantObject: (DCMTKQueryNode*) o __deprecated_msg("deprecated in OsiriX");
 - (void) setSearchString: (NSString *)searchString;
 
 + (NSString*) DateTimeWithSecondsFormat:(NSDate*) t;

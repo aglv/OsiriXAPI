@@ -87,7 +87,8 @@ typedef enum ToolMode_
     tTAGT,                      //  29
     tBall,                      //  30
     tOvalAngle,                 //  31
-    tAutoCurvedROI              //  32
+    tAutoCurvedROI,             //  32
+    t3DPosition                 //  33
 } ToolMode;
 
 @class DCMView;
@@ -227,6 +228,9 @@ typedef enum ToolMode_
     float           ovalAngle1, ovalAngle2;
     float           roiRotation;
     
+    float           localFontHeight, localFontSize;
+    NSString        *localFontName;
+    
     NSPoint         arh1, arh2, arh3;
 }
 
@@ -238,7 +242,7 @@ typedef enum ToolMode_
 @property(nonatomic) int originalIndexForAlias;
 @property(nonatomic) BOOL hidden, locked, selectable, is3DROI;
 @property BOOL isAliased, displayCMOrPixels, mouseOverROI;
-@property(nonatomic, copy) NSString *name;
+@property(nonatomic, copy) NSString *name, *localFontName __deprecated_msg("only in OsiriX");
 @property(retain,nonatomic) NSString *comments;
 @property ToolMode type;
 @property(nonatomic, setter=setROIMode:) ROI_mode ROImode;
@@ -259,7 +263,7 @@ typedef enum ToolMode_
 @property(assign) NSColor* NSColor;
 @property(assign) BOOL isSpline;
 @property(readonly) NSMutableDictionary *peakValue, *isoContour;
-@property float offsetTextBox_x, offsetTextBox_y;
+@property float offsetTextBox_x, offsetTextBox_y, localFontHeight __deprecated_msg("only in OsiriX"), localFontSize __deprecated_msg("only in OsiriX");
 
 - (void) setNSColor:(NSColor*)color globally:(BOOL)g;
 - (void) setColor:(RGBColor) a globally: (BOOL) g;
@@ -272,6 +276,9 @@ typedef enum ToolMode_
 /** Return the default name */
 + (NSString*) defaultName;
 + (void) setFontHeight: (float) f;
+
++ (NSPoint) segmentDistToPoint: (NSPoint) segA :(NSPoint) segB :(NSPoint) p;
++ (BOOL) isBetween: (NSPoint) a :(NSPoint) b :(NSPoint) c;
 
 - (void) setDefaultName:(NSString*) n;
 - (NSString*) defaultName;

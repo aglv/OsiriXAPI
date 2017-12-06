@@ -25,10 +25,18 @@ extern NSString* const SessionDontDisplayUser;
 	NSMutableDictionary* dict;
 	NSString* sid;
 	NSLock* dictLock;
+    
+    BOOL requireDoubleAuthentication, doubleAuthenticated;
+    NSString *doubleAuthenticationToken;
+    NSString *usernameForDoubleAuthentication;
+    NSTimeInterval timeStampForDoubleAuthentication;
 }
 
 @property(readonly) NSString* sid;
 @property(readonly) NSMutableDictionary* dict;
+@property BOOL requireDoubleAuthentication, doubleAuthenticated;
+@property(retain) NSString *doubleAuthenticationToken, *usernameForDoubleAuthentication;
+@property NSTimeInterval timeStampForDoubleAuthentication;
 
 -(id)initWithId:(NSString*)isid;
 

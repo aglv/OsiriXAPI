@@ -25,6 +25,7 @@
 -(NSString*)tmpFilePathInDir:(NSString*)dirPath;
 -(NSString*)tmpDirPath;
 -(NSString*)tmpFilePathInTmp;
+-(NSString*)tmpFilePathInTmpWithExtension: (NSString*) ext;
 -(NSString*)confirmDirectoryAtPath:(NSString*)dirPath;
 -(NSString*)confirmNoIndexDirectoryAtPath:(NSString*)path;
 -(NSUInteger)sizeAtPath:(NSString*)path;

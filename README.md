@@ -10,6 +10,6 @@ My technique for OsiriX API linking in plugin (and preferences) targets is:
 
 Warning: using ``-undefined dynamic_lookup`` causes the linker not to raise warnings for missing symbols. This could be a problem, as you'll only be able to notice that some symbols are actually missing at runtime. For safety, instead of having ``-undefined dynamic_lookup``, you should list symbols by adding ``-Wl,-U,_OBJC_CLASS_$_PluginFilter`` (and others) to your ``Other Linker Flags``.
 
-Currently, this is OsiriXAPI.framework from OsiriX Lite 8.0.2, renamed to
+Currently, this is OsiriXAPI.framework from OsiriX Lite 8.5, renamed to
 OsiriX.framework, with some extra headers from the OsiriX project (the OsiriX
 DCM framework), reorganized and with patched \#includes.

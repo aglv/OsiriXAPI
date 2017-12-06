@@ -13,7 +13,7 @@
 =========================================================================*/
 
 #import <Cocoa/Cocoa.h>
-#import "BrowserController.h"
+#import "browserController.h"
 
 /** \brief  Shares DB with Bonjour */
 

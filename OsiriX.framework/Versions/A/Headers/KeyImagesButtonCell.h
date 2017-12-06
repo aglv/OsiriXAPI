@@ -19,6 +19,7 @@ __deprecated_msg("only in OsiriX")
 {
     BOOL rightClick;
 }
+
 @property BOOL rightClick;
 
 @end

@@ -23,7 +23,7 @@
 
 @interface DicomDirParser : NSObject
 {
-	NSString				*data, *dirpath;
+	NSString *data, *dirpath;
 }
 
 - (id) init:(NSString*) file;

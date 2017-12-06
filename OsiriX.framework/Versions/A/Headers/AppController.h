@@ -104,9 +104,12 @@ extern "C"
 //@end
 //#endif
 
+#define REGPHPURL @"reg/reg.php"
+
 @class AppController, ToolbarPanelController, ThumbnailsListPanel, BonjourPublisher;
 
 extern AppController* OsiriX;
+extern NSString* getMacAddress(void);
 
 @interface AppController : NSObject	<NSNetServiceBrowserDelegate, NSNetServiceDelegate, NSSoundDelegate, NSMenuDelegate> // GrowlApplicationBridgeDelegate
 {
@@ -143,17 +146,18 @@ extern AppController* OsiriX;
     
     long updateTotalData, updateReceivedData;
     NSMutableData *updateData;
+
     id appNapActivity __deprecated_msg("only in OsiriX");
     
     // DICOM Definition parser
-    BOOL getCurrentModule;
+    BOOL getCurrentModule, applicationDidFinishLaunching __deprecated_msg("only in OsiriX");
     NSString *previousContent, *previousOriginal, *currentFile, *currentModule;
     NSMutableDictionary *DICOMDefinitionDict;
     NSDictionary *currentAttribute;
     NSMutableDictionary *currentIDElements;
 }
 
-@property BOOL checkAllWindowsAreVisibleIsOff, isSessionInactive, showRestartNeeded;
+@property BOOL checkAllWindowsAreVisibleIsOff, isSessionInactive, showRestartNeeded, applicationDidFinishLaunching __deprecated_msg("only in OsiriX");
 @property(readonly) NSMenu *filtersMenu, *recentStudiesMenu, *windowsTilingMenuRows, *windowsTilingMenuColumns;
 @property(readonly) NSNetService* dicomBonjourPublisher;
 @property(readonly) XMLRPCInterface *XMLRPCServer;
@@ -171,7 +175,8 @@ extern AppController* OsiriX;
 + (BOOL) hasOSXElCapitan;
 + (BOOL) hasOSXYosemite;
 + (BOOL) hasMacOSSierra __deprecated_msg("only in OsiriX");
-+ (BOOL) isOSXYosemite;
++ (BOOL) hasMacOSSierra10122 __deprecated_msg("only in OsiriX");
++ (BOOL) hasMacOSX: (NSString*) vers __deprecated_msg("only in OsiriX");
 + (int) isUnsupportedOS;
 + (BOOL) hasMacOSXMaverick;
 + (NSArray*) IPv4Address;
@@ -179,6 +184,9 @@ extern AppController* OsiriX;
 + (NSString*) getRK;
 + (void) restartOsiriX;
 + (NSDictionary*) loadRegistrationDictionary;
++ (NSImage*) webBrowserIcon __deprecated_msg("only in OsiriX");
++ (NSData*) encodeData:(NSData*) dataIn __deprecated_msg("only in OsiriX");
++ (NSData*) decodeData:(NSData*) dataIn __deprecated_msg("only in OsiriX");
 
 #pragma mark-
 #pragma mark initialization of the main event loop singleton
@@ -280,6 +288,7 @@ extern AppController* OsiriX;
 + (void) setUSETOOLBARPANEL: (BOOL) b;
 + (NSRect) usefullRectForScreen: (NSScreen*) screen;
 + (NSArray*) sortObjects: (NSArray*) objects accordingToSeriesDescriptionsArray: (NSArray*) seriesDescriptionsOrder;
++ (NSArray*) sortObjects: (NSArray*) objects accordingToSeriesDescriptionsArray: (NSArray*) seriesDescriptionsOrder oneSeriesPerSeriesDescription: (BOOL) oneSeriesPerSeriesDescription __deprecated_msg("only in OsiriX");
 - (NSMutableArray*) orderedWindowsAccordingToPositionByRows: (NSArray*) a;
 - (void) addStudyToRecentStudiesMenu: (NSManagedObjectID*) studyID;
 - (void) loadRecentStudy: (id) sender;
@@ -308,6 +317,7 @@ extern AppController* OsiriX;
 //+ (NSImage*) fusionIconForDcmPix: (DCMPix*) pix mode: (int) mode stack: (int) stack direction: (int) direction __deprecated_msg("only in OsiriX");
 + (NSImage*) convolutionIconForDcmPix: (DCMPix*) pix name: (NSString*) name __deprecated_msg("only in OsiriX");
 + (NSImage*) resizeImageForIcon: (NSImage*) im __deprecated_msg("only in OsiriX");
++ (NSRect) visibleFrameForScreen: (NSScreen*) screen __deprecated_msg("only in OsiriX");
 
 #pragma mark-
 #pragma mark growl

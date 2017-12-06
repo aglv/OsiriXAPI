@@ -50,13 +50,11 @@
 //-(void)writeLock;
 //-(BOOL)tryWriteLock;
 //-(void)writeUnlock;
-
++ (NSDictionary*) storeOptions;
 +(NSString*) modelName;
 -(BOOL) deleteSQLFileIfOpeningFailed;
 -(BOOL) dumpSqlFile;
 -(NSManagedObjectModel*)managedObjectModel;
-//-(NSMutableDictionary*)persistentStoreCoordinatorsDictionary;
--(BOOL)migratePersistentStoresAutomatically; // default implementation returns YES
 -(NSPersistentStore*) addPersistentStoreWithPath: (NSString*) sqlFilePath;
 -(void) removeAllSecondaryStores;
 
@@ -109,5 +107,6 @@
 
 + (int) dicomManagedObjectContextCounter __deprecated_msg("only in OsiriX");
 + (int) webManagedObjectContextCounter __deprecated_msg("only in OsiriX");
+
 @end
 

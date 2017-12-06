@@ -173,6 +173,7 @@ enum
 	IBOutlet NSMatrix		*customVectors, *customOrigin;
 
     IBOutlet NSWindow       *setWLWWWindow;
+
     IBOutlet NSTextField    *wlset __deprecated_msg("removed in OsiriX"), *fromset __deprecated_msg("removed in OsiriX");
     IBOutlet NSTextField    *wwset __deprecated_msg("removed in OsiriX"), *toset __deprecated_msg("removed in OsiriX");
     
@@ -289,7 +290,8 @@ enum
 	
 	BOOL					windowWillClose;
 	BOOL					postprocessed;
-	
+    BOOL                    subtract1seriesToOther4DSeriesApplied;
+    
 	NSRect					standardRect;
 	
 	// Brush ROI Filter
@@ -370,8 +372,14 @@ enum
     NSTimer *autoKeyImageTimer __deprecated_msg("only in OsiriX");
     NSPoint previousMousePosition __deprecated_msg("only in OsiriX");
     NSTimeInterval autoKeyImageChangeImageDataTime __deprecated_msg("only in OsiriX");
+    
+    NSInteger firstROIorKeyImage __deprecated_msg("only in OsiriX");
+    
+    NSString *sortedByKey __deprecated_msg("only in OsiriX");
+    BOOL sortedInAscending __deprecated_msg("only in OsiriX");
 }
-@property BOOL preFlipped __deprecated_msg("only in OsiriX");
+@property BOOL preFlipped __deprecated_msg("only in OsiriX"), sortedInAscending __deprecated_msg("only in OsiriX");
+@property(retain) NSString *sortedByKey __deprecated_msg("only in OsiriX");
 @property(retain) NSCalendarDate *injectionDateTime;
 @property(readonly) NSSlider *slider;
 @property(readonly) KeyImagesWindowController *keysCtrl __deprecated_msg("only in OsiriX");
@@ -400,6 +408,12 @@ enum
 
 @property(retain) NSNumber* flagListPODComparatives;
 @property BOOL movieViewer;
+
+@property (retain) NSSliderTouchBarItem *thickSlabSliderTouchBarItem;
+@property (retain) NSScrubber *reconstructionToolsScrubber;
+@property (retain) NSScrubber *seriesThumbnailsScrubber;
+@property (retain) NSSliderTouchBarItem *ROIsThicknessSliderTouchBarItem;
+@property (retain) NSSliderTouchBarItem *ROIsOpacitySliderTouchBarItem;
 
 /** Array of all 2D Viewers */
 + (NSMutableArray*) getDisplayed2DViewers;
@@ -649,7 +663,7 @@ enum
 - (void) contextualDictionaryPath:(NSString *)newContextualDictionaryPath;
 - (NSString *) contextualDictionaryPath;
 - (void) contextualMenuEvent:(id)sender;
-- (ViewerController*) loadSelectedSeries: (id) series rightClick: (BOOL) rightClick  __deprecated_msg("ViewerController only in OsiriX");
+- (ViewerController*) loadSelectedSeries: (id) series rightClick: (BOOL) rightClick  __deprecated_msg("ViewerController returned only in OsiriX");
 - (IBAction) setAxialOrientation:(id) sender;
 - (IBAction) reSyncOrigin:(id) sender;
 - (void) loadROI:(long) mIndex;
@@ -707,6 +721,7 @@ enum
 - (float) highLighted;
 - (void) setHighLighted: (float) b;
 - (void) syncThumbnails;
+- (BOOL) syncWithViewer: (ViewerController*) v;
 - (void) checkBuiltMatrixPreview;
 - (void)comparativeRefresh:(NSString*) patientUID;
 

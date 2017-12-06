@@ -45,7 +45,7 @@ enum
 };
 
 /** \brief Window Controller for Q/R */
-@interface QueryController : NSWindowController <NSWindowDelegate, NSOutlineViewDelegate, NSTableViewDelegate>
+@interface QueryController : NSWindowController <NSWindowDelegate, NSOutlineViewDelegate, NSTableViewDelegate, NSMenuDelegate>
 {
     IBOutlet    QueryOutlineView			*outlineView;
 	IBOutlet	NSProgressIndicator			*progressIndicator;
@@ -102,7 +102,7 @@ enum
     NSMutableArray                          *temporaryCFindResultArray;
     BOOL                                    firstServerRealtimeResults;
     
-    NSMutableArray                          *downloadedStudies;
+    NSMutableArray                          *downloadedStudies, *autoretrieveQueue;
     
     NSString                                *customDICOMField;
     

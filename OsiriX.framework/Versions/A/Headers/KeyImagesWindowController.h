@@ -24,7 +24,7 @@ __deprecated_msg("only in OsiriX")
     ViewerController *viewer;
     int previousIndex;
     NSString *previousStudyInstanceUID;
-    BOOL hidden __deprecated_msg("only in OsiriX");
+    BOOL hidden;
 }
 
 @property (retain) ViewerController *viewer;

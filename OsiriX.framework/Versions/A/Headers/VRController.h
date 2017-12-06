@@ -159,6 +159,9 @@
 
 @property float deleteValue;
 
+@property (retain) NSCustomTouchBarItem *horizontalPanTouchBarItem;
+@property CGFloat previousHorizontalTranslationOnTouchBar;
+
 - (IBAction) applyConvolution:(id) sender;
 - (IBAction) setOrientation:(id) sender;
 - (NSString*) style;

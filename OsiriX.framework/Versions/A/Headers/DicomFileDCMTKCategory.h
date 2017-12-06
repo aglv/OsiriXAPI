@@ -26,10 +26,18 @@
 + (NSArray*) getEncodingArrayForFile: (NSString*) file;
 + (BOOL) isDICOMFileDCMTK:(NSString *) file; /**< Check for validity of DICOM using DCMTK */
 + (BOOL) isNRRDFile:(NSString *) file; /**< Test for NRRD file format */
+
 + (NSString*) getDicomField: (NSString*) field forFile: (NSString*) path;
 + (NSString*) getDicomFieldForGroup:(int)gr element:(int)el forFile: (NSString*) path;
 + (NSString*) getDicomFieldForGroup:(int) gr element: (int) el forDcmFileFormat: (void*) ff;
-+ (BOOL) rewriteAsExplicit:(NSString*) path; /**< This can clean corrupted file / fields */
+
++ (NSData*) getDicomDataForGroup:(int)gr element:(int)el forFile: (NSString*) path;
++ (NSData*) getDicomDataForGroup:(int) gr element: (int) el forDcmFileFormat: (void*) ff;
+
++ (BOOL) rewriteAsExplicit:(NSString*) path;
++ (BOOL) rewritePath: (NSString*) path asSyntax: (int) syntax;
++ (BOOL) rewritePath: (NSString*) path asSyntax: (int) syntax toPath:(NSString*) savePath;
+
 + (unsigned short) getVRForElement: (unsigned short) el group: (unsigned short) gr;
 
 - (BOOL) getHologicHeader;
