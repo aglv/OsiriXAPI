@@ -11,7 +11,10 @@
 class DcmDataset;
 class DcmMetaInfo;
 #else
+#ifndef DCMDATASETDEFINED
+#define DCMDATASETDEFINED
 typedef char* DcmDataset;
+#endif
 typedef char* DcmMetaInfo;
 #endif
 

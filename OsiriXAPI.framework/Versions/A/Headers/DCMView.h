@@ -1,16 +1,11 @@
 /*=========================================================================
-  Program:   OsiriX
-
-  Copyright (c) OsiriX Team
-  All rights reserved.
-  Distributed under GNU - LGPL
-  
-  See http://www.osirix-viewer.com/copyright.html for details.
-
-     This software is distributed WITHOUT ANY WARRANTY; without even
-     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
-     PURPOSE.
-=========================================================================*/
+ Program:   OsiriX
+ Copyright (c) 2010 - 2018 Pixmeo SARL
+ 266 rue de Bernex
+ CH-1233 Bernex
+ Switzerland
+ All rights reserved.
+ =========================================================================*/
 
 #import <Foundation/Foundation.h>
 #import <Cocoa/Cocoa.h>
@@ -246,6 +241,7 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
 	BOOL			is2DViewerCached, is2DViewerValue;
 	
 	BOOL lensTexture;
+    NSPoint lensPosition;
 	
     BOOL cursorhidden;
 	int avoidRecursiveSync;
@@ -292,9 +288,33 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
     NSNumber *windowWidthToSave, *windowLevelToSave, *yFlippedToSave, *xFlippedToSave;
     id imageToSave;
     BOOL savedImageParameters;
+    NSTimeInterval lastBecomeMainWindowTime;
     
+    BOOL flippedRendered;
+    
+#define PBO_COUNT 2
+    BOOL pboInitialized;
+    GLuint pboIds[ PBO_COUNT];
+    unsigned long pboSize;
+    int pboIndex;
+    
+    BOOL sliderDragging;
+    BOOL resliceViewDisplayed, displayResliceView;
+    float resliceViewSize, resliceViewSizeFactor;
+    float *resliceTexture;
+    BOOL resliceTextureIsRGBA;
+    GLuint resliceTextureID;
+    BOOL resliceDirectionIsWidth;
+    int resliceTextureWidth, resliceTextureHeight, resliceTexturePosition;
+    float resliceTexturePixelRatio;
+    BOOL displayResliceIndex;
+    
+    NSTimeInterval lastLensShiftPressed;
+    BOOL persitentLensMode;
 }
 
+@property BOOL flippedRendered, displayResliceView, resliceViewDisplayed;
+@property float resliceViewSizeFactor;
 @property(retain) NSNumber *scaleToSave, *rotationAngleToSave, *xOffsetToSave, *yOffsetToSave, *yFlippedToSave, *xFlippedToSave, *windowWidthToSave, *windowLevelToSave;
 @property(retain) NSNumber *scaleSeriesToSave, *rotationAngleSeriesToSave, *displayStyleSeriesToSave, *yFlippedSeriesToSave, *xFlippedSeriesToSave, *xOffsetSeriesToSave, *yOffsetSeriesToSave, *windowWidthSeriesToSave, *windowLevelSeriesToSave;
 @property NSRect drawingFrameRect;
@@ -303,7 +323,7 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
 @property BOOL COPYSETTINGSINSERIES, flippedData, showDescriptionInLarge, syncOnLocationImpossible, colorTransfer, stickToCenter;
 @property(nonatomic) BOOL whiteBackground;
 @property(retain) NSMutableArray *dcmPixList, *dcmRoiList;
-@property(readonly) NSArray *dcmFilesList;
+@property(retain) NSArray *dcmFilesList;
 @property long syncSeriesIndex;
 @property(nonatomic)float syncRelativeDiff, studyColorR, studyColorG, studyColorB;
 @property(nonatomic) long blendingMode;
@@ -337,6 +357,7 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
 @property(readonly) BOOL isKeyView, mouseDragging;
 @property annotationsLevel annotationType;
 @property(readonly) int volumicData;
+@property short thickSlabStacks;
 
 + (CGFloat) getDeltaY: (CGFloat) deltaY event: (NSEvent*) theEvent;
 + (void) setDontListenToSyncMessage: (BOOL) v;
@@ -361,6 +382,8 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
 - (void) applyImageTransformation __deprecated;
 - (void) loadOpenGLIdentityForDrawingFrame: (NSRect) r;
 - (void) gClickCountSetReset;
+- (void) applyROIWLWW;
++ (BOOL) getWL:(float*) wl WW:(float*) ww fromROIs:(NSArray*) rois;
 - (int) findPlaneAndPoint:(float*) pt :(float*) location;
 - (int) findPlaneForPoint:(float*) pt localPoint:(float*) location distanceWithPlane: (float*) distanceResult;
 - (int) findPlaneForPoint:(float*) pt preferParallelTo:(float*)parto localPoint:(float*) location distanceWithPlane: (float*) distanceResult;
@@ -370,10 +393,12 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
 - (unsigned char*) getRawPixelsWidth:(long*) width height:(long*) height spp:(long*) spp bpp:(long*) bpp screenCapture:(BOOL) screenCapture force8bits:(BOOL) force8bits removeGraphical:(BOOL) removeGraphical squarePixels:(BOOL) squarePixels allTiles:(BOOL) allTiles allowSmartCropping:(BOOL) allowSmartCropping origin:(float*) imOrigin spacing:(float*) imSpacing;
 - (unsigned char*) getRawPixelsWidth:(long*) width height:(long*) height spp:(long*) spp bpp:(long*) bpp screenCapture:(BOOL) screenCapture force8bits:(BOOL) force8bits removeGraphical:(BOOL) removeGraphical squarePixels:(BOOL) squarePixels allTiles:(BOOL) allTiles allowSmartCropping:(BOOL) allowSmartCropping origin:(float*) imOrigin spacing:(float*) imSpacing offset:(int*) offset isSigned:(BOOL*) isSigned;
 - (unsigned char*) getRawPixelsWidth:(long*) width height:(long*) height spp:(long*) spp bpp:(long*) bpp screenCapture:(BOOL) screenCapture force8bits:(BOOL) force8bits removeGraphical:(BOOL) removeGraphical squarePixels:(BOOL) squarePixels allTiles:(BOOL) allTiles allowSmartCropping:(BOOL) allowSmartCropping origin:(float*) imOrigin spacing:(float*) imSpacing offset:(int*) offset isSigned:(BOOL*) isSigned views: (NSArray*) views viewsRect: (NSArray*) rects;
+- (unsigned char*) getRawPixelsWidth:(long*) width height:(long*) height spp:(long*) spp bpp:(long*) bpp screenCapture:(BOOL) screenCapture force8bits:(BOOL) force8bits removeGraphical:(BOOL) removeGraphical squarePixels:(BOOL) squarePixels allTiles:(BOOL) allTiles allowSmartCropping:(BOOL) allowSmartCropping origin:(float*) imOrigin spacing:(float*) imSpacing offset:(int*) offset isSigned:(BOOL*) isSigned limitResolution:(BOOL) limitResolution;
+- (unsigned char*) getRawPixelsWidth:(long*) width height:(long*) height spp:(long*) spp bpp:(long*) bpp screenCapture:(BOOL) screenCapture force8bits:(BOOL) force8bits removeGraphical:(BOOL) removeGraphical squarePixels:(BOOL) squarePixels allTiles:(BOOL) allTiles allowSmartCropping:(BOOL) allowSmartCropping origin:(float*) imOrigin spacing:(float*) imSpacing offset:(int*) offset isSigned:(BOOL*) isSigned limitResolution:(BOOL) limitResolution alphaChannel:(BOOL) alphaChannel;
 
 - (unsigned char*) getRawPixelsViewWidth:(long*) width height:(long*) height spp:(long*) spp bpp:(long*) bpp screenCapture:(BOOL) screenCapture force8bits:(BOOL) force8bits removeGraphical:(BOOL) removeGraphical squarePixels:(BOOL) squarePixels allowSmartCropping:(BOOL) allowSmartCropping origin:(float*) imOrigin spacing:(float*) imSpacing;
 - (unsigned char*) getRawPixelsViewWidth:(long*) width height:(long*) height spp:(long*) spp bpp:(long*) bpp screenCapture:(BOOL) screenCapture force8bits:(BOOL) force8bits removeGraphical:(BOOL) removeGraphical squarePixels:(BOOL) squarePixels allowSmartCropping:(BOOL) allowSmartCropping origin:(float*) imOrigin spacing:(float*) imSpacing offset:(int*) offset isSigned:(BOOL*) isSigned;
-- (unsigned char*) getRawPixelsWidth:(long*) width height:(long*) height spp:(long*) spp bpp:(long*) bpp screenCapture:(BOOL) screenCapture force8bits:(BOOL) force8bits removeGraphical:(BOOL) removeGraphical squarePixels:(BOOL) squarePixels allTiles:(BOOL) allTiles allowSmartCropping:(BOOL) allowSmartCropping origin:(float*) imOrigin spacing:(float*) imSpacing offset:(int*) offset isSigned:(BOOL*) isSigned limitResolution:(BOOL) limitResolution;
+- (unsigned char*) getRawPixelsViewWidth:(long*) width height:(long*) height spp:(long*) spp bpp:(long*) bpp screenCapture:(BOOL) screenCapture force8bits:(BOOL) force8bits removeGraphical:(BOOL) removeGraphical squarePixels:(BOOL) squarePixels allowSmartCropping:(BOOL) allowSmartCropping origin:(float*) imOrigin spacing:(float*) imSpacing offset:(int*) offset isSigned:(BOOL*) isSigned limitResolution: (BOOL) limitResolution alphaChannel:(BOOL) alphaChannel;
 
 - (void) blendingPropagate;
 - (void) subtract:(DCMView*) bV;
@@ -384,7 +409,8 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
 - (short)syncro;
 - (void)setSyncro:(short) s;
 
-// checks to see if tool is for ROIs.  maybe better name - (BOOL)isToolforROIs:(long)tool
+// checks to see if tool is for ROIs.
++ (BOOL) isToolforROIs:(ToolMode)tool;
 - (BOOL) roiTool:(long) tool;
 - (void) prepareToRelease;
 - (void) orientationCorrectedToView:(float*) correctedOrientation;
@@ -400,13 +426,14 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
 - (NSPoint) ConvertFromGL2GL:(NSPoint) a toView:(DCMView*) otherView;
 - (NSRect) smartCrop;
 - (void) setWLWW:(float) wl :(float) ww;
-- (void)discretelySetWLWW:(float)wl :(float)ww;
+- (void) setWLWW:(float) wl :(float) ww saveChanges:(BOOL) saveChanges;
 - (void) getWLWW:(float*) wl :(float*) ww;
 - (void) getThickSlabThickness:(float*) thickness location:(float*) location;
 - (void) setCLUT:( unsigned char*) r :(unsigned char*) g :(unsigned char*) b;
 - (NSImage*) nsimage;
 - (NSImage*) nsimage:(BOOL) originalSize;
 - (NSImage*) nsimage:(BOOL) originalSize allViewers:(BOOL) allViewers;
+//- (CGImageRef) CGImageRef:(BOOL) originalSize allViewers:(BOOL) allViewers;
 - (NSDictionary*) exportDCMCurrentImage: (DICOMExport*) exportDCM size:(int) size;
 - (NSDictionary*) exportDCMCurrentImage: (DICOMExport*) exportDCM size:(int) size  views: (NSArray*) views viewsRect: (NSArray*) viewsRect;
 - (NSDictionary*) exportDCMCurrentImage: (DICOMExport*) exportDCM size:(int) size  views: (NSArray*) views viewsRect: (NSArray*) viewsRect exportSpacingAndOrigin: (BOOL) exportSpacingAndOrigin;
@@ -427,6 +454,7 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
 - (void) setOrigin:(NSPoint) x;
 - (void) setOriginX:(float) x Y:(float) y;
 - (void) scaleToFit;
+- (void) scaleToFitIfNecessary;
 - (float) scaleToFitForDCMPix: (DCMPix*) d;
 - (BOOL) isScaledFit;
 - (void) setBlendingFactor:(float) f;
@@ -473,7 +501,6 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
 - (void) setCursorForView: (long) tool;
 - (ToolMode) getTool: (NSEvent*) event;
 - (void)resizeWindowToScale:(float)resizeScale;
-- (float) getBlendedSUV;
 - (OrthogonalMPRController*) controller;
 - (void) roiChange:(NSNotification*)note;
 - (void) roiSelected:(NSNotification*) note;
@@ -482,8 +509,7 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
 - (void) setStartWLWW;
 - (void) stopROIEditing;
 - (void) deleteInvalidROIs;
-//- (void) computeMagnifyLens:(NSPoint) p;
-- (void) makeTextureFromImage:(NSImage*)image forTexture:(GLuint*)texName buffer:(GLubyte*)buffer textureUnit:(GLuint)textureUnit;
+- (NSSize) makeTextureFromImage:(NSImage*)image forTexture:(GLuint*)texName buffer:(GLubyte**)buffer textureUnit:(GLuint)textureUnit;
 - (void) stopROIEditingForce:(BOOL) force;
 - (void) subDrawRect: (NSRect)aRect;     // Subclassable, default does nothing.
 - (void) drawRectAnyway:(NSRect)aRect;   // Subclassable, default does nothing.
@@ -526,6 +552,9 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
 +(NSDictionary*) hotKeyModifiersDictionary;
 - (void) delete3DROIsAliases;
 - (void) generate3DROIsAliases;
+- (void) displayFirstImage: (id) sender;
+- (void) displayLastImage: (id) sender;
+- (void) displayMiddleImage: (id) sender;
 //iChat
 // New Draw method to allow for IChat Theater
 - (void) drawRect:(NSRect)aRect withContext:(NSOpenGLContext *)ctx;

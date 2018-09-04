@@ -1,16 +1,11 @@
 /*=========================================================================
-  Program:   OsiriX
-
-  Copyright (c) OsiriX Team
-  All rights reserved.
-  Distributed under GNU - LGPL
-  
-  See http://www.osirix-viewer.com/copyright.html for details.
-
-     This software is distributed WITHOUT ANY WARRANTY; without even
-     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
-     PURPOSE.
-=========================================================================*/
+ Program:   OsiriX
+ Copyright (c) 2010 - 2018 Pixmeo SARL
+ 266 rue de Bernex
+ CH-1233 Bernex
+ Switzerland
+ All rights reserved.
+ =========================================================================*/
 
 #import <Foundation/Foundation.h>
 #import <Cocoa/Cocoa.h>
@@ -102,9 +97,10 @@ extern "C"
 //--------------------------------------
 
 // DICOM params needed for SUV calculations
-	float				patientsWeight, repetitionTime, diffusionbvalue, echoTime, flipAngle;
-	NSString			*laterality, *viewPosition, *patientPosition, *acquisitionDate, *SOPClassUID, *frameofReferenceUID, *rescaleType;
-	BOOL				hasSUV, SUVConverted, displaySUVValue;
+    NSString            *patientsSex;
+	float				patientsWeight, patientsSize, repetitionTime, diffusionbvalue, echoTime, flipAngle;
+	NSString			*laterality, *viewPosition, *patientPosition, *acquisitionDate, *SOPClassUID, *frameofReferenceUID, *rescaleType, *bodyPartExamined;
+	BOOL				hasSUV, SUVConverted, SULConverted, displaySUVValue;
 	NSString			*units, *decayCorrection;
 	float				decayFactor, factorPET2SUV, radionuclideTotalDose, radionuclideTotalDoseCorrected;
 	NSCalendarDate		*acquisitionTime, *radiopharmaceuticalStartTime;
@@ -140,7 +136,8 @@ extern "C"
 	BOOL				convolution, updateToBeApplied;
 	short				kernelsize;
 	float				normalization, kernel[25];
-	float				cineRate;
+    
+	float				cineRate, nominalInterval, triggerTime;
 
 //slice
     double				sliceInterval, sliceLocation, sliceThickness, spacingBetweenSlices;
@@ -182,7 +179,7 @@ extern "C"
 
 /** Papyrus Loading variables */	
 	
-	NSString			*modalityString, *studyInstanceUID;
+	NSString			*modalityString, *studyInstanceUID, *patientOrientation;
 	unsigned short      *shortRed, *shortGreen, *shortBlue;
 	unsigned short		clutEntryR, clutEntryG, clutEntryB;
 	unsigned short		clutDepthR, clutDepthG, clutDepthB;
@@ -195,18 +192,25 @@ extern "C"
     
     BOOL                isHologic;
     
+    BOOL                sigmoidVOILUT;
+    
 // Ophtalmic fundus images
     
     NSString            *referencedSOPInstanceUID;
     float               referenceCoordinates[ 4];
+    
+    BOOL                RGBAlphaMaskComputed;
+    
+    NSRect              contentFrameRect; // computeCTFrameRect
 }
 
 @property long frameNo;
+@property NSRect contentFrameRect;
 @property (setter=setID:) long ID;
 @property (readonly) NSRecursiveLock *checking;
 @property (nonatomic) float minValueOfSeries, maxValueOfSeries, factorPET2SUV;
-@property (retain, nonatomic) NSString *modalityString, *studyInstanceUID;
-@property (retain) NSString* imageType, *referencedSOPInstanceUID, *yearOld, *yearOldAcquisition;
+@property (retain, nonatomic) NSString *modalityString, *studyInstanceUID, *patientOrientation;
+@property (retain) NSString* imageType, *referencedSOPInstanceUID, *yearOld, *yearOldAcquisition, *bodyPartExamined;
 
 // Dimensions in pixels
 @property (nonatomic) long pwidth, pheight;
@@ -287,13 +291,13 @@ Note setter is different to not break existing usage. :-( */
 
 // Properties (aka accessors) needed for SUV calculations
 @property(readonly) float philipsFactor;
-@property float patientsWeight, halflife, radionuclideTotalDose, radionuclideTotalDoseCorrected;
+@property float patientsWeight, patientsSize, halflife, radionuclideTotalDose, radionuclideTotalDoseCorrected;
 @property(retain) NSCalendarDate *acquisitionTime;
-@property(retain) NSString *acquisitionDate, *rescaleType;
+@property(retain) NSString *acquisitionDate, *rescaleType, *patientsSex;
 @property(retain) NSCalendarDate *radiopharmaceuticalStartTime;
-@property BOOL SUVConverted, needToCompute8bitRepresentation;
+@property BOOL SUVConverted, SULConverted, needToCompute8bitRepresentation;
 @property(readonly) BOOL hasSUV;
-@property float decayFactor;
+@property(nonatomic)float decayFactor, nominalInterval, triggerTime;
 @property(retain) NSString *units, *decayCorrection;
 @property BOOL displaySUVValue;
 @property BOOL isLUT12Bit;
@@ -310,6 +314,9 @@ Note setter is different to not break existing usage. :-( */
 - (float) getPixelValueX: (long) x Y:(long) y;  /**< Get the pixel for a point with x,y coordinates */
 
 - (void) checkSUV; /**< Makes sure all the necessary values for SUV calculation are present */
++ (float) LBMSize:(float) sizeInCm weight:(float) weight sex:(NSString*) sex;
+- (float) LBM; /**< lean body mass */
+- (float) SULFactor;
 
 + (void) checkUserDefaults: (BOOL) update;  /**< Check User Default for needed setting */
 + (void) resetUserDefaults;  /**< Reset the defaults */
@@ -355,6 +362,7 @@ Note setter is different to not break existing usage. :-( */
 * @param restore  
 * @param addition  
 */
+- (void) fillROI:(ROI*) roi newVal :(float) newVal outside :(BOOL) outside;
 - (void) fillROI:(ROI*) roi newVal:(float) newVal minValue:(float) minValue maxValue:(float) maxValue outside:(BOOL) outside orientationStack:(long) orientationStack stackNo:(long) stackNo restore:(BOOL) restore addition:(BOOL) addition;
 - (void) fillROI:(ROI*) roi newVal:(float) newVal minValue:(float) minValue maxValue:(float) maxValue outside:(BOOL) outside orientationStack:(long) orientationStack stackNo:(long) stackNo restore:(BOOL) restore addition:(BOOL) addition spline:(BOOL) spline;
 - (void) fillROI:(ROI*) roi newVal :(float) newVal minValue :(float) minValue maxValue :(float) maxValue outside :(BOOL) outside orientationStack :(long) orientationStack stackNo :(long) stackNo restore :(BOOL) restore addition:(BOOL) addition spline:(BOOL) spline clipMin: (NSPoint) clipMin clipMax: (NSPoint) clipMax;
@@ -485,6 +493,8 @@ Note setter is different to not break existing usage. :-( */
 - (long) maskID;
 - (void) maskTime:(float)newMaskTime;
 - (float) maskTime;
+- (double) minimumEncodedValue;
+- (double) maximumEncodedValue;
 - (void) convertExternalOwnedtoSelfOwned;
 - (BOOL) hasOrientation;
 - (void) getDataFromNSImage:(NSImage*) otherImage;
@@ -506,12 +516,18 @@ Note setter is different to not break existing usage. :-( */
 - (BOOL) is3DPlane;
 - (void) orientationCorrected:(float*) correctedOrientation rotation:(float) rotation xFlipped: (BOOL) xFlipped yFlipped: (BOOL) yFlipped;
 + (NSPoint) rotatePoint:(NSPoint)pt aroundPoint:(NSPoint)c angle:(float)a;
+- (void) computeCineRateFromNominalIntervalForCount: (float) numberOfImagesInSeries;
 - (float) normalization;
 - (short) kernelsize;
+- (float) defaultWL; // = savedWL, or fullWL if not available
+- (float) defaultWW;  // = savedWW, or fullWW if not available
+- (void) computeAlphaMaskIfNeeded;
 + (void) clearDcmPixCache;
+- (DCMPix*) renderWithScale:(float) scale;
 - (DCMPix*) renderWithRotation:(float) r scale:(float) scale xFlipped:(BOOL) xF yFlipped: (BOOL) yF;
 - (DCMPix*) renderWithRotation:(float) r scale:(float) scale xFlipped:(BOOL) xF yFlipped: (BOOL) yF backgroundOffset: (float) bgO;
 - (NSRect) usefulRectWithRotation:(float) r scale:(float) scale xFlipped:(BOOL) xF yFlipped: (BOOL) yF;
+- (NSRect) usefulRectWithRotation:(float) r scale:(float) scale xFlipped:(BOOL) xF yFlipped: (BOOL) yF useContentFrameRect:(BOOL)useContentFrameRect;
 - (DCMPix*) mergeWithDCMPix:(DCMPix*) o offset:(NSPoint) oo;
 - (DCMPix*) renderInRectSize:(NSSize) rectSize atPosition:(NSPoint) oo rotation:(float) r scale:(float) scale xFlipped:(BOOL) xF yFlipped: (BOOL) yF;
 - (DCMPix*) renderInRectSize:(NSSize) rectSize atPosition:(NSPoint) oo rotation:(float) r scale:(float) scale xFlipped:(BOOL) xF yFlipped: (BOOL) yF smartCrop: (BOOL) smartCrop;

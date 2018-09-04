@@ -959,7 +959,7 @@ typedef unsigned short ushort;
 #define PACKAGE_TARNAME "OsiriX dcmtk-3.6.1"
 
 /* Define to the home page for this package. */
-#define PACKAGE_URL "http://www.osirix-viewer.com/"
+#define PACKAGE_URL "https://www.osirix-viewer.com/"
 
 /* Define to the version of this package. */
 #define PACKAGE_VERSION "3.6.1"

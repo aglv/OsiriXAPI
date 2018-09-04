@@ -1,16 +1,11 @@
 /*=========================================================================
-  Program:   OsiriX
-
-  Copyright (c) OsiriX Team
-  All rights reserved.
-  Distributed under GNU - LGPL
-  
-  See http://www.osirix-viewer.com/copyright.html for details.
-
-     This software is distributed WITHOUT ANY WARRANTY; without even
-     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
-     PURPOSE.
-=========================================================================*/
+ Program:   OsiriX
+ Copyright (c) 2010 - 2018 Pixmeo SARL
+ 266 rue de Bernex
+ CH-1233 Bernex
+ Switzerland
+ All rights reserved.
+ =========================================================================*/
 
 
 #import <Cocoa/Cocoa.h>
@@ -26,7 +21,7 @@
 {
 	NSNumber	*dicomTime;
     NSImage     *thumbnailImage;
-    NSArray     *imagesWithROIsCache;
+    NSArray     *imagesWithROIsCache, *imagesWithROIsDisplayedInKeyImagesWindowCache;
     int         latestDistantNumberOfImages;
 }
 
@@ -62,9 +57,13 @@
 @property(nonatomic, retain) NSNumber* xOffset;
 @property(nonatomic, retain) NSNumber* yFlipped;
 @property(nonatomic, retain) NSNumber* yOffset;
+@property(nonatomic, retain) NSData *dictionaryData;
 @property(nonatomic, retain) NSSet* images;
 @property(nonatomic, retain) DicomStudy* study;
+@property(nonatomic, retain) NSString* bodyPart;
 @property int latestDistantNumberOfImages;
+
+@property(nonatomic, retain) NSNumber* dateTimeZone, *dateAddedTimeZone, *dateOpenedTimeZone;
 
 - (int) multiframesNumber;
 - (NSSet*) paths;
@@ -85,27 +84,35 @@
 - (NSString*) uniqueFilename;
 - (BOOL) isDistant;
 + (void) recomputeLocalizersSeriesInstanceUIDForStudies: (NSSet*) studiesSet;
++ (void) recomputeSeriesUIDForSeries: (DicomSeries*) series;
 - (NSString*) type;
 - (NSImage*) thumbnailImage;
 - (NSString*) ROIsDescription;
+- (void) addBodyPart: (NSString*) bp;
 - (NSArray*) imagesWithROIs;
+- (NSArray*) imagesWithROIsDisplayedInKeyImagesWindow: (BOOL) imagesWithROIsDisplayedInKeyImagesWindow;
+- (BOOL) areThereImagesWithROIsDisplayedInKeyImagesWindow: (BOOL) displayedInKeyImagesWindow;
 - (void) purgeCaches;
 - (NSArray*) imagesAsScreenCapture;
 - (NSArray*) imagesAsScreenCapture:(NSRect)frame;
 - (NSArray*) imagesAsScreenCapture:(NSRect)frame dicomImages:(NSArray*) dcmImages;
 - (NSArray*) imagesAsScreenCapture:(NSRect)frame dicomImages:(NSArray*) dcmImages annotationsLevel: (annotationsLevel) annotationsLevel;
+-(NSArray*) imagesAsScreenCapture:(NSRect)frame dicomImages:(NSArray*) dcmImages annotationsLevel: (annotationsLevel) annotationsLevel cinteRate: (NSInteger*) cineRate;
 + (NSRect) frameForImageAsScreenCapture;
+- (NSArray*) presentationStates;
+- (NSArray*) applyPresentationState;
+- (NSString*) callingAET;
+- (NSString*) calledAET;
+- (NSString *) hostname;
+- (NSDictionary*) dictionary;
+- (long) getNewAndUniqueSeriesIDAfterCurrentSeriesID;
+- (void) setDictionary: (NSDictionary*) dict;
+- (void) addToDictionaryObject: (id) object forKey: (id) key;
 @end
 
 @interface DicomSeries (CoreDataGeneratedAccessors)
-
-- (NSArray*) presentationStates;
 - (void) addImagesObject:(DicomImage *)value;
 - (void) removeImagesObject:(DicomImage *)value;
 - (void) addImages:(NSSet *)value;
 - (void) removeImages:(NSSet *)value;
-- (void) applyPresentationState;
-- (NSString*) callingAET;
-- (NSString*) calledAET;
-- (NSString *) hostname;
 @end

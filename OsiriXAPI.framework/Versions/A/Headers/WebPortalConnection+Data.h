@@ -1,15 +1,10 @@
 /*=========================================================================
  Program:   OsiriX
- 
- Copyright (c) OsiriX Team
+ Copyright (c) 2010 - 2018 Pixmeo SARL
+ 266 rue de Bernex
+ CH-1233 Bernex
+ Switzerland
  All rights reserved.
- Distributed under GNU - LGPL
- 
- See http://www.osirix-viewer.com/copyright.html for details.
- 
- This software is distributed WITHOUT ANY WARRANTY; without even
- the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
- PURPOSE.
  =========================================================================*/
 
 #import "WebPortalConnection.h"
@@ -51,7 +46,7 @@
 
 -(void)processWeasisJnlp;
 -(void)processWeasisXml;
-
+-(void) processOHIFJson;
 -(void)processThumbnail;
 -(void)processReport;
 -(void)processSeriesPdf;
@@ -67,5 +62,8 @@
 -(void) addDoubleAuthenticationUserEvent: (NSString*) username;
 -(NSTimeInterval) delayForDoubleAuthenticationUser: (NSString*) username;
 - (void) resetDoubleAuthenticationEventsForUser:(NSString*) username;
+
++ (NSDictionary*) processOHIFJsonWithStudies: (NSArray*) requestedStudies series:(NSArray*) requestedSeries baseURL:(NSString*) baseURL mobile:(BOOL) isMobile wadoSyntax: (NSString*) ws filesForInstanceUID: (NSDictionary*) filesDictionary;
++ (NSDictionary*) processOHIFJsonWithStudies: (NSArray*) requestedStudies series:(NSArray*) requestedSeries baseURL:(NSString*) baseURL mobile:(BOOL) isMobile wadoSyntax: (NSString*) ws filesForInstanceUID: (NSDictionary*) filesDictionary anonymized: (BOOL) anonymized;
 @end
 

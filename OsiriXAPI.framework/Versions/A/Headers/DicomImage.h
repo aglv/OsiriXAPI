@@ -1,16 +1,11 @@
 /*=========================================================================
-  Program:   OsiriX
-
-  Copyright (c) OsiriX Team
-  All rights reserved.
-  Distributed under GNU - LGPL
-  
-  See http://www.osirix-viewer.com/copyright.html for details.
-
-     This software is distributed WITHOUT ANY WARRANTY; without even
-     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
-     PURPOSE.
-=========================================================================*/
+ Program:   OsiriX
+ Copyright (c) 2010 - 2018 Pixmeo SARL
+ 266 rue de Bernex
+ CH-1233 Bernex
+ Switzerland
+ All rights reserved.
+ =========================================================================*/
 
 #import <Cocoa/Cocoa.h>
 #import "DCMView.h"
@@ -43,12 +38,16 @@ void* sopInstanceUIDEncode( NSString *sopuid);
 	NSString	*modality;
 	NSString	*fileType;
     NSString    *cachedSRPath;
+    NSString    *cachedSeriesInstanceUID;
     
-    NSImage*    _thumbnail;
+    NSImage     *_thumbnail;
+    
+    NSArray     *rois; // temporary && cache : used in [DicomSeries imagesWithROIsDisplayedInKeyImagesWindow];
     
     id sortingValue;
 }
 
+@property(retain) NSArray *rois;
 @property(retain) NSNumber* numberOfFrames;
 @property(retain) id sortingValue;
 
@@ -86,9 +85,11 @@ void* sopInstanceUIDEncode( NSString *sopuid);
 @property(nonatomic, retain) NSNumber* zoom;
 @property(nonatomic, retain) DicomSeries* series;
 
++ (NSArray*) uniquePathsForDicomImageArray: (NSArray*) images;
 - (NSNumber*) isImageStorage;
 + (NSData*) sopInstanceUIDEncodeString:(NSString*) s;
 - (NSString*) uniqueFilename;
+- (NSString*) seriesInstanceUID;
 - (NSNumber*) numberOfSeries;
 - (NSSet*) paths;
 - (NSString*) completePath;

@@ -1,16 +1,11 @@
 /*=========================================================================
-  Program:   OsiriX
-
-  Copyright (c) OsiriX Team
-  All rights reserved.
-  Distributed under GNU - LGPL
-  
-  See http://www.osirix-viewer.com/copyright.html for details.
-
-     This software is distributed WITHOUT ANY WARRANTY; without even
-     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
-     PURPOSE.
-=========================================================================*/
+ Program:   OsiriX
+ Copyright (c) 2010 - 2018 Pixmeo SARL
+ 266 rue de Bernex
+ CH-1233 Bernex
+ Switzerland
+ All rights reserved.
+ =========================================================================*/
 
 
 
@@ -235,6 +230,7 @@ typedef char* VTKStereoVRView;
 	IBOutlet NSMatrix		*VRquality;
 	
 	IBOutlet NSMatrix		*scissorStateMatrix;
+    IBOutlet NSColorWell    *backgroundColorWell;
     NSColor *backgroundColor;
 	
 	IBOutlet NSObjectController	*shadingController;
@@ -421,7 +417,10 @@ typedef char* VTKStereoVRView;
 @property (readonly) NSArray* currentOpacityArray;
 @property (retain) DICOMExport *exportDCM;
 @property (retain) NSString *dcmSeriesString;
+@property (retain) VRController *controller;
+@property (retain) ViewerController *blendingController;
 @property (retain, nonatomic) NSColor *backgroundColor;
+
 
 + (void) testGraphicBoard;
 //+ (BOOL) getCroppingBox:(double*) a :(vtkVolume *) volume :(vtkBoxWidget*) croppingBox;
@@ -580,6 +579,7 @@ typedef char* VTKStereoVRView;
 - (void) computeValueFactor;
 - (void) setRotate: (BOOL) r;
 - (float) factor;
+- (float) OpenGlBackingScaleFactor;
 - (float) imageSampleDistance;
 - (float) blendingImageSampleDistance;
 - (void) setViewSizeToMatrix3DExport;
@@ -620,8 +620,6 @@ typedef char* VTKStereoVRView;
 - (void)setAdvancedCLUT:(NSMutableDictionary*)clut lowResolution:(BOOL)lowRes;
 - (void)setAdvancedCLUTWithName:(NSString*)name;
 - (BOOL)advancedCLUT;
-- (VRController*)controller;
-- (void)setController:(VRController*)aController;
 - (BOOL)isRGB;
 
 - (vtkVolumeMapper*) mapper;

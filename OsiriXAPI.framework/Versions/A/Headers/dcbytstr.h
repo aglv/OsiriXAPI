@@ -20,15 +20,6 @@
  *  Author:  Gerd Ehlers, Andreas Barth
  *
  *  Purpose: Interface of class DcmByteString
- *
- *  Last Update:      $Author: lpysher $
- *  Update Date:      $Date: 2006/03/01 20:15:19 $
- *  Source File:      $Source: /cvsroot/osirix/osirix/Binaries/dcmtk-source/dcmdata/dcbytstr.h,v $
- *  CVS/RCS Revision: $Revision: 1.1 $
- *  Status:           $State: Exp $
- *
- *  CVS/RCS Log at end of file
- *
  */
 
 

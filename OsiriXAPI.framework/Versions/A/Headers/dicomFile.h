@@ -1,16 +1,11 @@
 /*=========================================================================
-  Program:   OsiriX
-
-  Copyright (c) OsiriX Team
-  All rights reserved.
-  Distributed under GNU - LGPL
-  
-  See http://www.osirix-viewer.com/copyright.html for details.
-
-     This software is distributed WITHOUT ANY WARRANTY; without even
-     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
-     PURPOSE.
-=========================================================================*/
+ Program:   OsiriX
+ Copyright (c) 2010 - 2018 Pixmeo SARL
+ 266 rue de Bernex
+ CH-1233 Bernex
+ Switzerland
+ All rights reserved.
+ =========================================================================*/
 
 
 #import <Foundation/Foundation.h>
@@ -70,15 +65,17 @@
 * removes empty space at end of strings
 */
 + (NSString*) NSreplaceBadCharacter: (NSString*) str; 
-+ (char *) replaceBadCharacter:(char *) str encoding: (NSStringEncoding) encoding; /**< Same as NSreplaceBadCharacter, but using char* and encodings */
-+ (NSString *) stringWithBytes:(char *) str encodings: (NSStringEncoding*) encoding; /**< Convert char* str with NSStringEncoding* encoding to NSString */ 
-+ (NSString *) stringWithBytes:(char *) str encodings: (NSStringEncoding*) encoding replaceBadCharacters: (BOOL) replace; /**< Convert char* str with NSStringEncoding* encoding to NSString */ 
-+ (BOOL) isModalityInCombine: (NSString*) modality;
++ (char *) replaceBadCharacter:(char *) str encoding:(NSStringEncoding) encoding; /**< Same as NSreplaceBadCharacter, but using char* and encodings */
++ (NSString *) stringWithBytes:(char *) str encodings:(NSStringEncoding*) encoding; /**< Convert char* str with NSStringEncoding* encoding to NSString */
++ (NSString *) stringWithBytes:(char *) str encodings:(NSStringEncoding*) encoding trim:(BOOL) trim;
++ (NSString *) stringWithBytes:(char *) str encodings:(NSStringEncoding*) encoding replaceBadCharacters:(BOOL) replace; /**< Convert char* str with NSStringEncoding* encoding to NSString */
++ (NSString *) stringWithBytes:(char *) str encodings:(NSStringEncoding*) encodings replaceBadCharacters:(BOOL) replace trim:(BOOL) trim;
 - (NSPDFImageRep*) PDFImageRep; /**< Get a PDFImageRep from DICOM SR file */
 - (long) NoOfFrames; /**< Number of frames in the file */
 - (long) getWidth; /**<  Returns image width */
 - (long) getHeight; /**< Return image Height */
 - (long) NoOfSeries; /**< Returns number of seris in the file */
++ (id) dicomFileWithPath:(NSString*) f; /**< Init with file at location NSString* f */
 - (id) init:(NSString*) f; /**< Init with file at location NSString* f */
 - (id) init:(NSString*) f DICOMOnly:(BOOL) DICOMOnly; /**< init with file at location NSString* f DICOM files only if DICOMOnly = YES */
 - (id) initRandom; /**< Inits and returns an empty dicomFile */
@@ -123,13 +120,17 @@
 - (BOOL) splitMultiEchoMR; /**< Returns the splitMultiEchoMR default If YES, splits multi echo series into separate series by Echo number. */
 - (BOOL) useSeriesDescription; /**< Returns the useSeriesDescription default. */
 - (BOOL) noLocalizer; /**< Returns the NOLOCALIZER default. */
-- (BOOL) combineProjectionSeries; /**< Returns the combineProjectionSeries default.  If YES, combines are projection Modalities: CR, DR into one series. */
+- (NSDictionary*) combineSeries;
+- (NSDictionary*) splitSeries;
 - (BOOL) oneFileOnSeriesForUS; /**< Returns the oneFileOnSeriesForUS default */
-- (BOOL) combineProjectionSeriesMode; /**< Returns the combineProjectionSeriesMode default. */
 //- (BOOL) checkForLAVIM; /**< Returns the CHECKFORLAVIM default. */
 - (BOOL) separateCardiac4D; /**< Returns the SEPARATECARDIAC4D default. If YES separates cardiac studies into separate gated series. */
 - (BOOL) containsString: (NSString*) s inArray: (NSArray*) a;
 + (BOOL) containsLocalizerInString: (NSString*) str;
++ (NSString*) seriesInstanceUIDForFile: (NSString*) file;
++ (NSArray*) combineSplitModalities;
++ (NSDictionary*)combineSeriesDictionary;
++ (NSDictionary*)splitSeriesDictionary;
 @end
 
 

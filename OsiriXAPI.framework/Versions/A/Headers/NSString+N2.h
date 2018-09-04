@@ -1,16 +1,11 @@
 /*=========================================================================
-  Program:   OsiriX
-
-  Copyright (c) OsiriX Team
-  All rights reserved.
-  Distributed under GNU - LGPL
-  
-  See http://www.osirix-viewer.com/copyright.html for details.
-
-     This software is distributed WITHOUT ANY WARRANTY; without even
-     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
-     PURPOSE.
-=========================================================================*/
+ Program:   OsiriX
+ Copyright (c) 2010 - 2018 Pixmeo SARL
+ 266 rue de Bernex
+ CH-1233 Bernex
+ Switzerland
+ All rights reserved.
+ =========================================================================*/
 
 #import <Cocoa/Cocoa.h>
 
@@ -19,6 +14,7 @@
 
 @interface NSString (N2)
 
++ (id) stringWithData: (NSData*) data;
 -(NSString*)stringBetweenString:(NSString*) aStr andString:(NSString*) bStr;
 -(NSArray*)stringsBetweenString:(NSString*) aStr andString:(NSString*) bStr;
 -(NSString*)markedString;
@@ -26,9 +22,10 @@
 +(NSString*)sizeString:(unsigned long long)size;
 +(NSString*)timeString:(NSTimeInterval)time;
 +(NSString*)timeString:(NSTimeInterval)time maxUnits:(NSInteger)maxUnits;
++(NSString*)timeString:(NSTimeInterval)time maxUnits:(NSInteger)maxUnits abbreviated:(BOOL)abbreviated;
 +(NSString*)dateString:(NSTimeInterval)date;
 -(NSString*)stringByTrimmingStartAndEnd;
-
++(NSString *) randomStringWithLength: (int) len;
 -(NSString*)urlEncodedString;
 -(NSString*)xmlEscapedString;
 -(NSString*)xmlUnescapedString;
@@ -43,6 +40,8 @@
 -(NSString*)resolveNSLocalizedStringsForLanguage:(NSString*)language inBundle:(NSBundle*)bundle escapeQuotationMarks: (BOOL) escapeQuotationMarks;
 -(NSString*)localizedForLanguage: (NSString*) language;
 -(NSString*)localizedForWebPortal;
+
+- (NSSize)sizeOfStringWithFont:(NSFont *)font;
 
 -(BOOL)contains:(NSString*)str;
 

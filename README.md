@@ -1,1 +1,1 @@
-These are the frameworks from OsiriX 8.5.
+These are the frameworks from OsiriX Lite v9.5.1

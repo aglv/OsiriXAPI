@@ -1,19 +1,22 @@
 /*=========================================================================
-  Program:   OsiriX
-
-  Copyright (c) OsiriX Team
-  All rights reserved.
-  Distributed under GNU - LGPL
-  
-  See http://www.osirix-viewer.com/copyright.html for details.
-
-     This software is distributed WITHOUT ANY WARRANTY; without even
-     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
-     PURPOSE.
-=========================================================================*/
+ Program:   OsiriX
+ Copyright (c) 2010 - 2018 Pixmeo SARL
+ 266 rue de Bernex
+ CH-1233 Bernex
+ Switzerland
+ All rights reserved.
+ =========================================================================*/
 
 
 #import <Cocoa/Cocoa.h>
+
+typedef enum {
+    unknownFilesOnDistantServer = 0,
+    checkingOnDistantServer = 1,
+    noFilesOnDistantServer = 2,
+    partiallyAvailableOnDistantServer = 3,
+    allFilesOnDistantServer = 4
+} SyncDistantServerState;
 
 @class DicomSeries, DicomImage;
 
@@ -27,14 +30,24 @@
     NSColor *cachedColor;
     NSArray *cachedPresentationStates;
     NSArray *cacheROIs;
-    NSManagedObject *cachedROISRSeries;
+    DicomSeries *cachedROISRSeries;
     NSSet *cacheKeyImages;
     BOOL reentry;
+    
+    BOOL cachedIsIncompleteStudy;
+    NSTimeInterval cachedIsIncompleteStudyDate;
+    
+    int numberOfSeries;
+    
+    NSDictionary *distantServer;
+    NSArray *distantSOPInstances;
 }
-
+@property (nonatomic) int32_t distantServerState;
+@property (nonatomic) double distantServerStateTime;
 @property(nonatomic, retain) NSString* accessionNumber;
 @property(nonatomic, retain) NSString* color;
 @property(nonatomic, retain) NSString* studyState;
+@property(nonatomic, retain) NSString* bodyPart;
 @property(nonatomic, retain) NSString* comment;
 @property(nonatomic, retain) NSString* comment2;
 @property(nonatomic, retain) NSString* comment3;
@@ -64,8 +77,18 @@
 @property(nonatomic, retain) NSString* studyInstanceUID;
 @property(nonatomic, retain) NSString* studyName;
 @property(nonatomic, retain) NSData* windowsState;
+@property(nonatomic, retain) NSData *dictionaryData;
 @property(nonatomic, retain) NSSet* albums;
 @property(nonatomic, retain) NSSet* series;
+@property(nonatomic, retain) NSNumber *cloudDownloaded, *cloudUploaded;
+
+@property(nonatomic, retain) NSArray *distantSOPInstances;
+@property(nonatomic, retain) NSDictionary *distantServer;
+
+@property(nonatomic, retain) NSNumber* dateTimeZone, *dateAddedTimeZone, *dateOfBirthTimeZone, *dateOpenedTimeZone;
+
++ (NSDate*) convertDate:(NSDate*) date withTimeZone:(NSNumber*) savedTimeZone;
++ (NSNumber*) timeZoneForDate:(NSDate*) date;
 
 + (NSRecursiveLock*) dbModifyLock;
 + (NSString*) formattedPatientName: (NSString*) n;
@@ -81,9 +104,14 @@
 - (NSNumber*) noFiles;
 - (NSSet*) paths;
 - (NSSet*) keyImages;
+- (DicomImage*) imageWithPixels;
 - (NSArray*) roiAndKeyImages;
+- (NSArray*) roiAndKeyImagesWithOnlyROIsDisplayedInKeyImagesWindow;
+- (NSArray*) roiAndKeyImagesWithROIsDisplayedInKeyImagesWindow: (BOOL) displayedInKeyImagesWindow;
 - (NSString*) yearOld;
 - (NSString*) yearOldAcquisition;
+- (NSString*) yearOldNowAndAtAcquisition;
+- (NSString*) dateOfBirthFormatted;
 - (NSSet*) images;
 - (NSNumber*) rawNoFiles;
 - (NSString*) modalities;
@@ -94,15 +122,19 @@
 - (NSArray*) imageSeries;
 - (NSArray*) imageSeriesContainingPixels:(BOOL) pixels;
 - (NSArray*) imageSeriesContainingPixels:(BOOL) pixels includeLocalizersSeries: (BOOL) includeLocalizersSeries;
+- (NSArray*) imageSeriesContainingPixels:(BOOL) pixels includeLocalizersSeries: (BOOL) includeLocalizersSeries sorted:(BOOL) sorted;
 - (NSArray*) keyObjectSeries;
 - (NSArray*) keyObjects;
 - (NSArray*) presentationStateSeries;
 - (NSArray*) presentationStateObjects;
 - (NSArray*) presentationStateDictionaries;
 - (NSArray*) waveFormSeries;
+- (NSString*) roiPathForImage: (DicomImage*) image inArray: (NSArray*) roisArray commentsArray: (NSArray*) commentsArray;
 - (NSString*) roiPathForImage: (DicomImage*) image inArray: (NSArray*) roisArray;
 - (NSString*) roiPathForImage: (DicomImage*) image;
+- (DicomImage*) roiForImage: (DicomImage*) image inArray: (NSArray*) roisArray commentsArray: (NSArray*) commentsArray;
 - (DicomImage*) roiForImage: (DicomImage*) image inArray: (NSArray*) roisArray;
+- (NSArray*) OsiriXSRSeries;
 - (DicomSeries*) roiSRSeries;
 - (DicomSeries*) localizersSeries;
 - (DicomSeries*) reportSRSeries;
@@ -110,10 +142,13 @@
 - (DicomSeries*) windowsStateSRSeries;
 - (DicomImage*) reportImage;
 - (DicomImage*) annotationsSRImage;
+- (DicomImage *) SRImageWithSeriesID: (int) seriesID seriesDescription: (NSString*) seriesDescription;
 - (void) archiveReportAsDICOMSR;
++ (void) setArchiveAnnotationsAsDICOMSR: (BOOL) v;
 - (void) archiveAnnotationsAsDICOMSR;
 - (void) archiveWindowsStateAsDICOMSR;
 - (NSArray*) allWindowsStateSRSeries;
+- (void) addBodyPart: (NSString*) bp;
 - (BOOL) isHidden;
 - (BOOL) isDistant;
 - (NSNumber*) dicomTime;
@@ -125,6 +160,8 @@
 - (NSComparisonResult) compareName:(DicomStudy*)study;
 - (NSArray*) roiImages;
 - (NSArray*) imagesWithROIs;
+- (NSArray*) imagesWithROIsDisplayedInKeyImagesWindow: (BOOL) displayedInKeyImagesWindow;
+- (BOOL) areThereImagesWithROIsDisplayedInKeyImagesWindow: (BOOL) displayedInKeyImagesWindow;
 - (NSArray*) allSeries;
 - (NSArray*) generateDICOMSCImagesForKeyImages: (BOOL) keyImages andROIImages: (BOOL) ROIImages;
 - (void) setNSColor:(NSColor *)c;
@@ -140,6 +177,23 @@
 - (BOOL) computeHasKeyImages;
 - (NSImage*) thumbnailImage;
 - (NSData*) thumbnail;
+- (NSNumber*) noSeries;
+- (void) refresh;
+- (void) computeDistantServerState;
+- (void) checkDistantServerState;
+- (void) checkDistantServerStateUploadIfNoFilesOnDistantServer: (BOOL) uploadIfNoFilesOnDistantServer;
+- (void) uploadFilesToCloud:(NSSet*) localExtraDicomFiles;
+- (void) resetDistanceServerState;
++ (NSString*) scrambleString: (NSString*) t;
+- (NSDictionary*) dictionary;
+- (void) setDictionary: (NSDictionary*) dict;
+- (void) addToDictionaryObject: (id) object forKey: (id) key;
+- (long) getNewAndLastSeriesID;
+- (long) getNewAndFirstSeriesID;
+- (long) getNewAndUniqueSeriesIDAfterThisSeriesID: (long) startNumber;
++ (BOOL) isSendingStudyID: (NSManagedObjectID*) study;
++ (void) setSendingStudyID: (NSManagedObjectID*) study to:(BOOL) value;
++ (void) setSendingStudyIDs: (NSArray*) studies to:(BOOL) value;
 @end
 
 @interface DicomStudy (CoreDataGeneratedAccessors)
@@ -153,10 +207,6 @@
 - (void) removeSeriesObject:(DicomSeries*) value;
 - (void) addSeries:(NSSet*) value;
 - (void) removeSeries:(NSSet*) value;
-
-- (NSArray*) imagesForKeyImages:(BOOL) keyImages andForROIs:(BOOL)alsoImagesWithROIs;
-
-+ (NSString*) scrambleString: (NSString*) t;
 
 @end
 

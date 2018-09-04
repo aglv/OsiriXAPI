@@ -1,16 +1,11 @@
 /*=========================================================================
-  Program:   OsiriX
-
-  Copyright (c) OsiriX Team
-  All rights reserved.
-  Distributed under GNU - LGPL
-  
-  See http://www.osirix-viewer.com/copyright.html for details.
-
-     This software is distributed WITHOUT ANY WARRANTY; without even
-     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
-     PURPOSE.
-=========================================================================*/
+ Program:   OsiriX
+ Copyright (c) 2010 - 2018 Pixmeo SARL
+ 266 rue de Bernex
+ CH-1233 Bernex
+ Switzerland
+ All rights reserved.
+ =========================================================================*/
 
 //Abstract class for generalized control of DICOM sending.
 
@@ -47,7 +42,7 @@ enum SendServerType { osirixServer, offisServer };
 @class DCMTKStoreSCU;
 
 /** \brief Window Controller for DICOM Send */
-@interface SendController : NSWindowController
+@interface SendController : NSWindowController <NSMenuDelegate>
 {
 	NSArray				*_files;
 	NSString			*_numberFiles;
@@ -68,7 +63,11 @@ enum SendServerType { osirixServer, offisServer };
 + (void) sendFiles:(NSArray *)files;
 + (void) sendFiles:(NSArray *)files toNode: (NSDictionary*) node;
 + (void) sendFiles:(NSArray *)files toNode: (NSDictionary*) node usingSyntax: (int) syntax;
++ (BOOL) executeSend:(NSArray*) files patientName: (NSString*) patientName studyDescription: (NSString*) studyDescription showError: (BOOL) showError server:(NSDictionary*) server;
++ (BOOL) executeSend:(NSArray*) files patientName: (NSString*) patientName studyDescription: (NSString*) studyDescription database: (DicomDatabase*) db showError: (BOOL) showError server:(NSDictionary*) server;
++ (BOOL) executeSend:(NSArray*) files patientName: (NSString*) patientName studyDescription: (NSString*) studyDescription database: (DicomDatabase*) db showError: (BOOL) showError server:(NSDictionary*) server error:(NSError**) returnedError;
 + (NSArray*) changeTransferSyntaxTo: (int) newSyntax quality: (int) opt_Quality forFiles: (NSArray*) filesToSend tmpFiles:(NSArray**) tmpFiles;
++ (NSArray*) changeTransferSyntaxToAnyOfTheseSyntaxes: (NSArray*) newSyntaxes quality: (int) opt_Quality forFiles: (NSArray*) filesToSend tmpFiles:(NSArray**) tmpFiles;
 - (void) sendDICOMFilesOffis:(NSDictionary *) dict;
 + (int) sendControllerObjects;
 - (id)initWithFiles:(NSArray *)files;

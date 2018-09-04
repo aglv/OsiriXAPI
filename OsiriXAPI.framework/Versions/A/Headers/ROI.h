@@ -1,16 +1,11 @@
 /*=========================================================================
-  Program:   OsiriX
-
-  Copyright (c) OsiriX Team
-  All rights reserved.
-  Distributed under GNU - LGPL
-  
-  See http://www.osirix-viewer.com/copyright.html for details.
-
-     This software is distributed WITHOUT ANY WARRANTY; without even
-     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
-     PURPOSE.
-=========================================================================*/
+ Program:   OsiriX
+ Copyright (c) 2010 - 2018 Pixmeo SARL
+ 266 rue de Bernex
+ CH-1233 Bernex
+ Switzerland
+ All rights reserved.
+ =========================================================================*/
 
 #import <Foundation/Foundation.h>
 #import "MyPoint.h"
@@ -231,22 +226,31 @@ typedef enum ToolMode_
     NSString        *localFontName;
     
     NSPoint         arh1, arh2, arh3;
+    
+    NSMutableArray  *stringTags; // An array containing a list of NSStrings : store private strings in this array
+    BOOL            dontDisplayInKeyImagesWindow;
+    
+    float           preferredWL, preferredWW;
+    BOOL            dontSavePreferredWLWW;
+    
+    NSTimeInterval           creationTimeStamp;
 }
 
+@property float roiRotation;
 @property NSPoint imageOrigin;
 @property(readonly) int textureWidth, textureHeight;
+@property(readonly) NSTimeInterval creationTimeStamp;
 @property(readonly) int textureDownRightCornerX,textureDownRightCornerY, textureUpLeftCornerX, textureUpLeftCornerY;
 @property(readonly) unsigned char *textureBuffer;
 @property(nonatomic) float opacity, zLocation;
 @property(nonatomic) int originalIndexForAlias;
 @property(nonatomic) BOOL hidden, locked, selectable, is3DROI;
-@property BOOL isAliased, displayCMOrPixels, mouseOverROI;
+@property BOOL isAliased, displayCMOrPixels, mouseOverROI, dontDisplayInKeyImagesWindow, fill;
 @property(nonatomic, copy) NSString *name, *localFontName;
 @property(retain,nonatomic) NSString *comments;
 @property ToolMode type;
 @property(nonatomic, setter=setROIMode:) ROI_mode ROImode;
-@property(retain) NSMutableArray *points; // Return/set the points state of the ROI
-@property(readonly) NSMutableArray *zPositions;
+@property(readonly) NSMutableArray *zPositions, *stringTags;
 @property BOOL clickInTextBox;
 @property(nonatomic, setter=setROIRect:) NSRect rect; // To create a Rectangular ROI (tROI) or an Oval ROI (tOval) or a 2DPoint
 @property(nonatomic, retain) DCMPix *pix; // The DCMPix associated to this ROI
@@ -262,7 +266,8 @@ typedef enum ToolMode_
 @property(assign) NSColor* NSColor;
 @property(assign) BOOL isSpline;
 @property(readonly) NSMutableDictionary *peakValue, *isoContour;
-@property float offsetTextBox_x, offsetTextBox_y, localFontHeight, localFontSize;
+@property float offsetTextBox_x, offsetTextBox_y, localFontHeight, localFontSize, preferredWL, preferredWW;
+@property BOOL dontSavePreferredWLWW;
 
 - (void) setNSColor:(NSColor*)color globally:(BOOL)g;
 - (void) setColor:(RGBColor) a globally: (BOOL) g;
@@ -286,8 +291,11 @@ typedef enum ToolMode_
 - (void) prepareForRelease;
 - (void) resetCache;
 - (NSMutableArray *) roiList;
-
+- (BOOL) invertBrushROI;
 + (BOOL) splineForROI;
+
+- (void) setPoints: (NSArray*) pts;
+- (NSMutableArray*) points;
 
 /** Load User Defaults */
 +(void) loadDefaultSettings;
@@ -303,6 +311,7 @@ typedef enum ToolMode_
 - (id) initWithType: (long) itype :(float) ipixelSpacing :(NSPoint) iimageOrigin;
 - (id) initWithType: (long) itype inView: (DCMView*) v;
 + (id) roiWithType: (long) itype inView: (DCMView*) v;
++ (id) roiWithTexture: (unsigned char*)tBuff rect:(NSRect) rect inView:(DCMView *)v;
 
 /** Create a new ROI, needs the current pixel resolution  x and y and image origin* @param itype ROI Type
 * @param ipixelSpacingx  Pixel width
@@ -386,8 +395,8 @@ typedef enum ToolMode_
 */
 + (NSPoint) pointBetweenPoint:(NSPoint) a and:(NSPoint) b ratio: (float) r;
 
-
-+ (NSMutableArray*) resamplePoints: (NSArray*) points number:(int) no;
++ (NSMutableArray*)resamplePoints:(NSArray*)points number:(int)no;
++ (NSMutableArray*)resamplePoints:(NSArray*)points number:(int)no closeROI:(BOOL)closeROI;
 
 + (NSString*) formattedLengthForCM: (float) lCm;
 
@@ -413,8 +422,12 @@ typedef enum ToolMode_
 /** Returns YES if roi is valid */
 - (BOOL) valid;
 
++ (void) deleteROIs: (NSArray*) array postNotification: (BOOL) postNotification;
 + (void) deleteROIs: (NSArray*) array;
 + (void) deleteROI: (ROI*) r;
+
+- (BOOL) writeToFile:(NSString*) file;
++ (ROI*) readFromFile:(NSString*) file;
 
 /** Draw the ROI */
 - (void) drawROI :(float) scaleValue :(float) offsetx :(float) offsety :(float) spacingx :(float) spacingy;
@@ -476,6 +489,7 @@ typedef enum ToolMode_
 - (void) applySettingsToParent;
 - (void) applySettingsFromParent;
 - (BOOL) isIdenticalTo:(ROI*) otherROI;
+- (BOOL) isPointInside: (NSPoint) pixelCoordinates;
 - (BOOL) isInside: (int*) pixelCoordinates;
 - (BOOL) isInside: (int*) pixelCoordinates :(float) sliceInterval;
 - (BOOL) containBallROI: (DCMView*) view pixelCoordinates: (double*) pixelCoordinates radius: (double*) radius;

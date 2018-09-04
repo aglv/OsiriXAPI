@@ -1,17 +1,13 @@
 /*=========================================================================
-  Program:   OsiriX
+ Program:   OsiriX
+ Copyright (c) 2010 - 2018 Pixmeo SARL
+ 266 rue de Bernex
+ CH-1233 Bernex
+ Switzerland
+ All rights reserved.
+ =========================================================================*/
 
-  Copyright (c) OsiriX Team
-  All rights reserved.
-  Distributed under GNU - LGPL
-  
-  See http://www.osirix-viewer.com/copyright.html for details.
-
-     This software is distributed WITHOUT ANY WARRANTY; without even
-     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
-     PURPOSE.
-=========================================================================*/
-
+#ifndef OSIRIXLIGHT
 
 #import "QueryOutlineView.h"
 #import "sourcesTableView.h"
@@ -22,6 +18,7 @@
 @class QueryFilter;
 @class DicomStudy;
 @class DICOMFieldMenu;
+@class DicomDatabase;
 
 #define MAXINSTANCE 40
 
@@ -49,7 +46,7 @@ enum
 {
     IBOutlet    QueryOutlineView			*outlineView;
 	IBOutlet	NSProgressIndicator			*progressIndicator;
-	IBOutlet	NSSearchField				*searchFieldName, *searchFieldRefPhysician, *searchFieldID, *searchFieldAN, *searchFieldStudyDescription, *searchFieldComments, *searchInstitutionName, *searchCustomField;
+	IBOutlet	NSSearchField				*searchFieldName, *searchFieldRefPhysician, *searchFieldID, *searchFieldAN, *searchFieldStudyDescription, *searchFieldBodyPart, *searchFieldComments, *searchInstitutionName, *searchCustomField;
 	
 				NSMutableArray				*sourcesArray;
 	IBOutlet	sourcesTableView			*sourcesTable;
@@ -119,6 +116,8 @@ enum
     
     NSString *customDICOMFieldGroupAndElement;
     DICOMFieldMenu *DICOMField;
+    NSArray *sortArrayCopy;
+    int selectedSendToPopupIndex;
 }
 
 @property (readonly) NSRecursiveLock *autoQueryLock;
@@ -139,10 +138,18 @@ enum
 + (int) queryAndRetrieveAccessionNumber:(NSString*) an server: (NSDictionary*) aServer showErrors: (BOOL) showErrors;
 + (void) retrieveStudies:(NSArray*) studies showErrors: (BOOL) showErrors;
 + (void) retrieveStudies:(NSArray*) studies showErrors: (BOOL) showErrors checkForPreviousAutoRetrieve: (BOOL) checkForPreviousAutoRetrieve;
++ (void) retrieveStudies:(NSArray*) studies showErrors: (BOOL) showErrors checkForPreviousAutoRetrieve: (BOOL) checkForPreviousAutoRetrieve onlyIfNeeded: (BOOL) onlyIfNeeded;
+
 + (NSMutableArray*) queryStudiesForFilters:(NSDictionary*) filters servers: (NSArray*) serversList showErrors: (BOOL) showErrors;
++ (NSMutableArray*) queryStudiesForFilters:(NSDictionary*) filters servers: (NSArray*) serversList showErrors: (BOOL) showErrors error:(NSError**) error;
++ (NSMutableArray*) querySeriesForFilters:(NSDictionary*) filters servers: (NSArray*) serversList showErrors: (BOOL) showErrors;
+
 + (NSArray*) queryStudiesForPatient:(DicomStudy*) study usePatientID:(BOOL) usePatientID usePatientName:(BOOL) usePatientName usePatientBirthDate: (BOOL) usePatientBirthDate servers: (NSArray*) serversList showErrors: (BOOL) showErrors;
 + (NSArray*) queryStudyInstanceUID:(NSString*) an server: (NSDictionary*) aServer;
 + (NSArray*) queryStudyInstanceUID:(NSString*) an server: (NSDictionary*) aServer showErrors: (BOOL) showErrors;
++ (NSArray*) querySOPInstancesForStudyInstanceUID:(NSString*) an server: (NSDictionary*) aServer;
++ (NSArray*) querySOPInstancesForStudyInstanceUID:(NSString*) an server: (NSDictionary*) aServer showErrors: (BOOL) showErrors;
++ (NSArray*) querySOPInstancesForStudyInstanceUID:(NSString*) an server: (NSDictionary*) aServer database: (DicomDatabase*) db showErrors: (BOOL) showErrors;
 - (void) autoRetrieveSettings: (id) sender;
 - (void) saveSettings;
 + (void) getDateAndTimeQueryFilterWithTag: (int) tag fromDate:(NSDate*) from toDate:(NSDate*) to date: (QueryFilter**) dateQueryFilter time: (QueryFilter**) timeQueryFilter;
@@ -194,3 +201,5 @@ enum
 - (void)view:(NSView*)view recursiveBindEnableToObject:(id)obj withKeyPath:(NSString*)keyPath;
 - (void) pressStateCellForRow: (int) clickedRow column: (int) clickedColumn event: (NSEvent*) event;
 @end
+
+#endif

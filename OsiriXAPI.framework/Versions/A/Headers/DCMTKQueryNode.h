@@ -1,23 +1,28 @@
 /*=========================================================================
-  Program:   OsiriX
-
-  Copyright (c) OsiriX Team
-  All rights reserved.
-  Distributed under GNU - LGPL
-  
-  See http://www.osirix-viewer.com/copyright.html for details.
-
-     This software is distributed WITHOUT ANY WARRANTY; without even
-     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
-     PURPOSE.
-=========================================================================*/
+ Program:   OsiriX
+ Copyright (c) 2010 - 2018 Pixmeo SARL
+ 266 rue de Bernex
+ CH-1233 Bernex
+ Switzerland
+ All rights reserved.
+ =========================================================================*/
 
 
 #import <Cocoa/Cocoa.h>
 #import "DCMTKServiceClassUser.h"
 
 #ifndef OSIRIX_LIGHT
-@class DCMCalendarDate;
+@class DCMCalendarDate, DicomDatabase;
+
+#ifdef __cplusplus
+class DcmDataset;
+#else
+#ifndef DCMDATASETDEFINED
+#define DCMDATASETDEFINED
+typedef char* DcmDataset;
+#endif
+#endif
+
 /** \brief Base class for query nodes */
 @interface DCMTKQueryNode : DCMTKServiceClassUser <NSCopying, NSURLSessionDelegate>
 {
@@ -35,6 +40,7 @@
     NSString *_interpretationStatusID;
     NSString *_scheduledProcedureStepStatus;
 	NSString *_accessionNumber;
+    NSString *_bodyPartExamined;
     NSString *_patientSex;
 	DCMCalendarDate *_date;
 	DCMCalendarDate *_birthdate;
@@ -55,6 +61,9 @@
     NSString *incomingPath, *wadoRSBoundary;
     NSThread *mainThread;
     NSTimeInterval childrenTimeInterval;
+    DicomDatabase *db;
+    
+    NSString *localStudyName, *localSudyDescription;
 }
 
 @property( readonly) DcmDataset *originalDataset;
@@ -64,7 +73,8 @@
 @property BOOL isAutoRetrieve;
 @property BOOL noSmartMode;
 @property NSUInteger countOfSuboperations, countOfSuccessfulSuboperations;
-@property (retain) NSString *abstractSyntax, *incomingPath, *wadoRSBoundary;
+@property (retain) NSString *abstractSyntax, *incomingPath, *wadoRSBoundary, *localStudyName, *localSudyDescription;
+@property (retain, nonatomic) DicomDatabase *db;
 
 + (NSURLSession*) dicomWebURLSession;
 
@@ -100,6 +110,7 @@
 - (NSString *)rawName;
 - (NSString *)patientID;
 - (NSString *)accessionNumber;
+- (NSString *)bodyPartExamined;
 - (NSString *)referringPhysician;
 - (NSString *)patientSex;
 - (NSString *)performingPhysician;
@@ -113,12 +124,15 @@
 - (void)purgeChildren;
 - (void)addChild:(DcmDataset *)dataset;
 - (DcmDataset *)queryPrototype;
+- (DcmDataset *)queryPrototypeIMAGELevel;
 - (DcmDataset *)moveDataset;
 - (BOOL) isWorkList;
+- (BOOL) deleteObjectOnServer;
 // values are a NSDictionary the key for the value is @"value" key for the name is @"name"  name is the tag descriptor from the tag dictionary
-- (void)queryWithValues:(NSArray *)values;
-- (void) queryWithValues:(NSArray *)values dataset:(DcmDataset*) dataset;
-- (void) queryWithValues:(NSArray *)values dataset:(DcmDataset*) dataset syntaxAbstract:(NSString*) syntaxAbstract;
+- (BOOL) queryAllChildren;
+- (BOOL) queryWithValues:(NSArray *)values;
+- (BOOL) queryWithValues:(NSArray *)values dataset:(DcmDataset*) dataset;
+- (BOOL) queryWithValues:(NSArray *)values dataset:(DcmDataset*) dataset syntaxAbstract:(NSString*) syntaxAbstract;
 - (void)setShowErrorMessage:(BOOL) m;
 //common network code for move and query
 - (BOOL)setupNetworkWithSyntax:(const char *)abstractSyntax dataset:(DcmDataset *)dataset;

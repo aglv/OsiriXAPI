@@ -1,16 +1,11 @@
 /*=========================================================================
-  Program:   OsiriX
-
-  Copyright (c) OsiriX Team
-  All rights reserved.
-  Distributed under GNU - LGPL
-  
-  See http://www.osirix-viewer.com/copyright.html for details.
-
-     This software is distributed WITHOUT ANY WARRANTY; without even
-     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
-     PURPOSE.
-=========================================================================*/
+ Program:   OsiriX
+ Copyright (c) 2010 - 2018 Pixmeo SARL
+ 266 rue de Bernex
+ CH-1233 Bernex
+ Switzerland
+ All rights reserved.
+ =========================================================================*/
 
 enum
 {
@@ -18,6 +13,14 @@ enum
 	CGETRetrieveMode = 1,
 	WADORetrieveMode = 2,
     WADORSRetrieveMode = 3
+};
+
+enum
+{
+    kHostNotReachable = -2,
+    kServiceNotReachable = -1,
+    kUnknownHostState = 0,
+    kServiceReachable = 1
 };
 
 #import <Cocoa/Cocoa.h>
@@ -30,9 +33,11 @@ enum
 	NSNetService *publisher;
     BOOL browserRunning;
 }
+
 + (NSString*) gethostnameAndPort: (int*) port forService:(NSNetService*) sender;
 + (NSArray *) DICOMServersList;
 + (NSMutableDictionary*)DICOMNodeInfoFromTXTRecordData:(NSData*)data;
++ (NSString*) emojiForState:(int) state;
 + (NSArray *) DICOMServersListSendOnly: (BOOL) send QROnly:(BOOL) QR;
 + (NSDictionary*) serverForHostname:(NSString*) hostname port: (int) port;
 + (NSString*) getIPAddress: (NSString*) address;
@@ -41,5 +46,8 @@ enum
 - (void)update;
 - (NSArray *)dicomServices;
 - (int)portForNetService:(NSNetService *)netService;
+
+- (NSMutableArray *) cachedDICOMServersList;
+- (NSTimeInterval) lastCachedDICOMServersList;
 
 @end

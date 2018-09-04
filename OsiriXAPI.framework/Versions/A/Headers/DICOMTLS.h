@@ -1,15 +1,10 @@
 /*=========================================================================
  Program:   OsiriX
- 
- Copyright (c) OsiriX Team
+ Copyright (c) 2010 - 2018 Pixmeo SARL
+ 266 rue de Bernex
+ CH-1233 Bernex
+ Switzerland
  All rights reserved.
- Distributed under GNU - LGPL
- 
- See http://www.osirix-viewer.com/copyright.html for details.
- 
- This software is distributed WITHOUT ANY WARRANTY; without even
- the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
- PURPOSE.
  =========================================================================*/
 
 #import <Cocoa/Cocoa.h>
@@ -24,7 +19,7 @@ typedef enum
 
 #define TLSTESTFILE @"/private/tmp/OsiriX-DcmTLSTransportLayer"
 #define TLS_SEED_FILE @"/private/tmp/OsiriXTLSSeed"
-#define TLS_WRITE_SEED_FILE "/private/tmp/OsiriXTLSSeedWrite"
+#define TLS_WRITE_SEED_FILE @"/private/tmp/OsiriXTLSSeedWrite"
 #define TLS_PRIVATE_KEY_FILE @"/private/tmp/TLSKey"
 #define TLS_CERTIFICATE_FILE @"/private/tmp/TLSCert"
 #define TLS_TRUSTED_CERTIFICATES_DIR @"/private/tmp/TLSTrustedCert" 

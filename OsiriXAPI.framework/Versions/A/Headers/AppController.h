@@ -1,16 +1,11 @@
 /*=========================================================================
-  Program:   OsiriX
-
-  Copyright (c) OsiriX Team
-  All rights reserved.
-  Distributed under GNU - LGPL
-  
-  See http://www.osirix-viewer.com/copyright.html for details.
-
-     This software is distributed WITHOUT ANY WARRANTY; without even
-     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
-     PURPOSE.
-=========================================================================*/
+ Program:   OsiriX
+ Copyright (c) 2010 - 2018 Pixmeo SARL
+ 266 rue de Bernex
+ CH-1233 Bernex
+ Switzerland
+ All rights reserved.
+ =========================================================================*/
 
 // This will be added to the main inded page of the Doxygen documentation
 /** \mainpage OsiriX index page
@@ -105,6 +100,7 @@ extern "C"
 //#endif
 
 #define REGPHPURL @"reg/reg.php"
+#define WSPHPURL @"ws/ws.php"
 
 @class AppController, ToolbarPanelController, ThumbnailsListPanel, BonjourPublisher;
 
@@ -153,6 +149,14 @@ extern NSString* getMacAddress(void);
     NSMutableDictionary *DICOMDefinitionDict;
     NSDictionary *currentAttribute;
     NSMutableDictionary *currentIDElements;
+    
+    IBOutlet NSWindow *notAvailableWindow;
+    IBOutlet NSTextField *notAvailableText;
+    
+    // Registration key window
+    NSString* currentRegistrationKey;
+    NSString* upgradeRegistrationKey;
+    IBOutlet NSWindow *registrationKeyWindow;
 }
 
 @property BOOL checkAllWindowsAreVisibleIsOff, isSessionInactive, showRestartNeeded, applicationDidFinishLaunching;
@@ -162,8 +166,11 @@ extern NSString* getMacAddress(void);
 @property(readonly) BonjourPublisher* bonjourPublisher;
 @property(readonly) int lastColumns, lastRows, lastCount;
 @property(retain) id appNapActivity;
+@property(retain) NSString *currentRegistrationKey, *upgradeRegistrationKey;
 
++ (BOOL) hostReachable:(NSString*) host;
 + (void) thisFeatureIsNotAvailable: (NSString*) stringUrl;
++ (NSString*) MACAddress;
 + (BOOL) isFDACleared;
 + (BOOL) willExecutePlugin;
 + (BOOL) willExecutePlugin:(id) filter;
@@ -186,6 +193,7 @@ extern NSString* getMacAddress(void);
 + (NSImage*) webBrowserIcon;
 + (NSData*) encodeData:(NSData*) dataIn;
 + (NSData*) decodeData:(NSData*) dataIn;
++ (void) clearEvents;
 
 #pragma mark-
 #pragma mark initialization of the main event loop singleton
@@ -213,6 +221,10 @@ extern NSString* getMacAddress(void);
 + (void)checkForHTMLTemplates __deprecated;
 + (BOOL) FPlistForKey: (NSString*) k;
 + (long) longForFPlistForKey: (NSString*) k;
++ (NSString *) machineModel;
+
++ (BOOL) isStarting;
++ (BOOL) isTerminating;
 
 #pragma mark-
 #pragma mark  Server management
@@ -226,6 +238,7 @@ extern NSString* getMacAddress(void);
 #pragma mark-
 #pragma mark static menu items
 //===============OSIRIX========================
+- (IBAction) enterNewRegistrationKey:(id)sender;
 - (IBAction) about:(id)sender; /**< Display the about window */
 - (IBAction) showPreferencePanel:(id)sender; /**< Show Preferences window */
 #ifndef OSIRIX_LIGHT
@@ -259,6 +272,8 @@ extern NSString* getMacAddress(void);
 - (IBAction) killAllStoreSCU:(id) sender;
 
 - (id) splashScreen;
+
+- (void) releaseObject: (id) obj afterDelay: (int) delay;
 
 #pragma mark-
 #pragma mark window routines
@@ -303,6 +318,7 @@ extern NSString* getMacAddress(void);
 - (NSMenu*) wlwwMenu;
 - (NSMenu*) convMenu;
 - (NSMenu*) clutMenu;
+- (NSTimeInterval) runningTimeInterval;
 + (NSImage*) clutIconForClutName: (NSString*) clutName;
 + (NSImage*) clutIconForRed: (unsigned char*) redT green:(unsigned char*) greenT blue:(unsigned char*) blueT;
 + (void) setPopupMenuFont: (NSMenu*) menu;
@@ -317,6 +333,7 @@ extern NSString* getMacAddress(void);
 + (NSImage*) convolutionIconForDcmPix: (DCMPix*) pix name: (NSString*) name;
 + (NSImage*) resizeImageForIcon: (NSImage*) im;
 + (NSRect) visibleFrameForScreen: (NSScreen*) screen;
++ (void) pingPlugin: (id) object userDict: (NSDictionary*) userDict;
 
 #pragma mark-
 #pragma mark growl
@@ -347,7 +364,14 @@ extern NSString* getMacAddress(void);
 -(void)setReceivingIcon;
 -(void)unsetReceivingIcon;
 -(void)setBadgeLabel:(NSString*)label;
-- (void)playGrabSound;
+-(void)playGrabSound;
 
++ (NSString*) encodedStringWithParameters:(NSDictionary*) parameters;
++ (NSString*) stringFromEncodedURL:(NSString*) pathURL withParameters:(NSDictionary*) parameters;
++ (NSArray*) arrayFromEncodedURL:(NSString*) pathURL withParameters:(NSDictionary*) parameters;
++ (NSArray*) POSTJSON:(id) json encodedToURL:(NSString*) pathURL withParameters:(NSDictionary*) parameters;
++ (NSString*) stringFromPOSTJSON: (id) json encodedURL:(NSString*) pathURL withParameters:(NSDictionary*) parameters;
++ (id) dictionaryOrArrayFromEncodedURL:(NSString*) pathURL withParameters:(NSDictionary*) parameters;
++ (NSString*) stringFromEncodedArray:(NSArray*) array;
 @end
 

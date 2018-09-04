@@ -1,15 +1,10 @@
 /*=========================================================================
  Program:   OsiriX
- 
- Copyright (c) OsiriX Team
+ Copyright (c) 2010 - 2018 Pixmeo SARL
+ 266 rue de Bernex
+ CH-1233 Bernex
+ Switzerland
  All rights reserved.
- Distributed under GNU - LGPL
- 
- See http://www.osirix-viewer.com/copyright.html for details.
- 
- This software is distributed WITHOUT ANY WARRANTY; without even
- the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
- PURPOSE.
  =========================================================================*/
 
 #import <Cocoa/Cocoa.h>
@@ -72,6 +67,7 @@
 +(NSString*) cleanUsername: (NSString*) username;
 
 -(BOOL)requestIsIPhone;
+-(BOOL)requestIsMobile;
 -(BOOL)requestIsIPad;
 -(BOOL)requestIsIPod;
 -(BOOL)requestIsIOS;
@@ -79,11 +75,14 @@
 -(NSString*)contentType;
 -(NSString*)acceptHeader;
 -(NSString*)requestMethod;
-
+-(NSDictionary*)headerFields;
 -(NSString*)portalURL;
+-(NSString*)portalURLScheme;
+-(NSString*)publicURL;
 -(NSString*)dicomCStorePortString;
 - (void) resetPOST;
 - (void) fillSessionAndUserVariables;
+- (NSString*) clientIPAddress;
 
 @end
 

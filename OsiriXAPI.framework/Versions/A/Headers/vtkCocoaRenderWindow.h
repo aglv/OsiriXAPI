@@ -287,6 +287,14 @@ public:
   void SetPixelFormat(void *pixelFormat);
   void *GetPixelFormat();
 
+    // Using CGFloat would be better, but doing it this way avoids pulling in
+    // Apple headers, which cause problems with the 10.3 SDK and python wrappings.
+#if defined(__LP64__) && __LP64__
+    double ScaleFactor;
+#else
+    float ScaleFactor;
+#endif
+    
 protected:
   vtkCocoaRenderWindow();
   ~vtkCocoaRenderWindow();
@@ -299,14 +307,6 @@ protected:
 
   int OffScreenInitialized;
   int OnScreenInitialized;
-  
-  // Using CGFloat would be better, but doing it this way avoids pulling in
-  // Apple headers, which cause problems with the 10.3 SDK and python wrappings.
-#if defined(__LP64__) && __LP64__
-  double ScaleFactor;
-#else
-  float ScaleFactor;
-#endif
 
   // Description:
   // Accessors for the cocoa manager (Really an NSMutableDictionary*).

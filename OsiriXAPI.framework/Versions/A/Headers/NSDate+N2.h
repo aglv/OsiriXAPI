@@ -1,16 +1,11 @@
 /*=========================================================================
-  Program:   OsiriX
-
-  Copyright (c) OsiriX Team
-  All rights reserved.
-  Distributed under GNU - LGPL
-  
-  See http://www.osirix-viewer.com/copyright.html for details.
-
-     This software is distributed WITHOUT ANY WARRANTY; without even
-     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
-     PURPOSE.
-=========================================================================*/
+ Program:   OsiriX
+ Copyright (c) 2010 - 2018 Pixmeo SARL
+ 266 rue de Bernex
+ CH-1233 Bernex
+ Switzerland
+ All rights reserved.
+ =========================================================================*/
 
 #import <Cocoa/Cocoa.h>
 
@@ -19,5 +14,6 @@
 
 +(id)dateWithYYYYMMDD:(NSString*)datestr HHMMss:(NSString*)timestr;
 -(NSDateComponents*) differenceWithDate: (NSDate*) endDate;
-
+-(NSCalendarDate*) endOfDay;
+-(NSCalendarDate*) startOfDay;
 @end

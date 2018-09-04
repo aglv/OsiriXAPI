@@ -1,15 +1,10 @@
 /*=========================================================================
  Program:   OsiriX
- 
- Copyright (c) OsiriX Team
+ Copyright (c) 2010 - 2018 Pixmeo SARL
+ 266 rue de Bernex
+ CH-1233 Bernex
+ Switzerland
  All rights reserved.
- Distributed under GNU - LGPL
- 
- See http://www.osirix-viewer.com/copyright.html for details.
- 
- This software is distributed WITHOUT ANY WARRANTY; without even
- the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
- PURPOSE.
  =========================================================================*/
 
 #import <Cocoa/Cocoa.h>
@@ -35,6 +30,7 @@
 	BOOL wadoEnabled;
 	BOOL weasisEnabled;
 	BOOL flashEnabled;
+    BOOL ohifEnabled;
 	
 	BOOL notificationsEnabled;
 	NSInteger notificationsInterval;
@@ -66,7 +62,7 @@
 
 @property(readonly) BOOL isAcceptingConnections;
 
-@property(readonly) NSMutableArray *runLoops, *runLoopsLoad;
+@property(readonly) NSMutableArray *runLoops, *runLoopsLoad, *httpThreads;
 
 @property (nonatomic) BOOL usesSSL;
 @property (nonatomic) NSInteger portNumber;
@@ -77,6 +73,7 @@
 
 @property BOOL wadoEnabled;
 @property BOOL weasisEnabled;
+@property (nonatomic) BOOL ohifEnabled;
 @property BOOL flashEnabled;
 
 @property (nonatomic) BOOL notificationsEnabled;
