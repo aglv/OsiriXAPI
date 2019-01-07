@@ -25,7 +25,7 @@ enum burnerDestination
 	volatile BOOL burning;
 	NSMutableArray *files, *anonymizedFiles, *dbObjectsID, *originalDbObjectsID;
 	float burnSize;
-	IBOutlet NSTextField *sizeField, *finalSizeField;
+	IBOutlet NSTextField *sizeField;
 	IBOutlet NSMatrix	 *compressionMode;
 	IBOutlet NSButton *burnButton;
 	IBOutlet NSButton *anonymizedCheckButton;
@@ -71,7 +71,6 @@ enum burnerDestination
 - (IBAction)estimateFolderSize:(id)object;
 - (void)performBurn:(id)object;
 - (void)irisAnimation:(NSTimer*)object;
-- (NSNumber*)getSizeOfDirectory:(NSString*)path;
 - (NSString*) defaultTitle;
 - (void)saveOnVolume;
 @end

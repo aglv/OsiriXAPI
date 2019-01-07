@@ -41,7 +41,9 @@ typedef enum  {
 -(void)validateLocalStudies;
 -(void)activateCloud;
 
--(NSDictionary*)server;
+- (NSDictionary*)server;
+- (NSDictionary*)subscription;
+- (void) refreshgToken;
 
 -(BOOL)isInRetrieveQueue:(NSString*) uid;
 -(void)addToRetrieveQueue:(NSString*) uid;
@@ -54,4 +56,8 @@ typedef enum  {
 -(void)removeStudyInstanceUIDs:(NSArray *)studiesInstanceUIDs fromAlbum:(DicomAlbum *)dicomAlbum;
 -(void)addStudyInstanceUIDs:(NSArray *)studiesInstanceUIDs toAlbum:(DicomAlbum *)album;
 -(void)setStudyInstanceUIDs:(NSArray *)studiesInstanceUIDs forAlbum:(DicomAlbum *)dicomAlbum;
+
+-(void)setValue:(NSString*)value forKey:(NSString*)key forStudy:(NSManagedObject*)object;
+-(id)getValueForKey:(NSString*)key forStudy:(NSManagedObject*)object;
+-(BOOL)syncToCloudDatabase;
 @end

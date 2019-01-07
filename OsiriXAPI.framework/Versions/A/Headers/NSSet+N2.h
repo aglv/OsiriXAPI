@@ -7,16 +7,9 @@
  All rights reserved.
  =========================================================================*/
 
+#import <Cocoa/Cocoa.h>
 
-/** \brief  AppleScript functions */
-
-#import <Foundation/Foundation.h>
-//#import <Scripting/Scripting.h>
-
-@interface OsiriXScripts : NSScriptCommand {
-
-}
-
-- (id)performDefaultImplementation;
-
+@interface NSSet (N2)
+- (NSArray*)array;
 @end
+

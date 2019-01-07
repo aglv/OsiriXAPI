@@ -19,16 +19,20 @@
 
 /** \brief Window Controller for XML parsing */
 
-@interface XMLController : OSIWindowController <NSToolbarDelegate, NSWindowDelegate>
+@interface XMLController : OSIWindowController <NSToolbarDelegate, NSWindowDelegate, NSSearchFieldDelegate>
 {
     IBOutlet XMLOutlineView		*table;
 	IBOutlet NSScrollView		*tableScrollView;
     IBOutlet NSSearchField		*search;
     IBOutlet NSView				*searchView, *dicomEditingView;
+    
+    int searchCount, searchIndex;
+    id currentSearchItem;
+    int currentSearchRow;
 	
     unsigned long               srcFileSize;
 	NSStringEncoding            srcFileEncoding;
-    NSMutableArray				*xmlDcmData, *tree;
+    NSMutableArray				*xmlDcmData;
     NSData						*xmlData;    
     NSToolbar					*toolbar;	
 	NSString					*srcFile;
@@ -61,7 +65,8 @@
 
 @property (retain) NSString *addDICOMFieldTextField;
 @property (retain) DICOMFieldMenu *DICOMField;
-@property int editingLevel;
+@property (retain) id currentSearchItem;
+@property int editingLevel, searchCount, searchIndex;
 
 - (BOOL) modificationsToApply;
 

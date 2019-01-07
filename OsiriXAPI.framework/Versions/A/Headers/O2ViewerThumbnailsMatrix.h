@@ -13,7 +13,11 @@
     NSPoint draggingStartingPoint;
     NSTimeInterval doubleClick;
     NSCell *doubleClickCell;
+    BOOL recomputeCells;
+    NSRect *rectsCache;
 }
+
+- (void) resetCacheCells;
 
 @end
 

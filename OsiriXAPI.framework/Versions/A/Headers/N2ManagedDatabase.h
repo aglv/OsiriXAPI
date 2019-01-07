@@ -24,6 +24,7 @@
     BOOL isSaving;
     NSTimer *shareBetweenComputersTimer;
     NSMutableArray *postN2ManagedDatabaseNotificationArray;
+    BOOL _isReadOnly, _isCD;
 }
 @property BOOL isSaving;
 @property(readonly) NSThread* associatedThread;
@@ -33,8 +34,14 @@
 @property(readwrite,retain) NSManagedObjectContext* managedObjectContext; // only change this value if you know what you're doing
 @property NSTimeInterval timeOfLastModification;
 @property(readonly,retain) id mainDatabase; // for independentDatabases
+@property(nonatomic) BOOL isReadOnly, isCD;
+
 -(BOOL)isMainDatabase;
 -(id)getMainDatabase;
+
+-(BOOL) canLockDatabase;
+-(void) setLocked: (BOOL) readOnly;
+-(BOOL) isLocked;
 
 // locking actually locks the context
 -(void)lock;

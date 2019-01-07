@@ -44,7 +44,6 @@
 	IBOutlet NSWindow *chooseNameAndSaveWindow;
 	IBOutlet NSTextField *clutSavedName;
 	
-    NSWindow *vrViewWindow;
 	IBOutlet VRView *vrView;
 	BOOL vrViewLowResolution;
 	BOOL didResizeVRVIew;
@@ -58,6 +57,8 @@
 	NSPoint mouseDraggingStartPoint;
 	BOOL updateView, setCLUTtoVRView, windowWillClose;
 }
+
+@property (nonatomic) BOOL windowWillClose;
 
 - (void)cleanup;
 - (void)createContextualMenu;

@@ -25,7 +25,8 @@
 +(NSString*)timeString:(NSTimeInterval)time maxUnits:(NSInteger)maxUnits abbreviated:(BOOL)abbreviated;
 +(NSString*)dateString:(NSTimeInterval)date;
 -(NSString*)stringByTrimmingStartAndEnd;
-+(NSString *) randomStringWithLength: (int) len;
+-(NSString*)stringByDeletingPrefix:(NSString*)prefix;
++(NSString*)randomStringWithLength: (int) len;
 -(NSString*)urlEncodedString;
 -(NSString*)xmlEscapedString;
 -(NSString*)xmlUnescapedString;
@@ -40,7 +41,7 @@
 -(NSString*)resolveNSLocalizedStringsForLanguage:(NSString*)language inBundle:(NSBundle*)bundle escapeQuotationMarks: (BOOL) escapeQuotationMarks;
 -(NSString*)localizedForLanguage: (NSString*) language;
 -(NSString*)localizedForWebPortal;
-
+-(NSString *)numberToSuperscript;
 - (NSSize)sizeOfStringWithFont:(NSFont *)font;
 
 -(BOOL)contains:(NSString*)str;

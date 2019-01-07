@@ -109,7 +109,7 @@
 - (NSArray*) fileList;
 
 - (void) ApplyOpacityString: (NSString*) str;
-- (void) load3DState;
+- (BOOL) load3DState;
 
 - (NSArray*) roiVolumes;
 - (void) hideROIVolume: (ROIVolume*) v;

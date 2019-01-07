@@ -15,6 +15,7 @@
 +(BOOL)fileNeedsDecompression:(NSString*)path;
 +(BOOL)compressDicomFilesAtPaths:(NSArray*)paths;
 +(BOOL)compressDicomFilesAtPaths:(NSArray*)paths intoDirAtPath:(NSString*)destDir;
++(BOOL)compressDicomFilesAtPaths:(NSArray*)paths intoDirAtPath:(NSString*)dest compression: (int) compression quality: (int) quality;
 +(BOOL)decompressDicomFilesAtPaths:(NSArray*)paths;
 +(BOOL)decompressDicomFilesAtPaths:(NSArray*)paths intoDirAtPath:(NSString*)destDir;
 +(NSString*)extractReportSR:(NSString*)dicomSR contentDate:(NSDate*)date;

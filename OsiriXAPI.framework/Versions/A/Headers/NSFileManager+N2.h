@@ -30,15 +30,17 @@ NS_ASSUME_NONNULL_BEGIN
 -(NSString*)confirmDirectoryAtPath:(NSString*)dirPath subDirectory: (BOOL) subDirectory createIntermediateDirectories: (BOOL) createIntermediateDirectories;
 -(NSUInteger)sizeAtPath:(NSString*)path;
 -(NSUInteger)sizeAtFSRef:(FSRef*)theFileRef;
+-(unsigned long long) fileSize:(NSString*) filePath;
 -(BOOL)copyItemAtPath:(NSString*)srcPath toPath:(NSString*)dstPath byReplacingExisting:(BOOL)replace error:(NSError* _Nullable *)err;
 -(BOOL) removeItemsWithPrefix:(NSString *)path error:(NSError * _Nullable *)error;
 -(BOOL)applyFileModeOfParentToItemAtPath:(NSString*)path;
 
 -(NSArray*)filesWithExtension: (NSString*) extension inDirectory: (NSString*) directory;
+-(NSArray*)filesWithExtensions: (NSArray*) extensions inDirectory: (NSString*) directory;
 
 -(NSString*)destinationOfAliasAtPath:(NSString*)path;
 -(NSString*)destinationOfAliasOrSymlinkAtPath:(NSString*)path;
--(NSString*)destinationOfAliasOrSymlinkAtPath:(NSString*)path resolved:(BOOL*)r;
+-(NSString*)destinationOfAliasOrSymlinkAtPath:(NSString*)path resolved:(BOOL* _Nullable)r;
 
 -(N2DirectoryEnumerator*)enumeratorAtPath:(NSString*)path limitTo:(NSInteger)maxNumberOfFiles;
 -(N2DirectoryEnumerator*)enumeratorAtPath:(NSString*)path filesOnly:(BOOL)filesOnly;

@@ -27,6 +27,7 @@
 
 @property(nonatomic, retain, readonly) NSNumber* dicomTime;
 
+@property(nonatomic, retain) NSNumber* sortSeriesBySliceLocation;
 @property(nonatomic, retain) NSString* comment;
 @property(nonatomic, retain) NSString* comment2;
 @property(nonatomic, retain) NSString* comment3;
@@ -40,6 +41,7 @@
 @property(nonatomic, retain) NSNumber* mountedVolume __deprecated;
 @property(nonatomic, retain) NSString* name;
 @property(nonatomic, retain) NSNumber* numberOfImages;
+@property(nonatomic, retain) NSNumber* rawNoFiles;
 @property(nonatomic, retain) NSNumber* numberOfKeyImages;
 @property(nonatomic, retain) NSNumber* rotationAngle;
 @property(nonatomic, retain) NSNumber* scale;
@@ -58,7 +60,7 @@
 @property(nonatomic, retain) NSNumber* yFlipped;
 @property(nonatomic, retain) NSNumber* yOffset;
 @property(nonatomic, retain) NSData *dictionaryData;
-@property(nonatomic, retain) NSSet* images;
+@property(nonatomic, retain) NSOrderedSet* images;
 @property(nonatomic, retain) DicomStudy* study;
 @property(nonatomic, retain) NSString* bodyPart;
 @property int latestDistantNumberOfImages;
@@ -66,16 +68,18 @@
 @property(nonatomic, retain) NSNumber* dateTimeZone, *dateAddedTimeZone, *dateOpenedTimeZone;
 
 - (int) multiframesNumber;
-- (NSSet*) paths;
+- (BOOL) computeHasROIs;
+- (NSOrderedSet *)paths;
 - (NSSet*) keyImages;
+- (float) viewedPercentage;
 - (NSArray*) sortedKeyImages;
 - (NSArray*) sortedImages;
+- (DicomImage*) middleImage;
 - (NSInteger) firstKeyOrROIImage;
 - (NSInteger) lastKeyOrROIImage;
 - (NSInteger) nextKeyOrROIImageTo: (NSInteger) index;
 - (NSInteger) nextKeyOrROIImageTo: (NSInteger) index forward: (BOOL) forward;
 - (NSComparisonResult) compareName:(DicomSeries*)series;
-- (NSNumber*) noFilesExcludingMultiFrames;
 - (NSNumber*) rawNoFiles;
 - (DicomSeries*) previousSeries;
 - (DicomSeries*) nextSeries;
@@ -107,7 +111,8 @@
 - (NSDictionary*) dictionary;
 - (long) getNewAndUniqueSeriesIDAfterCurrentSeriesID;
 - (void) setDictionary: (NSDictionary*) dict;
-- (void) addToDictionaryObject: (id) object forKey: (id) key;
+- (void) addToDictionaryObject: (id) object forKey: (NSString*) key;
+- (void) removeKeyFromDictionaryObject:(NSString*) key;
 @end
 
 @interface DicomSeries (CoreDataGeneratedAccessors)

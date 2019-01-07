@@ -43,7 +43,7 @@ extern NSString* const O2ScreenCapturesSeriesName;
 	NSTimeInterval _timeOfLastIsFileSystemFreeSizeLimitReachedVerification;
     NSTimeInterval _lastCleanForFreeSpaceTimeInterval;
 	char baseDirPathC[4096], incomingDirPathC[4096], tempDirPathC[4096]; // these paths are used from the DICOM listener
-    BOOL _isReadOnly, _hasPotentiallySlowDataAccess, dontImportFilesFromIncomingDirOnBackground;
+    BOOL _hasPotentiallySlowDataAccess, dontImportFilesFromIncomingDirOnBackground;
     // compression/decompression
     NSMutableArray* _decompressQueue;
     NSMutableArray* _compressQueue;
@@ -59,6 +59,9 @@ extern NSString* const O2ScreenCapturesSeriesName;
     BOOL protectionAgainstReentry, saving;
     volatile BOOL _deallocating;
 }
+
++(NSString*) localFieldForDICOMField: (NSString*) field;
++(NSString*) DICOMFieldForLocalField: (NSString*) field;
 
 +(void)initializeDicomDatabaseClass;
 +(void)recomputePatientUIDsInContext:(NSManagedObjectContext*)db;
@@ -88,7 +91,6 @@ extern NSString* const O2ScreenCapturesSeriesName;
 @property(readonly,retain) NSString* baseDirPath, *uniqueTmpfolder; // OsiriX Data
 @property(readonly,retain) NSString* dataBaseDirPath; // depends on the content of the file at baseDirPath/DBFOLDER_LOCATION
 @property(readwrite,retain,nonatomic) NSString* name, *sourcePath;
-@property(nonatomic) BOOL isReadOnly;
 @property(readonly) NSMutableArray *compressingSOPs;
 @property BOOL hasPotentiallySlowDataAccess;
 @property (nonatomic) NSTimeInterval timeOfLastIsFileSystemFreeSizeLimitReachedVerification, lastCleanForFreeSpaceTimeInterval;
@@ -202,6 +204,7 @@ extern NSString* const DicomDatabaseLogEntryEntityName;
 -(BOOL) automaticallyRetrievePartialStudies;
 -(BOOL) PACSOnDemandSeriesLevelSupport;
 -(BOOL) PACSOnDemandForSearchField;
+-(BOOL) syncToCloudDatabase;
 -(NSArray*) comparativeServers;
 -(NSArray*) smartAlbumStudiesDICOMNodes;
 -(int) oldestStudyForComparatives;

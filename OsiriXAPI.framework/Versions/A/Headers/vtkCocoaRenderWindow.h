@@ -307,6 +307,8 @@ protected:
 
   int OffScreenInitialized;
   int OnScreenInitialized;
+  
+
 
   // Description:
   // Accessors for the cocoa manager (Really an NSMutableDictionary*).

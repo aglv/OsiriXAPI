@@ -8,7 +8,7 @@
  =========================================================================*/
 
 #import <Cocoa/Cocoa.h>
-#import <OsiriX/DCM.h>
+#import <OsiriX/DCMFramework.h>
 
 #undef verify
 #include "dcdatset.h"

@@ -24,11 +24,12 @@
 + (void) startCheckForPluginsUpdatesVerbose: (BOOL) verbose;
 
 + (int) compareVersion: (NSString *) v1 withVersion: (NSString *) v2;
-+ (NSMutableDictionary*) plugins;
-+ (NSMutableDictionary*) pluginsDict;
++ (NSDictionary*) plugins;
++ (NSDictionary*) pluginsInstances;
++ (NSDictionary*) pluginsDict;
 + (NSDictionary*) pluginsBundleDictionnary;
-+ (NSMutableDictionary*) fileFormatPlugins;
-+ (NSMutableDictionary*) reportPlugins;
++ (NSDictionary*) fileFormatPlugins;
++ (NSDictionary*) reportPlugins;
 + (NSArray*) preProcessPlugins;
 + (NSMenu*) fusionPluginsMenu;
 + (NSArray*) fusionPlugins;

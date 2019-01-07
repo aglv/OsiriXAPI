@@ -81,6 +81,7 @@ typedef enum {
 @property(nonatomic, retain) NSSet* albums;
 @property(nonatomic, retain) NSSet* series;
 @property(nonatomic, retain) NSNumber *cloudDownloaded, *cloudUploaded;
+@property(nonatomic, retain) NSNumber *cloudUploadFailed;
 
 @property(nonatomic, retain) NSArray *distantSOPInstances;
 @property(nonatomic, retain) NSDictionary *distantServer;
@@ -153,7 +154,6 @@ typedef enum {
 - (BOOL) isDistant;
 - (NSNumber*) dicomTime;
 - (void) setHidden: (BOOL) h;
-- (NSNumber*) noFilesExcludingMultiFrames;
 - (NSDictionary*) annotationsAsDictionary;
 - (void) applyAnnotationsFromDictionary: (NSDictionary*) rootDict;
 - (void) reapplyAnnotationsFromDICOMSR;
@@ -182,12 +182,13 @@ typedef enum {
 - (void) computeDistantServerState;
 - (void) checkDistantServerState;
 - (void) checkDistantServerStateUploadIfNoFilesOnDistantServer: (BOOL) uploadIfNoFilesOnDistantServer;
-- (void) uploadFilesToCloud:(NSSet*) localExtraDicomFiles;
+- (void) uploadFilesToCloud:(NSArray*) localExtraDicomImages;
 - (void) resetDistanceServerState;
 + (NSString*) scrambleString: (NSString*) t;
 - (NSDictionary*) dictionary;
 - (void) setDictionary: (NSDictionary*) dict;
-- (void) addToDictionaryObject: (id) object forKey: (id) key;
+- (void) addToDictionaryObject: (id) object forKey: (NSString*) key;
+- (void) removeKeyFromDictionaryObject:(NSString*) key;
 - (long) getNewAndLastSeriesID;
 - (long) getNewAndFirstSeriesID;
 - (long) getNewAndUniqueSeriesIDAfterThisSeriesID: (long) startNumber;

@@ -37,6 +37,7 @@
 @class ViewerController;
 @class ToolbarPanelController;
 @class KeyImagesWindowController;
+@class O2ViewerThumbnailsMatrix;
 
 #define ToolsMenuIconSize NSMakeSize(28.0, 28.0)
 
@@ -85,14 +86,14 @@ typedef enum _ThickSlabMode
 	NSConditionLock *flipDataThread, *convThread;
 	NSThread *loadingThread;
     BOOL awakeFromNib, firstBuildMatrix;
-    NSTimeInterval windowInitTime;
+    
 	
     ToolbarPanelController *toolbarPanel;
     
 	IBOutlet StudyView		*studyView;
 			SeriesView		*seriesView;
 
-	IBOutlet NSMatrix		*previewMatrix;
+	IBOutlet O2ViewerThumbnailsMatrix		*previewMatrix;
 	IBOutlet NSScrollView	*previewMatrixScrollView;
     IBOutlet NSView         *previewRootView;
     
@@ -119,7 +120,7 @@ typedef enum _ThickSlabMode
 	
 	short					currentOrientationTool, originalOrientation;
 	
-    IBOutlet NSSlider       *slider, *speedSlider;
+    IBOutlet NSSlider       *speedSlider;
 	IBOutlet NSButton		*loopButton;
     IBOutlet NSView         *speedView;
     IBOutlet NSView         *toolsView;
@@ -233,9 +234,12 @@ typedef enum _ThickSlabMode
 	IBOutlet NSButton		*imageAllViewers;
 	
 	IBOutlet NSWindow		*displaySUVWindow;
-	IBOutlet NSForm			*suvForm;
 	IBOutlet NSMatrix		*suvConversion;
-	
+    
+    float SUV_PatientsWeight,SUV_InjectedDose, SUV_CorrectedDose, SUV_HalfLife, SUV_PatientsSize, SUV_LBM;
+    NSDate *SUV_InjectionTime, *SUV_AcquisitionTime;
+    int SUV_PatientsSex;
+    
     IBOutlet NSView         *reportPluginsView;
     IBOutlet NSImageView	*reportPluginsViewImageView;
     IBOutlet NSPopUpButton	*reportPluginsViewPopUpButton;
@@ -280,7 +284,8 @@ typedef enum _ThickSlabMode
 	short					curMovieIndex, maxMovieIndex;
     OrientationVector       orientationVector;
     NSToolbar               *toolbar;
-	
+    NSMutableDictionary     *toolbarItemCache;
+    
 	float					direction;
 	
 	float					factorPET2SUV;
@@ -293,8 +298,6 @@ typedef enum _ThickSlabMode
     NSTimer					*timer, *movieTimer;//, *timeriChat;
     NSTimeInterval			lastTime, lastTimeFrame;
 	NSTimeInterval			lastMovieTime;
-	
-	NSMutableArray			*ROINamesArray;
 	
 	ThickSlabController		*thickSlab;
 	
@@ -394,12 +397,19 @@ typedef enum _ThickSlabMode
     
     NSImage *reportIcon;
     NSString *reportURL;
+    
+    IBOutlet NSWindow *recalibrateWindow;
+    
+    BOOL changeImageData;
+    
+    int *viewedImagesArray;
 }
 @property BOOL preFlipped, sortedInAscending;
+@property(nonatomic) int *viewedImagesArray;
 @property(retain) NSString *sortedByKey, *reportURL;
 @property(retain, nonatomic) NSImage *reportIcon;
 @property(retain) NSCalendarDate *injectionDateTime;
-@property(readonly) NSSlider *slider;
+//@property(readonly) NSSlider *slider;
 @property(readonly) KeyImagesWindowController *keysCtrl;
 @property(readonly) short currentOrientationTool, originalOrientation;
 @property(readonly) NSTimer	*timer;
@@ -417,9 +427,12 @@ typedef enum _ThickSlabMode
 @property(readonly) NSButton *blendingResample;
 @property(readonly) BOOL titledGantry;
 @property(readonly) ToolbarPanelController *toolbarPanel;
-@property(readonly) NSMatrix *previewMatrix;
+@property(readonly) O2ViewerThumbnailsMatrix *previewMatrix;
 @property(readonly) NSScrollView *previewMatrixScrollView;
-@property(readonly) NSTimeInterval windowInitTime;
+
+@property(nonatomic) float SUV_PatientsWeight,SUV_InjectedDose, SUV_CorrectedDose, SUV_HalfLife, SUV_PatientsSize, SUV_LBM;
+@property(nonatomic) int SUV_PatientsSex;
+@property(retain) NSDate *SUV_InjectionTime, *SUV_AcquisitionTime;
 
 /** Return the 'dragged' window, the destination window is contained in the 'viewerController' object of the 'PluginFilter' object */
 @property(nonatomic, retain) ViewerController *blendedWindow;
@@ -660,7 +673,6 @@ typedef enum _ThickSlabMode
 - (IBAction) roiIntDeleteAllROIsWithSameName :(NSString*) name;
 - (IBAction) roiDeleteAllROIsWithSameName:(id) sender;
 - (IBAction) updateZVector:(id) sender;
-- (IBAction) roiEdit3DROISettings:(id)sender;
 - (void)displayDICOMOverlays: (id)sender;
 - (IBAction)resampleDataBy2:(id)sender;
 - (void) setStatusValue:(int) v;
@@ -699,6 +711,7 @@ typedef enum _ThickSlabMode
 - (IBAction)setKeyImage:(id)sender;
 - (IBAction) roiSelectDeselectAll:(id) sender;
 - (BOOL) FullScreenON;
++ (void) quitAllFullScreenViewers;
 - (void) setROITool:(id) sender;
 - (void) setROIToolTag:(ToolMode) roitype;
 - (void) setToolTag:(ToolMode) toolTag;
@@ -741,6 +754,7 @@ typedef enum _ThickSlabMode
 - (void) adjustSlider;
 - (void) sliderFusionAction:(id) sender;
 - (void) sliderFusionAdd:(int) value;
+- (void) sliderFusionSet:(int) value;
 - (void) popFusionAction:(id) sender;
 - (void) propagateSettings;
 - (void) setCurWLWWMenu:(NSString*)s ;
@@ -750,6 +764,7 @@ typedef enum _ThickSlabMode
 - (BOOL) syncWithViewer: (ViewerController*) v;
 - (void) checkBuiltMatrixPreview;
 - (void)comparativeRefresh:(NSString*) patientUID;
+- (void) loadViewedImagesArray;
 
 /** Used to determine in the Window Controller is a 2D Viewer.
 * Always return YES
@@ -778,7 +793,6 @@ typedef enum _ThickSlabMode
 - (void)blendWithViewer:(ViewerController *)bc blendingType:(int)blendingType;
 - (void)blendingSheetDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
 - (void)computeContextualMenu;
-- (void)computeContextualMenuForROI:(ROI*)roi;
 
 /** Modality of the study */
 - (NSString*) modality;
@@ -862,6 +876,7 @@ typedef enum _ThickSlabMode
 //- (IBAction) setCurvedMPRslider:(id) sender;
 //- (IBAction) endCurvedMPR:(id) sender;
 - (IBAction) resetImage:(id) sender;
++ (BOOL) isAnimatingCells;
 + (NSArray*) defaultROINames;
 + (void) setDefaultROINames: (NSArray*) names;
 #ifndef OSIRIX_LIGHT
@@ -927,7 +942,6 @@ typedef enum _ThickSlabMode
 #endif
 - (void) convertPETtoSUV;
 - (IBAction) fullScreenMenu:(id) sender;
-- (int) imageIndexOfROI:(ROI*) c;
 - (void)exportTextFieldDidChange:(NSNotification *)note;
 - (OrientationVector) orientationVector;
 - (Orientation) orthogonalOrientation;
@@ -964,6 +978,7 @@ typedef enum _ThickSlabMode
 - (void) setRegisteredViewer: (ViewerController*) viewer;
 - (void)setMode:(long)mode toROIGroupWithID:(NSTimeInterval)groupID;
 - (void)selectROI:(ROI*)roi deselectingOther:(BOOL)deselectOther;
+- (void)selectROI:(ROI*)roi deselectingOther:(BOOL)deselectOther bringToFront:(BOOL) bringToFront;
 - (void)deselectAllROIs;
 - (void) refreshToolbar;
 - (void) redrawToolbar;

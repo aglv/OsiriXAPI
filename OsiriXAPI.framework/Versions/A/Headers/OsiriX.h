@@ -15,6 +15,7 @@
 #include <OsiriXAPI/HTTPResponse.h>
 #include <OsiriXAPI/ThreadPerConnectionServer.h>
 #include <OsiriXAPI/SSCrypto.h>
+#include <OsiriXAPI/NSFont_OpenGL.h>
 #include <OsiriXAPI/osconfig.h>
 #include <OsiriXAPI/mathconfig.h>
 #include <OsiriXAPI/arith.h>
@@ -3660,11 +3661,14 @@
 #include <OsiriXAPI/N2CellDescriptor.h>
 #include <OsiriXAPI/N2Resizer.h>
 #include <OsiriXAPI/N2WebServiceClient.h>
+#include <OsiriXAPI/NSOrderedSet+N2.h>
 #include <OsiriXAPI/N2UnclickableSplitView.h>
 #include <OsiriXAPI/N2Exceptions.h>
 #include <OsiriXAPI/NSManagedObject+N2.h>
 #include <OsiriXAPI/N2SingletonObject.h>
+#include <OsiriXAPI/NSSet+N2.h>
 #include <OsiriXAPI/NSData+N2.h>
+#include <OsiriXAPI/N2SeparatorMenu.h>
 #include <OsiriXAPI/NS(Attributed)String+Geometrics.h>
 #include <OsiriXAPI/N2WSDL.h>
 #include <OsiriXAPI/KBPopUpToolbarItem.h>
@@ -3792,6 +3796,7 @@
 #include <OsiriXAPI/XMLOutlineView.h>
 #include <OsiriXAPI/OSIWindow.h>
 #include <OsiriXAPI/VTKStereoSRView.h>
+#include <OsiriXAPI/Registration.h>
 #include <OsiriXAPI/SendController.h>
 #include <OsiriXAPI/SplashScreen.h>
 #include <OsiriXAPI/FlyThruStepsArrayController.h>
@@ -3881,7 +3886,6 @@
 #include <OsiriXAPI/CLUTOpacityView.h>
 #include <OsiriXAPI/VRViewVPRO.h>
 #include <OsiriXAPI/QueryController.h>
-#include <OsiriXAPI/DCMCalendarScript.h>
 #include <OsiriXAPI/LLScoutView.h>
 #include <OsiriXAPI/PaletteController.h>
 #include <OsiriXAPI/Anonymization.h>

@@ -4,7 +4,7 @@
 
 
 /** \brief Network destination Array Controller for  Q/R*/
-@interface DNDArrayController : NSArrayController
+@interface DNDArrayController : NSArrayController <NSMenuDelegate>
 {
     IBOutlet NSTableView			*tableView;
 	IBOutlet SFAuthorizationView	*_authView;
@@ -17,6 +17,8 @@
 @property BOOL dontAcceptFirstRowChange;
 
 // table view drag and drop support
+
+- (void) setAuthView:( SFAuthorizationView*) v;
 
 - (BOOL)tableView:(NSTableView *)tv writeRows:(NSArray*)rows toPasteboard:(NSPasteboard*)pboard;
     

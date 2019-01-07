@@ -40,7 +40,7 @@
 	NSMutableDictionary *dicomElements;
 }
 
-@property(retain) NSString *serieID, *serie;
+@property(retain) NSString *serieID, *serie, *studyID;
 @property(retain, nonatomic) NSString *filePath;
 
 // file functions
@@ -71,6 +71,7 @@
 + (NSString *) stringWithBytes:(char *) str encodings:(NSStringEncoding*) encoding replaceBadCharacters:(BOOL) replace; /**< Convert char* str with NSStringEncoding* encoding to NSString */
 + (NSString *) stringWithBytes:(char *) str encodings:(NSStringEncoding*) encodings replaceBadCharacters:(BOOL) replace trim:(BOOL) trim;
 - (NSPDFImageRep*) PDFImageRep; /**< Get a PDFImageRep from DICOM SR file */
+- (NSString*) PDFFile;
 - (long) NoOfFrames; /**< Number of frames in the file */
 - (long) getWidth; /**<  Returns image width */
 - (long) getHeight; /**< Return image Height */

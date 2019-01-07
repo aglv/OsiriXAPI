@@ -15,5 +15,5 @@
 - (void)postNotificationOnMainThread:(NSNotification *)notification;
 - (void)postNotificationOnMainThreadName:(NSString *)aName object:(id)anObject;
 - (void)postNotificationOnMainThreadName:(NSString *)aName object:(id)anObject userInfo:(NSDictionary *)aUserInfo;
-
+- (void) addUniqueObserver:(id)observer selector:(SEL)aSelector name:(NSNotificationName)aName object:(id)anObject;
 @end

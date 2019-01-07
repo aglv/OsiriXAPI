@@ -24,50 +24,51 @@
 
 #include "osconfig.h"
 #include "djlsutil.h" /* For the OFCondition codes */
-#include "interface.h" /* CharLS include */
+#include "charls.h" /* CharLS include */
 
 /** Helper class for converting between dcmjpls and CharLS error codes
  */
 class DJLSError
 {
 private:
-  /// private undefined constructor
-  DJLSError();
-
+    /// private undefined constructor
+    DJLSError();
+    
 public:
-
-  /** This method converts a CharLS error code into a dcmjpls OFCondition
-   *  @param error The CharLS error code
-   *  @return The OFCondition
-   */
-  static const OFConditionConst& convert(JLS_ERROR error)
-  {
-    switch (error)
+    
+    /** This method converts a CharLS error code into a dcmjpls OFCondition
+     *  @param error The CharLS error code
+     *  @return The OFCondition
+     */
+    static const OFCondition& convert(charls::ApiResult error)
     {
-      case OK:
-        return EC_Normal;
-      case UncompressedBufferTooSmall:
-        return EC_JLSUncompressedBufferTooSmall;
-      case CompressedBufferTooSmall:
-        return EC_JLSCompressedBufferTooSmall;
-      case ImageTypeNotSupported:
-        return EC_JLSCodecUnsupportedImageType;
-      case InvalidJlsParameters:
-        return EC_JLSCodecInvalidParameters;
-      case ParameterValueNotSupported:
-        return EC_JLSCodecUnsupportedValue;
-      case InvalidCompressedData:
-        return EC_JLSInvalidCompressedData;
-      case UnsupportedBitDepthForTransform:
-        return EC_JLSUnsupportedBitDepthForTransform;
-      case UnsupportedColorTransform:
-        return EC_JLSUnsupportedColorTransform;
-      case TooMuchCompressedData:
-        return EC_JLSTooMuchCompressedData;
-      default:
-        return EC_IllegalParameter;
+        static OFCondition cond = EC_Normal;
+        
+        if( error == charls::ApiResult::OK)
+            cond = EC_Normal;
+        else if( error == charls::ApiResult::UncompressedBufferTooSmall)
+            cond = EC_JLSUncompressedBufferTooSmall;
+        else if( error == charls::ApiResult::CompressedBufferTooSmall)
+            cond = EC_JLSCompressedBufferTooSmall;
+        else if( error == charls::ApiResult::ImageTypeNotSupported)
+            cond = EC_JLSCodecUnsupportedImageType;
+        else if( error == charls::ApiResult::InvalidJlsParameters)
+            cond = EC_JLSCodecInvalidParameters;
+        else if( error == charls::ApiResult::ParameterValueNotSupported)
+            cond = EC_JLSCodecUnsupportedValue;
+        else if( error == charls::ApiResult::InvalidCompressedData)
+            cond = EC_JLSInvalidCompressedData;
+        else if( error == charls::ApiResult::UnsupportedBitDepthForTransform)
+            cond = EC_JLSUnsupportedBitDepthForTransform;
+        else if( error == charls::ApiResult::UnsupportedColorTransform)
+            cond = EC_JLSUnsupportedColorTransform;
+        else if( error == charls::ApiResult::TooMuchCompressedData)
+            cond = EC_JLSTooMuchCompressedData;
+        else
+            cond = EC_IllegalParameter;
+        
+        return cond;
     }
-  }
 };
 
 #endif

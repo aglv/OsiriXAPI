@@ -20,21 +20,7 @@
 *  The OsiriX team.
 */
 
-#ifdef OSIRIX_VIEWER
-#ifndef OSIRIX_LIGHT
-#ifndef MACAPPSTORE
-#import <Growl/Growl.h>
-#endif
-#endif
-#endif
-
 #import <AppKit/AppKit.h>
-#import "XMLRPCMethods.h"
-
-//@class ThreadPoolServer;
-//@class ThreadPerConnectionServer;
-
-//#import "IChatTheatreDelegate.h"
 
 @class PreferenceController;
 @class BrowserController;
@@ -42,6 +28,7 @@
 @class DCMNetServiceDelegate;
 @class WebPortal;
 @class DCMPix;
+@class XMLRPCInterface;
 
 typedef enum
 {
@@ -74,7 +61,6 @@ enum
 extern "C"
 {
 #endif
-	NSRect screenFrame();
 	NSString * documentsDirectoryFor( int mode, NSString *url) __deprecated;
 	NSString * documentsDirectory() __deprecated;
     extern BOOL hideListenerError;
@@ -93,21 +79,12 @@ extern "C"
 *
 */
 
-//#if defined(OSIRIX_VIEWER) && !defined(OSIRIX_LIGHT) && !defined(MACAPPSTORE)
-//#else
-//@protocol GrowlApplicationBridgeDelegate
-//@end
-//#endif
-
-#define REGPHPURL @"reg/reg.php"
-#define WSPHPURL @"ws/ws.php"
-
 @class AppController, ToolbarPanelController, ThumbnailsListPanel, BonjourPublisher;
 
 extern AppController* OsiriX;
 extern NSString* getMacAddress(void);
 
-@interface AppController : NSObject	<NSNetServiceBrowserDelegate, NSNetServiceDelegate, NSSoundDelegate, NSMenuDelegate> // GrowlApplicationBridgeDelegate
+@interface AppController : NSObject	<NSNetServiceBrowserDelegate, NSNetServiceDelegate, NSSoundDelegate, NSMenuDelegate>
 {
 	IBOutlet BrowserController		*browserController;
 
@@ -154,8 +131,9 @@ extern NSString* getMacAddress(void);
     IBOutlet NSTextField *notAvailableText;
     
     // Registration key window
-    NSString* currentRegistrationKey;
-    NSString* upgradeRegistrationKey;
+    NSString *currentRegistrationKey;
+    NSString *upgradeRegistrationKey;
+    IBOutlet NSTextField *keyTextField;
     IBOutlet NSWindow *registrationKeyWindow;
 }
 
@@ -170,7 +148,6 @@ extern NSString* getMacAddress(void);
 
 + (BOOL) hostReachable:(NSString*) host;
 + (void) thisFeatureIsNotAvailable: (NSString*) stringUrl;
-+ (NSString*) MACAddress;
 + (BOOL) isFDACleared;
 + (BOOL) willExecutePlugin;
 + (BOOL) willExecutePlugin:(id) filter;
@@ -185,14 +162,10 @@ extern NSString* getMacAddress(void);
 + (BOOL) isOSXYosemite;
 + (int) isUnsupportedOS;
 + (BOOL) hasMacOSXMaverick;
-+ (NSArray*) IPv4Address;
 + (NSString*) UID;
 + (NSString*) getRK;
 + (void) restartOsiriX;
-+ (NSDictionary*) loadRegistrationDictionary;
 + (NSImage*) webBrowserIcon;
-+ (NSData*) encodeData:(NSData*) dataIn;
-+ (NSData*) decodeData:(NSData*) dataIn;
 + (void) clearEvents;
 
 #pragma mark-
@@ -221,7 +194,6 @@ extern NSString* getMacAddress(void);
 + (void)checkForHTMLTemplates __deprecated;
 + (BOOL) FPlistForKey: (NSString*) k;
 + (long) longForFPlistForKey: (NSString*) k;
-+ (NSString *) machineModel;
 
 + (BOOL) isStarting;
 + (BOOL) isTerminating;
@@ -239,6 +211,7 @@ extern NSString* getMacAddress(void);
 #pragma mark static menu items
 //===============OSIRIX========================
 - (IBAction) enterNewRegistrationKey:(id)sender;
+- (BOOL) enterNewRegistrationKeyWithString: (NSString*) newKey;
 - (IBAction) about:(id)sender; /**< Display the about window */
 - (IBAction) showPreferencePanel:(id)sender; /**< Show Preferences window */
 #ifndef OSIRIX_LIGHT
@@ -251,6 +224,8 @@ extern NSString* getMacAddress(void);
 - (IBAction) setFixedTilingRows: (id) sender;
 - (IBAction) setFixedTilingColumns: (id) sender;
 - (void) initTilingWindows;
++ (void) delayedTileWindows:(id) sender;
++ (void) tileWindows:(id)sender;
 - (IBAction) tileWindows:(id)sender;  /**< Tile open window */
 - (IBAction) tile3DWindows:(id)sender; /**< Tile 3D open window */
 - (void) tileWindows:(id)sender windows: (NSMutableArray*) viewersList display2DViewerToolbar: (BOOL) display2DViewerToolbar displayThumbnailsList: (BOOL) displayThumbnailsList;
@@ -270,7 +245,7 @@ extern NSString* getMacAddress(void);
 //=============================================
 
 - (IBAction) killAllStoreSCU:(id) sender;
-
+- (IBAction) displayPixmeoLogin:(id)sender;
 - (id) splashScreen;
 
 - (void) releaseObject: (id) obj afterDelay: (int) delay;
@@ -296,6 +271,7 @@ extern NSString* getMacAddress(void);
 - (NSString*) privateIP;
 - (void) killDICOMListenerWait:(BOOL) w;
 - (void) runPreferencesUpdateCheck:(NSTimer*) timer;
++ (void) displayAppleScriptPermissionError: (NSDictionary*) errorInfo;
 + (void) resetThumbnailsList;
 + (void) checkForPreferencesUpdate: (BOOL) b;
 + (BOOL) USETOOLBARPANEL;
@@ -318,6 +294,7 @@ extern NSString* getMacAddress(void);
 - (NSMenu*) wlwwMenu;
 - (NSMenu*) convMenu;
 - (NSMenu*) clutMenu;
+- (BOOL) validateEmail: (NSString *) candidate;
 - (NSTimeInterval) runningTimeInterval;
 + (NSImage*) clutIconForClutName: (NSString*) clutName;
 + (NSImage*) clutIconForRed: (unsigned char*) redT green:(unsigned char*) greenT blue:(unsigned char*) blueT;
@@ -336,9 +313,8 @@ extern NSString* getMacAddress(void);
 + (void) pingPlugin: (id) object userDict: (NSDictionary*) userDict;
 
 #pragma mark-
-#pragma mark growl
+#pragma mark User Notifications
 - (void) growlTitle:(NSString*) title description:(NSString*) description name:(NSString*) name;
-//- (NSDictionary *) registrationDictionaryForGrowl;
 
 //#pragma mark-
 //#pragma mark display setters and getters
@@ -365,13 +341,5 @@ extern NSString* getMacAddress(void);
 -(void)unsetReceivingIcon;
 -(void)setBadgeLabel:(NSString*)label;
 -(void)playGrabSound;
-
-+ (NSString*) encodedStringWithParameters:(NSDictionary*) parameters;
-+ (NSString*) stringFromEncodedURL:(NSString*) pathURL withParameters:(NSDictionary*) parameters;
-+ (NSArray*) arrayFromEncodedURL:(NSString*) pathURL withParameters:(NSDictionary*) parameters;
-+ (NSArray*) POSTJSON:(id) json encodedToURL:(NSString*) pathURL withParameters:(NSDictionary*) parameters;
-+ (NSString*) stringFromPOSTJSON: (id) json encodedURL:(NSString*) pathURL withParameters:(NSDictionary*) parameters;
-+ (id) dictionaryOrArrayFromEncodedURL:(NSString*) pathURL withParameters:(NSDictionary*) parameters;
-+ (NSString*) stringFromEncodedArray:(NSArray*) array;
 @end
 

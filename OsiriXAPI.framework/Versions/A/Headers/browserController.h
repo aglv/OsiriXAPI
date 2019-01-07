@@ -32,7 +32,10 @@
 #endif
 
 enum dbObjectSelection {oAny,oMiddle,oFirstForFirst};
+
 enum searchDatabaseTypes { patientNameSearch = 0, patientIDSearch, patientBirthdateSearch, studyIDSearch, commentsSearch, comments2Search, comments3Search, comments4Search, studyDescriptionSearch, bodyPartSearch, modalitySearch, accessionNumberSearch, allFieldsSearch};
+
+typedef enum { noneInterval = 0, oneHourInterval = 1, sixHoursInterval = 2, twelveHoursInterval = 3, twentyFourHoursInterval = 7, fortyEightHoursInterval = 8, seventyTwoHoursInterval = 19, todayInterval = 4, yesterdayInterval = 9, dayBeforeYesterdayInterval = 10, lastTwoDaysInterval = 13, lastSevenDaysInterval = 15, lastFourteenDaysInterval = 16, lastWeekEndInterval = 11, currentWeekInterval = 12, lastWeekInterval = 14, oneMonthInterval = 6, currentMonthInterval = 17, lastMonthInterval = 18, lastMondayInterval = 20, lastTuesdayInterval, lastWednesdayInterval, lastThursdayInterval, lastFridayInterval, lastSaturdayInterval, lastSundayInterval, customInterval = 100} intervalType;
 
 extern NSString* O2AlbumDragType;
 
@@ -81,7 +84,7 @@ extern NSString* O2AlbumDragType;
     
     NSTimer                 *refreshTimer;
 //    NSTimer                 *timer, *refreshTimer, *databaseCleanerTimer, *deleteQueueTimer;
-	long					loadPreviewIndex, previousNoOfFiles, previousDistantNoOfFiles;
+	long					loadPreviewIndex, previousNoOfFiles, previousDistantNoOfFiles, previousChildrenCount;
 	NSManagedObject			*previousItem;
     int                     previousItemRow;
     DicomStudy              *cloudPreviousStudy;
@@ -98,15 +101,17 @@ extern NSString* O2AlbumDragType;
     NSThread                *distantSearchThread;
 	NSMutableDictionary*    _albumNoOfStudiesCache;
     NSMutableDictionary*    _albumCachedStudyInstanceArray;
-    NSString                *selectedAlbumName;
+    NSString                *selectedAlbumName, *selectedAlbumUID;
 	
     BOOL                    canAddToFetchLimit;
     unsigned long           willAddToFetchLimit;
     unsigned long           currentFetchLimit;
     unsigned long           outlineViewArrayCount;
     
-	NSArray							*outlineViewArray, *originalOutlineViewArray, *outlineViewArrayStudyInstanceUIDs;
-	NSArray							*matrixViewArray;
+    BOOL                    outlineViewFiltered;
+	NSArray					*outlineViewArray, *originalOutlineViewArray, *outlineViewArrayStudyInstanceUIDs, *outlineViewSortDescriptors;
+	NSArray					*matrixViewArray;
+    NSPredicate             *outlineViewPredicate;
 	
 	NSString				   *_searchString;
     NSMutableArray             *previousSearchItems;
@@ -117,7 +122,8 @@ extern NSString* O2AlbumDragType;
 	NSMenu							*columnsMenu, *contextualReportMenu;
 	IBOutlet BrowserMatrix			*oMatrix;
 	IBOutlet NSTableView			*albumTable;
-	
+    NSArray                         *tableViewAlbumsCache;
+    
 	IBOutlet NSBox					*bonjourSourcesBox;
 	
 	IBOutlet NSArrayController*		_sourcesArrayController;
@@ -152,9 +158,10 @@ extern NSString* O2AlbumDragType;
 	IBOutlet NSMatrix				*rebuildType;
 	IBOutlet NSTextField			*estimatedTime, *noOfFilesToRebuild, *warning;
 	
-    int								timeIntervalType;
+    intervalType					timeIntervalType;
     NSDate							*timeIntervalStart, *timeIntervalEnd;
     IBOutlet NSView					*timeIntervalView;
+    IBOutlet NSMenu                 *timeIntervalMenu;
 
     NSString						*modalityFilter;
     IBOutlet NSPopUpButton          *modalityFilterMenu;
@@ -164,7 +171,7 @@ extern NSString* O2AlbumDragType;
 	IBOutlet NSSearchField			*searchField;
     IBOutlet NSButton               *searchInEntireDBResult;
 	NSToolbarItem					*toolbarSearchItem;
-	int								searchType;
+	int								searchType, userSelectedSearchType;
 	
 	IBOutlet NSMenu					*imageTileMenu;
 	IBOutlet NSWindow				*urlWindow, *CDpasswordWindow, *ZIPpasswordWindow;
@@ -226,9 +233,7 @@ extern NSString* O2AlbumDragType;
 	WaitRendering					*waitOpeningWindow;
 	BOOL							waitCompressionAbort;
 	
-	NSMutableArray					*cachedFilesForDatabaseOutlineSelectionSelectedFiles;
 	NSMutableArray					*cachedFilesForDatabaseOutlineSelectionCorrespondingObjects;
-    NSMutableSet                    *cachedFilesForDatabaseOutlineSelectionTreeObjects;
 	NSIndexSet						*cachedFilesForDatabaseOutlineSelectionIndex;
 	
     id                              lastROIsAndKeyImagesSelectedFiles, lastROIsImagesSelectedFiles, lastKeyImagesSelectedFiles;
@@ -267,7 +272,7 @@ extern NSString* O2AlbumDragType;
     BOOL comparativeStudyWaitedToOpen; // for retrieveStudy: function
     BOOL comparativeStudyWaitedToSelect; // for retrieveStudy: function
     
-    NSString *smartAlbumDistantName;
+    NSString *smartAlbumDistantUID;
     NSArray *smartAlbumDistantArray;
     NSMutableArray *smartAlbumDistantSearchArray; //The queue of smart albums to be searched
     NSTimeInterval lastRefreshSmartAlbumDistantStudies;
@@ -295,10 +300,16 @@ extern NSString* O2AlbumDragType;
     NSString *openedStudyInstanceUID;
     
     NSSegmentedControl *drawersTitleBarButton;
+    NSButton *lockerButtonTitleBarButton;
+    
+    IBOutlet NSWindow *shareStudyRecipientWindow;
+    IBOutlet NSView *accessoryViewImportRecipients;
 }
 
+@property(retain) NSArray *outlineViewSortDescriptors, *outlineViewArray, *originalOutlineViewArray, *outlineViewArrayStudyInstanceUIDs;
+@property(retain) NSPredicate *outlineViewPredicate;
 @property(retain) NSIndexSet *selectedRowsBeforeResizing;
-@property(retain) NSArray *unifyStudiesMenu;
+@property(retain) NSArray *unifyStudiesMenu, *tableViewAlbumsCache;
 @property(retain) DicomStudy *cloudPreviousStudy;
 @property(retain, nonatomic) NSString *unifyFromList, *unifyTo;
 @property(nonatomic) BOOL unifyPatientID, unifyStudyID, unifyNewStudyInstanceUID, unifyNewSeriesInstanceUIDs, unifyNewSOPInstanceUIDs, unifyMultipleStudies, canAddToFetchLimit;
@@ -319,7 +330,7 @@ extern NSString* O2AlbumDragType;
 @property(readonly) BonjourBrowser *bonjourBrowser;
 @property(readonly) const char *cfixedDocumentsDirectory __deprecated, *cfixedIncomingDirectory __deprecated, *cfixedTempNoIndexDirectory __deprecated, *cfixedIncomingNoIndexDirectory __deprecated;
 
-@property(retain) NSString *searchString, *CDpassword, *pathToEncryptedFile, *passwordForExportEncryption, *temporaryNotificationEmail, *customTextNotificationEmail, *comparativePatientUID, *smartAlbumDistantName, *distantStudyMessage, *distantSearchString, *selectedAlbumName, *openedStudyInstanceUID;
+@property(retain) NSString *searchString, *CDpassword, *pathToEncryptedFile, *passwordForExportEncryption, *temporaryNotificationEmail, *customTextNotificationEmail, *comparativePatientUID, *smartAlbumDistantUID, *distantStudyMessage, *distantSearchString, *selectedAlbumName, *selectedAlbumUID, *openedStudyInstanceUID;
 @property(retain) NSPredicate *fetchPredicate, *testPredicate;
 @property(retain) NSArray *comparativeStudies;
 @property(readonly) NSPredicate *filterPredicate;
@@ -327,10 +338,11 @@ extern NSString* O2AlbumDragType;
 @property(retain) NSDate *distantTimeIntervalStart, *distantTimeIntervalEnd;
 @property(retain) NSDate *timeIntervalStart, *timeIntervalEnd;
 @property(nonatomic, retain) NSString *modalityFilter;
-@property(nonatomic) int timeIntervalType;
+@property(nonatomic) intervalType timeIntervalType;
 @property(readonly) NSMutableDictionary *databaseIndexDictionary;
 @property(readonly) PluginManagerController *pluginManagerController;
 @property int distantSearchType;
+@property(readonly, nonatomic) int searchType;
 @property(readonly) NSMutableArray *comparativeRetrieveQueue, *comparativeSeriesRetrieveQueue;
 
 // NSTouchBar
@@ -459,7 +471,7 @@ extern NSString* O2AlbumDragType;
 - (IBAction) delItem:(id) sender;
 - (void) proceedDeleteObjects: (NSArray*) objectsToDelete;
 - (void) proceedDeleteObjectIDs: (NSArray*) objectIDsToDelete;
-- (void) delObjects:(NSMutableArray*) objectsToDelete;
+- (void) delObjects:(NSArray*) objectsToDelete;
 - (IBAction) selectFilesAndFoldersToAdd:(id) sender;
 - (void) showDatabase:(id)sender;
 - (BOOL) displayStudy: (DicomStudy*) study object:(NSManagedObject*) element command:(NSString*) execute;
@@ -520,11 +532,26 @@ extern NSString* O2AlbumDragType;
 + (NSArray*) zipExtensions;
 - (void)storeSCPComplete:(id)sender;
 - (void) changeStateValueTo: (int) tag forStudies: (NSArray*) studies;
+
 - (NSMutableArray *) filesForDatabaseOutlineSelection :(NSMutableArray*) correspondingDicomFile;
 - (NSMutableArray *) filesForDatabaseOutlineSelection :(NSMutableArray*) correspondingManagedObjects onlyImages:(BOOL) onlyImages;
+
 - (NSMutableArray *) filesForDatabaseMatrixSelection :(NSMutableArray*) correspondingManagedObjects;
 - (NSMutableArray *) filesForDatabaseMatrixSelection :(NSMutableArray*) correspondingManagedObjects onlyImages:(BOOL) onlyImages;
+
+- (NSArray *) dicomImagesForDatabaseMatrixSelectionOnlyImages:(BOOL) onlyImages;
+- (NSArray *) dicomImagesForDatabaseMatrixSelectionAllFiles: (BOOL) allFiles;
+- (NSArray *) dicomImagesForDatabaseMatrixSelectionOnlyImages:(BOOL) onlyImages includeLocalizers: (BOOL) includeLocalizers;
+- (NSArray *) dicomImagesForDatabaseMatrixSelection;
+
+- (NSArray*) dicomImagesForDatabaseOutlineSelectionOnlyImages:(BOOL)onlyImages;
+- (NSArray*) dicomImagesForDatabaseOutlineSelection;
+- (NSArray*) dicomImagesForDatabaseOutlineSelectionAllFiles: (BOOL) allFiles;
+- (NSArray*) dicomImagesForDatabaseOutlineSelectionOnlyImages:(BOOL)onlyImages includeLocalizers: (BOOL) includeLocalizers;
+- (NSArray*) dicomImagesForDatabaseOutlineSelectionOnlyImages:(BOOL)onlyImages includeLocalizers: (BOOL) includeLocalizers sorted: (BOOL) sorted;
+
 - (void)setToolbarReportIconForItem: (NSToolbarItem *)item;
+- (void) showTemplateFolderInFinder: (id) sender;
 - (void) addFiles: (NSArray*) files withRule:(NSDictionary*) routingRule __deprecated;
 - (void) resetListenerTimer __deprecated;
 - (IBAction) editAlbum: (id)sender;
@@ -561,6 +588,7 @@ extern NSString* O2AlbumDragType;
 
 - (void) refreshColumns;
 - (NSString*) outlineViewRefresh;
+- (NSString*) outlineViewRefreshWithoutFetchLimit;
 - (void) matrixInit:(long) noOfImages;
 - (void)matrixLoadIcons: (NSDictionary*)dict;
 - (NSArray*) albumArray;
@@ -573,6 +601,8 @@ extern NSString* O2AlbumDragType;
 - (void) refreshDatabase:(id) sender;
 - (void) syncReportsIfNecessary;
 
++ (void) getStudies:(NSMutableSet*) studiesSet andSeries:(NSMutableSet*) seriesSet fromObjects:(NSArray*) objects;
+
 //bonjour
 -(NSManagedObjectContext*)bonjourManagedObjectContext __deprecated;
 - (void) setBonjourDatabaseValue:(NSManagedObject*) obj value:(id) value forKey:(NSString*) key __deprecated;
@@ -580,6 +610,7 @@ extern NSString* O2AlbumDragType;
 - (void) displayBonjourServices;
 - (NSString*) askPassword;
 - (void) resetToLocalDatabase;
+- (void) resetToDefaultDatabase;
 - (void) switchToDefaultDBIfNeeded __deprecated;
 - (void) checkIncomingThread:(id) sender __deprecated;
 - (void) checkIncoming:(id) sender __deprecated;
@@ -653,8 +684,9 @@ extern NSString* O2AlbumDragType;
 - (void) retrieveComparativeStudy: (DCMTKStudyQueryNode*) study select: (BOOL) select open: (BOOL) open;
 - (void) retrieveComparativeStudy: (DCMTKStudyQueryNode*) study select: (BOOL) select open: (BOOL) open showGUI: (BOOL) showGUI viewer: (ViewerController*) viewer;
 - (void) refreshComparativeStudiesIfNeeded:(id) timer;
-- (NSArray*) distantStudiesForSmartAlbum: (NSString*) albumName;
-- (NSDictionary*) PACSOnDemandDictionaryForThisSmartAlbumName: (NSString*) albumName;
+- (NSArray*) distantStudiesForSmartAlbumUID: (NSString*) UID database: (DicomDatabase*) db;
+- (NSDictionary*) PACSOnDemandDictionaryForThisSmartAlbumUID: (NSString*) UID;
+- (NSDictionary*) PACSOnDemandDictionaryForThisSmartAlbumUID: (NSString*) UID database: (DicomDatabase*) db;
 - (void) initAnimationSlider;
 
 - (void) setSearchString: (NSString *)searchString;

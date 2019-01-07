@@ -10,7 +10,7 @@
 		</data>
 		<key>Resources/Info.plist</key>
 		<data>
-		FzClhCMFBloKu80W6U11UXqoxDo=
+		ScixXF1ud6gBoYjGBzUXj+oBzOY=
 		</data>
 		<key>Resources/nameDictionary.plist</key>
 		<data>
@@ -115,6 +115,17 @@
 			TITdi59qBtz0WDnjNFjtZQBFPjhelM0f9CraiLxhg8o=
 			</data>
 		</dict>
+		<key>Headers/DCMFramework.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			sxxOw9rNrThvO0grb7lvyQmNMJA=
+			</data>
+			<key>hash2</key>
+			<data>
+			AUXkrJ0fyHH3d9XwNCWQceTa66hnmaSOOrMvXeYIri0=
+			</data>
+		</dict>
 		<key>Headers/DCMLimitedObject.h</key>
 		<dict>
 			<key>hash</key>
@@ -152,11 +163,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			rtv/1XkPeLk0RlAKDsKD/SDC2Ug=
+			2QQK4wB8AhVzUBmBK4i/Pv8/mZQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			XIZ6W1WhHcHpaQALnw4y0peycsGnAibEBzkl39JxAa4=
+			4mx+ayi+A9FhWbFVodTyT5b2XHaElAWDg1QRqMuWjGs=
 			</data>
 		</dict>
 		<key>Headers/DCMPixelDataAttributeJPEG12.h</key>
@@ -284,11 +295,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			FzClhCMFBloKu80W6U11UXqoxDo=
+			ScixXF1ud6gBoYjGBzUXj+oBzOY=
 			</data>
 			<key>hash2</key>
 			<data>
-			GQiif3GM/h/fQ6npz4I35WOOqvDi8kCI7SC7pzwyL8M=
+			F7IXHmfY8H6rkLqMc7GPehYTs9rkk1tedCSgvcc0JOw=
 			</data>
 		</dict>
 		<key>Resources/nameDictionary.plist</key>

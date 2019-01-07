@@ -33,13 +33,14 @@ enum {kMicrosoftWordReport = 0,
 
 - (BOOL)createNewReport:(DicomStudy*) study destination:(NSString*)path type:(int)type;
 
-+(NSString*)databaseWordTemplatesDirPath;
 +(NSString*)resolvedDatabaseWordTemplatesDirPath;
 
 - (BOOL) createNewPagesReportForStudy:(NSManagedObject*)aStudy toDestinationPath:(NSString*)aPath;
 - (BOOL) createNewOpenDocumentReportForStudy:(NSManagedObject*)aStudy toDestinationPath:(NSString*)aPath;
 + (NSArray*)pagesTemplatesList;
++ (NSString*)databasePagesTemplatesDirPath;
 + (NSArray*)wordTemplatesList;
++ (NSString*)databaseWordTemplatesDirPath;
 - (NSMutableString *)templateName;
 - (void)setTemplateName:(NSString *)aName;
 + (int) Pages5orHigher;

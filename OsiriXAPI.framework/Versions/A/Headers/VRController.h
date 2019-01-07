@@ -164,7 +164,7 @@
 - (IBAction) setMode:(id)sender;
 - (NSMutableArray*) pixList;
 - (NSMutableArray*) curPixList;
-- (void) load3DState;
+- (BOOL) load3DState;
 - (void) updateBlendingImage;
 - (ViewerController*) blendingController;
 - (id) initWithPix:(NSMutableArray*) pix :(NSArray*) f :(NSData*) vData :(ViewerController*) bC :(ViewerController*) vC;

@@ -29,5 +29,7 @@
 - (NSNumber*) noFiles; // Match DicomStudy
 - (BOOL) isHidden;
 - (void) setHidden: (BOOL) h;
+- (void) queryChildrenAtIMAGELevel;
+
 @end
 #endif

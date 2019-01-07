@@ -11,7 +11,6 @@
 
 
 @interface NSArray (N2)
-
 - (NSArray*)splitArrayIntoArraysOfMinSize:(NSUInteger)chunkSize maxArrays:(NSUInteger)maxArrays;
 - (NSArray*)splitArrayIntoChunksOfMinSize:(NSUInteger)chunkSize maxChunks:(NSUInteger)maxChunks;
 - (id) deepMutableCopy;
@@ -19,6 +18,9 @@
 - (NSArray *)arrayByRemovingObjectsFromArray:(NSArray*)objs;
 - (NSArray *)arrayByRemovingDuplicates;
 - (NSArray *)reversedArray;
+- (NSString*)arrayAsString;
+- (BOOL)intersectArray:(NSArray*) a;
++ (NSArray*)arrayFromString: (NSString*) s;
 @end
 
 

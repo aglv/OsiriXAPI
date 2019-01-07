@@ -17,6 +17,7 @@
 }
 // returns a shared instance of the class
 + sharedInstance;
++(void) setDontAskPrivileges: (BOOL) p;
 // checks if user is authentcated forCommands
 - (BOOL)isAuthenticated:(NSArray *)forCommands;
 // authenticates user forCommands
@@ -32,10 +33,6 @@
 // kills the process specified by commandFromPS
 - (BOOL)killProcess:(NSString *)commandFromPS;
 @end
-
-// strings for notification center
-extern NSString* const BLAuthenticatedNotification;
-extern NSString* const BLDeauthenticatedNotification;
 
 
 

@@ -238,7 +238,7 @@ static int StructuredGridLIC2DSlice(int argc, char* argv[])
     
 
     //vtkPNGWriter* writer = vtkPNGWriter::New();
-    //writer->SetFileName("/tmp/lic.png");
+    //writer->SetFileName("/private/tmp/lic.png");
     //writer->SetInputConnection(caster->GetOutputPort());
     //writer->Write();
     //writer->Delete();

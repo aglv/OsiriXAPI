@@ -22,4 +22,7 @@
 
 + (NSDictionary*) dictionaryWithContentsOfFile:(NSString*) file cipher: (NSString*) cipher;
 - (BOOL) writeToFile: (NSString*) file atomically:(BOOL)useAuxiliaryFile cipher: (NSString*) cipher;
+
+- (NSString*) dictionaryAsString;
++ (NSDictionary*) dictionaryFromString: (NSString*) s;
 @end

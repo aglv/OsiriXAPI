@@ -17,8 +17,11 @@
 #include <OpenGL/CGLCurrent.h>
 #include <OpenGL/CGLContext.h>
 #import "N3Geometry.h"
+#import "NSFont_OpenGL.h"
 #import "ROI.h"
 
+
+#define MINIMUM_WW 0.00001
 #define STAT_UPDATE					0.6f
 #define IMAGE_COUNT					1
 #define IMAGE_DEPTH					32
@@ -132,8 +135,8 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
 	
     BOOL            xFlipped, yFlipped;
 
-	long			fontListGLSize[256];
-	long			labelFontListGLSize[ 256];
+	long			fontListGLSize[ FONTGLSIZE + ' '];
+	long			labelFontListGLSize[ FONTGLSIZE + ' '];
 	NSSize			stringSize;
 	NSFont			*labelFont;
 	NSFont			*fontGL;
@@ -141,9 +144,7 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
     GLuint          fontListGL;
 	GLuint          labelFontListGL;
 	float			fontRasterY;
-		
-    NSPoint         mesureA, mesureB;
-    NSRect          roiRect;
+    
 	NSString		*stringID;
 	NSSize			previousViewSize;
 
@@ -186,7 +187,7 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
 	NSPoint			display2DPoint;
     int             display2DPointIndex;
 	
-	NSMutableDictionary	*stringTextureCache;
+	NSMutableDictionary	*stringTextureCache, *lowPriorityStringTextureCache;
 	
 	BOOL           _dragInProgress; // Are we drag and dropping
 	NSTimer			*_mouseDownTimer; //Timer to check if mouseDown is Persisiting;
@@ -307,10 +308,13 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
     BOOL resliceDirectionIsWidth;
     int resliceTextureWidth, resliceTextureHeight, resliceTexturePosition;
     float resliceTexturePixelRatio;
-    BOOL displayResliceIndex;
+    BOOL displayResliceIndex, mouseDownInResliceView;
     
     NSTimeInterval lastLensShiftPressed;
     BOOL persitentLensMode;
+    
+    BOOL mouseDownInOpenGLSlider;
+    float openGLSliderOffsetClick;
 }
 
 @property BOOL flippedRendered, displayResliceView, resliceViewDisplayed;
@@ -367,9 +371,10 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
 + (void) setCLUTBARS:(CLUTBarMode) c ANNOTATIONS:(annotationsLevel) a;
 + (void)setPluginOverridesMouse: (BOOL)override DEPRECATED_ATTRIBUTE;
 + (void) computePETBlendingCLUT;
++ (void) computePETBlendingCLUT: (NSString*) clutName;
 + (NSString*) findWLWWPreset: (float) wl :(float) ww :(DCMPix*) pix;
 + (NSSize)sizeOfString:(NSString *)string forFont:(NSFont *)font;
-+ (long) lengthOfString:( char *) cstr forFont:(long *)fontSizeArray;
++ (long) lengthOfString:(unichar *) cstr length:(NSUInteger) l forFont:(long *)fontSizeArray;
 + (BOOL) intersectionBetweenTwoLinesA1:(NSPoint) a1 A2:(NSPoint) a2 B1:(NSPoint) b1 B2:(NSPoint) b2 result:(NSPoint*) r;
 + (float) Magnitude:( NSPoint) Point1 :(NSPoint) Point2;
 + (float) angleBetweenVector: (float*) v1 andVector: (float*) v2;
@@ -379,7 +384,7 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
 + (double) pbaseDouble_Plane: (double*) point :(double*) planeOrigin :(double*) planeVector :(double*) pointProjection;
 + (short)syncro;
 + (void)setSyncro:(short) s;
-- (void) applyImageTransformation __deprecated;
+//- (void) applyImageTransformation __deprecated;
 - (void) loadOpenGLIdentityForDrawingFrame: (NSRect) r;
 - (void) gClickCountSetReset;
 - (void) applyROIWLWW;
@@ -458,7 +463,7 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
 - (float) scaleToFitForDCMPix: (DCMPix*) d;
 - (BOOL) isScaledFit;
 - (void) setBlendingFactor:(float) f;
-- (void) sliderAction:(id) sender;
+//- (void) sliderAction:(id) sender;
 - (void) roiSet;
 - (void) sync3DPosition;
 - (void) roiSet:(ROI*) aRoi __deprecated;
@@ -503,7 +508,6 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
 - (void)resizeWindowToScale:(float)resizeScale;
 - (OrthogonalMPRController*) controller;
 - (void) roiChange:(NSNotification*)note;
-- (void) roiSelected:(NSNotification*) note;
 - (void) magnifyWithEvent:(NSEvent *)anEvent;
 - (void) rotateWithEvent:(NSEvent *)anEvent;
 - (void) setStartWLWW;
@@ -555,6 +559,20 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
 - (void) displayFirstImage: (id) sender;
 - (void) displayLastImage: (id) sender;
 - (void) displayMiddleImage: (id) sender;
+
+- (void)computeContextualMenuForROI:(ROI*)roi;
+- (IBAction) roiSaveCurrent:(NSMenuItem*) mi;
+- (IBAction) roiXYPlot:(NSMenuItem*) mi;
+- (IBAction) roiCopyInfo:(NSMenuItem*) mi;
+- (NSArray*) roisWithName:(NSString*)name;
+- (IBAction) roiExportMetaData:(NSMenuItem*) mi;
+- (IBAction) roiIntDeleteAllROIsWithSameName :(NSString*) name;
+- (IBAction) roiEdit3DROISettings:(id)sender;
+- (IBAction) roi3DROIConvertIsocontourToBrush:(NSMenuItem*)mi;
+- (IBAction) roiGetInfo:(id) sender;
+- (IBAction) roiHistogram:(id) sender;
+- (int) imageIndexOfROI:(ROI*) c;
+
 //iChat
 // New Draw method to allow for IChat Theater
 - (void) drawRect:(NSRect)aRect withContext:(NSOpenGLContext *)ctx;
@@ -580,9 +598,7 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
 - (void)setIsLUT12Bit:(BOOL)boo;
 - (BOOL)isLUT12Bit;
 
-//- (void)displayLoupe;
-//- (void)displayLoupeWithCenter:(NSPoint)center;
-//- (void)hideLoupe;
+- (void)flagsChanged;
 
 + (NSArray*)cleanedOutDcmPixArray:(NSArray*)input; // filters the input array of DCMPix by returning only the pix with the most common ImageType in the input array
 

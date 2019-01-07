@@ -25,7 +25,9 @@
 #include "vtkTDxDevice.h"
 
 //class vtkRenderWindowInteractor;
-#include <3dConnexionClient/ConnexionClientAPI.h> // 3DxMacWare SDK
+#if USE3DCONNEXION
+#include <3DconnexionClient/ConnexionClientAPI.h> // 3DxMacWare SDK
+#endif
 
 class VTK_RENDERING_EXPORT vtkTDxMacDevice : public vtkTDxDevice
 {

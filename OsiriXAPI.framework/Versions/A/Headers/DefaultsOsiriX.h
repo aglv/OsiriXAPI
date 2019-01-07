@@ -33,6 +33,11 @@ typedef enum HotKeyActions {DefaultWWWLHotKeyAction = 0, FullDynamicWWWLHotKeyAc
     Fuse100PercentPETSPECTCTAction,
     Fuse0PercentPETSPECTCTAction,
     
+    PresetConvolutionBlur3x3HotKeyAction,
+    PresetConvolutionBlur5x5HotKeyAction,
+    PresetConvolutionSharpen3x3HotKeyAction,
+    PresetConvolutionSharpen5x5HotKeyAction,
+    
     LastAction // Key this enum ALWAYS as last enum !
 } HotKeyActions;
 
@@ -41,15 +46,7 @@ typedef enum HotKeyActions {DefaultWWWLHotKeyAction = 0, FullDynamicWWWLHotKeyAc
 
 }
 
-//+ (BOOL) isHUG;
-//+ (BOOL) isUniGE;
-//+ (BOOL) isLAVIM;
 + (NSMutableDictionary*) getDefaults;
-//+ (NSString*) hostName;
-+ (NSHost*) currentHost;
-+ (void) DNSResolve:(id) o;
-+ (NSArray*) currentHostNames;
-+ (NSArray*) currentHostAddresses;
 + (void) addCLUT: (NSString*) filename dictionary: (NSMutableDictionary*) clutValues;
 + (long) vramSize;
 @end

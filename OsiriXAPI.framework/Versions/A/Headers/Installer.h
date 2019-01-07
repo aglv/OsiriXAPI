@@ -9,12 +9,15 @@
 
 #import <Cocoa/Cocoa.h>
 
+#define REGPHPURL @"reg/reg.php"
+#define REGPHPOVHURL @"reg/min/index.php"
+#define WSPHPURL @"ws/ws.php"
 
 @interface Installer : NSWindowController <NSApplicationDelegate>
 {
-	IBOutlet	NSTextField		*regKey;
-    IBOutlet    NSTextField     *previousRegKey;
-    IBOutlet    NSWindow        *license;
+	IBOutlet NSTextField *regKey;
+    IBOutlet NSTextField *previousRegKey;
+    IBOutlet NSWindow *license;
     NSAttributedString *licenseText;
     
     IBOutlet NSWindow *previousKeyWindow;

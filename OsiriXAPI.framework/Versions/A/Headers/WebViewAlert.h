@@ -18,6 +18,8 @@
     int modalResponse;
     IBOutlet WebView *webView;
     unsigned long crc32result;
+    NSMutableDictionary *preferences;
+    NSTimer *quitAfterInterval;
 }
 
 + (NSInteger) alertWithURL: (NSURL*) u;
@@ -32,5 +34,7 @@
 @property BOOL displayCancel, displayEnterRegKey, showDontShowAgain, dontShowAgain;
 @property (retain) NSURL *url;
 @property (retain) NSString *signature;
+@property (retain) NSMutableDictionary *preferences;
+@property (retain) NSTimer *quitAfterInterval;
 
 @end

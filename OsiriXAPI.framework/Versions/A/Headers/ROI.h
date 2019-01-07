@@ -86,6 +86,14 @@ typedef enum ToolMode_
     t3DPosition                 //  33
 } ToolMode;
 
+struct RGBAColor {
+    float red;
+    float green;
+    float blue;
+    float alpha;
+};
+typedef struct RGBAColor RGBAColor;
+
 @class DCMView;
 @class DCMPix;
 @class StringTexture;
@@ -169,7 +177,7 @@ typedef enum ToolMode_
     float           previousScaleForSplinePoints;
     
     DCMUSRegion     *rUSRegion;
-	float			rmean, rmax, rmin, rdev, rtotal, rskewness, rkurtosis, rLength, rLengthPix, rArea, rAreaPix;
+	float			rmean, rmedian, rmax, rmin, rdev, rtotal, rskewness, rkurtosis, rLength, rLengthPix, rArea, rAreaPix;
 	
     NSMutableDictionary *peakValue, *isoContour;
     
@@ -262,7 +270,7 @@ typedef enum ToolMode_
 @property(nonatomic) float thickness;
 @property(retain) ROI *parentROI;
 @property double sliceThickness, pixelSpacingX, pixelSpacingY;
-@property (nonatomic) float min, max, mean, dev, skewness, kurtosis, total, length, area, lengthPix, areaPix;
+@property (nonatomic) float min, max, mean, median, dev, skewness, kurtosis, total, length, area, lengthPix, areaPix;
 @property(assign) NSColor* NSColor;
 @property(assign) BOOL isSpline;
 @property(readonly) NSMutableDictionary *peakValue, *isoContour;
@@ -296,6 +304,7 @@ typedef enum ToolMode_
 
 - (void) setPoints: (NSArray*) pts;
 - (NSMutableArray*) points;
+- (NSArray*) pointsIn3DCoordinates;
 
 /** Load User Defaults */
 +(void) loadDefaultSettings;
@@ -420,7 +429,8 @@ typedef enum ToolMode_
 - (BOOL) mouseRoiUp:(NSPoint) pt scaleValue: (float) scaleValue;
 
 /** Returns YES if roi is valid */
-- (BOOL) valid;
+- (BOOL) valid; // YES, if drawing
+- (BOOL) isValid;
 
 + (void) deleteROIs: (NSArray*) array postNotification: (BOOL) postNotification;
 + (void) deleteROIs: (NSArray*) array;

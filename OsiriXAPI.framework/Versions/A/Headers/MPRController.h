@@ -107,7 +107,7 @@
 @property (nonatomic, retain) Point3D *mousePosition;
 @property (retain) NSArray *wlwwMenuItems;
 @property (retain) NSString *dcmSeriesName;
-@property (readonly) DCMPix *originalPix;
+@property (retain) DCMPix *originalPix;
 @property (nonatomic) float LOD, movieRate;
 @property (nonatomic) BOOL lowLOD, dcmSameIntervalAndThickness, displayMousePosition, blendingModeAvailable, dcmBatchReverse;
 @property (nonatomic, retain) NSColor *colorAxis1, *colorAxis2, *colorAxis3;

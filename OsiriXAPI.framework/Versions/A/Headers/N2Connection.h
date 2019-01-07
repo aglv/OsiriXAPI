@@ -48,6 +48,8 @@ enum N2ConnectionStatus {
 @property BOOL closeOnNextSpaceAvailable;
 @property(readonly,retain) NSError* error;
 
++(NSString*) runLoopMode;
+
 // non-tls
 +(NSData*)sendSynchronousRequest:(NSData*)request toAddress:(id)address port:(NSInteger)port;
 +(NSData*)sendSynchronousRequest:(NSData*)request toAddress:(id)address port:(NSInteger)port dataHandlerTarget:(id)target selector:(SEL)selector context:(void*)context; // -(NSInteger)connection:(N2Connection*)connection dummyDataHandler:(NSData*)data context:(void*)context

@@ -12,7 +12,7 @@
 #import <Accelerate/Accelerate.h>
 
 #define ORIENTATION_SENSIBILITY 0.001
-#define SLICEINTERVAL_SENSIBILITY 0.2
+#define SLICEINTERVAL_SENSIBILITY 0.5
 
 typedef struct {
    double x,y,z;
@@ -71,6 +71,7 @@ extern "C"
 	short				bitsAllocated, bitsStored, highBit;
     long                height, width;
     float               slope, offset;
+    float               realWorldSlope, realWorldOffset;
     
 //	window level & width
 	float				savedWL, savedWW;
@@ -109,6 +110,7 @@ extern "C"
 #define MaxNumOfOverlays 10
 // DICOM params for Overlays - 0x60XX group
 	int					oRows[ MaxNumOfOverlays], oColumns[ MaxNumOfOverlays], oType[ MaxNumOfOverlays], oOrigin[ MaxNumOfOverlays][ 2], oBits[ MaxNumOfOverlays], oBitPosition[ MaxNumOfOverlays];
+    int                 oImageFrameOrigin[ MaxNumOfOverlays], oNumberOfFramesInOverlay[ MaxNumOfOverlays];
 	unsigned char		*oData[ MaxNumOfOverlays];
 	
 //	DSA-subtraction	
@@ -223,8 +225,9 @@ Note setter is different to not break existing usage. :-( */
 @property(setter=setfImage:) float* fImage;
 
 /** WW & WL */
+@property(readonly) short bitsAllocated;
 @property(readonly) float ww, wl, fullww, fullwl;
-@property(nonatomic) float slope, offset, savedWW, savedWL, *subtractedfImage;
+@property(nonatomic) float slope, offset, realWorldSlope, realWorldOffset, savedWW, savedWL, *subtractedfImage;
 
 @property(readonly) BOOL notAbleToLoadImage, VOILUTApplied;
 @property(readonly) NSPoint *shutterPolygonal;
@@ -345,11 +348,13 @@ Note setter is different to not break existing usage. :-( */
 /** returns calculated values for ROI:
 *  mean, total, deviation, min, max
 */
+- (void) computeROI:(ROI*) roi :(float *)mean :(float *)median :(float *)total :(float *)dev :(float *)min :(float *)max :(float *)skewness :(float*) kurtosis;
 - (void) computeROI:(ROI*) roi :(float *)mean :(float *)total :(float *)dev :(float *)min :(float *)max :(float*) skewness :(float*) kurtosis;
 - (void) computeROI:(ROI*) roi :(float *)mean :(float *)total :(float *)dev :(float *)min :(float *)max;
 
 - (void) computeBallROI:(ROI*) roi :(float*) mean :(float *)total :(float *)dev :(float *)min :(float *)max :(float *)skewness :(float*) kurtosis;
 - (void) computeBallROI:(ROI*) roi :(float*) mean :(float *)total :(float *)dev :(float *)min :(float *)max :(float *)skewness :(float*) kurtosis :(NSMutableDictionary*) peakValue :(NSMutableDictionary*) isoContour;
+- (void) computeBallROI:(ROI*) roi :(float*) mean :(float*)median :(float *)total :(float *)dev :(float *)min :(float *)max :(float *)skewness :(float*) kurtosis :(NSMutableDictionary*) peakValue :(NSMutableDictionary*) isoContour;
 
 /** Fill a ROI with a value
 * @param roi  Selected ROI
@@ -686,6 +691,7 @@ Note setter is different to not break existing usage. :-( */
 //+ (double) moment: (float *) x length:(long) length mean: (double) mean order: (int) order;
 + (double) skewness: (float*) data length: (long) length mean: (double) mean;
 + (double) kurtosis: (float*) data length: (long) length mean: (double) mean;
++ (float) median: (float*) data length: (long) length;
 
 #ifndef OSIRIX_LIGHT
 /** create ROIs from RTSTRUCT */

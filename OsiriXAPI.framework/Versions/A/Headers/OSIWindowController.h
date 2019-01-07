@@ -49,11 +49,14 @@ enum OsiriXBlendingTypes {BlendingPlugin = -1, BlendingFusion = 1, BlendingSubtr
 	BOOL windowIsMovedByTheUserO;
     NSTimeInterval windowDidMoveLastTimeInterval;
 	NSRect savedWindowsFrameO;
-	
+	NSTimeInterval windowInitTime;
+    
 	DicomDatabase* _database;
 }
 
 @property(nonatomic,retain) DicomDatabase* database;
+@property NSTimeInterval windowInitTime;
+
 -(void)refreshDatabase:(NSDictionary*)dict;
 - (void) autoreleaseIfClosed;
 + (BOOL) dontWindowDidChangeScreen;
@@ -61,6 +64,7 @@ enum OsiriXBlendingTypes {BlendingPlugin = -1, BlendingFusion = 1, BlendingSubtr
 + (void) setDontEnterMagneticFunctions:(BOOL) a;
 - (void) setMagnetic:(BOOL) a;
 - (BOOL) magnetic;
++ (NSArray*) allMagneticWindowControllers;
 
 + (void) setWindowAppearance: (NSWindow*) window;
 + (NSColor*) darkAppearanceFontColor;

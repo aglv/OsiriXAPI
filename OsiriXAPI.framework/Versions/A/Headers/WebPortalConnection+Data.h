@@ -31,6 +31,7 @@
 -(void)processPasswordForgottenHtml;
 -(void)processAccountHtml;
 -(void)processClearCaches;
+-(void)processLogHTTPRequest;
 
 -(void)processAdminIndexHtml;
 -(void)processAdminUserHtml;
@@ -65,5 +66,6 @@
 
 + (NSDictionary*) processOHIFJsonWithStudies: (NSArray*) requestedStudies series:(NSArray*) requestedSeries baseURL:(NSString*) baseURL mobile:(BOOL) isMobile wadoSyntax: (NSString*) ws filesForInstanceUID: (NSDictionary*) filesDictionary;
 + (NSDictionary*) processOHIFJsonWithStudies: (NSArray*) requestedStudies series:(NSArray*) requestedSeries baseURL:(NSString*) baseURL mobile:(BOOL) isMobile wadoSyntax: (NSString*) ws filesForInstanceUID: (NSDictionary*) filesDictionary anonymized: (BOOL) anonymized;
++ (NSDictionary*) processOHIFJsonWithStudies: (NSArray*) requestedStudies series:(NSArray*) requestedSeries addCommentsAndStatus: (BOOL) addCommentsAndStatus;
 @end
 

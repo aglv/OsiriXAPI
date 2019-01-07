@@ -153,6 +153,8 @@ typedef char* DcmDataset;
 - (void) move:(NSDictionary*) dict retrieveMode: (int) retrieveMode;
 - (void) move:(NSDictionary*) dict;
 
+- (NSMutableURLRequest*) URLRequest;
+
 //- (void) sendMessage: (NSString*) abstractSyntax command: (int) cmd;
 
 + (dispatch_semaphore_t)semaphoreForServerHostAndPort:(NSString*)key;

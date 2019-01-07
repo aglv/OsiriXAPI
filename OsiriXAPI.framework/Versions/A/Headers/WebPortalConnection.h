@@ -65,6 +65,7 @@
 +(NSString*)FormatParams:(NSDictionary*)dict;
 +(NSDictionary*)ExtractParams:(NSString*)paramsString;
 +(NSString*) cleanUsername: (NSString*) username;
++(void) setLogHTTPRequest: (BOOL) v;
 
 -(BOOL)requestIsIPhone;
 -(BOOL)requestIsMobile;

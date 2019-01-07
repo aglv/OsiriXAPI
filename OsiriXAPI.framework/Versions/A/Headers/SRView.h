@@ -291,7 +291,6 @@ typedef struct renderSurface
 	
 	BOOL						_dragInProgress;
 	NSTimer						*_mouseDownTimer;
-	NSImage						*destinationImage;
 	
 	NSPoint						_mouseLocStart;  // mouseDown start point
 	BOOL						_resizeFrame;

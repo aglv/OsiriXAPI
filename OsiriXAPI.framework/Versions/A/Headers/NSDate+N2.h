@@ -12,6 +12,9 @@
 
 @interface NSDate (N2)
 
++(id)dateWithString:(NSString *)str calendarFormat:(NSString*)format;
+- (NSString*) dateAsStringWithCalendarFormat: (NSString*)format;
+
 +(id)dateWithYYYYMMDD:(NSString*)datestr HHMMss:(NSString*)timestr;
 -(NSDateComponents*) differenceWithDate: (NSDate*) endDate;
 -(NSCalendarDate*) endOfDay;

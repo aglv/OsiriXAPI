@@ -7,13 +7,11 @@
  All rights reserved.
  =========================================================================*/
 
-// 7/7/2005 Fixed bug with planar configuration and YBR. LP
-
 #import <Foundation/Foundation.h>
 #import "DCMAttribute.h"
 
 enum photometricmode{DCM_UNKNOWN_PHOTOMETRIC, DCM_MONOCHROME1,  DCM_MONOCHROME2, DCM_RGB, DCM_ARGB,  DCM_YBR_FULL_422, DCM_YBR_PARTIAL_422, DCM_YBR_FULL, DCM_YBR_RCT,  DCM_YBR_ICT, DCM_HSV, DCM_CMYK, DCM_PALETTE };
-
+typedef enum DCM_CompressionQuality_ {DCMLosslessQuality = 0, DCMHighQuality, DCMMediumQuality, DCMLowQuality} DCM_CompressionQuality;
 
 
 @class DCMTransferSyntax;
