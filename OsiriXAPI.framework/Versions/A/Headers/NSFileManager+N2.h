@@ -1,6 +1,6 @@
 /*=========================================================================
  Program:   OsiriX
- Copyright (c) 2010 - 2018 Pixmeo SARL
+ Copyright (c) 2010 - 2019 Pixmeo SARL
  266 rue de Bernex
  CH-1233 Bernex
  Switzerland
@@ -18,16 +18,17 @@ NS_ASSUME_NONNULL_BEGIN
 -(void) correctWritingPermissionForDirectory:(NSString*) path error: (NSError* _Nullable *) error;
 
 -(void) moveItemAtPathToTrash: (NSString*) path;
--(NSString*)findSystemFolderOfType:(int)folderType forDomain:(int)domain;
 -(NSString*)userApplicationSupportFolderForApp;
 -(NSString*)tmpFilePathInDir:(NSString*)dirPath;
 -(NSString*)tmpDirPath;
 -(NSString*)tmpFilePathInTmp;
 -(NSString*)tmpFilePathInTmpWithExtension: (NSString*) ext;
+-(void) chmodPath: (NSString*) path;
 -(NSString*)confirmDirectoryAtPath:(NSString*)dirPath;
 -(NSString*)confirmNoIndexDirectoryAtPath:(NSString*)path;
 -(NSString*)confirmDirectoryAtPath:(NSString*)dirPath createIntermediateDirectories: (BOOL) createIntermediateDirectories;
 -(NSString*)confirmDirectoryAtPath:(NSString*)dirPath subDirectory: (BOOL) subDirectory createIntermediateDirectories: (BOOL) createIntermediateDirectories;
+-(unsigned long long)folderSize:(NSString*)path;
 -(NSUInteger)sizeAtPath:(NSString*)path;
 -(NSUInteger)sizeAtFSRef:(FSRef*)theFileRef;
 -(unsigned long long) fileSize:(NSString*) filePath;

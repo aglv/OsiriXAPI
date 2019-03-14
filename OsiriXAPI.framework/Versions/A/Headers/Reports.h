@@ -1,6 +1,6 @@
 /*=========================================================================
  Program:   OsiriX
- Copyright (c) 2010 - 2018 Pixmeo SARL
+ Copyright (c) 2010 - 2019 Pixmeo SARL
  266 rue de Bernex
  CH-1233 Bernex
  Switzerland
@@ -39,13 +39,16 @@ enum {kMicrosoftWordReport = 0,
 - (BOOL) createNewOpenDocumentReportForStudy:(NSManagedObject*)aStudy toDestinationPath:(NSString*)aPath;
 + (NSArray*)pagesTemplatesList;
 + (NSString*)databasePagesTemplatesDirPath;
++ (NSString*)databaseOpenDocumentTemplatesDirPath;
 + (NSArray*)wordTemplatesList;
++ (NSArray*)openDocumentTemplatesList;
 + (NSString*)databaseWordTemplatesDirPath;
 - (NSMutableString *)templateName;
 - (void)setTemplateName:(NSString *)aName;
 + (int) Pages5orHigher;
 + (void)checkForPagesTemplate;
 + (void)checkForWordTemplates;
++ (void)checkForOpenDocumentTemplates;
 + (NSDictionary*) searchAndReplaceFieldsFromStudy:(DicomStudy*)aStudy inString:(NSMutableString*)aString;
 + (NSDictionary*) searchAndReplaceFieldsFromStudy:(DicomStudy*)aStudy inString:(NSMutableString*)aString testValidFields: (BOOL) testValidFields htmlEncoding: (BOOL) htmlEncoding;
 + (NSString*) getDICOMStringValueForField: (NSString*) rawField inDICOMFile: (NSString*) path;

@@ -36,10 +36,15 @@
 	UInt64 requestContentLengthReceived;
 	
 	NSMutableArray *responseDataSizes;
+    
+    NSTimeInterval connectionDate;
+    NSTimer *connectionTimeout;
 }
-+(NSString*) countryForIP: (NSString*) ip;
++ (NSString*) countryForIP: (NSString*) ip;
 + (NSArray*) recentNonces;
++ (unsigned long) HTTPConnectionCounter;
 
+- (AsyncSocket*) asyncSocket;
 - (id)initWithAsyncSocket:(AsyncSocket *)newSocket forServer:(HTTPServer *)myServer;
 
 - (BOOL)supportsMethod:(NSString *)method atPath:(NSString *)path;

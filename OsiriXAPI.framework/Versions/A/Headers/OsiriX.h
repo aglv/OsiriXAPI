@@ -236,6 +236,11 @@
 #include <OsiriXAPI/oftempf.h>
 #include <OsiriXAPI/ofcond.h>
 #include <OsiriXAPI/ofmap.h>
+#include <OsiriXAPI/tuplefrd.h>
+#include <OsiriXAPI/tuplefwd.h>
+#include <OsiriXAPI/tuple.h>
+#include <OsiriXAPI/helpers.h>
+#include <OsiriXAPI/variant.h>
 #include <OsiriXAPI/dcmtrans.h>
 #include <OsiriXAPI/dcmsmap.h>
 #include <OsiriXAPI/dcasccff.h>
@@ -3716,6 +3721,7 @@
 #include <OsiriXAPI/DicomAlbum.h>
 #include <OsiriXAPI/ComparativeCell.h>
 #include <OsiriXAPI/KeyImagesWindow.h>
+#include <OsiriXAPI/DecompressFunctions.h>
 #include <OsiriXAPI/SRFlyThruAdapter+StereoVision.h>
 #include <OsiriXAPI/StructuredReport.h>
 #include <OsiriXAPI/AppController.h>

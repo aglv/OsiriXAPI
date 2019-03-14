@@ -1,6 +1,6 @@
 /*=========================================================================
  Program:   OsiriX
- Copyright (c) 2010 - 2018 Pixmeo SARL
+ Copyright (c) 2010 - 2019 Pixmeo SARL
  266 rue de Bernex
  CH-1233 Bernex
  Switzerland
@@ -66,6 +66,7 @@ enum SendServerType { osirixServer, offisServer };
 + (BOOL) executeSend:(NSArray*) files patientName: (NSString*) patientName studyDescription: (NSString*) studyDescription showError: (BOOL) showError server:(NSDictionary*) server;
 + (BOOL) executeSend:(NSArray*) files patientName: (NSString*) patientName studyDescription: (NSString*) studyDescription database: (DicomDatabase*) db showError: (BOOL) showError server:(NSDictionary*) server;
 + (BOOL) executeSend:(NSArray*) files patientName: (NSString*) patientName studyDescription: (NSString*) studyDescription database: (DicomDatabase*) db showError: (BOOL) showError server:(NSDictionary*) server error:(NSError**) returnedError;
++ (BOOL) executeSend:(NSArray*) files patientName: (NSString*) patientName patientID: (NSString*) patientID studyDescription: (NSString*) studyDescription database: (DicomDatabase*) db showError: (BOOL) showError server:(NSDictionary*) server error:(NSError**) returnedError;
 + (NSArray*) changeTransferSyntaxTo: (int) newSyntax quality: (int) opt_Quality forFiles: (NSArray*) filesToSend tmpFiles:(NSArray**) tmpFiles;
 + (NSArray*) changeTransferSyntaxToAnyOfTheseSyntaxes: (NSArray*) newSyntaxes quality: (int) opt_Quality forFiles: (NSArray*) filesToSend tmpFiles:(NSArray**) tmpFiles;
 - (void) sendDICOMFilesOffis:(NSDictionary *) dict;

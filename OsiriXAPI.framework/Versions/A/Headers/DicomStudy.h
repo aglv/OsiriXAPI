@@ -1,6 +1,6 @@
 /*=========================================================================
  Program:   OsiriX
- Copyright (c) 2010 - 2018 Pixmeo SARL
+ Copyright (c) 2010 - 2019 Pixmeo SARL
  266 rue de Bernex
  CH-1233 Bernex
  Switzerland
@@ -25,6 +25,7 @@ typedef enum {
 {
 	BOOL isHidden;
 	NSNumber *dicomTime, *cachedRawNoFiles;
+    NSTimeInterval cachedRawNoFilesTime;
     NSUInteger _numberOfImagesWhenCachedModalities;
 	NSString *cachedModalites, *cacheYearOldAcquisition, *cacheYearOld;
     NSColor *cachedColor;
@@ -41,6 +42,8 @@ typedef enum {
     
     NSDictionary *distantServer;
     NSArray *distantSOPInstances;
+    
+    int avoidReentry3;
 }
 @property (nonatomic) int32_t distantServerState;
 @property (nonatomic) double distantServerStateTime;
@@ -115,6 +118,7 @@ typedef enum {
 - (NSString*) dateOfBirthFormatted;
 - (NSSet*) images;
 - (NSNumber*) rawNoFiles;
+- (void) resetCachedRawNoFiles;
 - (NSString*) modalities;
 + (NSString*) displayedModalitiesForSeries: (NSArray*) seriesModalities;
 + (NSArray*) chronologicalColors;

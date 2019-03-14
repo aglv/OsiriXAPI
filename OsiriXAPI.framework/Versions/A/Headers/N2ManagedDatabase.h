@@ -1,6 +1,6 @@
 /*=========================================================================
  Program:   OsiriX
- Copyright (c) 2010 - 2018 Pixmeo SARL
+ Copyright (c) 2010 - 2019 Pixmeo SARL
  266 rue de Bernex
  CH-1233 Bernex
  Switzerland
@@ -83,10 +83,12 @@
 
 // in these methods, e can be an NSEntityDescription* or an NSString*
 -(NSArray*)objectsForEntity:(id)e;
+-(NSArray*)objectsForEntity:(id)e propertiesToFetch: (NSArray*) propertiesToFetch;
 -(NSArray*)objectsForEntity:(id)e predicate:(NSPredicate*)p;
 -(NSArray*)objectsForEntity:(id)e predicate:(NSPredicate*)p error:(NSError**)err;
 -(NSArray*)objectsForEntity:(id)e predicate:(NSPredicate*)p error:(NSError**)error fetchLimit:(NSUInteger)fetchLimit sortDescriptors:(NSArray*)sortDescriptors;
 -(NSArray*)objectsForEntity:(id)e predicate:(NSPredicate*)p error:(NSError**)error fetchLimit:(NSUInteger)fetchLimit fetchOffset:(NSUInteger)fetchOffset sortDescriptors:(NSArray*)sortDescriptors;
+-(NSArray*)objectsForEntity:(id)e predicate:(NSPredicate*)p error:(NSError**)error fetchLimit:(NSUInteger)fetchLimit fetchOffset:(NSUInteger)fetchOffset sortDescriptors:(NSArray*)sortDescriptors propertiesToFetch:(NSArray*) propertiesToFetch;
 -(NSUInteger)countObjectsForEntity:(id)e;
 -(NSUInteger)countObjectsForEntity:(id)e predicate:(NSPredicate*)p;
 -(NSUInteger)countObjectsForEntity:(id)e predicate:(NSPredicate*)p error:(NSError**)err;

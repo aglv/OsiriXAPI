@@ -1,6 +1,6 @@
 /*=========================================================================
  Program:   OsiriX
- Copyright (c) 2010 - 2018 Pixmeo SARL
+ Copyright (c) 2010 - 2019 Pixmeo SARL
  266 rue de Bernex
  CH-1233 Bernex
  Switzerland
@@ -16,9 +16,9 @@
 {
 	IBOutlet	NSButton *version;
     IBOutlet    NSTextField *regAndTransactionID;
-	NSTimer		*timerIn, *timerOut;
-	IBOutlet	id view;
-	int         versionType;
+                NSTimer	*timerIn, *timerOut;
+	IBOutlet    NSImageView *view;
+                int versionType;
 }
 
 - (void) affiche;

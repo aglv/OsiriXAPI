@@ -1,6 +1,6 @@
 /*=========================================================================
  Program:   OsiriX
- Copyright (c) 2010 - 2018 Pixmeo SARL
+ Copyright (c) 2010 - 2019 Pixmeo SARL
  266 rue de Bernex
  CH-1233 Bernex
  Switzerland
@@ -53,6 +53,7 @@ typedef char* DcmDataset;
 	OFCondition globalCondition;
     NSUInteger _countOfSuboperations, _countOfSuccessfulSuboperations;
     NSMutableDictionary *miscDictionary;
+    NSMutableDictionary *logEntry;
     DcmDataset *originalDataset;
     
     NSMutableData *wadoRSData;
@@ -75,6 +76,7 @@ typedef char* DcmDataset;
 @property NSUInteger countOfSuboperations, countOfSuccessfulSuboperations;
 @property (retain) NSString *abstractSyntax, *incomingPath, *wadoRSBoundary, *localStudyName, *localSudyDescription;
 @property (retain, nonatomic) DicomDatabase *db;
+@property( retain) NSMutableDictionary *logEntry;
 
 + (NSURLSession*) dicomWebURLSession;
 
@@ -104,6 +106,8 @@ typedef char* DcmDataset;
 - (NSNumber*)rawNoFiles;
 - (NSString*)type;
 - (NSString *)uid;
+- (NSString*) studyInstanceUID;
+- (NSString*) seriesInstanceUID;
 - (BOOL) isDistant;
 - (NSString *)theDescription;
 - (NSString *)name;

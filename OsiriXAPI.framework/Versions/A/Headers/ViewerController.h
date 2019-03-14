@@ -1,6 +1,6 @@
 /*=========================================================================
  Program:   OsiriX
- Copyright (c) 2010 - 2018 Pixmeo SARL
+ Copyright (c) 2010 - 2019 Pixmeo SARL
  266 rue de Bernex
  CH-1233 Bernex
  Switzerland
@@ -438,6 +438,7 @@ typedef enum _ThickSlabMode
 @property(nonatomic, retain) ViewerController *blendedWindow;
 
 @property(retain) NSNumber* flagListPODComparatives;
+@property(retain) NSThread *loadingThread;
 @property BOOL movieViewer;
 
 @property (retain) NSSliderTouchBarItem *thickSlabSliderTouchBarItem;
@@ -450,6 +451,7 @@ typedef enum _ThickSlabMode
 + (NSMutableArray*) getDisplayed2DViewers;
 + (NSCountedSet*) displayedPatientUIDs;
 + (NSMutableArray*) get2DViewers;
++ (int) countOf2DViewers;
 + (NSArray*) getDisplayedSeries;
 + (BOOL) isFrontMost2DViewer: (NSWindow*) ww;
 + (ViewerController*) frontMostDisplayed2DViewer;

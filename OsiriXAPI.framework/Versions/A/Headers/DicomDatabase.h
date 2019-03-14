@@ -1,6 +1,6 @@
 /*=========================================================================
  Program:   OsiriX
- Copyright (c) 2010 - 2018 Pixmeo SARL
+ Copyright (c) 2010 - 2019 Pixmeo SARL
  266 rue de Bernex
  CH-1233 Bernex
  Switzerland
@@ -160,6 +160,8 @@ extern NSString* const DicomDatabaseLogEntryEntityName;
 +(NSPredicate*)predicateForSmartAlbumFilter:(NSString*)string;
 -(void) saveAlbumsToPath:(NSString*) path;
 -(void) loadAlbumsFromPath:(NSString*) path;
+
+-(NSString*) statisticalDataForHTML:(BOOL) html getDATABASEsize:(BOOL) getDATABASEsize;
 
 -(void) addStudies:(NSArray*)dicomStudies toAlbum:(DicomAlbum*)dicomAlbum;
 -(DicomAlbum*) addAlbumWithName: (NSString*) newAlbumName predicate:(NSString*) predicate;

@@ -1,6 +1,6 @@
 /*=========================================================================
  Program:   OsiriX
- Copyright (c) 2010 - 2018 Pixmeo SARL
+ Copyright (c) 2010 - 2019 Pixmeo SARL
  266 rue de Bernex
  CH-1233 Bernex
  Switzerland
@@ -50,6 +50,8 @@
 @property (nonatomic, retain) NSNumber * cannotChangePassword;
 @property (nonatomic, retain) NSNumber * onePatientOnly;
 @property (nonatomic, retain) NSNumber * uploadDocumentToStudy;
+@property (nonatomic, retain) NSNumber * studyOldestDate;
+@property (nonatomic, retain) NSNumber * studyOldestDateLimitation;
 
 -(void)generatePassword;
 -(void)convertPasswordToHashIfNeeded;

@@ -1,6 +1,6 @@
 /*=========================================================================
  Program:   OsiriX
- Copyright (c) 2010 - 2018 Pixmeo SARL
+ Copyright (c) 2010 - 2019 Pixmeo SARL
  266 rue de Bernex
  CH-1233 Bernex
  Switzerland
@@ -38,14 +38,15 @@ typedef enum
     
 } GAMode;
 
-enum
-{
+enum compressionTechniqueType {
 	compression_sameAsDefault = 0,
 	compression_none = 1,
 	compression_JPEG = 2,
 	compression_JPEG2000 = 3,
-    compression_JPEGLS = 4
+    compression_JPEGLS = 4,
+    compression_undefined = 255
 };
+typedef enum compressionTechniqueType compressionTechniqueType;
 
 enum
 {

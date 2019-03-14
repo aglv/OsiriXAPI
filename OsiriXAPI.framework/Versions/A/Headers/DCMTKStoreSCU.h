@@ -1,6 +1,6 @@
 /*=========================================================================
  Program:   OsiriX
- Copyright (c) 2010 - 2018 Pixmeo SARL
+ Copyright (c) 2010 - 2019 Pixmeo SARL
  266 rue de Bernex
  CH-1233 Bernex
  Switzerland
@@ -37,7 +37,7 @@ int runStoreSCU(const char *myAET, const char*peerAET, const char*hostname, int 
 	int _numberOfFiles;
 	int _numberSent;
 	int _numberErrors;
-	NSString *_patientName;
+	NSString *_patientName, *_patientID;
 	NSString *_studyDescription; 
 	id _logEntry;
 	

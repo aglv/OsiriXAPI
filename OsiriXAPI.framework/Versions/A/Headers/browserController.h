@@ -1,6 +1,6 @@
 /*=========================================================================
  Program:   OsiriX
- Copyright (c) 2010 - 2018 Pixmeo SARL
+ Copyright (c) 2010 - 2019 Pixmeo SARL
  266 rue de Bernex
  CH-1233 Bernex
  Switzerland
@@ -25,7 +25,7 @@
 @class MyOutlineView,DCMView,DCMPix;
 @class StructuredReportController,BrowserMatrix;
 @class PluginManagerController,WaitRendering, Wait, ActivityWindowController;
-@class WebPortalUser, DCMTKStudyQueryNode, ImageAndTextCell, DicomAlbum;
+@class WebPortalUser, DCMTKStudyQueryNode, DCMTKeriesQueryNode, DCMTKQueryNode, ImageAndTextCell, DicomAlbum;
 
 #ifndef OSIRIX_LIGHT
 @class DCMTKQueryNode;
@@ -57,8 +57,9 @@ extern NSString* O2AlbumDragType;
 <NSTableViewDelegate, NSDrawerDelegate, NSMatrixDelegate, NSToolbarDelegate, NSMenuDelegate, NSSplitViewDelegate, WebPolicyDelegate, WKNavigationDelegate>   //NSObject
 #endif
 {
-	DicomDatabase*					_database;
-	NSMutableDictionary				*databaseIndexDictionary;
+//    BOOL                    databaseOccluded;
+	DicomDatabase*			_database;
+	NSMutableDictionary		*databaseIndexDictionary;
 	
 	NSDateFormatter			*TimeFormat, *TimeWithSecondsFormat, *DateTimeWithSecondsFormat;
 	
@@ -107,6 +108,7 @@ extern NSString* O2AlbumDragType;
     unsigned long           willAddToFetchLimit;
     unsigned long           currentFetchLimit;
     unsigned long           outlineViewArrayCount;
+    unsigned long           outlineViewSelectionDidChangeCount;
     
     BOOL                    outlineViewFiltered;
 	NSArray					*outlineViewArray, *originalOutlineViewArray, *outlineViewArrayStudyInstanceUIDs, *outlineViewSortDescriptors;
@@ -236,7 +238,7 @@ extern NSString* O2AlbumDragType;
 	NSMutableArray					*cachedFilesForDatabaseOutlineSelectionCorrespondingObjects;
 	NSIndexSet						*cachedFilesForDatabaseOutlineSelectionIndex;
 	
-    id                              lastROIsAndKeyImagesSelectedFiles, lastROIsImagesSelectedFiles, lastKeyImagesSelectedFiles;
+    id                              lastROIsAndKeyImagesSelectedFiles, lastROIsAndKeyImagesSelectedStudies, lastROIsImagesSelectedFiles, lastKeyImagesSelectedFiles;
     NSArray                         *ROIsAndKeyImagesCache, *ROIsImagesCache, *KeyImagesCache;
     BOOL                            ROIsAndKeyImagesCacheSameSeries, ROIsImagesCacheSameSeries;
     
@@ -266,7 +268,7 @@ extern NSString* O2AlbumDragType;
     NSTimeInterval lastRefreshComparativeStudies; //Refresh the studies after X minutes
     
     NSMutableArray *comparativeRetrieveQueue, *comparativeSeriesRetrieveQueue; //Retrieve Queue: don't retrieve the same study multiple times
-    DCMTKStudyQueryNode *comparativeStudyWaited; //The study to be selected or opened
+    NSString *comparativeStudyWaited, *comparativeSeriesWaited; //The studyInstanceUID and seriesInstanceUID to be selected or opened
     ViewerController *comparativeStudyWaitedViewer; //The destination viewer
     NSTimeInterval comparativeStudyWaitedTime; //The time when the study to be selected or opened was activated
     BOOL comparativeStudyWaitedToOpen; // for retrieveStudy: function
@@ -304,6 +306,8 @@ extern NSString* O2AlbumDragType;
     
     IBOutlet NSWindow *shareStudyRecipientWindow;
     IBOutlet NSView *accessoryViewImportRecipients;
+    
+    BOOL awakedFromNib;
 }
 
 @property(retain) NSArray *outlineViewSortDescriptors, *outlineViewArray, *originalOutlineViewArray, *outlineViewArrayStudyInstanceUIDs;
@@ -317,7 +321,7 @@ extern NSString* O2AlbumDragType;
 @property(retain,nonatomic) DicomDatabase* database;
 @property(readonly) NSArrayController* sources;
 @property(readonly) NSRecursiveLock *computingNumberOfStudiesForAlbumsLock;
-
+//@property(readonly) BOOL databaseOccluded;
 @property(readonly) NSDateFormatter *DateTimeFormat __deprecated, *DateOfBirthFormat __deprecated, *TimeFormat, *TimeWithSecondsFormat, *DateTimeWithSecondsFormat;
 @property(readonly) NSArray *matrixViewArray;
 @property(readonly) NSMatrix *oMatrix;
@@ -474,6 +478,7 @@ extern NSString* O2AlbumDragType;
 - (void) delObjects:(NSArray*) objectsToDelete;
 - (IBAction) selectFilesAndFoldersToAdd:(id) sender;
 - (void) showDatabase:(id)sender;
+- (void) windowWillAppear;
 - (BOOL) displayStudy: (DicomStudy*) study object:(NSManagedObject*) element command:(NSString*) execute;
 - (IBAction) matrixPressed:(id)sender;
 - (void) loadDatabase:(NSString*) path __deprecated;
@@ -617,7 +622,6 @@ extern NSString* O2AlbumDragType;
 - (void) checkIncomingNow:(id) sender __deprecated;
 - (NSArray*) openSubSeries: (NSArray*) toOpenArray;
 - (IBAction) checkMemory:(id) sender;
-- (IBAction) buildAllThumbnails:(id) sender;
 
 //DB plugins
 - (void)executeFilterDB:(id)sender;

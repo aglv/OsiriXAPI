@@ -1,6 +1,6 @@
 /*=========================================================================
  Program:   OsiriX
- Copyright (c) 2010 - 2018 Pixmeo SARL
+ Copyright (c) 2010 - 2019 Pixmeo SARL
  266 rue de Bernex
  CH-1233 Bernex
  Switzerland
@@ -19,4 +19,6 @@
 @property(readonly,retain) NSMutableArray* rightSubviews;
 @property(retain) NSColor* textColor;
 
++ (void) setWillBeVisible: (BOOL) v;
++ (BOOL) willBeVisible;
 @end
