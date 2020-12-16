@@ -1,6 +1,6 @@
 /*=========================================================================
  Program:   OsiriX
- Copyright (c) 2010 - 2019 Pixmeo SARL
+ Copyright (c) 2010 - 2020 Pixmeo SARL
  266 rue de Bernex
  CH-1233 Bernex
  Switzerland
@@ -13,6 +13,7 @@
 #import <AppKit/AppKit.h>
 #import "ROI.h"
 #import "DefaultsOsiriX.h"
+#import "DicomSeries.h"
 
 @class DCMView;
 @class OpacityTransferView;
@@ -297,6 +298,7 @@ typedef enum _ThickSlabMode
     
     NSTimer					*timer, *movieTimer;//, *timeriChat;
     NSTimeInterval			lastTime, lastTimeFrame;
+    float                   curImageRemaining;
 	NSTimeInterval			lastMovieTime;
 	
 	ThickSlabController		*thickSlab;
@@ -403,9 +405,14 @@ typedef enum _ThickSlabMode
     BOOL changeImageData;
     
     int *viewedImagesArray;
+    id annotationsObserver;
+    
+    NSImage *toolbarMenuItemImage;
+    NSArray *allStudiesMatrixModalities;
 }
 @property BOOL preFlipped, sortedInAscending;
 @property(nonatomic) int *viewedImagesArray;
+@property(retain) id annotationsObserver;
 @property(retain) NSString *sortedByKey, *reportURL;
 @property(retain, nonatomic) NSImage *reportIcon;
 @property(retain) NSCalendarDate *injectionDateTime;
@@ -447,10 +454,13 @@ typedef enum _ThickSlabMode
 @property (retain) NSSliderTouchBarItem *ROIsThicknessSliderTouchBarItem;
 @property (retain) NSSliderTouchBarItem *ROIsOpacitySliderTouchBarItem;
 
+@property (retain) NSArray *allStudiesMatrixModalities;
+
 /** Array of all 2D Viewers */
 + (NSMutableArray*) getDisplayed2DViewers;
 + (NSCountedSet*) displayedPatientUIDs;
 + (NSMutableArray*) get2DViewers;
++ (NSArray*) get2DViewersObjectIDs;
 + (int) countOf2DViewers;
 + (NSArray*) getDisplayedSeries;
 + (BOOL) isFrontMost2DViewer: (NSWindow*) ww;
@@ -461,6 +471,10 @@ typedef enum _ThickSlabMode
 + (NSMutableArray*) poolOf2DViewers;
 + (NSArray*) studyColors;
 + (void) clearFrontMost2DViewerCache;
++ (BOOL) dontUseTooltipForThumbnail;
++ (BOOL) processReslice:(long) directionm pixList:(NSArray**) pixList fileList:(NSArray**) fileList maxMovieIndex: (int) maxMovieIndex processorsLock:(NSConditionLock*) processorsLock newPixList: (NSMutableArray*) xPix newFileList: (NSMutableArray*) xFiles newData:(NSMutableArray*) xData;
++(BOOL) processReslice:(long) directionm pixList:(NSArray**) pixList fileList:(NSArray**) fileList maxMovieIndex: (int) maxMovieIndex processorsLock:(NSConditionLock*) processorsLock newPixList: (NSMutableArray*) xPix newFileList: (NSMutableArray*) xFiles newData:(NSMutableArray*) xData square: (BOOL) square;
++(NSArray*) processResliceFrom:(SliceOrientation) from to:(SliceOrientation) to pixList:(NSArray*) pixList square: (BOOL) square;
 
 /**  Create a new 2D Viewer
 * @param pixList Array of DCMPix objects
@@ -668,6 +682,7 @@ typedef enum _ThickSlabMode
 - (void) setUpdateTilingViewsValue:(BOOL) v;
 - (IBAction) ConvertToBWMenu:(id) sender;
 - (NSScreen*) get3DViewerScreen: (ViewerController*) v;
++ (void) place3DViewerWindow:(NSWindowController*) viewer from2DViewer: (ViewerController*) viewer2D;
 - (void) place3DViewerWindow:(NSWindowController*) viewer;
 - (IBAction) export2PACS:(id) sender;
 - (void) print:(id) sender;
@@ -677,6 +692,7 @@ typedef enum _ThickSlabMode
 - (IBAction) updateZVector:(id) sender;
 - (void)displayDICOMOverlays: (id)sender;
 - (IBAction)resampleDataBy2:(id)sender;
+- (BOOL) validateToolbarItemIdentifier: (NSString *) toolbarItemIdentifier;
 - (void) setStatusValue:(int) v;
 - (BOOL)resampleDataBy2;
 - (BOOL)resampleDataWithFactor:(float)factor;
@@ -750,6 +766,8 @@ typedef enum _ThickSlabMode
 - (void) setupToolbar;
 - (NSToolbar*) toolbar;
 - (void) PlayStop:(id) sender;
+- (BOOL) isPlaying;
++ (BOOL) isOneViewerPlaying;
 - (void) performAnimationIfPlaying;
 - (short) getNumberOfImages;
 - (float) frameRate;
@@ -767,6 +785,7 @@ typedef enum _ThickSlabMode
 - (void) checkBuiltMatrixPreview;
 - (void)comparativeRefresh:(NSString*) patientUID;
 - (void) loadViewedImagesArray;
++ (NSArray*) buildApplyProtocolMenuForModality: (NSString*) modalities;
 
 /** Used to determine in the Window Controller is a 2D Viewer.
 * Always return YES
@@ -782,6 +801,8 @@ typedef enum _ThickSlabMode
 /** String for the currently selected Opacity menu item */
 - (NSString*) curOpacityMenu;
 
+/** String for the currently selected Convolution menu item */
+- (NSString*) curConvMenu;
 
 /** Flag to indicate the the window will close */
 - (BOOL) windowWillClose;
@@ -817,6 +838,7 @@ typedef enum _ThickSlabMode
 - (IBAction) roiSetPixels:(id) sender;
 - (IBAction) roiPropagateSetup: (id) sender;
 - (IBAction) roiPropagate:(id) sender;
+- (void) roiPropagateToEntireSeries: (ROI*) roi alias: (BOOL) alias;
 - (void) loadSeriesUp;
 - (void) loadSeriesDown;
 - (void) showWindowTransition;
@@ -832,6 +854,7 @@ typedef enum _ThickSlabMode
 - (IBAction) orthogonalMPRViewer:(id) sender;
 
 - (void) showCurrentThumbnail:(id) sender;
+- (void) showCurrentThumbnail:(id) sender centered: (BOOL) centered;
 
 #ifndef OSIRIX_LIGHT
 /** ReSort the images displayed according to IMAGE Table field */

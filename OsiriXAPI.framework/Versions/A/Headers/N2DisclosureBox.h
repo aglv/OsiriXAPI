@@ -1,6 +1,6 @@
 /*=========================================================================
  Program:   OsiriX
- Copyright (c) 2010 - 2019 Pixmeo SARL
+ Copyright (c) 2010 - 2020 Pixmeo SARL
  266 rue de Bernex
  CH-1233 Bernex
  Switzerland
@@ -9,8 +9,6 @@
 
 
 #import <Cocoa/Cocoa.h>
-
-@class N2DisclosureButtonCell;
 
 extern NSString* N2DisclosureBoxDidToggleNotification;
 extern NSString* N2DisclosureBoxWillExpandNotification;
@@ -25,7 +23,6 @@ extern NSString* N2DisclosureBoxDidCollapseNotification;
 }
 
 @property BOOL enabled;
-@property(readonly) N2DisclosureButtonCell* titleCell;
 
 -(id)initWithTitle:(NSString*)title content:(NSView*)view;
 -(void)toggle:(id)sender;

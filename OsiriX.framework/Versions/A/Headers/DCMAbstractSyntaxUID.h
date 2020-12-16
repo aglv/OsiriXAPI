@@ -1,6 +1,6 @@
 /*=========================================================================
  Program:   OsiriX
- Copyright (c) 2010 - 2019 Pixmeo SARL
+ Copyright (c) 2010 - 2020 Pixmeo SARL
  266 rue de Bernex
  CH-1233 Bernex
  Switzerland
@@ -140,6 +140,7 @@ htt://www.pixelmed.com
 
 + (NSString *)pdfStorageClassUID;
 + (NSString *)EncapsulatedCDAStorage;
++ (NSString *)EncapsulatedSTLStorage;
 
 - (id)initWithUID:(NSString *)uid  name:(NSString *)name  type:(NSString *)type;
 - (NSString *)uid;

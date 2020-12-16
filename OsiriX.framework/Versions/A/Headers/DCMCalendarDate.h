@@ -1,6 +1,6 @@
 /*=========================================================================
  Program:   OsiriX
- Copyright (c) 2010 - 2019 Pixmeo SARL
+ Copyright (c) 2010 - 2020 Pixmeo SARL
  266 rue de Bernex
  CH-1233 Bernex
  Switzerland
@@ -24,6 +24,7 @@
 * or occasionally @"%Y.%m.%d", @"%Y%m", @"%Y" 
 */
 + (id)dicomDate:(NSString *)string;
++ (id)dicomDate:(NSString *)string andAddTwoHours: (BOOL) addTwoHours;
 
 /** Create a DICOM time from a string 
 * Format for TM is HHMMSS.ffffff = @"%H%M%S.%U";"
@@ -48,6 +49,7 @@
 
 /** Create a DICOM date from a string for queries */
 + (id)queryDate:(NSString *)query;
+//+ (NSString*) mergeQueryDates: (NSString*) date1 withDate: (NSString*) date2;
 
 /** Create a DICOM date the name of this method should change but I don't want to do it right before a release - spalte */
 + (id)dateWithYear:(NSInteger)year month:(NSUInteger)month day:(NSUInteger)day hour:(NSUInteger)hour minute:(NSUInteger)minute second:(NSUInteger)second timeZone:(NSTimeZone *)aTimeZone;
@@ -57,7 +59,6 @@
 
 /** return the time as a DICOM formatted string */
 - (NSString *)timeString;
-- (NSString *)timeStringWithMilliseconds;
 
 /** return the datetime as a DICOM formatted string */
 - (NSString *)dateTimeString:(BOOL)withTimeZone;

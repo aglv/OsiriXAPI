@@ -1,6 +1,6 @@
 /*=========================================================================
  Program:   OsiriX
- Copyright (c) 2010 - 2019 Pixmeo SARL
+ Copyright (c) 2010 - 2020 Pixmeo SARL
  266 rue de Bernex
  CH-1233 Bernex
  Switzerland
@@ -10,6 +10,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "DCMTKServiceClassUser.h"
+#import "SendController.h"
 
 #ifndef OSIRIX_LIGHT
 @class DCMCalendarDate, DicomDatabase;
@@ -41,9 +42,11 @@ typedef char* DcmDataset;
     NSString *_scheduledProcedureStepStatus;
 	NSString *_accessionNumber;
     NSString *_bodyPartExamined;
+    NSString *_manufacturerModelName;
     NSString *_patientSex;
 	DCMCalendarDate *_date;
 	DCMCalendarDate *_birthdate;
+    NSString *_birthdateString;
 	DCMCalendarDate *_time;
 	NSString *_modality;
 	NSNumber *_numberImages;
@@ -84,6 +87,7 @@ typedef char* DcmDataset;
 + (void) errorURL:(NSArray*) msg;
 
 + (NSString*) boundaryFromHeaders: (NSDictionary*) headers;
++ (NSString*) syntaxStringForTransferSyntaxCode: (TransferSyntaxCodes) ts;
 
 + (id)queryNodeWithDataset:(DcmDataset *)dataset
 			callingAET:(NSString *)myAET  
@@ -103,6 +107,8 @@ typedef char* DcmDataset;
 			compression: (float)compression
 			extraParameters:(NSDictionary *)extraParameters;
 
+- (NSString *)comment;
+- (NSString *)comments;
 - (NSNumber*)rawNoFiles;
 - (NSString*)type;
 - (NSString *)uid;
@@ -112,13 +118,18 @@ typedef char* DcmDataset;
 - (NSString *)theDescription;
 - (NSString *)name;
 - (NSString *)rawName;
+- (DCMCalendarDate *)birthdate;
 - (NSString *)patientID;
 - (NSString *)accessionNumber;
 - (NSString *)bodyPartExamined;
+- (NSString *)manufacturerModelName;
 - (NSString *)referringPhysician;
 - (NSString *)patientSex;
 - (NSString *)performingPhysician;
 - (NSString *)institutionName;
+- (NSDate *)firstImageDate;
+- (NSDate *)lastImageDate;
+- (NSTimeInterval) acquisitionDuration;
 - (DCMCalendarDate *)date;
 - (DCMCalendarDate *)time;
 - (NSString *)modality;
@@ -162,6 +173,6 @@ typedef char* DcmDataset;
 //- (void) sendMessage: (NSString*) abstractSyntax command: (int) cmd;
 
 + (dispatch_semaphore_t)semaphoreForServerHostAndPort:(NSString*)key;
-
++ (BOOL) addAuthenticationToRequest: (NSMutableURLRequest*) request fromParameters: (NSMutableDictionary*) d;
 @end
 #endif

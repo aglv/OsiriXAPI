@@ -1,6 +1,6 @@
 /*=========================================================================
  Program:   OsiriX
- Copyright (c) 2010 - 2019 Pixmeo SARL
+ Copyright (c) 2010 - 2020 Pixmeo SARL
  266 rue de Bernex
  CH-1233 Bernex
  Switzerland
@@ -27,11 +27,13 @@
     IBOutlet NSSlider *toSlider;
     
     BOOL saveAsPreferredSettings;
+    
+    NSString *printFolder;
 }
 @property (retain) ViewerController *viewer;
 @property (retain) NSArray *printers, *printersMenu;
 @property (nonatomic) int selectedPrinter;
-@property (retain) NSString *printerDescription, *pagesTextfield;
+@property (retain) NSString *printerDescription, *pagesTextfield, *printFolder;
 @property (retain) NSMutableDictionary *printer;
 @property (nonatomic) int pages, from, to, interval, numberOfImages;
 @property BOOL saveAsPreferredSettings;

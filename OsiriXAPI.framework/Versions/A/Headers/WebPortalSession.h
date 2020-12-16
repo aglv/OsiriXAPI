@@ -1,6 +1,6 @@
 /*=========================================================================
  Program:   OsiriX
- Copyright (c) 2010 - 2019 Pixmeo SARL
+ Copyright (c) 2010 - 2020 Pixmeo SARL
  266 rue de Bernex
  CH-1233 Bernex
  Switzerland
@@ -9,17 +9,17 @@
 
 #import <Cocoa/Cocoa.h>
 
-extern NSString* const SessionIPAddressKey;
+extern NSString* const SessionIPAddressKey; // NSString
 extern NSString* const SessionUsernameKey; // NSString
-extern NSString* const SessionCookieName;
+extern NSString* const SessionCookieName; // NSString
 extern NSString* const SessionLastActivityDateKey; // NSDate
-extern NSString* const SessionUserIDKey;
-extern NSString* const SessionDontDisplayUser;
+extern NSString* const SessionUserIDKey; // objectID.URIRepresentation.absoluteString
+extern NSString* const SessionDontDisplayUser;  // NSNumber
 
-@interface WebPortalSession : NSObject {
+@interface WebPortalSession : NSObject <NSCoding> {
 @private
 	NSMutableDictionary* dict;
-	NSString* sid, *ipAddr;
+	NSString* sid;
 	NSLock* dictLock;
     
     BOOL requireDoubleAuthentication, doubleAuthenticated;
@@ -30,8 +30,8 @@ extern NSString* const SessionDontDisplayUser;
     NSTimeInterval sessionCreationDateTimeInterval;
 }
 
-@property(readonly) NSString* sid;
-@property(readonly) NSMutableDictionary* dict;
+@property(retain) NSString* sid;
+@property(retain) NSMutableDictionary* dict;
 @property BOOL requireDoubleAuthentication, doubleAuthenticated;
 @property(retain) NSString *doubleAuthenticationToken, *usernameForDoubleAuthentication;
 @property NSTimeInterval timeStampForDoubleAuthentication, sessionCreationDateTimeInterval;
@@ -42,8 +42,14 @@ extern NSString* const SessionDontDisplayUser;
 -(id)objectForKey:(NSString*)k;
 
 -(NSString*)createToken;
+-(NSString*)createTokenForUser: (NSString*) username;
+
 -(BOOL)consumeToken:(NSString*)token;
+-(BOOL)consumeToken:(NSString*)token user: (NSString**) user;
+
 -(BOOL)containsToken:(NSString*)token;
+-(BOOL)containsToken:(NSString*)token user:(NSString**) user;
+
 -(NSString*)newChallenge;
 -(NSString*)challenge;
 -(void)deleteChallenge;

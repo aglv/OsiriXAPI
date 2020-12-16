@@ -1,6 +1,6 @@
 /*=========================================================================
  Program:   OsiriX
- Copyright (c) 2010 - 2019 Pixmeo SARL
+ Copyright (c) 2010 - 2020 Pixmeo SARL
  266 rue de Bernex
  CH-1233 Bernex
  Switzerland
@@ -106,6 +106,7 @@
 - (IBAction) setOrientation:(id) sender;
 - (ViewerController*) blendingController;
 - (id) initWithPix:(NSMutableArray*) pix :(NSArray*) f :(NSData*) vData :(ViewerController*) bC :(ViewerController*) vC;
+- (id) initWithSTLFile: (NSString*) stlFile series: (DicomSeries*) s;
 - (void) setupToolbar;
 - (void) setDefaultTool:(id) sender;
 - (IBAction) ApplySettings:(id) sender;

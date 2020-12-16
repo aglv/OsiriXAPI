@@ -1,6 +1,6 @@
 /*=========================================================================
  Program:   OsiriX
- Copyright (c) 2010 - 2019 Pixmeo SARL
+ Copyright (c) 2010 - 2020 Pixmeo SARL
  266 rue de Bernex
  CH-1233 Bernex
  Switzerland
@@ -13,6 +13,7 @@
 #import "sourcesTableView.h"
 #import <AppKit/AppKit.h>
 #import "SFAuthorizationView+OsiriX.h"
+#import "BrowserController.h"
 
 @class QueryArrayController;
 @class QueryFilter;
@@ -21,6 +22,16 @@
 @class DicomDatabase;
 
 #define MAXINSTANCE 40
+
+enum {
+    anyDateRadio = 0,
+    hoursRadio = 1,
+    daysRadio = 2,
+    weeksRadio = 3,
+    monthsRadio = 4,
+    onDateRadio = 5,
+    intervalRadio = 6
+};
 
 enum
 {
@@ -46,7 +57,7 @@ enum
 {
     IBOutlet    QueryOutlineView			*outlineView;
 	IBOutlet	NSProgressIndicator			*progressIndicator;
-	IBOutlet	NSSearchField				*searchFieldName, *searchFieldRefPhysician, *searchFieldID, *searchFieldAN, *searchFieldStudyDescription, *searchFieldBodyPart, *searchFieldComments, *searchInstitutionName, *searchCustomField;
+	IBOutlet	NSSearchField				*searchFieldName, *searchFieldRefPhysician, *searchFieldID, *searchFieldAN, *searchFieldStudyDescription, *searchFieldBodyPart, *searchFieldComments, *searchInstitutionName, *searchCustomField, *searchFieldStudyInstanceUID;
 	
 				NSMutableArray				*sourcesArray;
 	IBOutlet	sourcesTableView			*sourcesTable;
@@ -59,12 +70,13 @@ enum
 	
     IBOutlet	NSMatrix					*mwlStatusMatrix;
 	IBOutlet	NSMatrix					*birthdateFilterMatrix;
-	IBOutlet	NSMatrix					*dateFilterMatrix;
+    IBOutlet    NSStackView                 *dateFilterMatrix;
+    IBOutlet    NSPopUpButton               *hoursMenu, *daysMenu, *weeksMenu, *monthsMenu;
 	IBOutlet	NSMatrix					*modalityFilterMatrix;
     IBOutlet    NSMatrix                    *statusFilterMatrix;
 	IBOutlet	NSTabView					*PatientModeMatrix;
-	IBOutlet	NSDatePicker				*fromDate, *toDate, *searchBirth;
-	IBOutlet	NSTextField					*yearOldBirth;
+	IBOutlet	NSDatePicker				*fromDate, *toDate, *onDate;
+	IBOutlet	NSTextField					*yearOldBirth, *searchBirthField;
     IBOutlet	NSPopUpButton				*sendToPopup;
     
     IBOutlet NSView*                        refreshGroup;
@@ -118,8 +130,14 @@ enum
     DICOMFieldMenu *DICOMField;
     NSArray *sortArrayCopy;
     int selectedSendToPopupIndex;
+    
+    NSDate *queryControllerToDate, *queryControllerFromDate, *queryControllerOnDate;
+    
+    NSDictionary *countPresetNode;
+    NSThread *countPresetThread;
 }
 
+@property (retain, nonatomic) NSDate *queryControllerToDate, *queryControllerFromDate, *queryControllerOnDate;
 @property (readonly) NSRecursiveLock *autoQueryLock;
 @property (readonly) QueryOutlineView *outlineView;
 @property BOOL autoQuery, DatabaseIsEdited;
@@ -128,6 +146,8 @@ enum
 @property (readonly) SFAuthorizationView* authView;
 @property (retain) NSString *customDICOMFieldGroupAndElement;
 @property (retain) DICOMFieldMenu *DICOMField;
+@property (retain) NSDictionary *countPresetNode;
+@property (retain) NSThread *countPresetThread;
 
 + (QueryController*) currentQueryController;
 + (QueryController*) currentAutoQueryController;
@@ -152,7 +172,7 @@ enum
 + (NSArray*) querySOPInstancesForStudyInstanceUID:(NSString*) an server: (NSDictionary*) aServer database: (DicomDatabase*) db showErrors: (BOOL) showErrors;
 - (void) autoRetrieveSettings: (id) sender;
 - (void) saveSettings;
-+ (void) getDateAndTimeQueryFilterWithTag: (int) tag fromDate:(NSDate*) from toDate:(NSDate*) to date: (QueryFilter**) dateQueryFilter time: (QueryFilter**) timeQueryFilter;
++ (void) getDateAndTimeQueryFilterWithTag: (intervalType) tag fromDate:(NSDate*) from toDate:(NSDate*) to onDate:(NSDate*) onDate date: (QueryFilter**) dateQueryFilter time: (QueryFilter**) timeQueryFilter;
 - (void) applyPresetDictionary: (NSDictionary *) presets;
 - (void) emptyPreset:(id) sender;
 - (NSMutableDictionary*) savePresetInDictionaryWithDICOMNodes: (BOOL) includeDICOMNodes;
@@ -162,9 +182,10 @@ enum
 - (void) refreshAutoQR: (id) sender;
 - (void) refreshList: (NSArray*) l;
 - (void) setCurrentAutoQR: (int) index;
-- (BOOL) queryWithDisplayingErrors:(BOOL) showError;
-- (BOOL) queryWithDisplayingErrors:(BOOL) showError instance: (NSMutableDictionary*) instance index: (int) index;
+- (NSArray*) queryWithDisplayingErrors:(BOOL) showError;
+- (NSArray*) queryWithDisplayingErrors:(BOOL) showError instance: (NSMutableDictionary*) instance index: (int) index;
 - (IBAction) selectUniqueSource:(id) sender;
+- (void) selectSourceForServer:(NSDictionary*)server;
 - (QueryFilter*) getModalityQueryFilter:(NSArray*) modalityArray;
 - (void) refreshSources;
 - (IBAction) retrieveAndViewClick: (id) sender;

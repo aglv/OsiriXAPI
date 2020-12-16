@@ -1,6 +1,6 @@
 /*=========================================================================
  Program:   OsiriX
- Copyright (c) 2010 - 2019 Pixmeo SARL
+ Copyright (c) 2010 - 2020 Pixmeo SARL
  266 rue de Bernex
  CH-1233 Bernex
  Switzerland
@@ -13,11 +13,9 @@
     NSMenu* _contextualMenu;
 	NSString* _noSelectionLabel;
     NSWindow* _menuWindow;
-    BOOL _n2mode;
 }
 
 @property(retain) NSMenu* contextualMenu;
 @property(retain,nonatomic) NSString* noSelectionLabel;
-@property BOOL n2mode;
 
 @end

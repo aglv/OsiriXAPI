@@ -182,6 +182,9 @@ typedef enum AsyncSocketError AsyncSocketError;
 	NSMutableArray *theWriteQueue;
 	AsyncWritePacket *theCurrentWrite;
 	NSTimer *theWriteTimer;
+    
+    NSTimer *noActivityTimer;
+    BOOL activity;
 
 	id theDelegate;
 	UInt16 theFlags;
@@ -191,10 +194,14 @@ typedef enum AsyncSocketError AsyncSocketError;
     NSTimeInterval socketCreationDate;
     
     NSRunLoop *theAssignedRunLoop;
+    BOOL attachedToRunLoop;
 }
 @property(retain) NSRunLoop *theAssignedRunLoop;
+@property(retain) NSTimer *noActivityTimer;
 
 + (unsigned long) asyncSocketCounter;
++ (unsigned long) asyncSocketWithRunLoopCounter;
+
 - (id)init;
 - (id)initWithDelegate:(id)delegate;
 - (id)initWithDelegate:(id)delegate userData:(long)userData;

@@ -1,6 +1,6 @@
 /*=========================================================================
  Program:   OsiriX
- Copyright (c) 2010 - 2019 Pixmeo SARL
+ Copyright (c) 2010 - 2020 Pixmeo SARL
  266 rue de Bernex
  CH-1233 Bernex
  Switzerland
@@ -84,6 +84,7 @@
 // in these methods, e can be an NSEntityDescription* or an NSString*
 -(NSArray*)objectsForEntity:(id)e;
 -(NSArray*)objectsForEntity:(id)e propertiesToFetch: (NSArray*) propertiesToFetch;
+-(NSArray*)objectsForEntity:(id)e predicate:(NSPredicate*)p propertiesToFetch: (NSArray*) propertiesToFetch;
 -(NSArray*)objectsForEntity:(id)e predicate:(NSPredicate*)p;
 -(NSArray*)objectsForEntity:(id)e predicate:(NSPredicate*)p error:(NSError**)err;
 -(NSArray*)objectsForEntity:(id)e predicate:(NSPredicate*)p error:(NSError**)error fetchLimit:(NSUInteger)fetchLimit sortDescriptors:(NSArray*)sortDescriptors;
@@ -96,11 +97,15 @@
 -(void) sqlFileChanged;
 -(BOOL)save;
 -(BOOL)save:(NSError**)err;
+-(void)refreshObjectsFromNotification:(NSDictionary*) n;
 
 -(void)deleteSqlFiles;
 +(void)deleteSqlFiles: (NSString*) sqlIndex;
 +(void)showNotMainThreadWarning:(BOOL)w;
-- (BOOL) isCloudSync;
+-(BOOL)isCloudSync;
+
+-(void)deleteAllPersistenStores;
+-(void)reloadPersistentStores;
 @end
 
 @interface N2ManagedDatabase (Protected)

@@ -1,6 +1,6 @@
 /*=========================================================================
  Program:   OsiriX
- Copyright (c) 2010 - 2019 Pixmeo SARL
+ Copyright (c) 2010 - 2020 Pixmeo SARL
  266 rue de Bernex
  CH-1233 Bernex
  Switzerland
@@ -29,9 +29,11 @@
 -(void)processStudyHtml;
 -(void)processStudyHtml: (NSString*) xid;
 -(void)processPasswordForgottenHtml;
+-(void)processPasswordCreateHtml;
 -(void)processAccountHtml;
 -(void)processStatisticalInformations;
 -(void)processLogHTTPRequest;
+-(void)processDisplayMacOSLog;
 
 -(void)processAdminIndexHtml;
 -(void)processAdminUserHtml;
@@ -40,6 +42,8 @@
 -(void)processSeriesJson;
 -(void)processAlbumsJson;
 -(void)processSeriesListJson;
+-(void)processAuditJson;
+-(void)processAuditReport;
 -(void)processHTMLReportTemplate;
 -(void)processHTMLReport;
 -(void)processHTMLReportFrontMost2DViewerImage;

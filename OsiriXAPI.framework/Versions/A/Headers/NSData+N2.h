@@ -1,6 +1,6 @@
 /*=========================================================================
  Program:   OsiriX
- Copyright (c) 2010 - 2019 Pixmeo SARL
+ Copyright (c) 2010 - 2020 Pixmeo SARL
  266 rue de Bernex
  CH-1233 Bernex
  Switzerland
@@ -28,4 +28,12 @@
 
 - (NSData *)AES256EncryptWithKey:(NSString *)key;
 - (NSData *)AES256DecryptWithKey:(NSString *)key;
+
+#ifdef OSIRIX_VIEWER
++ (NSString*) decryptFile: (NSString*) file;
++ (NSString*) encryptFile: (NSString*) file;
+#endif
+
++ (BOOL) decryptFile: (NSString*) file toPath: (NSString*) path;
++ (BOOL) encryptFile: (NSString*) file toPath: (NSString*) path;
 @end

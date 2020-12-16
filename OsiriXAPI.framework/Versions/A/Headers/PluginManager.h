@@ -1,6 +1,6 @@
 /*=========================================================================
  Program:   OsiriX
- Copyright (c) 2010 - 2019 Pixmeo SARL
+ Copyright (c) 2010 - 2020 Pixmeo SARL
  266 rue de Bernex
  CH-1233 Bernex
  Switzerland
@@ -36,6 +36,9 @@
 + (NSImage*) pluginIconForBundle: (NSBundle*) plugin;
 + (NSString*) versionForPath: (NSString*) path;
 
++ (BOOL) pluginsAlertAlreadyDisplayed;
++ (void) setPluginsAlertAlreadyDisplayed:(BOOL) p;
+
 + (void) startProtectForCrashWithFilter: (id) filter;
 + (void) startProtectForCrashWithPath: (NSString*) path;
 + (void) endProtectForCrash;
@@ -49,6 +52,7 @@
 + (void) setMenus:(NSMenu*) filtersMenu :(NSMenu*) roisMenu :(NSMenu*) othersMenu :(NSMenu*) dbMenu :(NSMenu*) reportMenu;
 + (BOOL) isComPACS;
 + (void) installPluginFromPath: (NSString*) path;
++ (void) installPluginFromPath: (NSString*) path andActivate: (BOOL) activate;
 + (NSString*)activePluginsDirectoryPath;
 + (NSString*)inactivePluginsDirectoryPath;
 + (NSString*)userActivePluginsDirectoryPath;

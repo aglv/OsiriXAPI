@@ -1,6 +1,6 @@
 /*=========================================================================
  Program:   OsiriX
- Copyright (c) 2010 - 2019 Pixmeo SARL
+ Copyright (c) 2010 - 2020 Pixmeo SARL
  266 rue de Bernex
  CH-1233 Bernex
  Switzerland
@@ -16,7 +16,6 @@
 @private
 	WebPortalDatabase* database;
 	DicomDatabase* dicomDatabase;
-	BOOL isAcceptingConnections;
 	NSMutableArray* sessions;
 	NSLock* sessionsArrayLock;
 	NSLock* sessionCreateLock;
@@ -29,6 +28,8 @@
 	BOOL weasisEnabled;
 	BOOL flashEnabled;
     BOOL ohifEnabled;
+    NSInteger poolSize;
+    NSMutableDictionary *createPasswordDictionary;
 	
 	BOOL notificationsEnabled;
 	NSInteger notificationsInterval;
@@ -46,22 +47,22 @@
 +(void)finalizeWebPortalClass;
 
 +(WebPortal*)defaultWebPortal;
++(BOOL) isWebPortalInitialized;
 +(WebPortal*)wadoOnlyWebPortal;
++(WebPortal*)auditWebPortal;
 
 +(NSDictionary*)webServicesHTMLFiles;
 
 @property(readonly, retain) WebPortalDatabase* database;
 @property(readonly, retain) DicomDatabase* dicomDatabase;
-@property(readonly, retain) NSMutableDictionary* cache;
+@property(readonly, retain) NSMutableDictionary* cache, *createPasswordDictionary;
 @property(readonly, retain) NSMutableDictionary* locks;
 @property(readonly, retain) NSMutableArray* sessions;
-
-@property(readonly) BOOL isAcceptingConnections;
 
 @property(readonly) NSMutableArray *runLoops, *runLoopsLoad, *httpThreads;
 
 @property (nonatomic) BOOL usesSSL;
-@property (nonatomic) NSInteger portNumber;
+@property (nonatomic) NSInteger portNumber, poolSize;
 @property(retain) NSString* address;
 
 @property BOOL authenticationRequired;
@@ -78,15 +79,14 @@
 -(id)initWithDatabase:(WebPortalDatabase*)database dicomDatabase:(DicomDatabase*)dd;
 -(id)initWithDatabaseAtPath:(NSString*)sqlFilePath dicomDatabase:(DicomDatabase*)dd;
 
--(void)startAcceptingConnections;
--(void)stopAcceptingConnections;
-
 - (NSThread*) threadForRunLoopRef: (CFRunLoopRef) runloopref;
 
 -(NSData*)dataForPath:(NSString*)rel;
 +(NSData*)dataForPath:(NSString*)file;
 +(NSString*)pathForPath:(NSString*)path;
-+(NSString*) pathForPath:(NSString*)file includeInMemoryFiles: (BOOL) includeInMemoryFiles;
++(NSArray*)filesForDirectory:(NSString*)path;
++(NSArray*)filesForDirectory:(NSString*)dirPath forExtension: (NSString*) extension;
++(NSString*)pathForPath:(NSString*)file includeInMemoryFiles: (BOOL) includeInMemoryFiles;
 -(NSString*)stringForPath:(NSString*)file;
 
 -(WebPortalSession*)newSession;

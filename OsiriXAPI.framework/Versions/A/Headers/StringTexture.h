@@ -1,6 +1,6 @@
 /*=========================================================================
  Program:   OsiriX
- Copyright (c) 2010 - 2019 Pixmeo SARL
+ Copyright (c) 2010 - 2020 Pixmeo SARL
  266 rue de Bernex
  CH-1233 Bernex
  Switzerland
@@ -26,6 +26,8 @@
 	NSBitmapImageRep *bitmap;
 	
 	NSSize texSize;
+    
+    int maxWidth;
 	
 	BOOL xFlipped;
 	BOOL yFlipped;
@@ -39,7 +41,12 @@
 	NSSize frameSize; // offset or frame size, default is 4 width 2 height
 	BOOL antialiasing;
     float sf; // screen factor during creation
+    
+    NSFont *font;
 }
+
+@property (retain) NSFont *font;
+@property int maxWidth;
 
 // this API requires a current rendering context and all operations will be performed in regards to thar context
 // the same context should be current for all method calls for a particular object instance

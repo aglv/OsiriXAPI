@@ -44,6 +44,7 @@
 + (NSArray*) recentNonces;
 + (unsigned long) HTTPConnectionCounter;
 
+- (HTTPServer*) server;
 - (AsyncSocket*) asyncSocket;
 - (id)initWithAsyncSocket:(AsyncSocket *)newSocket forServer:(HTTPServer *)myServer;
 
@@ -75,7 +76,7 @@
 - (NSData *)preprocessErrorResponse:(CFHTTPMessageRef)response;
 
 - (void)die;
-
+- (BOOL)isAuthenticated;
 @end
 
 @interface HTTPConnection (AsynchronousHTTPResponse)

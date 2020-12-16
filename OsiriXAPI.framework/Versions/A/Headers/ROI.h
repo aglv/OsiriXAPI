@@ -1,6 +1,6 @@
 /*=========================================================================
  Program:   OsiriX
- Copyright (c) 2010 - 2019 Pixmeo SARL
+ Copyright (c) 2010 - 2020 Pixmeo SARL
  266 rue de Bernex
  CH-1233 Bernex
  Switzerland
@@ -204,10 +204,12 @@ typedef struct RGBAColor RGBAColor;
 	NSImage			*layerImage;//, *layerImageWhenSelected;
 	NSData			*layerImageJPEG;//, *layerImageWhenSelectedJPEG;
 	float			layerPixelSpacingX, layerPixelSpacingY;
+    NSSize          layerImageTextureSize;
 	BOOL			isLayerOpacityConstant;
 	BOOL			canColorizeLayer, canResizeLayer;
 	NSColor			*layerColor;
 	
+    NSString        *UUID;           // saved
 	NSNumber		*uniqueID;		// <- not saved, only valid during the 'life' of a ROI
 	NSTimeInterval	groupID;		// timestamp of a ROI group. Grouped ROI will be selected/deleted together.
 	
@@ -243,8 +245,16 @@ typedef struct RGBAColor RGBAColor;
     
     NSTimeInterval           creationTimeStamp;
     BOOL observersAdded;
+    BOOL is3DMeasure;
+    
+    NSDate *creationDate;
+    NSDate *modificationDate;
+    NSString *username;
+    
+    BOOL textNameOnly;
 }
 
+@property(retain,nonatomic) NSDate *creationDate, *modificationDate;
 @property float roiRotation;
 @property NSPoint imageOrigin;
 @property(readonly) int textureWidth, textureHeight;
@@ -254,9 +264,9 @@ typedef struct RGBAColor RGBAColor;
 @property(nonatomic) float opacity, zLocation;
 @property(nonatomic) int originalIndexForAlias;
 @property(nonatomic) BOOL hidden, locked, selectable, is3DROI;
-@property BOOL isAliased, displayCMOrPixels, mouseOverROI, dontDisplayInKeyImagesWindow, fill;
+@property BOOL isAliased, displayCMOrPixels, mouseOverROI, dontDisplayInKeyImagesWindow, fill, is3DMeasure, textNameOnly;
 @property(nonatomic, copy) NSString *name, *localFontName;
-@property(retain,nonatomic) NSString *comments;
+@property(retain,nonatomic) NSString *comments, *UUID, *username;
 @property ToolMode type;
 @property(nonatomic, setter=setROIMode:) ROI_mode ROImode;
 @property(readonly) NSMutableArray *zPositions, *stringTags;
@@ -278,6 +288,9 @@ typedef struct RGBAColor RGBAColor;
 @property float offsetTextBox_x, offsetTextBox_y, localFontHeight, localFontSize, preferredWL, preferredWW;
 @property BOOL dontSavePreferredWLWW;
 
++ (id) unarchiveObjectWithData: (NSData*) d;
++ (id) unarchiveObjectWithFile: (NSString*) d;
+
 - (void) setNSColor:(NSColor*)color globally:(BOOL)g;
 - (void) setColor:(RGBColor) a globally: (BOOL) g;
 - (void) setThickness:(float) a globally: (BOOL) g;
@@ -289,6 +302,7 @@ typedef struct RGBAColor RGBAColor;
 /** Return the default name */
 + (NSString*) defaultName;
 + (void) setFontHeight: (float) f;
++ (float) fontHeight;
 
 + (NSPoint) segmentDistToPoint: (NSPoint) segA :(NSPoint) segB :(NSPoint) p;
 + (BOOL) isBetween: (NSPoint) a :(NSPoint) b :(NSPoint) c;
@@ -302,7 +316,7 @@ typedef struct RGBAColor RGBAColor;
 - (NSMutableArray *) roiList;
 - (BOOL) invertBrushROI;
 + (BOOL) splineForROI;
-
+- (NSRect) boundRect;
 - (void) setPoints: (NSArray*) pts;
 - (NSMutableArray*) points;
 - (NSArray*) pointsIn3DCoordinates;
@@ -496,6 +510,7 @@ typedef struct RGBAColor RGBAColor;
 + (NSString*) descriptionHeader;
 + (NSString*) stringTypeForROI: (int) i;
 - (NSString*) niceDescription;
+- (NSString*) textualForLens;
 
 - (void) applySettingsToParent;
 - (void) applySettingsFromParent;

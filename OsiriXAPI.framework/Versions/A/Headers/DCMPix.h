@@ -1,6 +1,6 @@
 /*=========================================================================
  Program:   OsiriX
- Copyright (c) 2010 - 2019 Pixmeo SARL
+ Copyright (c) 2010 - 2020 Pixmeo SARL
  266 rue de Bernex
  CH-1233 Bernex
  Switzerland
@@ -51,7 +51,7 @@ extern "C"
 
 @interface DCMPix: NSObject <NSCopying>
 {
-	NSString            *sourceFile, *URIRepresentationAbsoluteString, *imageType;
+	NSString            *sourceFile, *URIRepresentationAbsoluteString, *imageType, *decryptedFile;
 	BOOL				isBonjour, fileTypeHasPrefixDICOM, isSigned;
     int                 numberOfFrames;
     int                 originalPhotoInterpret;
@@ -204,15 +204,19 @@ extern "C"
     BOOL                RGBAlphaMaskComputed;
     
     NSRect              contentFrameRect; // computeCTFrameRect
+    
+    NSTimeInterval      studyDuration, seriesDuration;
 }
 
+@property BOOL inverseVal;
 @property long frameNo;
 @property NSRect contentFrameRect;
 @property (setter=setID:) long ID;
 @property (readonly) NSRecursiveLock *checking;
 @property (nonatomic) float minValueOfSeries, maxValueOfSeries, factorPET2SUV;
-@property (retain, nonatomic) NSString *modalityString, *studyInstanceUID, *patientOrientation;
+@property (retain, nonatomic) NSString *modalityString, *studyInstanceUID, *patientOrientation, *decryptedFile;
 @property (retain) NSString* imageType, *referencedSOPInstanceUID, *yearOld, *yearOldAcquisition, *bodyPartExamined;
+@property NSTimeInterval studyDuration, seriesDuration;
 
 // Dimensions in pixels
 @property (nonatomic) long pwidth, pheight;
@@ -528,6 +532,7 @@ Note setter is different to not break existing usage. :-( */
 - (float) defaultWW;  // = savedWW, or fullWW if not available
 - (void) computeAlphaMaskIfNeeded;
 + (void) clearDcmPixCache;
++ (NSString*) convertECGStorageToPDF: (NSString*) file sopInstanceUID: (NSString*) sopUID;
 - (DCMPix*) renderWithScale:(float) scale;
 - (DCMPix*) renderWithRotation:(float) r scale:(float) scale xFlipped:(BOOL) xF yFlipped: (BOOL) yF;
 - (DCMPix*) renderWithRotation:(float) r scale:(float) scale xFlipped:(BOOL) xF yFlipped: (BOOL) yF backgroundOffset: (float) bgO;

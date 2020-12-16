@@ -1,6 +1,6 @@
 /*=========================================================================
  Program:   OsiriX
- Copyright (c) 2010 - 2019 Pixmeo SARL
+ Copyright (c) 2010 - 2020 Pixmeo SARL
  266 rue de Bernex
  CH-1233 Bernex
  Switzerland
@@ -35,7 +35,7 @@ enum dbObjectSelection {oAny,oMiddle,oFirstForFirst};
 
 enum searchDatabaseTypes { patientNameSearch = 0, patientIDSearch, patientBirthdateSearch, studyIDSearch, commentsSearch, comments2Search, comments3Search, comments4Search, studyDescriptionSearch, bodyPartSearch, modalitySearch, accessionNumberSearch, allFieldsSearch};
 
-typedef enum { noneInterval = 0, oneHourInterval = 1, sixHoursInterval = 2, twelveHoursInterval = 3, twentyFourHoursInterval = 7, fortyEightHoursInterval = 8, seventyTwoHoursInterval = 19, todayInterval = 4, yesterdayInterval = 9, dayBeforeYesterdayInterval = 10, lastTwoDaysInterval = 13, lastSevenDaysInterval = 15, lastFourteenDaysInterval = 16, lastWeekEndInterval = 11, currentWeekInterval = 12, lastWeekInterval = 14, oneMonthInterval = 6, currentMonthInterval = 17, lastMonthInterval = 18, lastMondayInterval = 20, lastTuesdayInterval, lastWednesdayInterval, lastThursdayInterval, lastFridayInterval, lastSaturdayInterval, lastSundayInterval, customInterval = 100} intervalType;
+typedef enum { noneInterval = 0, oneHourInterval = 1, sixHoursInterval = 2, twelveHoursInterval = 3, twentyFourHoursInterval = 7, fortyEightHoursInterval = 8, seventyTwoHoursInterval = 19, todayInterval = 4, yesterdayInterval = 9, dayBeforeYesterdayInterval = 10, lastTwoDaysInterval = 13, lastSevenDaysInterval = 15, lastFourteenDaysInterval = 16, lastWeekEndInterval = 11, currentWeekInterval = 12, lastWeekInterval = 14, oneMonthInterval = 6, currentMonthInterval = 17, lastMonthInterval = 18, lastMondayInterval = 20, lastTuesdayInterval = 21, lastWednesdayInterval = 22, lastThursdayInterval = 23, lastFridayInterval = 24, lastSaturdayInterval = 25, lastSundayInterval = 26, twoHoursInterval = 27, threeHoursInterval = 28, fourHoursInterval = 29, fiveHoursInterval = 30, lastThreeDaysInterval = 31, lastFourDaysInterval = 32, lastFiveDaysInterval = 33, lastTwoMonthsInterval = 34, lastThreeMonthsInterval = 35, todayAMInterval = 36, todayPMInterval = 37, tenMinutesInterval = 38, twentyMinutesInterval = 39, thirtyMinutesInterval = 40, fortyMinutesInterval = 41, customDate = 42, customDateBefore = 43, customDateAfter = 44, currentWeekEndInterval = 45, lastJanuaryInterval = 46, lastFebruaryInterval = 47, lastMarchInterval = 48, lastAprilInterval = 49, lastMayInterval = 50, lastJuneInterval = 51, lastJulyInterval = 52, lastAugustInterval = 53, lastSeptemberInterval = 54, lastOctoberInterval = 55, lastNovemberInterval = 56, lastDecemberInterval = 57, customInterval = 100} intervalType;
 
 extern NSString* O2AlbumDragType;
 
@@ -88,6 +88,8 @@ extern NSString* O2AlbumDragType;
 	long					loadPreviewIndex, previousNoOfFiles, previousDistantNoOfFiles, previousChildrenCount;
 	NSManagedObject			*previousItem;
     int                     previousItemRow;
+    BOOL                    forceRefreshMatrix;
+    
     DicomStudy              *cloudPreviousStudy;
     
 	long					previousBonjourIndex;
@@ -122,6 +124,7 @@ extern NSString* O2AlbumDragType;
 	IBOutlet NSTextField			*databaseDescription;
 	IBOutlet MyOutlineView          *databaseOutline;
 	NSMenu							*columnsMenu, *contextualReportMenu;
+    IBOutlet NSMenu                 *auditReportMenu;
 	IBOutlet BrowserMatrix			*oMatrix;
 	IBOutlet NSTableView			*albumTable;
     NSArray                         *tableViewAlbumsCache;
@@ -162,7 +165,6 @@ extern NSString* O2AlbumDragType;
 	
     intervalType					timeIntervalType;
     NSDate							*timeIntervalStart, *timeIntervalEnd;
-    IBOutlet NSView					*timeIntervalView;
     IBOutlet NSMenu                 *timeIntervalMenu;
 
     NSString						*modalityFilter;
@@ -176,9 +178,11 @@ extern NSString* O2AlbumDragType;
 	int								searchType, userSelectedSearchType;
 	
 	IBOutlet NSMenu					*imageTileMenu;
-	IBOutlet NSWindow				*urlWindow, *CDpasswordWindow, *ZIPpasswordWindow;
-	IBOutlet NSTextField			*urlString;
+	IBOutlet NSWindow				*urlWindow, *CDpasswordWindow, *ZIPpasswordWindow, *DICOMwebAuthenticationWindow;
+    IBOutlet NSTextField			*urlString;
 	
+    NSString                        *DICOMwebServerToAuthenticate, *DICOMwebServerUsername, *DICOMwebServerPassword;
+    
 	IBOutlet NSForm					*rdPatientForm, *rdPixelForm, *rdVoxelForm, *rdOffsetForm;
 	IBOutlet NSMatrix				*rdPixelTypeMatrix;
 	IBOutlet NSView					*rdAccessory;
@@ -307,16 +311,22 @@ extern NSString* O2AlbumDragType;
     IBOutlet NSWindow *shareStudyRecipientWindow;
     IBOutlet NSView *accessoryViewImportRecipients;
     
-    BOOL awakedFromNib;
+    BOOL awakedFromNib, searchToBeResetted;
+    
+    IBOutlet NSTextView *getInfoTextView;
+    IBOutlet NSPanel *getInfoWindow;
+    NSMutableAttributedString *getInfoString;
 }
 
+@property(retain) NSMutableAttributedString *getInfoString;
+@property(retain) NSCursor *badgeCursor;
 @property(retain) NSArray *outlineViewSortDescriptors, *outlineViewArray, *originalOutlineViewArray, *outlineViewArrayStudyInstanceUIDs;
 @property(retain) NSPredicate *outlineViewPredicate;
 @property(retain) NSIndexSet *selectedRowsBeforeResizing;
 @property(retain) NSArray *unifyStudiesMenu, *tableViewAlbumsCache;
 @property(retain) DicomStudy *cloudPreviousStudy;
 @property(retain, nonatomic) NSString *unifyFromList, *unifyTo;
-@property(nonatomic) BOOL unifyPatientID, unifyStudyID, unifyNewStudyInstanceUID, unifyNewSeriesInstanceUIDs, unifyNewSOPInstanceUIDs, unifyMultipleStudies, canAddToFetchLimit;
+@property(nonatomic) BOOL unifyPatientID, unifyStudyID, unifyNewStudyInstanceUID, unifyNewSeriesInstanceUIDs, unifyNewSOPInstanceUIDs, unifyMultipleStudies, canAddToFetchLimit, searchToBeResetted;
 //@property int unifyModifyFieldsTag;
 @property(retain,nonatomic) DicomDatabase* database;
 @property(readonly) NSArrayController* sources;
@@ -349,6 +359,8 @@ extern NSString* O2AlbumDragType;
 @property(readonly, nonatomic) int searchType;
 @property(readonly) NSMutableArray *comparativeRetrieveQueue, *comparativeSeriesRetrieveQueue;
 
+@property(retain) NSString *DICOMwebServerToAuthenticate, *DICOMwebServerUsername, *DICOMwebServerPassword;
+
 // NSTouchBar
 @property(retain) NSPopoverTouchBarItem *modalityFilterPopoverTouchBarItem;
 @property(retain) NSPopoverTouchBarItem *timeIntervalFilterPopoverTouchBarItem;
@@ -373,7 +385,7 @@ extern NSString* O2AlbumDragType;
 + (BOOL) horizontalHistory;
 + (BOOL) isHardDiskFull __deprecated;
 + (NSData*) produceJPEGThumbnail:(NSImage*) image;
-+ (int) DefaultFolderSizeForDB;
++ (long) DefaultFolderSizeForDB;
 + (long) computeDATABASEINDEXforDatabase:(NSString*) path __deprecated;
 + (void) encryptFileOrFolder: (NSString*) srcFolder inZIPFile: (NSString*) destFile password: (NSString*) password;
 + (void) encryptFileOrFolder: (NSString*) srcFolder inZIPFile: (NSString*) destFile password: (NSString*) password deleteSource: (BOOL) deleteSource;
@@ -387,6 +399,7 @@ extern NSString* O2AlbumDragType;
 - (IBAction) addAlbums:(id) sender;
 - (IBAction) defaultAlbums: (id) sender;
 - (IBAction) clickBanner:(id) sender;
+- (IBAction) getInfo:(id) sender;
 - (IBAction) refreshPACSOnDemandResults:(id)sender;
 - (IBAction) drawerToggle: (id)sender;
 - (void) openDatabasePath: (NSString*) path __deprecated;
@@ -411,7 +424,7 @@ extern NSString* O2AlbumDragType;
 - (NSPredicate*) smartAlbumPredicateString:(NSString*) string __deprecated;
 - (void) executeActionsForState: (NSNumber*) c;
 - (void) pressCellForRow: (int) clickedRow column: (int) clickedColumn event: (NSEvent*) event identifier:(NSString*) identifier;
-- (void) rightClickCommentCellForRow: (int) clickedRow column: (int) clickedColumn event: (NSEvent*) event;
+- (void) rightClickCellForRow: (int) clickedRow column: (int) clickedColumn event: (NSEvent*) event identifier:(NSString*) identifier;
 - (void) emptyDeleteQueueThread;
 - (void) emptyDeleteQueue:(id) sender;
 - (BOOL)isUsingExternalViewer: (NSManagedObject*) item;
@@ -433,6 +446,9 @@ extern NSString* O2AlbumDragType;
 - (NSManagedObjectContext *) defaultManagerObjectContext __deprecated;
 - (NSManagedObjectContext *) defaultManagerObjectContextIndependentContext: (BOOL) independentContext __deprecated;
 
+- (NSString*) menuStringValueForTimeIntervalType:(intervalType) t;
+- (NSString*) menuStringValueForTimeIntervalType:(intervalType) t localizedForWeb: (BOOL) localizedForWeb;
+
 - (BOOL) isBonjour: (NSManagedObjectContext*) c __deprecated;
 - (NSString *) localDocumentsDirectory __deprecated;
 - (void) alternateButtonPressed: (NSNotification*)n;
@@ -446,6 +462,7 @@ extern NSString* O2AlbumDragType;
 - (void) setNetworkLogs;
 - (BOOL) isNetworkLogsActive;
 - (void) computeTimeInterval;
++ (void) computeTimeIntervalForTimeIntervalType:(intervalType) t start:(NSDate**) start end:(NSDate**) end;
 - (IBAction) print: (id) sender;
 - (void) ReadDicomCDRom:(id) sender __deprecated;
 - (NSString*) INCOMINGPATH __deprecated;
@@ -534,9 +551,9 @@ extern NSString* O2AlbumDragType;
 - (void) addHelpMenu;
 + (NSString*) _findFirstDicomdirOnCDMedia: (NSString*)startDirectory __deprecated;
 + (BOOL)isItCD:(NSString*) path;
-+ (NSArray*) zipExtensions;
 - (void)storeSCPComplete:(id)sender;
 - (void) changeStateValueTo: (int) tag forStudies: (NSArray*) studies;
+- (NSDictionary*) authenticateForDICOMwebServer: (NSDictionary*) server;
 
 - (NSMutableArray *) filesForDatabaseOutlineSelection :(NSMutableArray*) correspondingDicomFile;
 - (NSMutableArray *) filesForDatabaseOutlineSelection :(NSMutableArray*) correspondingManagedObjects onlyImages:(BOOL) onlyImages;

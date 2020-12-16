@@ -1,6 +1,6 @@
 /*=========================================================================
  Program:   OsiriX
- Copyright (c) 2010 - 2019 Pixmeo SARL
+ Copyright (c) 2010 - 2020 Pixmeo SARL
  266 rue de Bernex
  CH-1233 Bernex
  Switzerland
@@ -14,6 +14,9 @@
 
 enum TransferSyntaxCodes
 {
+    SendEmptyTransferSyntax = -5,
+    SendUnspecifiedTransferSyntax = -4,
+    SendWithWildcardTransferSyntax = -3,
     SendWithPreserveTransferSyntax = -2,
     SendWithOriginalTransferSyntax = -1,
 	SendExplicitLittleEndian = 0, 
@@ -34,7 +37,7 @@ enum TransferSyntaxCodes
 	SendJPEGLSLossy20 = 15, 
 	SendJPEGLSLossy50 = 16
 };
-
+typedef enum TransferSyntaxCodes TransferSyntaxCodes;
 
 enum SendServerType { osirixServer, offisServer };
 
@@ -52,21 +55,29 @@ enum SendServerType { osirixServer, offisServer };
 	BOOL				_readyForRelease;
 	BOOL				_abort;
 	NSRecursiveLock     *_lock;
-	NSDictionary		*_destinationServer;
     BOOL                doNotUpdatePreferences;
 	
 	IBOutlet NSPopUpButton	*newServerList;
 	IBOutlet NSMatrix		*keyImageMatrix;
 	IBOutlet NSTextField	*numberImagesTextField, *addressAndPort;
 	IBOutlet NSPopUpButton	*syntaxListOffis;
+    
+    IBOutlet NSWindow       *multipleDestinationsWindow;
+    IBOutlet NSArrayController *multipleDestinationsArrayController;
+    NSArray *destinationsArray;
 }
+@property(retain, nonatomic) NSArray *destinationsArray;
+
 + (void) sendFiles:(NSArray *)files;
 + (void) sendFiles:(NSArray *)files toNode: (NSDictionary*) node;
 + (void) sendFiles:(NSArray *)files toNode: (NSDictionary*) node usingSyntax: (int) syntax;
+
 + (BOOL) executeSend:(NSArray*) files patientName: (NSString*) patientName studyDescription: (NSString*) studyDescription showError: (BOOL) showError server:(NSDictionary*) server;
 + (BOOL) executeSend:(NSArray*) files patientName: (NSString*) patientName studyDescription: (NSString*) studyDescription database: (DicomDatabase*) db showError: (BOOL) showError server:(NSDictionary*) server;
 + (BOOL) executeSend:(NSArray*) files patientName: (NSString*) patientName studyDescription: (NSString*) studyDescription database: (DicomDatabase*) db showError: (BOOL) showError server:(NSDictionary*) server error:(NSError**) returnedError;
 + (BOOL) executeSend:(NSArray*) files patientName: (NSString*) patientName patientID: (NSString*) patientID studyDescription: (NSString*) studyDescription database: (DicomDatabase*) db showError: (BOOL) showError server:(NSDictionary*) server error:(NSError**) returnedError;
++ (BOOL) executeSend:(NSArray*) files patientName: (NSString*) patientName patientID: (NSString*) patientID studyDescription: (NSString*) studyDescription database: (DicomDatabase*) db showError: (BOOL) showError server:(NSDictionary*) server error:(NSError**) returnedError syntax: (int) syntax;
+
 + (NSArray*) changeTransferSyntaxTo: (int) newSyntax quality: (int) opt_Quality forFiles: (NSArray*) filesToSend tmpFiles:(NSArray**) tmpFiles;
 + (NSArray*) changeTransferSyntaxToAnyOfTheseSyntaxes: (NSArray*) newSyntaxes quality: (int) opt_Quality forFiles: (NSArray*) filesToSend tmpFiles:(NSArray**) tmpFiles;
 - (void) sendDICOMFilesOffis:(NSDictionary *) dict;
@@ -81,8 +92,6 @@ enum SendServerType { osirixServer, offisServer };
 - (void)setKeyImageIndex:(int)index;
 - (void)releaseSelfWhenDone:(id)sender;
 - (IBAction)selectServer: (id)sender;
-- (void) sendToNode: (NSDictionary*) node;
-- (void) sendToNode: (NSDictionary*) node objects:(NSArray*) objects;
 - (void) updateDestinationPopup:(NSNotification*) note;
 
 @end

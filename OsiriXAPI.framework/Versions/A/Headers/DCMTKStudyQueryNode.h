@@ -1,6 +1,6 @@
 /*=========================================================================
  Program:   OsiriX
- Copyright (c) 2010 - 2019 Pixmeo SARL
+ Copyright (c) 2010 - 2020 Pixmeo SARL
  266 rue de Bernex
  CH-1233 Bernex
  Switzerland
@@ -17,7 +17,12 @@
     BOOL isHidden;
     
     NSString *_studyID;
+    
+    NSManagedObjectID *localStudyObjectID;
+    NSTimeInterval localStudyObjectIDTime;
 }
+
+@property (retain) NSManagedObjectID *localStudyObjectID;
 
 - (NSString*) patientUID;
 - (NSNumber*) stateText;
@@ -26,6 +31,7 @@
 - (NSString*) studyName;// Match DicomStudy
 - (NSNumber*) numberOfImages;// Match DicomStudy
 - (NSDate*) dateOfBirth; // Match DicomStudy
+- (NSString*) dateOfBirthString; // Match DicomStudy
 - (NSNumber*) noFiles; // Match DicomStudy
 - (BOOL) isHidden;
 - (void) setHidden: (BOOL) h;

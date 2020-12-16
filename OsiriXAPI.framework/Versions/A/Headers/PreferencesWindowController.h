@@ -1,6 +1,6 @@
 /*=========================================================================
  Program:   OsiriX
- Copyright (c) 2010 - 2019 Pixmeo SARL
+ Copyright (c) 2010 - 2020 Pixmeo SARL
  266 rue de Bernex
  CH-1233 Bernex
  Switzerland
@@ -24,13 +24,14 @@
 	IBOutlet NSButton* authButton;
 	IBOutlet SFAuthorizationView* authView;
 	PreferencesWindowContext* currentContext;
-	NSMutableArray* animations;
 	IBOutlet NSView* flippedDocumentView;
     NSSize paneListSize, windowSize;
+    
+    NSString *signedInLabel;
 }
 
-@property(readonly) NSMutableArray* animations;
 @property(readonly) SFAuthorizationView* authView;
+@property(retain) NSString *signedInLabel;
 
 + (PreferencesWindowController*) sharedPreferencesWindowController;
 +(void) addPluginPaneWithResourceNamed:(NSString*)resourceName inBundle:(NSBundle*)parentBundle withTitle:(NSString*)title image:(NSImage*)image;

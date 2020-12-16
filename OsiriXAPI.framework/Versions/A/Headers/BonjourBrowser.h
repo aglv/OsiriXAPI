@@ -1,6 +1,6 @@
 /*=========================================================================
  Program:   OsiriX
- Copyright (c) 2010 - 2019 Pixmeo SARL
+ Copyright (c) 2010 - 2020 Pixmeo SARL
  266 rue de Bernex
  CH-1233 Bernex
  Switzerland
@@ -8,7 +8,7 @@
  =========================================================================*/
 
 #import <Cocoa/Cocoa.h>
-#import "browserController.h"
+#import "BrowserController.h"
 #import "WaitRendering.h"
 
 /** \brief  Searches and retrieves Bonjour shared databases */

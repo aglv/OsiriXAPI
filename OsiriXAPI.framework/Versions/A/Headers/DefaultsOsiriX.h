@@ -1,6 +1,6 @@
 /*=========================================================================
  Program:   OsiriX
- Copyright (c) 2010 - 2019 Pixmeo SARL
+ Copyright (c) 2010 - 2020 Pixmeo SARL
  266 rue de Bernex
  CH-1233 Bernex
  Switzerland
@@ -39,6 +39,7 @@ typedef enum HotKeyActions {DefaultWWWLHotKeyAction = 0, FullDynamicWWWLHotKeyAc
     PresetConvolutionSharpen5x5HotKeyAction,
     
     Copy3DCoordinatesToClipboardAction,
+    ShowCurrentSeriesInThumbnailsList,
     
     LastAction // Key this enum ALWAYS as last enum !
 } HotKeyActions;

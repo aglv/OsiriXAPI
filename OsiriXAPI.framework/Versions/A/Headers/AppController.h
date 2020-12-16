@@ -1,6 +1,6 @@
 /*=========================================================================
  Program:   OsiriX
- Copyright (c) 2010 - 2019 Pixmeo SARL
+ Copyright (c) 2010 - 2020 Pixmeo SARL
  266 rue de Bernex
  CH-1233 Bernex
  Switzerland
@@ -64,6 +64,8 @@ extern "C"
 #endif
 	NSString * documentsDirectoryFor( int mode, NSString *url) __deprecated;
 	NSString * documentsDirectory() __deprecated;
+    extern NSString* getMacAddress(void);
+
     extern BOOL hideListenerError;
     extern BOOL gDarkAppearance;
 #ifdef __cplusplus
@@ -83,9 +85,8 @@ extern "C"
 @class AppController, ToolbarPanelController, ThumbnailsListPanel, BonjourPublisher;
 
 extern AppController* OsiriX;
-extern NSString* getMacAddress(void);
 
-@interface AppController : NSObject	<NSNetServiceBrowserDelegate, NSNetServiceDelegate, NSSoundDelegate, NSMenuDelegate>
+@interface AppController : NSObject	<NSNetServiceBrowserDelegate, NSNetServiceDelegate, NSSoundDelegate, NSMenuDelegate, NSUserNotificationCenterDelegate>
 {
 	IBOutlet BrowserController		*browserController;
 
@@ -106,12 +107,12 @@ extern NSString* getMacAddress(void);
 	
     volatile BOOL					quitting;
 	BOOL							verboseUpdateCheck;
-	NSNetService					*BonjourDICOMService;
+	NSNetService					*dicomBonjourPublisher, *dicomWebBonjourPublisher;
 	
 	NSTimer							*updateTimer;
 	XMLRPCInterface					*XMLRPCServer;
 	
-	BOOL							checkAllWindowsAreVisibleIsOff, isSessionInactive;
+	BOOL							checkAllWindowsAreVisibleIsOff, isSessionInactive, testingNodes;
 	
 	int								lastColumns, lastRows, lastCount, lastColumnsPerScreen;
     
@@ -134,22 +135,28 @@ extern NSString* getMacAddress(void);
     // Registration key window
     NSString *currentRegistrationKey;
     NSString *upgradeRegistrationKey;
+    BOOL keysFromAccountHidden;
     IBOutlet NSTextField *keyTextField;
     IBOutlet NSWindow *registrationKeyWindow;
+    IBOutlet NSPopUpButton *availableKeysMenu;
+    NSRecursiveLock *regurlLock;
 }
 
 @property BOOL checkAllWindowsAreVisibleIsOff, isSessionInactive, showRestartNeeded, applicationDidFinishLaunching;
 @property(readonly) NSMenu *filtersMenu, *recentStudiesMenu, *windowsTilingMenuRows, *windowsTilingMenuColumns;
-@property(readonly) NSNetService* dicomBonjourPublisher;
+@property(readonly) NSNetService *dicomBonjourPublisher, *dicomWebBonjourPublisher;
 @property(readonly) XMLRPCInterface *XMLRPCServer;
 @property(readonly) BonjourPublisher* bonjourPublisher;
 @property(readonly) int lastColumns, lastRows, lastCount;
 @property(retain) id appNapActivity;
 @property(retain) NSString *currentRegistrationKey, *upgradeRegistrationKey;
+@property BOOL keysFromAccountHidden;
 
 + (BOOL) hostReachable:(NSString*) host;
 + (void) thisFeatureIsNotAvailable: (NSString*) stringUrl;
 + (BOOL) isFDACleared;
++ (BOOL) isANVISA;
++ (BOOL) isMD;
 + (BOOL) willExecutePlugin;
 + (BOOL) willExecutePlugin:(id) filter;
 + (BOOL) hasMacOSXLion;
@@ -168,6 +175,11 @@ extern NSString* getMacAddress(void);
 + (void) restartOsiriX;
 + (NSImage*) webBrowserIcon;
 + (void) clearEvents;
++ (BOOL) runningOsiriXMDSubscriptionInLimitedMode;
++ (NSDictionary*) parametersForURL: (NSURL*) url;
+
++(NSString*) getLastLines: (int) lines forApplication: (NSString*) applicationName;
++(NSString*) getLastLines: (int) lines forApplication: (NSString*) applicationName authenticate:(BOOL) authenticate;
 
 #pragma mark-
 #pragma mark initialization of the main event loop singleton
@@ -211,6 +223,7 @@ extern NSString* getMacAddress(void);
 #pragma mark-
 #pragma mark static menu items
 //===============OSIRIX========================
++ (NSString*) obfuscatedKey;
 - (IBAction) enterNewRegistrationKey:(id)sender;
 - (BOOL) enterNewRegistrationKeyWithString: (NSString*) newKey;
 - (IBAction) about:(id)sender; /**< Display the about window */
@@ -270,6 +283,8 @@ extern NSString* getMacAddress(void);
 - (IBAction) okModal: (id) sender;
 - (IBAction)alternateModal:(id)sender;
 - (NSString*) privateIP;
+- (NSString *)computerName;
++ (NSString *)computerName;
 - (void) killDICOMListenerWait:(BOOL) w;
 - (void) runPreferencesUpdateCheck:(NSTimer*) timer;
 + (void) displayAppleScriptPermissionError: (NSDictionary*) errorInfo;
@@ -280,6 +295,7 @@ extern NSString* getMacAddress(void);
 + (NSRect) usefullRectForScreen: (NSScreen*) screen;
 + (NSArray*) sortObjects: (NSArray*) objects accordingToSeriesDescriptionsArray: (NSArray*) seriesDescriptionsOrder;
 + (NSArray*) sortObjects: (NSArray*) objects accordingToSeriesDescriptionsArray: (NSArray*) seriesDescriptionsOrder oneSeriesPerSeriesDescription: (BOOL) oneSeriesPerSeriesDescription;
+- (NSMutableArray*) orderedWindowsAccordingToPositionByRows;
 - (NSMutableArray*) orderedWindowsAccordingToPositionByRows: (NSArray*) a;
 - (void) addStudyToRecentStudiesMenu: (NSManagedObjectID*) studyID;
 - (void) loadRecentStudy: (id) sender;
@@ -295,7 +311,6 @@ extern NSString* getMacAddress(void);
 - (NSMenu*) wlwwMenu;
 - (NSMenu*) convMenu;
 - (NSMenu*) clutMenu;
-- (BOOL) validateEmail: (NSString *) candidate;
 - (NSTimeInterval) runningTimeInterval;
 + (NSImage*) clutIconForClutName: (NSString*) clutName;
 + (NSImage*) clutIconForRed: (unsigned char*) redT green:(unsigned char*) greenT blue:(unsigned char*) blueT;
@@ -316,6 +331,7 @@ extern NSString* getMacAddress(void);
 #pragma mark-
 #pragma mark User Notifications
 - (void) growlTitle:(NSString*) title description:(NSString*) description name:(NSString*) name;
+- (void) growlTitle:(NSString*) title description:(NSString*) description name:(NSString*) name userInfo: (NSDictionary*) userInfo;
 
 //#pragma mark-
 //#pragma mark display setters and getters

@@ -1,6 +1,6 @@
 /*=========================================================================
  Program:   OsiriX
- Copyright (c) 2010 - 2019 Pixmeo SARL
+ Copyright (c) 2010 - 2020 Pixmeo SARL
  266 rue de Bernex
  CH-1233 Bernex
  Switzerland
@@ -60,8 +60,6 @@ extern NSString* const OsirixBonjourSharingNameDefaultsKey;
 
 extern NSString* const OsirixBonjourSharingIsPasswordProtectedDefaultsKey;
 +(BOOL)bonjourSharingIsPasswordProtected;
-
-extern NSString* const OsirixBonjourSharingPasswordDefaultsKey;
 +(NSString*)bonjourSharingPassword;
 
 #pragma mark Web Portal

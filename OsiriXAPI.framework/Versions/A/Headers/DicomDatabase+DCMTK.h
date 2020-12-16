@@ -1,6 +1,6 @@
 /*=========================================================================
  Program:   OsiriX
- Copyright (c) 2010 - 2019 Pixmeo SARL
+ Copyright (c) 2010 - 2020 Pixmeo SARL
  266 rue de Bernex
  CH-1233 Bernex
  Switzerland
@@ -9,7 +9,6 @@
 
 #import "DicomDatabase.h"
 #import "AppController.h"
-#import "DCMPixelDataAttribute.h"
 
 @interface DicomDatabase (DCMTK)
 

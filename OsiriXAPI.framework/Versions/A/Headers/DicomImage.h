@@ -1,6 +1,6 @@
 /*=========================================================================
  Program:   OsiriX
- Copyright (c) 2010 - 2019 Pixmeo SARL
+ Copyright (c) 2010 - 2020 Pixmeo SARL
  266 rue de Bernex
  CH-1233 Bernex
  Switzerland
@@ -88,6 +88,7 @@ void* sopInstanceUIDEncode( NSString *sopuid);
 @property(nonatomic, retain) NSNumber *cloudDownloaded, *cloudUploaded;
 @property(nonatomic, retain) NSNumber *viewedImage;
 
++ (void) initCaptureScreenWindow;
 + (NSArray*) uniquePathsForDicomImageArray: (NSArray*) images;
 - (NSNumber*) isImageStorage;
 - (NSNumber*) isPDFStorage;
@@ -110,6 +111,7 @@ void* sopInstanceUIDEncode( NSString *sopuid);
 - (void) setInDatabaseFolder:(NSNumber*) f;
 - (NSString*) path;
 - (void) setPath:(NSString*) p;
+- (NSImage*) imageAsScreenCapture:(NSRect)frame annotationsLevel: (annotationsLevel) annotationsLevel useROIWLWW: (BOOL) useROIWLWW;
 - (NSImage*) imageAsScreenCapture:(NSRect)frame annotationsLevel: (annotationsLevel) annotationsLevel;
 - (NSImage*) imageAsScreenCapture:(NSRect)frame;
 - (NSImage*) imageAsScreenCapture;

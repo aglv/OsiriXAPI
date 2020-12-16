@@ -1,6 +1,6 @@
 /*=========================================================================
  Program:   OsiriX
- Copyright (c) 2010 - 2019 Pixmeo SARL
+ Copyright (c) 2010 - 2020 Pixmeo SARL
  266 rue de Bernex
  CH-1233 Bernex
  Switzerland
@@ -10,6 +10,13 @@
 
 #import <Cocoa/Cocoa.h>
 #import "DCMView.h"
+
+typedef enum {
+    noOrientation = 0,
+    axialOrientation = 1,
+    coronalOrientation = 2,
+    sagittalOrientation = 3
+} SliceOrientation;
 
 #define THUMBNAILSIZE 160
 
@@ -64,6 +71,9 @@
 @property(nonatomic, retain) DicomStudy* study;
 @property(nonatomic, retain) NSString* bodyPart;
 @property int latestDistantNumberOfImages;
+@property(nonatomic, retain) NSDate* firstImageDate;
+@property(nonatomic, retain) NSDate* lastImageDate;
+@property(nonatomic, retain) NSNumber* hiddenWebPortal;
 
 @property(nonatomic, retain) NSNumber* dateTimeZone, *dateAddedTimeZone, *dateOpenedTimeZone;
 
@@ -72,6 +82,7 @@
 - (NSOrderedSet *)paths;
 - (NSSet*) keyImages;
 - (float) viewedPercentage;
+- (BOOL) hasPixels;
 - (NSArray*) sortedKeyImages;
 - (NSArray*) sortedImages;
 - (DicomImage*) middleImage;
@@ -87,6 +98,8 @@
 + (NSArray*) sortDescriptorsForImages;
 - (NSString*) uniqueFilename;
 - (BOOL) isDistant;
+- (NSTimeInterval) acquisitionDuration;
+- (void) computeDuration;
 + (void) recomputeLocalizersSeriesInstanceUIDForStudies: (NSSet*) studiesSet;
 + (void) recomputeSeriesUIDForSeries: (DicomSeries*) series;
 - (NSString*) type;
@@ -113,6 +126,9 @@
 - (void) setDictionary: (NSDictionary*) dict;
 - (void) addToDictionaryObject: (id) object forKey: (NSString*) key;
 - (void) removeKeyFromDictionaryObject:(NSString*) key;
++ (void) initCaptureScreenWindow;
+- (SliceOrientation) orientation;
+- (BOOL) isVolumic;
 @end
 
 @interface DicomSeries (CoreDataGeneratedAccessors)

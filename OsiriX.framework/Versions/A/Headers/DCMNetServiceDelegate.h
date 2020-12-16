@@ -1,6 +1,6 @@
 /*=========================================================================
  Program:   OsiriX
- Copyright (c) 2010 - 2019 Pixmeo SARL
+ Copyright (c) 2010 - 2020 Pixmeo SARL
  266 rue de Bernex
  CH-1233 Bernex
  Switzerland
@@ -30,9 +30,13 @@ enum
 {
 	NSNetServiceBrowser *_dicomNetBrowser;
 	NSMutableArray *_dicomServices;
-	NSNetService *publisher;
+    NSMutableArray *authenticationsForBonjourServices;
+    
+	NSNetService *dicomPublisher, *dicomWebPublisher;
     BOOL browserRunning;
 }
+
+@property (retain) NSNetService *dicomPublisher, *dicomWebPublisher;
 
 + (NSString*) gethostnameAndPort: (int*) port forService:(NSNetService*) sender;
 + (NSArray *) DICOMServersList;
@@ -42,7 +46,6 @@ enum
 + (NSDictionary*) serverForHostname:(NSString*) hostname port: (int) port;
 + (NSString*) getIPAddress: (NSString*) address;
 + (id)sharedNetServiceDelegate;
-- (void) setPublisher: (NSNetService*) p;
 - (void)update;
 - (NSArray *)dicomServices;
 - (int)portForNetService:(NSNetService *)netService;
@@ -50,4 +53,6 @@ enum
 - (NSMutableArray *) cachedDICOMServersList;
 - (NSTimeInterval) lastCachedDICOMServersList;
 
+- (NSDictionary*) authenticationForBonjourService: (NSDictionary*) s;
+- (void) addAuthenticationForBonjourService: (NSDictionary*) s username: (NSString*) username password: (NSString*) password;
 @end

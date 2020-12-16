@@ -1,6 +1,6 @@
 /*=========================================================================
  Program:   OsiriX
- Copyright (c) 2010 - 2019 Pixmeo SARL
+ Copyright (c) 2010 - 2020 Pixmeo SARL
  266 rue de Bernex
  CH-1233 Bernex
  Switzerland
@@ -48,6 +48,7 @@ typedef enum {
 @property (nonatomic) int32_t distantServerState;
 @property (nonatomic) double distantServerStateTime;
 @property(nonatomic, retain) NSString* accessionNumber;
+@property(nonatomic, retain) NSString* requestedProcedureID;
 @property(nonatomic, retain) NSString* color;
 @property(nonatomic, retain) NSString* studyState;
 @property(nonatomic, retain) NSString* bodyPart;
@@ -58,6 +59,7 @@ typedef enum {
 @property(nonatomic, retain) NSDate* date;
 @property(nonatomic, retain) NSDate* dateAdded;
 @property(nonatomic, retain) NSDate* dateOfBirth;
+@property(nonatomic, retain) NSString* dateOfBirthString;
 @property(nonatomic, retain) NSDate* dateOpened;
 @property(nonatomic, retain) NSString* dictateURL;
 @property(nonatomic, retain) NSNumber* expanded;
@@ -66,6 +68,7 @@ typedef enum {
 @property(nonatomic, retain) NSNumber* hasROIs;
 @property(nonatomic, retain) NSString* id;
 @property(nonatomic, retain) NSString* institutionName;
+@property(nonatomic, retain) NSString* manufacturerModelName;
 @property(nonatomic, retain) NSNumber* lockedStudy;
 @property(nonatomic, retain) NSString* modality;
 @property(nonatomic, retain) NSString* name;
@@ -85,9 +88,14 @@ typedef enum {
 @property(nonatomic, retain) NSSet* series;
 @property(nonatomic, retain) NSNumber *cloudDownloaded, *cloudUploaded;
 @property(nonatomic, retain) NSNumber *cloudUploadFailed;
-
+@property(nonatomic, retain) NSDate* firstImageDate;
+@property(nonatomic, retain) NSDate* lastImageDate;
+@property(nonatomic, retain) NSString* viewedBy;
+@property(nonatomic, retain) NSDate* viewedByDate;
 @property(nonatomic, retain) NSArray *distantSOPInstances;
 @property(nonatomic, retain) NSDictionary *distantServer;
+@property(nonatomic, retain) NSNumber *priority;
+@property(nonatomic, retain) NSNumber *hiddenWebPortal;
 
 @property(nonatomic, retain) NSNumber* dateTimeZone, *dateAddedTimeZone, *dateOfBirthTimeZone, *dateOpenedTimeZone;
 
@@ -101,11 +109,16 @@ typedef enum {
 + (NSString*) yearOldFromDateOfBirth: (NSDate*) dateOfBirth;
 + (NSString*) yearOldAcquisition:(NSDate*) acquisitionDate FromDateOfBirth: (NSDate*) dateOfBirth;
 + (BOOL) displaySeriesWithSOPClassUID: (NSString*) uid andSeriesDescription: (NSString*) description;
++ (BOOL) displaySeriesWithSOPClassUID: (NSString*) uid andSeriesDescription: (NSString*) description containingOnlyPixels: (BOOL) pixels;
 + (NSArray*) seriesSortDescriptors;
 + (NSArray*) seriesSortDescriptorsWithSubKey: (NSString*) subKey;
 + (NSArray*) seriesSortDescriptorsWithSubKey: (NSString*) subKey addStudyDateSorting: (BOOL) addStudyDateSorting;
 + (void) resetPreferences;
 - (NSNumber*) noFiles;
+- (NSTimeInterval) acquisitionDuration;
+- (NSString*) acquisitionDurationFormatted;
+- (void) computeDurationAndSeries: (BOOL) computeSeries;
+- (void) computeDuration;
 - (NSSet*) paths;
 - (NSSet*) keyImages;
 - (DicomImage*) imageWithPixels;
@@ -148,6 +161,9 @@ typedef enum {
 - (DicomImage*) reportImage;
 - (DicomImage*) annotationsSRImage;
 - (DicomImage *) SRImageWithSeriesID: (int) seriesID seriesDescription: (NSString*) seriesDescription;
+- (void) recordViewedBy;
+- (NSString*) viewedByDateFormatted;
++ (NSString*) getUsername;
 - (void) archiveReportAsDICOMSR;
 + (void) setArchiveAnnotationsAsDICOMSR: (BOOL) v;
 - (void) archiveAnnotationsAsDICOMSR;

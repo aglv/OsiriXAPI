@@ -1,6 +1,6 @@
 /*=========================================================================
  Program:   OsiriX
- Copyright (c) 2010 - 2019 Pixmeo SARL
+ Copyright (c) 2010 - 2020 Pixmeo SARL
  266 rue de Bernex
  CH-1233 Bernex
  Switzerland
@@ -30,6 +30,9 @@ extern NSString* const NSThreadIsCancelledKey;
 -(void)exitOperation;
 -(void)enterSubthreadWithRange:(CGFloat)rangeLoc :(CGFloat)rangeLen __deprecated;
 -(void)exitSubthread __deprecated;
+
+-(void)enterIgnoreGUIChanges;
+-(void)exitIgnoreGUIChanges;
 
 extern NSString* const NSThreadSupportsCancelKey;
 -(BOOL)supportsCancel;

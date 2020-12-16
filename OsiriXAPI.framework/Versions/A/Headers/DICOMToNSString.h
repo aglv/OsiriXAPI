@@ -1,6 +1,6 @@
 /*=========================================================================
  Program:   OsiriX
- Copyright (c) 2010 - 2019 Pixmeo SARL
+ Copyright (c) 2010 - 2020 Pixmeo SARL
  266 rue de Bernex
  CH-1233 Bernex
  Switzerland
@@ -10,6 +10,14 @@
 /** \brief Converts DICOM string  to NSString */
 
 #import <Cocoa/Cocoa.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+    extern NSString* nonNilString( NSString* s);
+#ifdef __cplusplus
+}
+#endif
 
 @interface NSString  (DICOMToNSString)
 

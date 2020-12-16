@@ -1,6 +1,6 @@
 /*=========================================================================
  Program:   OsiriX
- Copyright (c) 2010 - 2019 Pixmeo SARL
+ Copyright (c) 2010 - 2020 Pixmeo SARL
  266 rue de Bernex
  CH-1233 Bernex
  Switzerland
@@ -55,9 +55,9 @@
 #include "vtkPiecewiseFunction.h"
 #include "vtkColorTransferFunction.h"
 #include "vtkVolumeProperty.h"
-#include "vtkVolumeRayCastCompositeFunction.h"
-#include "vtkVolumeRayCastMapper.h"
-#include "vtkVolumeRayCastMIPFunction.h"
+//#include "vtkVolumeRayCastCompositeFunction.h"
+//#include "vtkVolumeRayCastMapper.h"
+//#include "vtkVolumeRayCastMIPFunction.h"
 
 #include "vtkTransform.h"
 #include "vtkSphere.h"
@@ -90,7 +90,7 @@
 #include "vtkTexture.h"
 #include "vtkTextureMapToSphere.h"
 #include "vtkTransformTextureCoords.h"
-#include "vtkPowerCrustSurfaceReconstruction.h"
+//#include "vtkPowerCrustSurfaceReconstruction.h"
 
 #undef id
 
@@ -112,6 +112,8 @@
 }
 
 @property float factor;
+@property (retain, nonatomic) NSColor *color;
+@property (retain) NSString *name;
 
 - (void) setTexture: (BOOL) o;
 - (BOOL) texture;

@@ -1,10 +1,11 @@
-//
-//  ROI3DSettingsWindow+TouchBar.h
-//  OsiriX
-//
-//  Created by Joris Heuberger on 14.11.16.
-//  Copyright © 2016 Pixmeo. All rights reserved.
-//
+/*=========================================================================
+ Program:   OsiriX
+ Copyright (c) 2010 - 2020 Pixmeo SARL
+ 266 rue de Bernex
+ CH-1233 Bernex
+ Switzerland
+ All rights reserved.
+ =========================================================================*/
 
 #import "ROI3DSettingsWindow.h"
 

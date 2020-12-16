@@ -82,7 +82,7 @@ extern NSString *const kSSKeychainWhereKey;
  This was originally inspired by EMKeychain and SDKeychain (both of which are now gone). Thanks to the authors.
  SSKeychain has since switched to a simpler implementation that was abstracted from [SSToolkit](http://sstoolk.it).
  */
-@interface SSKeychain : NSObject
+@interface SSKeychainUtility : NSObject
 
 ///-----------------------
 /// @name Getting Accounts
@@ -168,6 +168,8 @@ extern NSString *const kSSKeychainWhereKey;
  */
 + (NSString *)passwordForService:(NSString *)serviceName account:(NSString *)account;
 + (NSString *)passwordForService:(NSString *)service path:(NSString*) path account:(NSString *)account;
++ (NSString *)passwordForService:(NSString *)service account:(NSString *)account type:(NSString*)type;
++ (NSString *)passwordForService:(NSString *)service account:(NSString *)account error:(NSError **)error type:(NSString*) type;
 
 /**
  Returns a string containing the password for a given account and service, or `nil` if the Keychain doesn't have a

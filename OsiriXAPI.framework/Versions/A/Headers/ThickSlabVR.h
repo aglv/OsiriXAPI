@@ -1,6 +1,6 @@
 /*=========================================================================
  Program:   OsiriX
- Copyright (c) 2010 - 2019 Pixmeo SARL
+ Copyright (c) 2010 - 2020 Pixmeo SARL
  266 rue de Bernex
  CH-1233 Bernex
  Switzerland
@@ -47,9 +47,9 @@
 #include "vtkPiecewiseFunction.h"
 #include "vtkColorTransferFunction.h"
 #include "vtkVolumeProperty.h"
-#include "vtkVolumeRayCastCompositeFunction.h"
-#include "vtkVolumeRayCastMapper.h"
-#include "vtkVolumeRayCastMIPFunction.h"
+//#include "vtkVolumeRayCastCompositeFunction.h"
+//#include "vtkVolumeRayCastMapper.h"
+//#include "vtkVolumeRayCastMIPFunction.h"
 #include "vtkImageFlip.h"
 #undef id
 
@@ -68,12 +68,12 @@
 	float								tableBlendingFloatR[256], tableBlendingFloatG[256], tableBlendingFloatB[256];
 	float								opacityTable[ 256];
 	
-	vtkVolumeRayCastMapper				*volumeMapper;
+//	vtkVolumeRayCastMapper				*volumeMapper;
 	vtkVolume							*volume;
 	vtkVolumeProperty					*volumeProperty;
 	vtkColorTransferFunction			*colorTransferFunction;
 	vtkImageImport						*reader;
-	vtkVolumeRayCastCompositeFunction   *compositeFunction;
+//	vtkVolumeRayCastCompositeFunction   *compositeFunction;
 	vtkPiecewiseFunction				*opacityTransferFunction;
 	vtkImageFlip						*flipReader;
 	

@@ -1,6 +1,6 @@
 /*=========================================================================
  Program:   OsiriX
- Copyright (c) 2010 - 2019 Pixmeo SARL
+ Copyright (c) 2010 - 2020 Pixmeo SARL
  266 rue de Bernex
  CH-1233 Bernex
  Switzerland
@@ -25,6 +25,7 @@
 #define STAT_UPDATE					0.6f
 #define IMAGE_COUNT					1
 #define IMAGE_DEPTH					32
+#define NSRectCenter(r) NSMakePoint(r.origin.x+r.size.width/2, r.origin.y+r.size.height/2)
 
 // Tools.
 
@@ -32,6 +33,7 @@ extern NSString *pasteBoardOsiriX;
 extern NSString *pasteBoardOsiriXPlugin;
 extern NSString *OsirixPluginPboardUTI;
 extern int CLUTBARS, ANNOTATIONS, SOFTWAREINTERPOLATION_MAX, DISPLAYCROSSREFERENCELINES;
+extern int intersect3D_SegmentPlane( float *P0, float *P1, float *Pnormal, float *Ppoint, float* resultPt);
 
 typedef enum { annotNone = 0, annotGraphics, annotBase, annotFull} annotationsLevel;
 typedef enum { barHide = 0, barOrigin, barFused, barBoth} CLUTBarMode;
@@ -73,7 +75,6 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
 	BOOL			drawingROI, noScale, mouseDraggedForROIUndo;
 	DCMView			*blendingView;
 	float			blendingFactor, blendingFactorStart;
-	BOOL			eraserFlag; // use by the PaletteController to switch between the Brush and the Eraser
 	BOOL			colorTransfer;
 	unsigned char   *colorBuf, *blendingColorBuf;
 	unsigned char   alphaTable[256], opaqueTable[256], redTable[256], greenTable[256], blueTable[256];
@@ -104,6 +105,7 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
     char            listType;
     
     short           curImage, startImage, previousRGB;
+    float           previousFullWW, previousFullWL;
     
     ToolMode        currentTool, currentToolRight, currentMouseEventTool;
     
@@ -135,6 +137,7 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
 	
     BOOL            xFlipped, yFlipped;
 
+    float           fontSize, labelFontSize, labelFontHeight;
 	long			fontListGLSize[ FONTGLSIZE + ' '];
 	long			labelFontListGLSize[ FONTGLSIZE + ' '];
 	NSSize			stringSize;
@@ -242,7 +245,6 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
 	BOOL			is2DViewerCached, is2DViewerValue;
 	
 	BOOL lensTexture;
-    NSPoint lensPosition;
 	
     BOOL cursorhidden;
 	int avoidRecursiveSync;
@@ -318,7 +320,7 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
 }
 
 @property BOOL flippedRendered, displayResliceView, resliceViewDisplayed;
-@property float resliceViewSizeFactor;
+@property float resliceViewSizeFactor, labelFontSize, labelFontHeight;
 @property(retain) NSNumber *scaleToSave, *rotationAngleToSave, *xOffsetToSave, *yOffsetToSave, *yFlippedToSave, *xFlippedToSave, *windowWidthToSave, *windowLevelToSave;
 @property(retain) NSNumber *scaleSeriesToSave, *rotationAngleSeriesToSave, *displayStyleSeriesToSave, *yFlippedSeriesToSave, *xFlippedSeriesToSave, *xOffsetSeriesToSave, *yOffsetSeriesToSave, *windowWidthSeriesToSave, *windowLevelSeriesToSave;
 @property NSRect drawingFrameRect;
@@ -354,7 +356,6 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
 @property(readonly) float curWW, curWL;
 @property NSInteger rows, columns;
 @property(readonly) NSCursor *cursor;
-@property BOOL eraserFlag;
 @property BOOL drawing;
 @property (readonly) BOOL volumicSeries;
 @property (nonatomic) NSTimeInterval timeIntervalForDrag;
@@ -438,6 +439,7 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
 - (NSImage*) nsimage;
 - (NSImage*) nsimage:(BOOL) originalSize;
 - (NSImage*) nsimage:(BOOL) originalSize allViewers:(BOOL) allViewers;
+- (NSImage*) nsimageScaledToFitSquare: (NSPoint*) origin;
 //- (CGImageRef) CGImageRef:(BOOL) originalSize allViewers:(BOOL) allViewers;
 - (NSDictionary*) exportDCMCurrentImage: (DICOMExport*) exportDCM size:(int) size;
 - (NSDictionary*) exportDCMCurrentImage: (DICOMExport*) exportDCM size:(int) size  views: (NSArray*) views viewsRect: (NSArray*) viewsRect;
@@ -463,13 +465,12 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
 - (float) scaleToFitForDCMPix: (DCMPix*) d;
 - (BOOL) isScaledFit;
 - (void) setBlendingFactor:(float) f;
-//- (void) sliderAction:(id) sender;
+- (void) createAliasesFor3DMeasure: (ROI*)r;
 - (void) roiSet;
 - (void) sync3DPosition;
 - (void) roiSet:(ROI*) aRoi __deprecated;
 - (void) colorTables:(unsigned char **) a :(unsigned char **) r :(unsigned char **)g :(unsigned char **) b;
 - (void) blendingColorTables:(unsigned char **) a :(unsigned char **) r :(unsigned char **)g :(unsigned char **) b;
-- (void )changeFont:(id)sender;
 - (IBAction) sliderRGBFactor:(id) sender;
 - (IBAction) alwaysSyncMenu:(id) sender;
 - (void) getCLUT:( unsigned char**) r : (unsigned char**) g : (unsigned char**) b;
@@ -551,9 +552,10 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
 - (IBAction)actualSize:(id)sender;
 - (void) drawOrientation:(NSRect) size;
 - (void) setCOPYSETTINGSINSERIESdirectly: (BOOL) b;
--(BOOL)actionForHotKey:(NSString *)hotKey;
-+(NSDictionary*) hotKeyDictionary;
-+(NSDictionary*) hotKeyModifiersDictionary;
+- (void) switchCopySettingsInSeries:(id) sender;
+- (BOOL)actionForHotKey:(NSString *)hotKey;
++ (NSDictionary*) hotKeyDictionary;
++ (NSDictionary*) hotKeyModifiersDictionary;
 - (void) delete3DROIsAliases;
 - (void) generate3DROIsAliases;
 - (void) displayFirstImage: (id) sender;
@@ -601,5 +603,8 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
 - (void)flagsChanged;
 
 + (NSArray*)cleanedOutDcmPixArray:(NSArray*)input; // filters the input array of DCMPix by returning only the pix with the most common ImageType in the input array
+
++ (void) updateLastMouseEvent;
++ (NSTimeInterval) lastMouseEvent;
 
 @end

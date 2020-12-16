@@ -1,6 +1,6 @@
 /*=========================================================================
  Program:   OsiriX
- Copyright (c) 2010 - 2019 Pixmeo SARL
+ Copyright (c) 2010 - 2020 Pixmeo SARL
  266 rue de Bernex
  CH-1233 Bernex
  Switzerland
@@ -50,10 +50,26 @@ int runStoreSCU(const char *myAET, const char*peerAET, const char*hostname, int 
     NSString *_writeSeedFile;
 	TLSCertificateVerificationType certVerification;
     NSString *_dhparam;
+    
+    BOOL opt_verbose;
+    BOOL opt_showPresentationContexts;
+    BOOL opt_debug;
+    BOOL opt_abortAssociation;
+    unsigned int opt_maxReceivePDULength;
+    BOOL opt_proposeOnlyRequiredPresentationContexts;
+    BOOL opt_combineProposedTransferSyntaxes;
+    int opt_blockMode;
+    int opt_dimse_timeout;
+    int opt_acse_timeout;
+    int opt_Quality;
+    int networkTransferSyntax;
 }
 
 @property int maxThreads;
 @property (retain) NSString *readSeedFile, *writeSeedFile, *dhparam;
+@property int networkTransferSyntax;
+@property BOOL opt_verbose, opt_proposeOnlyRequiredPresentationContexts;
+@property int opt_blockMode, opt_dimse_timeout, opt_Quality;
 
 + (int) sendSyntaxForListenerSyntax: (int) listenerSyntax;
 + (int) sendSyntaxForSyntaxUID: (NSString*) syntaxUID;

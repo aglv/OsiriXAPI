@@ -1,6 +1,6 @@
 /*=========================================================================
  Program:   OsiriX
- Copyright (c) 2010 - 2019 Pixmeo SARL
+ Copyright (c) 2010 - 2020 Pixmeo SARL
  266 rue de Bernex
  CH-1233 Bernex
  Switzerland
@@ -10,6 +10,9 @@
 #import <Cocoa/Cocoa.h>
 
 @interface NSImage (N2)
+
++ (NSSize)badgeSizeForString:(NSString*)string;
++ (void)drawBadgeImageWithText:(NSString*)text atPoint:(NSPoint)point;
 
 -(NSImage *)rotateBy:(float) rotation;
 -(NSImage *)flipImageX:(BOOL) xFlip Y:(BOOL) yFlip;
@@ -29,7 +32,10 @@
 -(NSImage*)imageByScalingProportionallyUsingNSImage:(float)ratio;
 -(NSData*)getDataOfType:(NSBitmapImageFileType)type compressionFactor:(float)factor;
 -(NSBitmapImageRep *)bitmapImageRepresentation;
+-(NSBitmapImageRep *)bitmapImageRepresentationWithBitsPerSample: (int) bps andBitsPerPixel: (int) bpp;
+-(NSBitmapImageRep *)bitmapImageRepresentationWithBitsPerSample: (int) bps andBitsPerPixel: (int) bpp scalingFactor: (float) s;
 + (float) backingScaleNSImage;
++ (NSImage *)imageWithPreviewOfFileAtPath:(NSString *)path ofSize:(NSSize)size;
 
 @end
 

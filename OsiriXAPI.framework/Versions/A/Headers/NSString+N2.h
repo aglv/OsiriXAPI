@@ -1,6 +1,6 @@
 /*=========================================================================
  Program:   OsiriX
- Copyright (c) 2010 - 2019 Pixmeo SARL
+ Copyright (c) 2010 - 2020 Pixmeo SARL
  266 rue de Bernex
  CH-1233 Bernex
  Switzerland
@@ -23,14 +23,18 @@
 +(NSString*)timeString:(NSTimeInterval)time;
 +(NSString*)timeString:(NSTimeInterval)time maxUnits:(NSInteger)maxUnits;
 +(NSString*)timeString:(NSTimeInterval)time maxUnits:(NSInteger)maxUnits abbreviated:(BOOL)abbreviated;
-+(NSString*)dateString:(NSTimeInterval)date;
 -(NSString*)stringByTrimmingStartAndEnd;
 -(NSString*)stringByDeletingPrefix:(NSString*)prefix;
+-(NSString*)stringByDeletingSuffix:(NSString*)suffix;
 +(NSString*)randomStringWithLength: (int) len;
+
 -(NSString*)urlEncodedString;
+-(NSString*)urlDecodedString;
+
 -(NSString*)xmlEscapedString;
 -(NSString*)xmlUnescapedString;
-
+-(id)JSON; // NSDictionary or NSArray
+-(id)valueForJSONKey: (NSString*) key;
 -(NSString*)ASCIIString;
 -(NSString*)quotedPrintableString;
 -(NSString*)txtToHtml;
@@ -41,8 +45,11 @@
 -(NSString*)resolveNSLocalizedStringsForLanguage:(NSString*)language inBundle:(NSBundle*)bundle escapeQuotationMarks: (BOOL) escapeQuotationMarks;
 -(NSString*)localizedForLanguage: (NSString*) language;
 -(NSString*)localizedForWebPortal;
--(NSString *)numberToSuperscript;
-- (NSSize)sizeOfStringWithFont:(NSFont *)font;
+-(NSString*)numberToSuperscript;
+-(NSSize)sizeOfStringWithFont:(NSFont *)font;
+
+-(NSString*)stringByConditionallyResolvingAlias;
+-(NSString*)stringByConditionallyResolvingSymlink;
 
 -(BOOL)contains:(NSString*)str;
 
@@ -51,6 +58,7 @@
 +(NSString*)stringByRepeatingString:(NSString*)string times:(NSUInteger)times;
 -(NSString*)suspendedString;
 -(BOOL)validURL;
+-(NSString*)correctWebURL;
 -(NSRange)range;
 
 //-(NSString*)resolvedPathString;

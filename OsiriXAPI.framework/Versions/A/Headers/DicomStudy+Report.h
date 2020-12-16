@@ -1,6 +1,6 @@
 /*=========================================================================
  Program:   OsiriX
- Copyright (c) 2010 - 2019 Pixmeo SARL
+ Copyright (c) 2010 - 2020 Pixmeo SARL
  266 rue de Bernex
  CH-1233 Bernex
  Switzerland
@@ -21,6 +21,8 @@
 +(void)transformPdfAtPath:(NSString*)pdfPath toDicomAtPath:(NSString*)outDicomPath usingSourceDicomAtPath:(NSString*)sourcePath seriesDescription:(NSString*) seriesDescription;
 -(void)transformPdfAtPath:(NSString*)pdfPath toDicomAtPath:(NSString*)outDicomPath;
 
++(void)transformSTLAtPath:(NSString*)stlPath toDicomAtPath:(NSString*)outDicomPath usingSourceDicomAtPath:(NSString*)sourcePath seriesDescription:(NSString*) seriesDescription;
+
 -(BOOL) transformPath:(NSString*) inPath toDicomAtPath:(NSString*) outPath seriesDescription:(NSString*) seriesDescription;
 -(BOOL) transformPath:(NSString*) inPath seriesDescription:(NSString*) seriesDescription;
 
@@ -31,5 +33,5 @@
 +(NSString*) imageBlockForDicomImage: (DicomImage*) image;
 +(NSString*) imageBlockForImage: (NSImage*) im withDicomImage: (DicomImage*) image;
 +(NSArray*) acceptedExtensions;
-- (NSString*) HTMLReport;
+-(NSString*) HTMLReport;
 @end

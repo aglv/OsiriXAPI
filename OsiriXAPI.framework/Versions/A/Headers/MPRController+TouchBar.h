@@ -1,10 +1,11 @@
-//
-//  MPRController+TouchBar.h
-//  OsiriX
-//
-//  Created by Joris Heuberger on 15.11.16.
-//  Copyright © 2016 Pixmeo. All rights reserved.
-//
+/*=========================================================================
+ Program:   OsiriX
+ Copyright (c) 2010 - 2020 Pixmeo SARL
+ 266 rue de Bernex
+ CH-1233 Bernex
+ Switzerland
+ All rights reserved.
+ =========================================================================*/
 
 #import "MPRController.h"
 #import "HorizontalPanTouchBarItem.h"

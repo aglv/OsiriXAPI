@@ -1,6 +1,6 @@
 /*=========================================================================
  Program:   OsiriX
- Copyright (c) 2010 - 2019 Pixmeo SARL
+ Copyright (c) 2010 - 2020 Pixmeo SARL
  266 rue de Bernex
  CH-1233 Bernex
  Switzerland
@@ -26,6 +26,7 @@
     
     BOOL remoteDBWaitingForLoad;
     NSString *remoteDBPathToLoad;
+    int remoteCopyNumberOfFiles;
 }
 
 @property(readonly,retain) NSString* address;
@@ -33,6 +34,7 @@
 @property(readonly) BOOL TLS;
 @property(readonly,retain) NSHost* host;
 @property(retain) NSString *remoteDBPathToLoad;
+@property int remoteCopyNumberOfFiles;
 
 +(RemoteDicomDatabase*)databaseForLocation:(NSString*)location port:(NSUInteger)port name:(NSString*)name update:(BOOL)flagUpdate;
 +(RemoteDicomDatabase*)databaseForLocation:(NSString*)location port:(NSUInteger)port tls:(BOOL)tls name:(NSString*)name update:(BOOL)flagUpdate;
@@ -44,6 +46,7 @@
 -(NSThread*) initiateUpdate;
 -(NSThread*) forceInitiateUpdate;
 
+-(NSString*)cacheDataForImage:(DicomImage *)image;
 -(NSString*)cacheDataForImage:(DicomImage*)image maxFiles:(NSInteger)maxFiles;
 -(NSString*)localPathForImage:(DicomImage*)image;
 

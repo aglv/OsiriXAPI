@@ -1,6 +1,6 @@
 /*=========================================================================
  Program:   OsiriX
- Copyright (c) 2010 - 2019 Pixmeo SARL
+ Copyright (c) 2010 - 2020 Pixmeo SARL
  266 rue de Bernex
  CH-1233 Bernex
  Switzerland
@@ -49,6 +49,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 -(unsigned long) crc32ForPath: (NSString*) path;
 -(NSString*) volumeFormatForPath:(NSString*) path localized:(NSString*_Nonnull*_Nonnull) localized;
+
+- (BOOL) getTotalSize: (unsigned long long*) total andFreeSize: (unsigned long long*) free forPath: (NSString*) path;
 
 @end
 

@@ -40,34 +40,28 @@ public:
      *  @param error The CharLS error code
      *  @return The OFCondition
      */
-    static const OFCondition& convert(charls::ApiResult error)
+    static const OFCondition convert(charls::ApiResult error)
     {
-        static OFCondition cond = EC_Normal;
-        
         if( error == charls::ApiResult::OK)
-            cond = EC_Normal;
+            return EC_Normal;
         else if( error == charls::ApiResult::UncompressedBufferTooSmall)
-            cond = EC_JLSUncompressedBufferTooSmall;
+            return EC_JLSUncompressedBufferTooSmall;
         else if( error == charls::ApiResult::CompressedBufferTooSmall)
-            cond = EC_JLSCompressedBufferTooSmall;
-        else if( error == charls::ApiResult::ImageTypeNotSupported)
-            cond = EC_JLSCodecUnsupportedImageType;
+            return EC_JLSCompressedBufferTooSmall;
         else if( error == charls::ApiResult::InvalidJlsParameters)
-            cond = EC_JLSCodecInvalidParameters;
+            return EC_JLSCodecInvalidParameters;
         else if( error == charls::ApiResult::ParameterValueNotSupported)
-            cond = EC_JLSCodecUnsupportedValue;
+            return EC_JLSCodecUnsupportedValue;
         else if( error == charls::ApiResult::InvalidCompressedData)
-            cond = EC_JLSInvalidCompressedData;
-        else if( error == charls::ApiResult::UnsupportedBitDepthForTransform)
-            cond = EC_JLSUnsupportedBitDepthForTransform;
+            return EC_JLSInvalidCompressedData;
+        else if( error == charls::ApiResult::bit_depth_for_transform_not_supported)
+            return EC_JLSUnsupportedBitDepthForTransform;
         else if( error == charls::ApiResult::UnsupportedColorTransform)
-            cond = EC_JLSUnsupportedColorTransform;
+            return EC_JLSUnsupportedColorTransform;
         else if( error == charls::ApiResult::TooMuchCompressedData)
-            cond = EC_JLSTooMuchCompressedData;
+            return EC_JLSTooMuchCompressedData;
         else
-            cond = EC_IllegalParameter;
-        
-        return cond;
+            return EC_IllegalParameter;
     }
 };
 

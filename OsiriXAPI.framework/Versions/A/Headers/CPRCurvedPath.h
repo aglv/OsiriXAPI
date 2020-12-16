@@ -62,6 +62,7 @@ extern const int32_t CPRCurvedPathControlTokenNone;
 - (CGFloat)relativePositionForNodeAtIndex:(NSUInteger)nodeIndex;
 
 - (NSArray *)transverseSliceRequestsForSpacing:(CGFloat)spacing outputWidth:(NSUInteger)width outputHeight:(NSUInteger)height mmWide:(CGFloat)mmWide; // mmWide is the how wide in patient coordinates the transverse slice should be
+- (NSArray *)transverseSliceRequestsForSpacing:(CGFloat)spacing outputWidth:(NSUInteger)width outputHeight:(NSUInteger)height mmWide:(CGFloat)mmWide angle: (CGFloat) angle;
 
 - (BOOL)isPlaneMeasurable; // bad name, but if this is true, we will let folks make measurements on the generated plane
 

@@ -1,6 +1,6 @@
 /*=========================================================================
  Program:   OsiriX
- Copyright (c) 2010 - 2019 Pixmeo SARL
+ Copyright (c) 2010 - 2020 Pixmeo SARL
  266 rue de Bernex
  CH-1233 Bernex
  Switzerland
@@ -50,8 +50,9 @@ extern NSString* const O2ScreenCapturesSeriesName;
     NSThread* _compressDecompressThread;
     NSMutableArray *compressingSOPs;
 	// +Routing
-	NSMutableArray* _routingSendQueues;
-	NSRecursiveLock* _routingLock;
+	NSMutableArray *_routingSendQueues;
+    NSMutableDictionary *_routingObjectIDs;
+	NSRecursiveLock *_routingLock;
 	// +Clean
 	NSRecursiveLock* _cleanLock;
     NSString* uniqueTmpfolder;
@@ -102,6 +103,7 @@ extern NSString* const O2ScreenCapturesSeriesName;
 #endif
 -(BOOL)isLocal;
 -(NSArray*)childrenArray: (id)item onlyImages: (BOOL)onlyImages;
+-(NSArray*)childrenArray: (id)item onlyImages: (BOOL)onlyImages includeLocalizers: (BOOL) includeLocalizers;
 -(NSArray*)childrenArray: (id)item onlyImages: (BOOL)onlyImages retrieveDistant: (BOOL) retrieveDistant;
 -(NSArray*)childrenArray: (id)item onlyImages: (BOOL)onlyImages retrieveDistant: (BOOL) retrieveDistant includeLocalizers: (BOOL) includeLocalizers;
 -(NSArray*)childrenArray: (id) item;
@@ -169,6 +171,8 @@ extern NSString* const DicomDatabaseLogEntryEntityName;
 -(void) editAlbum:(DicomAlbum*) album;
 -(void) removeStudies:(NSArray*)dicomStudies fromAlbum:(DicomAlbum*)dicomAlbum;
 -(NSArray*) distantStudiesInstanceUIDsForAlbum:(DicomAlbum*) album;
++(NSString*) localizedAlbum: (NSString*) name forLocale: (NSString*) currentLocale;
+-(void) checkAllAlbumsHaveAnUID;
 
 -(void) mainDatabaseCreated;
 -(NSArray*) reindexObjects: (NSArray*) objects;
@@ -237,7 +241,6 @@ extern NSString* const DicomDatabaseLogEntryEntityName;
 
 // methods to overload when one needs to ask for confirmation about autorouting
 -(BOOL)allowAutoroutingWithPostNotifications:(BOOL)postNotifications rereadExistingItems:(BOOL)rereadExistingItems;
--(void)alertToApplyRoutingRules:(NSArray*)routingRules toImages:(NSArray*)images;
 +(void)forgetAbout:(DicomDatabase*)db;
 +(NSManagedObject *) clone:(NSManagedObject *)source inContext:(NSManagedObjectContext *)context;
 @end

@@ -1,6 +1,6 @@
 /*=========================================================================
  Program:   OsiriX
- Copyright (c) 2010 - 2019 Pixmeo SARL
+ Copyright (c) 2010 - 2020 Pixmeo SARL
  266 rue de Bernex
  CH-1233 Bernex
  Switzerland
@@ -11,6 +11,7 @@
 #import <Foundation/Foundation.h>
 #import <Cocoa/Cocoa.h>
 
+#define MINIMUM_TARGET_SIZE_FOR_PDF 1200
 #define ItIsADICOMDIR -8237
 
 /** \brief  Parses files for importing into the database */
@@ -42,6 +43,9 @@
 
 @property(retain) NSString *serieID, *serie, *studyID;
 @property(retain, nonatomic) NSString *filePath;
+
++ (NSArray*) zipExtensions;
++ (NSArray*) moviesExtensions;
 
 // file functions
 + (BOOL) isTiffFile:(NSString *) file; /**< Test for TIFF file format */
