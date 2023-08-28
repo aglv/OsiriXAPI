@@ -7,9 +7,9 @@
  All rights reserved.
  =========================================================================*/
 
-#if defined( __x86_64__)
-#define USE_OSPRAY
-#endif
+//#if defined( __x86_64__)
+//#define USE_OSPRAY
+//#endif
 
 #import <AppKit/AppKit.h>
 #import "DCMPix.h"
@@ -437,6 +437,8 @@ typedef char* VTKStereoVRView;
     double fillWarm, fillKF, fillEle, fillAzi;
     double headWarm, headKH;
     
+    double volumetricScatteringBlending, globalIlluminationReach;
+    
     vtkLightKit *lightKit;
     
     NSColor *keyLightColor, *fillLightColor, *headLightColor, *backLightColor;
@@ -444,6 +446,8 @@ typedef char* VTKStereoVRView;
     IBOutlet NSPopUpButton *presetsPopup;
     IBOutlet NSWindow *presetWindow;
     IBOutlet NSTextField *presetName;
+    
+    BOOL cinematicRenderingActived;
 }
 
 #ifdef _STEREO_VISION_
@@ -451,6 +455,7 @@ typedef char* VTKStereoVRView;
 //@property(readonly) short currentTool;
 #endif
 
+@property BOOL cinematicRenderingActived;
 @property (nonatomic) BOOL clipRangeActivated, keep3DRotateCentered, dontResetImage, bestRenderingMode, osprayComposite, denoise;
 @property (nonatomic) int projectionMode, ospraySPP, osprayAmbientSamples;
 @property (nonatomic) double clippingRangeThickness, focalDistance, focalDisk;
@@ -463,14 +468,16 @@ typedef char* VTKStereoVRView;
 @property (retain) VRController *controller;
 @property (retain) ViewerController *blendingController;
 @property (retain, nonatomic) NSColor *backgroundColor;
-@property (retain) NSColor *keyLightColor, *fillLightColor, *headLightColor, *backLightColor;
+@property (retain, nonatomic) NSColor *keyLightColor, *fillLightColor, *headLightColor, *backLightColor;
 
 @property (nonatomic) BOOL maintainLuminace;
 @property (nonatomic) double keyWarm, keyInt, keyEle, keyAzi;
 @property (nonatomic) double backWarm, backKB, backEle, backAzi;
 @property (nonatomic) double fillWarm, fillKF, fillEle, fillAzi;
 @property (nonatomic) double headWarm, headKH;
+@property (nonatomic) double volumetricScatteringBlending, globalIlluminationReach;
 
++ (void) addLogo: (unsigned char*) buf rowBytes: (unsigned int) rowBytes height: (unsigned int) height;
 + (void) testGraphicBoard;
 + (BOOL) getCroppingBox:(double*) a :(vtkVolume *) volume :(vtkBoxWidget*) croppingBox;
 //+ (void) setCroppingBox:(double*) a :(vtkVolume *) volume;
@@ -484,6 +491,7 @@ typedef char* VTKStereoVRView;
 - (float*) imageInFullDepthWidth: (long*) w height:(long*) h isRGB:(BOOL*) rgb blendingView:(BOOL) blendingView;
 - (NSDictionary*) exportDCMCurrentImage;
 - (NSDictionary*) exportDCMCurrentImageIn16bit: (BOOL) fullDepth;
+- (NSDictionary*) exportDCMCurrentImageIn16bit: (BOOL) fullDepth display: (BOOL) display;
 - (void) renderImageWithBestQuality: (BOOL) best waitDialog: (BOOL) wait;
 - (void) renderImageWithBestQuality: (BOOL) best waitDialog: (BOOL) wait display: (BOOL) display;
 - (void) endRenderImageWithBestQuality;

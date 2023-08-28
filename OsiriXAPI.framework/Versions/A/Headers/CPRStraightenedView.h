@@ -48,8 +48,6 @@
 	NSMutableDictionary *_mousePlanePointsInPix; // The display info stores on what
 	//	plane and where in 3D the mouse position dots are, but we want to cache where the dots should be drawn in this view.
 	
-	NSInteger _editingCurvedPathCount;
-    
     BOOL _drawAllNodes;
     
     BOOL _processingRequest; // synchronous new image requests are generated in drawRect, but code that handles the new image calls' setNeedsDisplay,

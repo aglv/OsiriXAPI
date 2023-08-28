@@ -43,6 +43,7 @@ enum
 + (NSMutableDictionary*)DICOMNodeInfoFromTXTRecordData:(NSData*)data;
 + (NSString*) emojiForState:(int) state;
 + (NSArray *) DICOMServersListSendOnly: (BOOL) send QROnly:(BOOL) QR;
++ (NSArray *) DICOMServersListSendOnly: (BOOL) send QROnly:(BOOL) QR includeBonjour: (BOOL) includeBonjour;
 + (NSDictionary*) serverForHostname:(NSString*) hostname port: (int) port;
 + (NSString*) getIPAddress: (NSString*) address;
 + (id)sharedNetServiceDelegate;

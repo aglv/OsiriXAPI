@@ -12,6 +12,7 @@
 
 @interface NSData (N2)
 
++(NSData*)dataWithFirstBytes:(unsigned long) size ofFile:(NSString*)file;
 +(NSData*)dataWithHex:(NSString*)hex;
 -(NSData*)initWithHex:(NSString*)hex;
 +(NSData*)dataWithBase64:(NSString*)base64;
@@ -32,8 +33,7 @@
 #ifdef OSIRIX_VIEWER
 + (NSString*) decryptFile: (NSString*) file;
 + (NSString*) encryptFile: (NSString*) file;
-#endif
-
 + (BOOL) decryptFile: (NSString*) file toPath: (NSString*) path;
 + (BOOL) encryptFile: (NSString*) file toPath: (NSString*) path;
+#endif
 @end

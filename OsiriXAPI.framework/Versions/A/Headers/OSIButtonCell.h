@@ -10,5 +10,5 @@
 #import <Cocoa/Cocoa.h>
 
 @interface OSIButtonCell : NSButtonCell
-
+@property int numberOfImages;
 @end

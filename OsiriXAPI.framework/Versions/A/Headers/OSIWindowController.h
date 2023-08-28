@@ -14,7 +14,7 @@
 */
 
 #import <Cocoa/Cocoa.h>
-@class DicomDatabase;
+@class DicomDatabase, ROI;
 
 
 #ifdef __cplusplus
@@ -68,13 +68,18 @@ enum OsiriXBlendingTypes {BlendingPlugin = -1, BlendingFusion = 1, BlendingSubtr
 
 + (void) setWindowAppearance: (NSWindow*) window;
 + (NSColor*) darkAppearanceFontColor;
++ (NSColor*) darkAppearanceFontColorWithAlpha: (float) alpha;
 + (NSColor*) darkAppearanceBackgroundColor;
 + (NSColor*) darkAppearanceBlackColor;
++ (NSColor*) darkAppearanceBlackColorWithAlpha: (float) alpha;
 + (float) darkAppearanceFontColorWhiteLevel;
 
 - (NSMutableArray*) pixList;
 - (void) addToUndoQueue:(NSString*) what;
 - (int)blendingType;
+
+- (void) addROI:(ROI*) roi;
+- (void) selectROI:(ROI*) roi deselectingOther:(BOOL)deselectOther;
 
 - (IBAction) redo:(id) sender;
 - (IBAction) undo:(id) sender;

@@ -54,8 +54,6 @@
     BOOL _isDraggingNode;
     NSInteger _draggedNode;
 
-    NSInteger _editingCurvedPathCount;
-    
     BOOL _drawAllNodes;
     
     BOOL _processingRequest; // synchronous new image requests are generated in drawRect, but code that handles the new image calls' setNeedsDisplay,

@@ -28,6 +28,7 @@
 - (void)move:(double)x :(double)y;
 - (double) distanceWithPoint: (MyPoint*) p;
 - (double) squareDistanceWithPoint: (MyPoint*) p;
+- (double) squareDistanceWithNSPoint: (NSPoint) p;
 - (BOOL)isEqualToMyPoint:(MyPoint*)a;
 - (BOOL)isEqualToPoint:(NSPoint)a;
 - (BOOL)isNearToPoint:(NSPoint)a :(double)scale :(double)ratio;

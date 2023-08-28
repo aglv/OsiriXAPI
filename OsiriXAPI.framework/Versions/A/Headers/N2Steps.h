@@ -21,7 +21,7 @@ extern NSString* N2StepsNotificationStep;
 	IBOutlet id _delegate;
 }
 
-@property(retain) id delegate;
+@property(assign) id delegate;
 @property(nonatomic, assign) N2Step* currentStep;
 //	@property(readonly) N2StepsView* view;
 

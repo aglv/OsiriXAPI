@@ -21,6 +21,7 @@
                 int versionType;
 }
 
++ (void) showLicense;
 - (void) affiche;
 - (IBAction) switchVersion:(id) sender;
 @end

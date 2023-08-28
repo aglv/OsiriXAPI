@@ -9,11 +9,16 @@
 
 #import "WebPortalConnection.h"
 
-@class DicomStudy;
+@class DicomStudy, DicomSeries;
 
 @interface WebPortalConnection (Data)
 
++(BOOL)dontShowPDFForUser:(WebPortalUser*) user study: (DicomStudy*) study;
++(BOOL) hideSeries: (DicomSeries*) series  user: (WebPortalUser *) user;
+
 +(NSArray*)MakeArray:(id)obj;
+
++(NSString*)sendTokenToPhone: (NSString*) phone error: (int*) returnErrorNumber;
 
 -(void)getWidth:(CGFloat*)width height:(CGFloat*)height fromImagesArray:(NSArray*)imagesArray;
 -(void)getWidth:(CGFloat*)width height:(CGFloat*)height fromImagesArray:(NSArray*)imagesArray minSize:(NSSize)minSize maxSize:(NSSize)maxSize;
@@ -21,6 +26,7 @@
 -(void)processLoginHtml;
 -(void)processDoubleAuthenticationLoginHtml;
 -(void)processIndexHtml;
+-(void)processLogoutHtml;
 -(void)processMainHtml;
 -(void)processStudyListHtml;
 -(void)processLogsListHtml;
@@ -60,6 +66,8 @@
 -(void)processImageAsScreenCapture: (BOOL) asDisplayed;
 -(void)processMovie;
 
+-(BOOL)isSeriesVisible:(DicomSeries*) s;
+-(id)objectXID;
 -(id)objectWithXID:(NSString*)xid;
 -(id)objectWithXID:(NSString*)xid compareToDistant: (BOOL) compareToDistant checkUserAutorisation: (BOOL) checkUserAutorisation;
 -(void)receiveReportHtmlAsPOST;

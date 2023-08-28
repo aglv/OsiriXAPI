@@ -10,6 +10,7 @@
 #import <Cocoa/Cocoa.h>
 
 @class DicomDatabase;
+@class DicomStudy;
 
 /** \brief Managed network logging */
 @interface LogManager : NSObject
@@ -21,5 +22,6 @@
 + (id) currentLogManager;
 - (void) resetLogs;
 - (void) addLogLine: (NSDictionary*) dict;
-
+- (void) addDisplayLogLineForStudy: (DicomStudy*) study;
+- (void) addLogLineForStudy: (DicomStudy*) study message: (NSString*) message;
 @end

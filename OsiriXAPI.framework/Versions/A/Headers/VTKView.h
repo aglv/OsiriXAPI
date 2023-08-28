@@ -25,6 +25,7 @@ VTK_MODULE_INIT(vtkRenderingFreeType);
 #include "vtkRenderWindow.h"
 #include "vtkRenderWindowInteractor.h"
 #include "vtkCocoaRenderWindowInteractor.h"
+#undef AT
 #include "vtkCocoaRenderWindow.h"
 #undef id
 #else

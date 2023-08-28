@@ -1,1 +1,1 @@
-These are the frameworks from OsiriX Lite v12.0.1
+These are the frameworks from OsiriX 13.0.3

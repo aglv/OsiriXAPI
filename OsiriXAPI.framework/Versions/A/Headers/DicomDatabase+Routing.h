@@ -17,6 +17,8 @@
 - (void) deallocRouting;
 
 - (void) addImages:(NSArray*)_dicomImages toSendQueueForRoutingRule:(NSDictionary*)routingRule;
+- (void) applyRoutingRules:(NSArray*)autoroutingRules toImages:(NSArray*)newImagesOriginal displayGUI:(BOOL) displayGUI evenIfInactive: (BOOL) evenIfInactive;
+- (void) applyRoutingRules:(NSArray*)autoroutingRules toImages:(NSArray*)newImagesOriginal displayGUI:(BOOL) displayGUI;
 - (void) applyRoutingRules:(NSArray*)routingRules toImages:(NSArray*)images;
 - (void) addImagesToRouting:(NSArray*)images;
 - (void) initiateRoutingUnlessAlreadyRouting;

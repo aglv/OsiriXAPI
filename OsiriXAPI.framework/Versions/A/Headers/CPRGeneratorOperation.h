@@ -13,6 +13,8 @@
 @class CPRGeneratorRequest;
 @class CPRVolumeData;
 
+static const NSUInteger FILL_HEIGHT = 10;
+
 @interface CPRGeneratorOperation : NSOperation {
     CPRVolumeData *_volumeData;
     CPRGeneratorRequest *_request;

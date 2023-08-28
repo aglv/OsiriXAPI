@@ -11,13 +11,15 @@
 #import "HTTPConnection.h"
 #import "WebPortalUser.h"
 
+#define SMS_TOKEN_MINIMUM_INTERVAL 60
+#define SMS_TOKEN_MAXIMUM_AGE 5*60
+
 @class WebPortal, WebPortalDatabase, WebPortalServer, WebPortalSession, WebPortalResponse, DicomDatabase;
 
 @interface WebPortalConnection : HTTPConnection
 {
     BOOL dealloc;
     
-	NSLock *sendLock, *running;
 	WebPortalUser* user;
 	WebPortalSession* session;
 	
@@ -66,6 +68,7 @@
 +(NSDictionary*)ExtractParams:(NSString*)paramsString;
 +(NSString*) cleanUsername: (NSString*) username;
 +(void) setLogHTTPRequest: (BOOL) v;
++ (NSArray*) usersThatDidNotConnectSinceDays: (int) maxDaysWithoutConnection database: (WebPortalDatabase*) database;
 
 -(BOOL)requestIsIPhone;
 -(BOOL)requestIsMobile;

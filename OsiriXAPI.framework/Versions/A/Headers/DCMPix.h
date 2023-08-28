@@ -63,9 +63,9 @@ extern "C"
 //DICOM TAGS
 
 //	orientation
-	BOOL				isOriginDefined;
+	BOOL				isOriginDefined, patientOrientationComputed;
 	double				originX /**< x position of image origin */ , originY /**< y Position of image origin */ , originZ /**< Z position of image origin*/;
-	double				orientation[ 9];  /**< pointer to orientation vectors  */
+	double				orientation[ 9], patientOrientationVector[ 9];  /**< pointer to orientation vectors  */
 
 //	pixel representation
 	short				bitsAllocated, bitsStored, highBit;
@@ -103,7 +103,7 @@ extern "C"
 	NSString			*laterality, *viewPosition, *patientPosition, *acquisitionDate, *SOPClassUID, *frameofReferenceUID, *rescaleType, *bodyPartExamined;
 	BOOL				hasSUV, SUVConverted, SULConverted, displaySUVValue;
 	NSString			*units, *decayCorrection;
-	float				decayFactor, factorPET2SUV, radionuclideTotalDose, radionuclideTotalDoseCorrected;
+	float				factorPET2SUV, radionuclideTotalDose, radionuclideTotalDoseCorrected;
 	NSCalendarDate		*acquisitionTime, *radiopharmaceuticalStartTime;
 	float				halflife, frameReferenceTime, philipsFactor;
 
@@ -208,7 +208,7 @@ extern "C"
     NSTimeInterval      studyDuration, seriesDuration;
 }
 
-@property BOOL inverseVal;
+@property BOOL inverseVal, excludeFromComputeContentFrame;
 @property long frameNo;
 @property NSRect contentFrameRect;
 @property (setter=setID:) long ID;
@@ -246,6 +246,7 @@ Note setter is different to not break existing usage. :-( */
 
 - (void)orientationDouble:(double*) c;
 - (void)setOrientationDouble:(double*) c;
+- (void)orientationFromPatientOrientation:(float*) o;
 
 /** Slice location */
 @property(readonly) double originX, originY, originZ;
@@ -304,7 +305,7 @@ Note setter is different to not break existing usage. :-( */
 @property(retain) NSCalendarDate *radiopharmaceuticalStartTime;
 @property BOOL SUVConverted, SULConverted, needToCompute8bitRepresentation;
 @property(readonly) BOOL hasSUV;
-@property(nonatomic)float decayFactor, nominalInterval, triggerTime;
+@property(nonatomic)float nominalInterval, triggerTime;
 @property(retain) NSString *units, *decayCorrection;
 @property BOOL displaySUVValue;
 @property BOOL isLUT12Bit;
@@ -324,6 +325,8 @@ Note setter is different to not break existing usage. :-( */
 + (float) LBMSize:(float) sizeInCm weight:(float) weight sex:(NSString*) sex;
 - (float) LBM; /**< lean body mass */
 - (float) SULFactor;
+
++ (BOOL) isDataEmpty: (void*) data width: (unsigned int) width height: (unsigned int) height spp: (unsigned int) spp bpp: (unsigned int) bpp fraction: (float) fraction;
 
 + (void) checkUserDefaults: (BOOL) update;  /**< Check User Default for needed setting */
 + (void) resetUserDefaults;  /**< Reset the defaults */
@@ -523,6 +526,7 @@ Note setter is different to not break existing usage. :-( */
 - (float*) kernel;
 - (void) applyShutter;
 - (BOOL) is3DPlane;
+- (void) releaseImage;
 - (void) orientationCorrected:(float*) correctedOrientation rotation:(float) rotation xFlipped: (BOOL) xFlipped yFlipped: (BOOL) yFlipped;
 + (NSPoint) rotatePoint:(NSPoint)pt aroundPoint:(NSPoint)c angle:(float)a;
 - (void) computeCineRateFromNominalIntervalForCount: (float) numberOfImagesInSeries;
@@ -530,14 +534,15 @@ Note setter is different to not break existing usage. :-( */
 - (short) kernelsize;
 - (float) defaultWL; // = savedWL, or fullWL if not available
 - (float) defaultWW;  // = savedWW, or fullWW if not available
+- (void) resetFullWWAndWL;
 - (void) computeAlphaMaskIfNeeded;
 + (void) clearDcmPixCache;
 + (NSString*) convertECGStorageToPDF: (NSString*) file sopInstanceUID: (NSString*) sopUID;
 - (DCMPix*) renderWithScale:(float) scale;
 - (DCMPix*) renderWithRotation:(float) r scale:(float) scale xFlipped:(BOOL) xF yFlipped: (BOOL) yF;
 - (DCMPix*) renderWithRotation:(float) r scale:(float) scale xFlipped:(BOOL) xF yFlipped: (BOOL) yF backgroundOffset: (float) bgO;
-- (NSRect) usefulRectWithRotation:(float) r scale:(float) scale xFlipped:(BOOL) xF yFlipped: (BOOL) yF;
-- (NSRect) usefulRectWithRotation:(float) r scale:(float) scale xFlipped:(BOOL) xF yFlipped: (BOOL) yF useContentFrameRect:(BOOL)useContentFrameRect;
+- (NSRect) usefullRectWithRotation:(float) r scale:(float) scale xFlipped:(BOOL) xF yFlipped: (BOOL) yF;
+- (NSRect) usefullRectWithRotation:(float) r scale:(float) scale xFlipped:(BOOL) xF yFlipped: (BOOL) yF useContentFrameRect:(BOOL)useContentFrameRect;
 - (DCMPix*) mergeWithDCMPix:(DCMPix*) o offset:(NSPoint) oo;
 - (DCMPix*) renderInRectSize:(NSSize) rectSize atPosition:(NSPoint) oo rotation:(float) r scale:(float) scale xFlipped:(BOOL) xF yFlipped: (BOOL) yF;
 - (DCMPix*) renderInRectSize:(NSSize) rectSize atPosition:(NSPoint) oo rotation:(float) r scale:(float) scale xFlipped:(BOOL) xF yFlipped: (BOOL) yF smartCrop: (BOOL) smartCrop;
@@ -688,6 +693,10 @@ Note setter is different to not break existing usage. :-( */
 - (void) clearCachedPapyGroups;
 + (void) purgeCachedDictionaries;
 
++ (void) convertDICOMSR: (NSString*) sourceFile toHTML: (NSString*) htmlpath;
++ (void) convertDICOMSR: (NSString*) sourceFile toHTML: (NSString*) htmlpath extraArguments: (NSArray*) extra;
++ (NSString*) convertHTMLtoPDF: (NSString*) htmlpath;
+
 /** Returns a pointer the the papyrus group
 * @param group group
 */
@@ -707,5 +716,7 @@ Note setter is different to not break existing usage. :-( */
 /** Custom Annotations */
 - (void)loadCustomImageAnnotationsDBFields: (DicomImage*) imageObj;
 #endif
+
+- (unsigned char*) getPixelDataWidth:(long*) width height:(long*) height spp:(long*) spp bpp:(long*) bpp force8bits:(BOOL) force8bits squarePixels:(BOOL) squarePixels origin:(float*) imOrigin spacing:(float*) imSpacing alphaChannel:(BOOL) alphaChannel offset:(int*) offset isSigned:(BOOL*) isSigned;
 
 @end

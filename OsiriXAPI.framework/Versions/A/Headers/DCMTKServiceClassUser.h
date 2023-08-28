@@ -79,7 +79,7 @@ typedef char* T_ASC_Network;
 @property BOOL abortAssociation;
 @property (retain) NSString *hostname, *callingAET, *calledAET;
 @property (readonly) NSMutableDictionary *extraParameters;
-@property int port, transferSyntax;
+@property int port, transferSyntax, dimse_timeout, acse_timeout;
 @property (retain) NSString *writeSeedFile, *readSeedFile, *dhparam;
 
 - (id) initWithCallingAET:(NSString *)myAET  

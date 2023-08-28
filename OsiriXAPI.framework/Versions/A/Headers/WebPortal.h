@@ -37,7 +37,8 @@
 	
 	NSMutableDictionary* cache;
 	NSMutableDictionary* locks;
-	NSMutableArray *runLoops, *runLoopsLoad, *httpThreads;
+	NSMutableArray *runLoops, *httpThreads;
+    NSMutableArray<NSDictionary*> *runLoopsLoad;
 	WebPortalServer *server;
 	NSThread *serverThread;
 }
@@ -51,6 +52,7 @@
 +(WebPortal*)wadoOnlyWebPortal;
 +(WebPortal*)auditWebPortal;
 
++(NSString*) webServicesHTMLPath;
 +(NSDictionary*)webServicesHTMLFiles;
 
 @property(readonly, retain) WebPortalDatabase* database;
@@ -59,11 +61,13 @@
 @property(readonly, retain) NSMutableDictionary* locks;
 @property(readonly, retain) NSMutableArray* sessions;
 
-@property(readonly) NSMutableArray *runLoops, *runLoopsLoad, *httpThreads;
+@property(readonly) NSMutableArray *runLoops, *httpThreads;
+@property(readonly) NSMutableArray<NSDictionary*> *runLoopsLoad;
 
 @property (nonatomic) BOOL usesSSL;
 @property (nonatomic) NSInteger portNumber, poolSize;
-@property(retain) NSString* address;
+@property (nonatomic, retain) NSString* address;
+@property (retain) NSString *URLcache;
 
 @property BOOL authenticationRequired;
 @property BOOL passwordRestoreAllowed;
@@ -80,6 +84,7 @@
 -(id)initWithDatabaseAtPath:(NSString*)sqlFilePath dicomDatabase:(DicomDatabase*)dd;
 
 - (NSThread*) threadForRunLoopRef: (CFRunLoopRef) runloopref;
+- (void) resetLoopsLoad;
 
 -(NSData*)dataForPath:(NSString*)rel;
 +(NSData*)dataForPath:(NSString*)file;
@@ -94,6 +99,7 @@
 -(void)deleteSessionId:(NSString*)sid;
 -(WebPortalSession*)sessionForId:(NSString*)sid;
 -(WebPortalSession*)sessionForUsername:(NSString*)username token:(NSString*)token;
+-(void)deleteSessionsForUser:(NSString*)username;
 -(void)clearSessions;
 -(id)sessionForUsername:(NSString*)username token:(NSString*)token doConsume: (BOOL) doConsume;
 

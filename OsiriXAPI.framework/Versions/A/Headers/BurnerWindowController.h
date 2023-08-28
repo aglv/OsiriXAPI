@@ -8,6 +8,9 @@
  =========================================================================*/
 
 #import <Cocoa/Cocoa.h>
+#import <DiscRecordingUI/DRSetupPanel.h>
+#import <DiscRecordingUI/DRBurnSetupPanel.h>
+#import <DiscRecordingUI/DRBurnProgressPanel.h>
 
 enum burnerDestination
 {
@@ -18,6 +21,7 @@ enum burnerDestination
 
 @class DRTrack;
 @class DicomDatabase;
+@class DicomImage;
 
 /** \brief Window Controller for DICOM disk burning */
 @interface BurnerWindowController : NSWindowController <NSWindowDelegate>
@@ -32,7 +36,6 @@ enum burnerDestination
 	NSString *cdName;
 	NSTimer *burnAnimationTimer;
 	volatile BOOL runBurnAnimation, isExtracting, isSettingUpBurn, isThrobbing, windowWillClose;
-	NSArray *filesToBurn;
 	BOOL _multiplePatients;
 	BOOL cancelled;
     NSString *writeDMGPath, *writeVolumePath;
@@ -48,11 +51,16 @@ enum burnerDestination
 	int burnAnimationIndex;
     int irisAnimationIndex;
     NSTimer *irisAnimationTimer;
+    
+    DRBurn *drburn;
 }
 
-@property BOOL buttonsDisabled;
+@property BOOL buttonsDisabled, burning;
 @property NSUInteger selectedUSB;
 @property (retain, nonatomic) NSString *password, *cdName;
+@property (retain) DRBurn *drburn;
+
++ (void) writeJSViewerImages: (NSArray<DicomImage*>*) dbObjects filesForSOPInstanceUID: (NSDictionary*) filesForSOPInstanceUID toFolder: (NSString *) burnFolder anonymized: (BOOL) anonymized;
 
 - (NSArray*) volumes;
 - (IBAction) ok:(id)sender;
@@ -62,7 +70,6 @@ enum burnerDestination
 - (id)initWithFiles:(NSArray *)theFiles managedObjects:(NSArray *)managedObjects;
 - (IBAction)burn:(id)sender;
 - (NSString *)folderToBurn;
-- (void)setFilesToBurn:(NSArray *)theFiles;
 - (void)burnCD:(id)object;
 - (NSArray *)extractFileNames:(NSArray *)filenames;
 - (void)importFiles:(NSArray *)fileNames;

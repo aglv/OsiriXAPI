@@ -17,7 +17,7 @@ enum {kMicrosoftWordReport = 0,
     kOpenOfficeReport = 5,
     kHTMLReport = 6};
 
-@class DicomStudy;
+@class DicomStudy, WebPortalUser;
 
 /** \brief reports */
 @interface Reports : NSObject
@@ -51,5 +51,6 @@ enum {kMicrosoftWordReport = 0,
 + (void)checkForOpenDocumentTemplates;
 + (NSDictionary*) searchAndReplaceFieldsFromStudy:(DicomStudy*)aStudy inString:(NSMutableString*)aString;
 + (NSDictionary*) searchAndReplaceFieldsFromStudy:(DicomStudy*)aStudy inString:(NSMutableString*)aString testValidFields: (BOOL) testValidFields htmlEncoding: (BOOL) htmlEncoding;
++ (NSDictionary*) searchAndReplaceFieldsFromStudy:(DicomStudy*)aStudy inString:(NSMutableString*)aString testValidFields: (BOOL) testValidFields htmlEncoding: (BOOL) htmlEncoding user: (WebPortalUser*) user;
 + (NSString*) getDICOMStringValueForField: (NSString*) rawField inDICOMFile: (NSString*) path;
 @end

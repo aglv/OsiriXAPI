@@ -152,24 +152,11 @@ htt://www.pixelmed.com
 - (BOOL) isPresentationState;
 - (BOOL) isWaveform;
 - (BOOL) isStandalone;
-- (BOOL)  isRadiotherapy;
+- (BOOL) isRadiotherapy;
 - (BOOL) isSpectroscopy;
 - (BOOL) isRawData;
 - (BOOL) isNonImageStorage;
 + (BOOL)isPDF:(NSString *)sopClassUID;
 + (NSString *)basicGrayscalePrintManagementMetaSOPClassUID;
 + (NSString *)basicColorPrintManagementMetaSOPClassUID;
-
-
-
-
-
-
-
-
-
-
-
-
-
 @end

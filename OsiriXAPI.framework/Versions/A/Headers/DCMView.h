@@ -96,7 +96,7 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
 	
 	NSMutableArray	*rectArray;
 	
-    NSMutableArray  *dcmPixList;
+    NSMutableArray<DCMPix*> *dcmPixList;
     NSArray			*dcmFilesList;
 	NSMutableArray  *dcmRoiList, *curRoiList;
     DCMPix			*curDCM;
@@ -105,7 +105,8 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
     char            listType;
     
     short           curImage, startImage, previousRGB;
-    float           previousFullWW, previousFullWL;
+    float           previousBWWW, previousBWWL;
+    float           previousRGBWW, previousRGBWL;
     
     ToolMode        currentTool, currentToolRight, currentMouseEventTool;
     
@@ -201,7 +202,7 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
 	
 	BOOL			scaleToFitNoReentry;
 	
-	GLString		*showDescriptionInLargeText, *flippedNotice;
+	GLString		*showDescriptionInLargeText, *flippedNotice, *ROIsHiddenNotice;
     float           previousScalingFactor;
 	//Context for rendering to iChat
 //	NSOpenGLContext *_alternateContext;
@@ -290,7 +291,7 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
     NSNumber *scaleToSave, *rotationAngleToSave, *xOffsetToSave, *yOffsetToSave;
     NSNumber *windowWidthToSave, *windowLevelToSave, *yFlippedToSave, *xFlippedToSave;
     id imageToSave;
-    BOOL savedImageParameters;
+    BOOL savedImageParameters, dontSaveImageParameters;
     NSTimeInterval lastBecomeMainWindowTime;
     
     BOOL flippedRendered;
@@ -308,7 +309,7 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
     BOOL resliceTextureIsRGBA;
     GLuint resliceTextureID;
     BOOL resliceDirectionIsWidth;
-    int resliceTextureWidth, resliceTextureHeight, resliceTexturePosition;
+    int resliceTextureWidth, resliceTextureHeight, resliceTexturePosition, resliceFlippedVertically;
     float resliceTexturePixelRatio;
     BOOL displayResliceIndex, mouseDownInResliceView;
     
@@ -317,21 +318,29 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
     
     BOOL mouseDownInOpenGLSlider;
     float openGLSliderOffsetClick;
+    
+    NSMutableArray *texturesToDelete;
+    
+    BOOL wasScaledToFit;
 }
 
-@property BOOL flippedRendered, displayResliceView, resliceViewDisplayed;
+@property BOOL flippedRendered, displayResliceView;
+@property (readonly) BOOL needToLoadTexture;
+@property (nonatomic) BOOL resliceViewDisplayed;
 @property float resliceViewSizeFactor, labelFontSize, labelFontHeight;
 @property(retain) NSNumber *scaleToSave, *rotationAngleToSave, *xOffsetToSave, *yOffsetToSave, *yFlippedToSave, *xFlippedToSave, *windowWidthToSave, *windowLevelToSave;
 @property(retain) NSNumber *scaleSeriesToSave, *rotationAngleSeriesToSave, *displayStyleSeriesToSave, *yFlippedSeriesToSave, *xFlippedSeriesToSave, *xOffsetSeriesToSave, *yOffsetSeriesToSave, *windowWidthSeriesToSave, *windowLevelSeriesToSave;
 @property NSRect drawingFrameRect;
 @property(retain) NSArray *cleanedOutDcmPixArray;
 @property(readonly) NSMutableArray *rectArray, *curRoiList;
-@property BOOL COPYSETTINGSINSERIES, flippedData, showDescriptionInLarge, syncOnLocationImpossible, colorTransfer, stickToCenter;
+@property BOOL COPYSETTINGSINSERIES, flippedData, showDescriptionInLarge, syncOnLocationImpossible, colorTransfer, stickToCenter, dontSaveImageParameters, wasScaledToFit;
 @property(nonatomic) BOOL whiteBackground;
-@property(retain) NSMutableArray *dcmPixList, *dcmRoiList;
+@property(retain) NSMutableArray<DCMPix*> *dcmPixList;
+@property(retain) NSMutableArray<NSMutableArray*> *dcmRoiList;
 @property(retain) NSArray *dcmFilesList;
 @property long syncSeriesIndex;
-@property(nonatomic)float syncRelativeDiff, studyColorR, studyColorG, studyColorB;
+@property(nonatomic) float syncRelativeDiff, studyColorR, studyColorG, studyColorB;
+@property(nonatomic) NSPoint offsetOrigin;
 @property(nonatomic) long blendingMode;
 @property(nonatomic) NSUInteger studyDateIndex;
 @property(retain,setter=setBlending:) DCMView *blendingView;
@@ -385,6 +394,7 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
 + (double) pbaseDouble_Plane: (double*) point :(double*) planeOrigin :(double*) planeVector :(double*) pointProjection;
 + (short)syncro;
 + (void)setSyncro:(short) s;
++ (DCMView*) viewUnderMouse;
 //- (void) applyImageTransformation __deprecated;
 - (void) loadOpenGLIdentityForDrawingFrame: (NSRect) r;
 - (void) gClickCountSetReset;
@@ -419,10 +429,11 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
 + (BOOL) isToolforROIs:(ToolMode)tool;
 - (BOOL) roiTool:(long) tool;
 - (void) prepareToRelease;
-- (void) orientationCorrectedToView:(float*) correctedOrientation;
+- (BOOL) orientationCorrectedToView:(float*) correctedOrientation;
 #ifndef OSIRIX_LIGHT
 - (N3AffineTransform)pixToSubDrawRectTransform; // converst points in DCMPix "Slice Coordinates" to coordinates that need to be passed to GL in subDrawRect
 #endif
+- (NSPoint) ConvertNSViewCenter2GL;
 - (NSPoint) ConvertFromNSView2GL:(NSPoint) a;
 - (NSPoint) ConvertFromView2GL:(NSPoint) a;
 - (NSPoint) ConvertFromUpLeftView2GL:(NSPoint) a;
@@ -460,6 +471,8 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
 - (NSPoint) rotatePoint:(NSPoint) a;
 - (void) setOrigin:(NSPoint) x;
 - (void) setOriginX:(float) x Y:(float) y;
+-(void) addOrigin:(NSPoint) p;
+-(void) addOriginX:(float)x Y:(float) y;
 - (void) scaleToFit;
 - (void) scaleToFitIfNecessary;
 - (float) scaleToFitForDCMPix: (DCMPix*) d;
@@ -550,7 +563,7 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
 - (IBAction)realSize:(id)sender;
 - (IBAction)scaleToFit:(id)sender;
 - (IBAction)actualSize:(id)sender;
-- (void) drawOrientation:(NSRect) size;
+- (float) drawOrientation:(NSRect) size;
 - (void) setCOPYSETTINGSINSERIESdirectly: (BOOL) b;
 - (void) switchCopySettingsInSeries:(id) sender;
 - (BOOL)actionForHotKey:(NSString *)hotKey;
@@ -561,6 +574,8 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
 - (void) displayFirstImage: (id) sender;
 - (void) displayLastImage: (id) sender;
 - (void) displayMiddleImage: (id) sender;
+
+- (void) roiDeleteAll;
 
 - (void)computeContextualMenuForROI:(ROI*)roi;
 - (IBAction) roiSaveCurrent:(NSMenuItem*) mi;
@@ -606,5 +621,7 @@ typedef enum {NoInterpolation = 0, BiLinear = 1, Lanczos5 = 2, BSplineBicubic = 
 
 + (void) updateLastMouseEvent;
 + (NSTimeInterval) lastMouseEvent;
+
+- (void) forceResliceViewDisplay;
 
 @end

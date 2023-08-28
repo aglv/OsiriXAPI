@@ -30,4 +30,6 @@
 - (BOOL) isVisible;
 - (IBAction) hideButton: (id) sender;
 - (IBAction) showButton: (id) sender;
+
+- (void) viewerWindowDidResize: (NSNotification*) n;
 @end

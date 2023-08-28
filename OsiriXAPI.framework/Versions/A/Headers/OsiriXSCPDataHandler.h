@@ -42,14 +42,17 @@
 	NSMutableDictionary *findTemplate;
     
     int prepareMoveForDataSetLevel;
+    NSTimeInterval start;
 }
 
 @property(retain) NSString *callingAET;
 @property(readonly) NSArray *findArray;
 @property(readonly) NSEnumerator *findEnumerator;
 @property(retain, nonatomic) NSString *specificCharacterSet;
+@property(readonly) NSTimeInterval start;
 
 + (id)allocRequestDataHandler;
++ (NSArray*) databases;
 
 -(NSTimeInterval)endOfDay:(NSCalendarDate *)day;
 -(NSTimeInterval)startOfDay:(NSCalendarDate *)day;

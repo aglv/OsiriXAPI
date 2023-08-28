@@ -20,7 +20,7 @@
 	float						sign;
 	
 	float						originalCrossPositionX, originalCrossPositionY, xReslicedCrossPositionX, xReslicedCrossPositionY, yReslicedCrossPositionX, yReslicedCrossPositionY;
-	long						orientationVector;
+	long						orientationVector, previousResliceX, previousResliceY;
     
 	IBOutlet OrthogonalMPRView	*originalView, *xReslicedView, *yReslicedView;
 

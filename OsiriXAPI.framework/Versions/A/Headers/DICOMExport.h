@@ -13,7 +13,7 @@
 
 @class DCMObject;
 @class DCMExportPlugin;
-@class DicomImage;
+@class DicomImage, DicomSeries, DicomStudy;
 
 #ifdef __cplusplus
 
@@ -75,9 +75,17 @@ typedef char* DcmFileFormat;
 }
 @property( readonly) NSMutableDictionary *metaDataDict;
 @property BOOL rotateRawDataBy90degrees, removeDICOMOverlays, convertRGBtoBW, convertBWtoRGB;
+@property( retain) NSString *mpeg4File;
+
++ (NSArray*) convertMultiFramePath:(DicomSeries*) multiframeSeries;
++ (NSArray*) convertMultiFramePath:(DicomSeries*) multiframeSeries intoDirInPath:(NSString*)outputDirPath;
 
 + (DICOMExport*) exporter;
 + (DICOMExport*) exporterWithSeriesNumber: (long) no;
+
++ (NSDictionary*) getMovieMetaInformationsForPath: (NSString*) path withNumberOfFrames: (BOOL) numberOfFrames imageAtFrame: (float) imageAtFramePercentage;
++ (NSDictionary*) getMovieMetaInformationsForPath: (NSString*) path imageAtFrame: (float) imageAtFramePercentage;
++ (NSDictionary*) getMovieMetaInformationsForPath: (NSString*) path withNumberOfFrames: (BOOL) numberOfFrames;
 
 // Is this DCM file based on another DCM file?
 - (void) setSourceFile:(NSString*) isource __deprecated;

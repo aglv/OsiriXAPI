@@ -23,6 +23,10 @@
 	
 	// To be able to use Cocoa bindings with toolbar...
 	IBOutlet NSView *tbLOD, *tbThickSlab, *tbWLWW, *tbTools, *tbShading, *tbMovie, *tbBlending, *tbSyncZoomLevel;
+    IBOutlet NSView *seriesPopUpToolbarItem;
+    IBOutlet NSPopUpButton *seriesPopupMenu;
+//    NSMenuItem *seriesPopupContextualMenu;
+    NSImage *toolbarMenuItemImage;
 	
 	NSToolbar *toolbar;
 	
@@ -141,7 +145,7 @@
 - (void) updateViewsAccordingToFrame:(id) sender;
 - (void)findShadingPreset:(id) sender;
 - (IBAction)editShadingValues:(id) sender;
-- (void) moviePlayStop:(id) sender;
+- (IBAction) moviePlayStop:(id) sender;
 - (IBAction) endDCMExportSettings:(id) sender;
 - (void) addMoviePixList:(NSMutableArray*) pix :(NSData*) vData __deprecated;
 - (void) addMoviePixList:(NSMutableArray*) pix filesList:(NSMutableArray*) files volumeData:(NSData*) vData;
@@ -150,7 +154,6 @@
 - (BOOL) getMovieDataAvailable;
 - (void)Apply3DOpacityString:(NSString*)str;
 - (void)Apply2DOpacityString:(NSString*)str;
-- (NSImage*) imageForROI: (int) i;
 - (void) setROIToolTag:(ToolMode) roitype;
 - (IBAction) roiGetInfo:(id) sender;
 - (void) setupToolbar;

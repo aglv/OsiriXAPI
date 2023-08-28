@@ -63,7 +63,7 @@ extern "C"
 {
 #endif
 	NSString * documentsDirectoryFor( int mode, NSString *url) __deprecated;
-	NSString * documentsDirectory() __deprecated;
+	NSString * documentsDirectory(void) __deprecated;
     extern NSString* getMacAddress(void);
 
     extern BOOL hideListenerError;
@@ -86,7 +86,7 @@ extern "C"
 
 extern AppController* OsiriX;
 
-@interface AppController : NSObject	<NSNetServiceBrowserDelegate, NSNetServiceDelegate, NSSoundDelegate, NSMenuDelegate, NSUserNotificationCenterDelegate>
+@interface AppController : NSObject	<NSNetServiceBrowserDelegate, NSNetServiceDelegate, NSSoundDelegate, NSMenuDelegate, NSUserNotificationCenterDelegate, NSTextFieldDelegate, NSUserInterfaceItemSearching>
 {
 	IBOutlet BrowserController		*browserController;
 
@@ -98,7 +98,7 @@ extern AppController* OsiriX;
 	IBOutlet NSWindow				*dbWindow, *emailAddressWindow;
 	IBOutlet NSMenu					*windowsTilingMenuRows, *windowsTilingMenuColumns;
     IBOutlet NSMenu                 *recentStudiesMenu;
-	
+    
 	NSDictionary					*previousDefaults;
 	
 	BOOL							showRestartNeeded;
@@ -140,6 +140,7 @@ extern AppController* OsiriX;
     IBOutlet NSWindow *registrationKeyWindow;
     IBOutlet NSPopUpButton *availableKeysMenu;
     NSRecursiveLock *regurlLock;
+    NSTimeInterval lastAppActivity;
 }
 
 @property BOOL checkAllWindowsAreVisibleIsOff, isSessionInactive, showRestartNeeded, applicationDidFinishLaunching;
@@ -150,6 +151,7 @@ extern AppController* OsiriX;
 @property(readonly) int lastColumns, lastRows, lastCount;
 @property(retain) id appNapActivity;
 @property(retain) NSString *currentRegistrationKey, *upgradeRegistrationKey;
+@property(retain) NSTimer *refreshOAuthTokensTimer;
 @property BOOL keysFromAccountHidden;
 
 + (BOOL) hostReachable:(NSString*) host;
@@ -170,6 +172,7 @@ extern AppController* OsiriX;
 + (BOOL) isOSXYosemite;
 + (int) isUnsupportedOS;
 + (BOOL) hasMacOSXMaverick;
++ (BOOL) hasNSParagraphStyleTabStopsBug;
 + (NSString*) UID;
 + (NSString*) getRK;
 + (void) restartOsiriX;
@@ -198,10 +201,8 @@ extern AppController* OsiriX;
 + (NSString*)printStackTrace:(NSException*)e __deprecated; // use -[NSException printStackTrace] form NSException+N2
 + (BOOL) isKDUEngineAvailable;
 + (void) binpdf: (NSString*) file toFile: (NSString*) toFile;
-+ (void) sendGAWithAction: (NSString*) action label:(NSString*) label;
-+ (void) sendGAWithCategory:(NSString*) category action: (NSString*) action label:(NSString*) label;
-+ (void) sendGAWithAction:(NSString*) action value:(int) intValue mode:(GAMode) gaMode;
-+ (void) sendGAWithCategory:(NSString*) category action: (NSString*) action label:(NSString*) label value:(int) intValue mode:(GAMode) gaMode;
++ (void) sendAnalyticsWithName: (NSString*) eventName;
++ (void) sendAnalyticsWithName: (NSString*) eventName dictionary: (NSDictionary*) dict;
 #pragma mark-
 #pragma mark HTML Templates
 + (void)checkForHTMLTemplates __deprecated;
@@ -234,6 +235,9 @@ extern AppController* OsiriX;
 #endif
 - (IBAction) autoQueryRefresh:(id)sender;
 #endif
+- (void) pokeAppActivity;
+- (NSTimeInterval) lastAppActivity;
+- (BOOL) isAppActive;
 //===============WINDOW========================
 - (IBAction) setFixedTilingRows: (id) sender;
 - (IBAction) setFixedTilingColumns: (id) sender;
@@ -311,6 +315,8 @@ extern AppController* OsiriX;
 - (NSMenu*) wlwwMenu;
 - (NSMenu*) convMenu;
 - (NSMenu*) clutMenu;
+- (BOOL) buildWindowsStateMenu:(NSMenu *)menu;
+- (NSMenu*) buildROIInformationsBoxMenu;
 - (NSTimeInterval) runningTimeInterval;
 + (NSImage*) clutIconForClutName: (NSString*) clutName;
 + (NSImage*) clutIconForRed: (unsigned char*) redT green:(unsigned char*) greenT blue:(unsigned char*) blueT;
@@ -327,6 +333,9 @@ extern AppController* OsiriX;
 + (NSImage*) resizeImageForIcon: (NSImage*) im;
 + (NSRect) visibleFrameForScreen: (NSScreen*) screen;
 + (void) pingPlugin: (id) object userDict: (NSDictionary*) userDict;
+
++ (void) hideWarningAboutDatabaseAccess;
++ (void) showWarningAboutDatabaseAccess;
 
 #pragma mark-
 #pragma mark User Notifications
@@ -358,5 +367,6 @@ extern AppController* OsiriX;
 -(void)unsetReceivingIcon;
 -(void)setBadgeLabel:(NSString*)label;
 -(void)playGrabSound;
+-(IBAction)userManual:(id)sender;
 @end
 

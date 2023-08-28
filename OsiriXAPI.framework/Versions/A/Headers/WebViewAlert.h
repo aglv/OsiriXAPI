@@ -14,12 +14,13 @@
 {
     BOOL displayCancel, displayEnterRegKey, showDontShowAgain, dontShowAgain;
     NSURL *url;
-    NSString *signature;
+    NSString *signature, *authorization;
     int modalResponse;
     IBOutlet WebView *webView;
     unsigned long crc32result;
     NSMutableDictionary *preferences;
     NSTimer *quitAfterInterval;
+    IBOutlet NSButton *okButton;
 }
 
 + (NSInteger) alertWithURL: (NSURL*) u;
@@ -31,10 +32,11 @@
 - (id) initWithDictionary: (NSDictionary*) d;
 
 @property (readonly) int modalResponse;
-@property BOOL displayCancel, displayEnterRegKey, showDontShowAgain, dontShowAgain;
+@property BOOL displayCancel, displayEnterRegKey, showDontShowAgain, dontShowAgain, doNotShow;
 @property (retain) NSURL *url;
-@property (retain) NSString *signature;
+@property (retain) NSString *signature, *authorization;
 @property (retain) NSMutableDictionary *preferences;
 @property (retain) NSTimer *quitAfterInterval;
+@property (retain) NSDictionary *parameters;
 
 @end

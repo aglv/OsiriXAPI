@@ -35,7 +35,8 @@ enum TransferSyntaxCodes
     SendJPEGLSLossless = 13, 
 	SendJPEGLSLossy10 = 14,  
 	SendJPEGLSLossy20 = 15, 
-	SendJPEGLSLossy50 = 16
+	SendJPEGLSLossy50 = 16,
+    SendLittleEndianOctetStream = 17
 };
 typedef enum TransferSyntaxCodes TransferSyntaxCodes;
 
@@ -54,7 +55,6 @@ enum SendServerType { osirixServer, offisServer };
 	NSInteger			_offisTS;
 	BOOL				_readyForRelease;
 	BOOL				_abort;
-	NSRecursiveLock     *_lock;
     BOOL                doNotUpdatePreferences;
 	
 	IBOutlet NSPopUpButton	*newServerList;
@@ -72,25 +72,19 @@ enum SendServerType { osirixServer, offisServer };
 + (void) sendFiles:(NSArray *)files toNode: (NSDictionary*) node;
 + (void) sendFiles:(NSArray *)files toNode: (NSDictionary*) node usingSyntax: (int) syntax;
 
-+ (BOOL) executeSend:(NSArray*) files patientName: (NSString*) patientName studyDescription: (NSString*) studyDescription showError: (BOOL) showError server:(NSDictionary*) server;
-+ (BOOL) executeSend:(NSArray*) files patientName: (NSString*) patientName studyDescription: (NSString*) studyDescription database: (DicomDatabase*) db showError: (BOOL) showError server:(NSDictionary*) server;
-+ (BOOL) executeSend:(NSArray*) files patientName: (NSString*) patientName studyDescription: (NSString*) studyDescription database: (DicomDatabase*) db showError: (BOOL) showError server:(NSDictionary*) server error:(NSError**) returnedError;
-+ (BOOL) executeSend:(NSArray*) files patientName: (NSString*) patientName patientID: (NSString*) patientID studyDescription: (NSString*) studyDescription database: (DicomDatabase*) db showError: (BOOL) showError server:(NSDictionary*) server error:(NSError**) returnedError;
-+ (BOOL) executeSend:(NSArray*) files patientName: (NSString*) patientName patientID: (NSString*) patientID studyDescription: (NSString*) studyDescription database: (DicomDatabase*) db showError: (BOOL) showError server:(NSDictionary*) server error:(NSError**) returnedError syntax: (int) syntax;
++ (BOOL) executeSend:(NSArray*) images database: (DicomDatabase*) db showError: (BOOL) showError server:(NSDictionary*) server error:(NSError**) returnedError;
++ (BOOL) executeSend:(NSArray*) images database: (DicomDatabase*) db showError: (BOOL) showError server:(NSDictionary*) server error:(NSError**) returnedError syntax: (int) syntax;
 
 + (NSArray*) changeTransferSyntaxTo: (int) newSyntax quality: (int) opt_Quality forFiles: (NSArray*) filesToSend tmpFiles:(NSArray**) tmpFiles;
 + (NSArray*) changeTransferSyntaxToAnyOfTheseSyntaxes: (NSArray*) newSyntaxes quality: (int) opt_Quality forFiles: (NSArray*) filesToSend tmpFiles:(NSArray**) tmpFiles;
-- (void) sendDICOMFilesOffis:(NSDictionary *) dict;
 + (int) sendControllerObjects;
 - (id)initWithFiles:(NSArray *)files;
-- (id)serverAtIndex:(int)index;
 - (id)server;
 - (NSString *)numberFiles;
 - (void)setNumberFiles:(NSString *)numberFiles;
 - (IBAction) endSelectServer:(id) sender;
 - (int)keyImageIndex;
 - (void)setKeyImageIndex:(int)index;
-- (void)releaseSelfWhenDone:(id)sender;
 - (IBAction)selectServer: (id)sender;
 - (void) updateDestinationPopup:(NSNotification*) note;
 

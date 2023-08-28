@@ -21,4 +21,9 @@
 -(NSDateComponents*) differenceWithDate: (NSDate*) endDate;
 -(NSCalendarDate*) endOfDay;
 -(NSCalendarDate*) startOfDay;
+-(NSString*) rfc1123String;
++(NSDate*) dateWithJavaScriptDate: (NSString*) date;
+-(NSString*) javaScriptDate;
++(NSDate*) dateWithJavaScriptDateTime: (NSString*) date;
+-(NSString*) javaScriptDateTime;
 @end

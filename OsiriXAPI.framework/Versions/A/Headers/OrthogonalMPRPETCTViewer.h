@@ -39,9 +39,8 @@
 	NSMutableArray							*pixList;
 	
 	IBOutlet NSWindow						*dcmExportWindow;
-	IBOutlet NSMatrix						*dcmSelection, *dcmFormat;
-	IBOutlet NSSlider						*dcmInterval, *dcmFrom, *dcmTo;
-	IBOutlet NSTextField					*dcmSeriesName, *dcmFromTextField, *dcmToTextField, *dcmIntervalTextField, *dcmCountTextField;
+	IBOutlet NSMatrix						*dcmFormat;
+	IBOutlet NSTextField					*dcmSeriesName, *dcmCountTextField;
 	IBOutlet NSBox							*dcmBox;
 	DICOMExport								*exportDCM;
 	
@@ -69,6 +68,8 @@
     
     float                               syncOriginPosition[3];
 }
+
+@property (nonatomic) int dcmFrom, dcmTo, dcmToMax;
 
 - (id) initWithPixList: (NSMutableArray*) pix :(NSArray*) files :(NSData*) vData :(ViewerController*) vC :(ViewerController*) bC;
 
@@ -150,11 +151,8 @@
 //export
 -(IBAction) endExportDICOMFileSettings:(id) sender;
 - (NSDictionary*) exportDICOMFileInt :(BOOL) screenCapture view:(DCMView*) curView;
-- (IBAction) changeFromAndToBounds:(id) sender;
 - (IBAction) setCurrentPosition:(id) sender;
-- (IBAction) setCurrentdcmExport:(id) sender;
-- (void)checkView:(NSView *)aView :(BOOL) OnOff;
-- (void)dcmExportTextFieldDidChange:(NSNotification *)note;
+- (void)checkView:(NSView *)aView enabled:(BOOL) OnOff;
 
 // 4D
 - (void) MoviePlayStop:(id) sender;

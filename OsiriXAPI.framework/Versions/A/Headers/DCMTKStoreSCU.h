@@ -38,7 +38,8 @@ int runStoreSCU(const char *myAET, const char*peerAET, const char*hostname, int 
 	int _numberSent;
 	int _numberErrors;
 	NSString *_patientName, *_patientID;
-	NSString *_studyDescription; 
+	NSString *_studyDescription;
+    NSDate *_studyDate;
 	id _logEntry;
 	
 	//TLS settings

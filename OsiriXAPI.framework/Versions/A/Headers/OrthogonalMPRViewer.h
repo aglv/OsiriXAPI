@@ -44,9 +44,8 @@ typedef enum {SyncSeriesBehaviorAbsolutePosWithSameStudy, SyncSeriesBehaviorRela
 	IBOutlet NSPopUpButton				*thickSlabPopup;
 	
 	IBOutlet NSWindow					*dcmExportWindow;
-	IBOutlet NSMatrix					*dcmSelection, *dcmFormat;
-	IBOutlet NSSlider					*dcmInterval, *dcmFrom, *dcmTo;
-	IBOutlet NSTextField				*dcmSeriesName, *dcmFromTextField, *dcmToTextField, *dcmIntervalTextField, *dcmCountTextField;
+    IBOutlet NSMatrix                   *dcmFormat;
+	IBOutlet NSTextField				*dcmSeriesName, *dcmCountTextField;
 	IBOutlet NSBox						*dcmBox;
 	DICOMExport							*exportDCM;
 	
@@ -57,8 +56,7 @@ typedef enum {SyncSeriesBehaviorAbsolutePosWithSameStudy, SyncSeriesBehaviorRela
 	IBOutlet NSView						*movieView;
 	IBOutlet NSTextField				*movieTextSlide;
 	IBOutlet NSButton					*moviePlayStop;
-	IBOutlet NSSlider					*movieRateSlider;
-	IBOutlet NSSlider					*moviePosSlider;
+	IBOutlet NSSlider					*movieRateSlider, *moviePosSlider;
 	short								curMovieIndex, maxMovieIndex;
 	NSTimeInterval						lastTime, lastMovieTime;
 	NSTimer								*movieTimer;
@@ -70,6 +68,9 @@ typedef enum {SyncSeriesBehaviorAbsolutePosWithSameStudy, SyncSeriesBehaviorRela
   
     float                               syncOriginPosition[3];
 }
+
+@property (nonatomic) int dcmFrom, dcmTo, dcmToMax;
+@property BOOL has4DData;
 
 - (id) initWithPixList: (NSMutableArray*) pixList :(NSArray*) filesList :(NSData*) vData :(ViewerController*) vC :(ViewerController*) bC;
 
@@ -167,13 +168,10 @@ typedef enum {SyncSeriesBehaviorAbsolutePosWithSameStudy, SyncSeriesBehaviorRela
 
 //export
 
--(IBAction) changeFromAndToBounds:(id) sender;
+- (void) changeFromAndToBounds:(int) value;
 -(IBAction) setCurrentPosition:(id) sender;
--(IBAction) setCurrentdcmExport:(id) sender;
 
 -(void) checkView:(NSView *)aView :(BOOL) OnOff;
-
--(void) dcmExportTextFieldDidChange:(NSNotification *)note;
 
 // ROIs
 - (IBAction) roiDeleteAll:(id) sender;

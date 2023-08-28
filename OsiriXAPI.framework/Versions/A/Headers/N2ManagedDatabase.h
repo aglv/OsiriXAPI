@@ -78,6 +78,7 @@
 -(NSEntityDescription*)entityForName:(NSString*)name;
 
 -(id)objectWithID:(id)oid;
+-(id)objectWithID:(id)oid existingObjectsOnly:(BOOL) existingObjectsOnly;
 -(NSArray*)objectsWithIDs:(NSArray*)objectIDs;
 -(void)deleteObjects:(NSArray *)objects;
 
@@ -93,6 +94,7 @@
 -(NSUInteger)countObjectsForEntity:(id)e;
 -(NSUInteger)countObjectsForEntity:(id)e predicate:(NSPredicate*)p;
 -(NSUInteger)countObjectsForEntity:(id)e predicate:(NSPredicate*)p error:(NSError**)err;
+-(NSArray *)executeFetchRequest:(NSFetchRequest *)request error:(NSError **)error;
 -(id)newObjectForEntity:(id)e;
 -(void) sqlFileChanged;
 -(BOOL)save;
@@ -117,11 +119,11 @@
 @interface N2ManagedObjectContext : NSManagedObjectContext {
 	N2ManagedDatabase* _database;
     BOOL dicomDatabaseClass, webDatabaseClass;
-    NSString *allocatedByStack;
+    NSThread *thread;
 }
 
 @property(assign) N2ManagedDatabase* database;
-@property(readonly) NSString *allocatedByStack;
+@property(assign) NSThread *thread;
 
 + (int) dicomManagedObjectContextCounter;
 + (int) webManagedObjectContextCounter;

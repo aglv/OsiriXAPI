@@ -44,7 +44,14 @@
 	IBOutlet NSProgressIndicator *statusProgressIndicator;
     
     NSMutableDictionary *downloadingPlugins;
+    
+    IBOutlet NSView *errorPopoverView;
+    
+    FSEventStreamRef stream;
+    BOOL streamStarted;
 }
+
+@property (retain) NSString *errorPopoverMessage;
 
 - (NSMutableArray*)plugins;
 - (NSArray*)availabilities;

@@ -13,7 +13,6 @@
 #ifndef OSIRIX_LIGHT
 /** \brief Study level DCMTKQueryNode */
 @interface DCMTKStudyQueryNode : DCMTKQueryNode {
-    BOOL _sortChildren;
     BOOL isHidden;
     
     NSString *_studyID;
@@ -24,6 +23,7 @@
 
 @property (retain) NSManagedObjectID *localStudyObjectID;
 
+- (NSManagedObjectID*) localStudyObjectIDForContext: (NSManagedObjectContext *) context;
 - (NSString*) patientUID;
 - (NSNumber*) stateText;
 - (NSString*) studyID;
@@ -36,6 +36,11 @@
 - (BOOL) isHidden;
 - (void) setHidden: (BOOL) h;
 - (void) queryChildrenAtIMAGELevel;
+- (BOOL) isModalityFieldEmpty;
+- (NSString*) modalities;
+
+-(void) computeNumberOfImages;
+-(void) computeModalitiesInStudy;
 
 @end
 #endif

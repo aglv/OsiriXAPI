@@ -18,9 +18,7 @@
     float *_floatBytes;
     NSMutableSet *_fillOperations;
 	NSOperation *_projectionOperation;
-    BOOL _operationExecuting;
     BOOL _operationFinished;
-    BOOL _operationFailed;
     
     CGFloat _sampleSpacing;
 }

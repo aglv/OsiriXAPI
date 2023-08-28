@@ -96,12 +96,17 @@ typedef enum {
 @property(nonatomic, retain) NSDictionary *distantServer;
 @property(nonatomic, retain) NSNumber *priority;
 @property(nonatomic, retain) NSNumber *hiddenWebPortal;
+@property(nonatomic, retain) NSNumber *dateDay;
+@property(nonatomic, retain) NSNumber *dateDayOfWeek;
+@property(nonatomic, retain) NSNumber *dateHourMinute;
+@property(nonatomic, retain) NSNumber *dateMonth;
+@property(nonatomic, retain) NSNumber *dateYear;
 
 @property(nonatomic, retain) NSNumber* dateTimeZone, *dateAddedTimeZone, *dateOfBirthTimeZone, *dateOpenedTimeZone;
 
 + (NSDate*) convertDate:(NSDate*) date withTimeZone:(NSNumber*) savedTimeZone;
 + (NSNumber*) timeZoneForDate:(NSDate*) date;
-
+- (void) modifyDICOMField: (NSString*) field value: (id) value showError: (BOOL) showError newUIDs: (BOOL) newUIDs;
 + (NSRecursiveLock*) dbModifyLock;
 + (NSString*) formattedPatientName: (NSString*) n;
 + (NSString*) soundex: (NSString*) s;
@@ -119,7 +124,11 @@ typedef enum {
 - (NSString*) acquisitionDurationFormatted;
 - (void) computeDurationAndSeries: (BOOL) computeSeries;
 - (void) computeDuration;
+- (void) computeDateProperties;
+- (void) checkMultipleSeriesWithSameUID;
 - (NSSet*) paths;
+- (NSString*) UID; //studyInstanceUID
+- (NSString*) DICOMName;
 - (NSSet*) keyImages;
 - (DicomImage*) imageWithPixels;
 - (NSArray*) roiAndKeyImages;
@@ -138,6 +147,7 @@ typedef enum {
 - (NSNumber*) chronologicalNumber;
 - (NSColor*) chronologicalColor;
 - (NSArray*) imageSeries;
+- (NSArray*) visibleImageSeries;
 - (NSArray*) imageSeriesContainingPixels:(BOOL) pixels;
 - (NSArray*) imageSeriesContainingPixels:(BOOL) pixels includeLocalizersSeries: (BOOL) includeLocalizersSeries;
 - (NSArray*) imageSeriesContainingPixels:(BOOL) pixels includeLocalizersSeries: (BOOL) includeLocalizersSeries sorted:(BOOL) sorted;
@@ -162,6 +172,7 @@ typedef enum {
 - (DicomImage*) annotationsSRImage;
 - (DicomImage *) SRImageWithSeriesID: (int) seriesID seriesDescription: (NSString*) seriesDescription;
 - (void) recordViewedBy;
+- (void) recordViewedBy:(NSString*) username;
 - (NSString*) viewedByDateFormatted;
 + (NSString*) getUsername;
 - (void) archiveReportAsDICOMSR;
@@ -197,6 +208,7 @@ typedef enum {
 - (BOOL) computeHasKeyImages;
 - (NSImage*) thumbnailImage;
 - (NSData*) thumbnail;
+- (NSData*) thumbnailIncludingSeries;
 - (NSNumber*) noSeries;
 - (void) refresh;
 - (void) computeDistantServerState;
@@ -215,6 +227,11 @@ typedef enum {
 + (BOOL) isSendingStudyID: (NSManagedObjectID*) study;
 + (void) setSendingStudyID: (NSManagedObjectID*) study to:(BOOL) value;
 + (void) setSendingStudyIDs: (NSArray*) studies to:(BOOL) value;
+- (BOOL) isExcludedFromWebPortal;
+- (void) setExcludedFromWebPortal: (BOOL) add;
+
+- (void) setIsIncompleteStudy: (BOOL) i;
+- (BOOL) isIncompleteStudy;
 @end
 
 @interface DicomStudy (CoreDataGeneratedAccessors)

@@ -49,7 +49,12 @@ enum
     todayPM = 11,
     after = 12,
     last2Months = 13,
-    lastYear = 14
+    lastYear = 14,
+    last5Months = 15,
+    last6Months = 16,
+    last8Months = 17,
+    last10Months = 18,
+    last12Months = 19
 };
 
 /** \brief Window Controller for Q/R */
@@ -92,7 +97,6 @@ enum
     NSMutableArray							*queryFilters;
 	
 	NSString								*currentQueryKey, *queryArrayPrefs;
-	int										checkAndViewTry;
 	
 	NSImage									*Realised3, *Realised2;
 	NSTimer									*QueryTimer;
@@ -135,6 +139,13 @@ enum
     
     NSDictionary *countPresetNode;
     NSThread *countPresetThread;
+    
+    NSMutableDictionary *localRawNoFilesCache;
+    
+    NSPoint menuWillOpenLocation;
+    
+    NSString *filterResult;
+    NSArray *unfilteredResultArray;
 }
 
 @property (retain, nonatomic) NSDate *queryControllerToDate, *queryControllerFromDate, *queryControllerOnDate;
@@ -148,9 +159,15 @@ enum
 @property (retain) DICOMFieldMenu *DICOMField;
 @property (retain) NSDictionary *countPresetNode;
 @property (retain) NSThread *countPresetThread;
+@property (retain) NSMutableDictionary *localRawNoFilesCache;
+@property (retain, nonatomic) NSString *filterResult;
+@property (retain) NSString *resultsOutOf;
+@property (retain) NSArray *unfilteredResultArray;
+@property BOOL addWildcardToQuery, refreshQueryOnlyWhenActive;
 
 + (QueryController*) currentQueryController;
 + (QueryController*) currentAutoQueryController;
++ (void) purgeCache;
 + (NSString*) stringIDForStudy:(id) item;
 + (BOOL) echo: (NSString*) address port:(int) port AET:(NSString*) aet;
 + (BOOL) echoServer:(NSDictionary*)serverParameters;
@@ -190,6 +207,7 @@ enum
 - (void) refreshSources;
 - (IBAction) retrieveAndViewClick: (id) sender;
 - (IBAction) retrieveAndView: (id) sender;
+- (void) delete:(id)sender;
 - (IBAction) view:(id) sender;
 - (IBAction) setBirthDate:(id) sender;
 - (NSArray*) queryPatientID:(NSString*) ID;
@@ -197,7 +215,7 @@ enum
 - (void) retrieve:(id)sender;
 - (void) retrieveClick:(id)sender;
 - (void) retrieve:(id)sender onlyIfNotAvailable:(BOOL) onlyIfNotAvailable;
-- (void) performQuery:(NSNumber*) showErrors;
+- (BOOL) performQuery:(NSNumber*) showErrors;
 - (void) performRetrieve:(NSArray*) array;
 - (void) setDateQuery:(id)sender;
 - (void) setModalityQuery:(id)sender;
