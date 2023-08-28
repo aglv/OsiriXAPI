@@ -1,15 +1,10 @@
 /*=========================================================================
  Program:   OsiriX
- 
- Copyright (c) OsiriX Team
+ Copyright (c) 2010 - 2020 Pixmeo SARL
+ 266 rue de Bernex
+ CH-1233 Bernex
+ Switzerland
  All rights reserved.
- Distributed under GNU - LGPL
- 
- See http://www.osirix-viewer.com/copyright.html for details.
- 
- This software is distributed WITHOUT ANY WARRANTY; without even
- the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
- PURPOSE.
  =========================================================================*/
 
 #import <Cocoa/Cocoa.h>
@@ -18,19 +13,27 @@
     NSPoint draggingStartingPoint;
     NSTimeInterval doubleClick;
     NSCell *doubleClickCell;
+    BOOL recomputeCells;
+    NSRect *rectsCache;
 }
 
+- (void) resetCacheCells;
++ (BOOL)draggingThumbnailCell;
 @end
 
 @interface O2ViewerThumbnailsMatrixRepresentedObject : NSObject {
     id _object;
     NSArray* _children;
+    int curStudyIndexAll;
+    int numberOfImages;
 }
 
 @property(retain) id object;
 @property(retain) NSArray* children;
+@property int curStudyIndexAll, numberOfImages;
+@property BOOL isOpenedStudy;
 
-+ (id)object:(id)object;
-+ (id)object:(id)object children:(NSArray*)children;
++ (id)object:(id)object __deprecated;
++ (id)object:(id)object children:(NSArray*)children studyIndex: (int) sI numberOfImages: (int) nI;
 
 @end

@@ -1,15 +1,10 @@
 /*=========================================================================
  Program:   OsiriX
- 
- Copyright (c) OsiriX Team
+ Copyright (c) 2010 - 2020 Pixmeo SARL
+ 266 rue de Bernex
+ CH-1233 Bernex
+ Switzerland
  All rights reserved.
- Distributed under GNU - LGPL
- 
- See http://www.osirix-viewer.com/copyright.html for details.
- 
- This software is distributed WITHOUT ANY WARRANTY; without even
- the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
- PURPOSE.
  =========================================================================*/
 
 #import "DicomDatabase.h"
@@ -31,12 +26,15 @@
     
     BOOL remoteDBWaitingForLoad;
     NSString *remoteDBPathToLoad;
+    int remoteCopyNumberOfFiles;
 }
 
 @property(readonly,retain) NSString* address;
 @property(readonly) NSInteger port;
+@property(readonly) BOOL TLS;
 @property(readonly,retain) NSHost* host;
 @property(retain) NSString *remoteDBPathToLoad;
+@property int remoteCopyNumberOfFiles;
 
 +(RemoteDicomDatabase*)databaseForLocation:(NSString*)location port:(NSUInteger)port name:(NSString*)name update:(BOOL)flagUpdate;
 +(RemoteDicomDatabase*)databaseForLocation:(NSString*)location port:(NSUInteger)port tls:(BOOL)tls name:(NSString*)name update:(BOOL)flagUpdate;
@@ -48,6 +46,7 @@
 -(NSThread*) initiateUpdate;
 -(NSThread*) forceInitiateUpdate;
 
+-(NSString*)cacheDataForImage:(DicomImage *)image;
 -(NSString*)cacheDataForImage:(DicomImage*)image maxFiles:(NSInteger)maxFiles;
 -(NSString*)localPathForImage:(DicomImage*)image;
 
@@ -61,6 +60,7 @@
 
 +(NSDictionary*)fetchDicomDestinationInfoForAddress:(NSString*)address port:(NSInteger)port;
 -(NSDictionary*)fetchDicomDestinationInfo;
+-(NSString*)fetchDatabaseVersion;
 
 -(void)storeScuImages:(NSArray*)dicomImages toDestinationAETitle:(NSString*)aet address:(NSString*)address port:(NSInteger)port transferSyntax:(int)exsTransferSyntax;
 

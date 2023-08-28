@@ -1,15 +1,10 @@
 /*=========================================================================
  Program:   OsiriX
- 
- Copyright (c) OsiriX Team
+ Copyright (c) 2010 - 2020 Pixmeo SARL
+ 266 rue de Bernex
+ CH-1233 Bernex
+ Switzerland
  All rights reserved.
- Distributed under GNU - LGPL
- 
- See http://www.osirix-viewer.com/copyright.html for details.
- 
- This software is distributed WITHOUT ANY WARRANTY; without even
- the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
- PURPOSE.
  =========================================================================*/
 
 #import <Cocoa/Cocoa.h>
@@ -28,13 +23,16 @@ typedef enum  UseScreenPart
 
 #pragma mark General
 
-extern NSString* const OsirixDateTimeFormatDefaultsKey;
+- (void) delayedSetObjectForKey: (NSDictionary*) d;
+
 +(NSDateFormatter*)dateTimeFormatter;
 +(NSString*)formatDateTime:(NSDate*)date;
 
-extern NSString* const OsirixDateFormatDefaultsKey;
 +(NSDateFormatter*)dateFormatter;
 +(NSString*)formatDate:(NSDate*)date;
+
++(NSString*)dateTimeFormat;
++(NSString*)dateFormat;
 
 extern NSString* const OsirixCanActivateDefaultDatabaseOnlyDefaultsKey;
 +(BOOL)canActivateOnlyDefaultDatabase;
@@ -60,8 +58,6 @@ extern NSString* const OsirixBonjourSharingNameDefaultsKey;
 
 extern NSString* const OsirixBonjourSharingIsPasswordProtectedDefaultsKey;
 +(BOOL)bonjourSharingIsPasswordProtected;
-
-extern NSString* const OsirixBonjourSharingPasswordDefaultsKey;
 +(NSString*)bonjourSharingPassword;
 
 #pragma mark Web Portal

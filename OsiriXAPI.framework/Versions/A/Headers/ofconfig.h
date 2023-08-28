@@ -56,7 +56,7 @@
  *
  */
 
-#define OFConfigFile_MaxLevel 2
+#define OFConfigFile_MaxLevel 1
 #define OFConfigFile_CommentChar '#'
 
 class OFConfigFile;

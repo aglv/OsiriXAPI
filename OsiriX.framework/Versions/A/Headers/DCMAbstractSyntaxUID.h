@@ -1,16 +1,11 @@
 /*=========================================================================
-  Program:   OsiriX
-
-  Copyright (c) OsiriX Team
-  All rights reserved.
-  Distributed under GNU - LGPL
-  
-  See http://www.osirix-viewer.com/copyright.html for details.
-
-     This software is distributed WITHOUT ANY WARRANTY; without even
-     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
-     PURPOSE.
-=========================================================================*/
+ Program:   OsiriX
+ Copyright (c) 2010 - 2020 Pixmeo SARL
+ 266 rue de Bernex
+ CH-1233 Bernex
+ Switzerland
+ All rights reserved.
+ =========================================================================*/
 
 
 /*************
@@ -82,6 +77,7 @@ htt://www.pixelmed.com
 + (NSString *)XRay3DCraniofacialImageStorage;
 + (NSString *)PETImageStorage;
 + (NSString *)RTImageStorage;
++ (NSString *)SRStoragePrefix;
 + (BOOL)isImageStorage:(NSString *)sopClassUID;
 + (NSArray *)imageSyntaxes;
 + (NSArray *)hiddenImageSyntaxes;
@@ -131,7 +127,7 @@ htt://www.pixelmed.com
 
 + (NSString *)MRSpectroscopyStorage;
 + (BOOL) isSpectroscopy:(NSString *)sopClassUID;
-
++ (BOOL) isSiemensCSAPrivateNonImageStorage:(NSString *)sopClassUID;
 + (NSString *)rawDataStorage;
 + (BOOL) isRawData:(NSString *)sopClassUID ;
 
@@ -144,6 +140,7 @@ htt://www.pixelmed.com
 
 + (NSString *)pdfStorageClassUID;
 + (NSString *)EncapsulatedCDAStorage;
++ (NSString *)EncapsulatedSTLStorage;
 
 - (id)initWithUID:(NSString *)uid  name:(NSString *)name  type:(NSString *)type;
 - (NSString *)uid;
@@ -155,24 +152,11 @@ htt://www.pixelmed.com
 - (BOOL) isPresentationState;
 - (BOOL) isWaveform;
 - (BOOL) isStandalone;
-- (BOOL)  isRadiotherapy;
+- (BOOL) isRadiotherapy;
 - (BOOL) isSpectroscopy;
 - (BOOL) isRawData;
 - (BOOL) isNonImageStorage;
 + (BOOL)isPDF:(NSString *)sopClassUID;
 + (NSString *)basicGrayscalePrintManagementMetaSOPClassUID;
 + (NSString *)basicColorPrintManagementMetaSOPClassUID;
-
-
-
-
-
-
-
-
-
-
-
-
-
 @end

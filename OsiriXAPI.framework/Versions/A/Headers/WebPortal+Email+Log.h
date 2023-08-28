@@ -1,21 +1,17 @@
 /*=========================================================================
  Program:   OsiriX
- 
- Copyright (c) OsiriX Team
+ Copyright (c) 2010 - 2020 Pixmeo SARL
+ 266 rue de Bernex
+ CH-1233 Bernex
+ Switzerland
  All rights reserved.
- Distributed under GNU - LGPL
- 
- See http://www.osirix-viewer.com/copyright.html for details.
- 
- This software is distributed WITHOUT ANY WARRANTY; without even
- the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
- PURPOSE.
  =========================================================================*/
 
 #import "WebPortal.h"
 
 
 @class WebPortalUser;
+@class DicomFile;
 
 @interface WebPortal (EmailLog)
 
@@ -26,6 +22,7 @@
 -(BOOL)sendNotificationsEmailsTo:(NSArray*)users aboutStudies:(NSArray*)filteredStudies predicate:(NSString*)predicate customText:(NSString*)customText from:(WebPortalUser*) from;
 
 -(void)updateLogEntryForStudy:(NSManagedObject*)study withMessage:(NSString*)message forUser:(NSString*)user ip:(NSString*)ip;
+-(void)updateLogEntryForDicomFile:(DicomFile*)study withMessage:(NSString*)message forUser:(NSString*)user ip:(NSString*)ip;
 
 -(WebPortalUser*)newUserWithEmail:(NSString*)email;
 

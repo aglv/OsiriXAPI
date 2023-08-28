@@ -1,16 +1,11 @@
 /*=========================================================================
-  Program:   OsiriX
-
-  Copyright (c) OsiriX Team
-  All rights reserved.
-  Distributed under GNU - LGPL
-  
-  See http://www.osirix-viewer.com/copyright.html for details.
-
-     This software is distributed WITHOUT ANY WARRANTY; without even
-     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
-     PURPOSE.
-=========================================================================*/
+ Program:   OsiriX
+ Copyright (c) 2010 - 2020 Pixmeo SARL
+ 266 rue de Bernex
+ CH-1233 Bernex
+ Switzerland
+ All rights reserved.
+ =========================================================================*/
 
 /** \brief  SuperClass for 3D WindowControllers
 */
@@ -22,10 +17,7 @@
 #import "NSFullScreenWindow.h"
 #import "OSIWindowController.h"
 
-
-#define DATABASEPATH				@"/DATABASE.noindex/"
-#define STATEDATABASE				@"/3DSTATE/"
-
+#define STATEDATABASE @"/3DSTATE/"
 
 @class ROIVolume;
 @class ViewerController;
@@ -114,7 +106,7 @@
 - (NSArray*) fileList;
 
 - (void) ApplyOpacityString: (NSString*) str;
-- (void) load3DState;
+- (BOOL) load3DState;
 
 - (NSArray*) roiVolumes;
 - (void) hideROIVolume: (ROIVolume*) v;

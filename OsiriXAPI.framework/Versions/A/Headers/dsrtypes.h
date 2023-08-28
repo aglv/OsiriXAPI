@@ -77,7 +77,7 @@
 // protocol, hostname and CGI script name used for HTML hyperlinks to composite objects
 #define HTML_HYPERLINK_PREFIX_FOR_CGI "http://localhost/dicom.cgi"
 // URL of the DICOM toolkit DCMTK
-#define DCMTK_INTERNET_URL "http://www.osirix-viewer.com"
+#define DCMTK_INTERNET_URL "https://www.osirix-viewer.com"
 
 // XML namespace URI for dcmsr module
 #define DCMSR_XML_NAMESPACE_URI "http://dicom.offis.de/dcmsr"

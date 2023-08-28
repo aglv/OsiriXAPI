@@ -1,16 +1,11 @@
 /*=========================================================================
-  Program:   OsiriX
-
-  Copyright (c) OsiriX Team
-  All rights reserved.
-  Distributed under GNU - LGPL
-  
-  See http://www.osirix-viewer.com/copyright.html for details.
-
-     This software is distributed WITHOUT ANY WARRANTY; without even
-     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
-     PURPOSE.
-=========================================================================*/
+ Program:   OsiriX
+ Copyright (c) 2010 - 2020 Pixmeo SARL
+ 266 rue de Bernex
+ CH-1233 Bernex
+ Switzerland
+ All rights reserved.
+ =========================================================================*/
 
 #import <Cocoa/Cocoa.h>
 #import "DCMPix.h"
@@ -45,7 +40,7 @@
 	
 	NSString				*style;
 	
-    IBOutlet NSView         *toolsView, *WLWWView, *CLUTEditorsView, *LODView, *ClippingRangeView, *BlendingView, *movieView, *shadingView, *engineView, *perspectiveView, *modeView, *scissorStateView;
+    IBOutlet NSView         *toolsView, *WLWWView, *CLUTEditorsView, *LODView, *ClippingRangeView, *BlendingView, *movieView, *shadingView, *engineView, *perspectiveView, *modeView, *scissorStateView, *viewAngleView, *scalarOpacityDistanceView;
 	
 	IBOutlet NSView			*OrientationsView;
 	
@@ -59,7 +54,6 @@
 	IBOutlet NSWindow       *growingRegionWindow;
 	BOOL					growingSet;
 	
-	IBOutlet NSButton		*shadingCheck;
 	IBOutlet NSTextField    *shadingValues;
 	
 	IBOutlet NSView			*convolutionView;
@@ -145,6 +139,8 @@
 	NSTimeInterval			flyThruRecordingTimeFrame;
 	
 	IBOutlet NSWindow       *editDeleteValue;
+    
+    BOOL initialized;
 	
 #ifdef _STEREO_VISION_
 	//Added SilvanWidmer 26-08-09
@@ -161,6 +157,7 @@
 
 @property (retain) NSCustomTouchBarItem *horizontalPanTouchBarItem;
 @property CGFloat previousHorizontalTranslationOnTouchBar;
+@property BOOL initialized;
 
 - (IBAction) applyConvolution:(id) sender;
 - (IBAction) setOrientation:(id) sender;
@@ -169,7 +166,7 @@
 - (IBAction) setMode:(id)sender;
 - (NSMutableArray*) pixList;
 - (NSMutableArray*) curPixList;
-- (void) load3DState;
+- (BOOL) load3DState;
 - (void) updateBlendingImage;
 - (ViewerController*) blendingController;
 - (id) initWithPix:(NSMutableArray*) pix :(NSArray*) f :(NSData*) vData :(ViewerController*) bC :(ViewerController*) vC;
@@ -213,6 +210,7 @@
 - (void) export2iPhoto:(id) sender;
 - (void) exportTIFF:(id) sender;
 - (void) computeMinMax;
+- (void) recomputeMinMax;
 - (float) minimumValue;
 - (float) maximumValue;
 - (float) blendingMinimumValue;

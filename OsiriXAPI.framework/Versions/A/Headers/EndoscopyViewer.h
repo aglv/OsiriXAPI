@@ -1,16 +1,11 @@
 /*=========================================================================
-  Program:   OsiriX
-
-  Copyright (c) OsiriX Team
-  All rights reserved.
-  Distributed under GNU - LGPL
-  
-  See http://www.osirix-viewer.com/copyright.html for details.
-
-     This software is distributed WITHOUT ANY WARRANTY; without even
-     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
-     PURPOSE.
-=========================================================================*/
+ Program:   OsiriX
+ Copyright (c) 2010 - 2020 Pixmeo SARL
+ 266 rue de Bernex
+ CH-1233 Bernex
+ Switzerland
+ All rights reserved.
+ =========================================================================*/
 
 
 
@@ -117,10 +112,6 @@
 #pragma mark Tools Selection
 - (IBAction) change2DTool:(id) sender;
 - (IBAction) change3DTool:(id) sender;
-#pragma mark-
-#pragma mark NSSplitview's delegate methods
-- (void)splitViewDidResizeSubviews:(NSNotification *)aNotification;
-
 #pragma mark-
 #pragma mark export
 - (IBAction) setExportAllViews: (id) sender;

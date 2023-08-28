@@ -1,18 +1,16 @@
 /*=========================================================================
-  Program:   OsiriX
-
-  Copyright (c) OsiriX Team
-  All rights reserved.
-  Distributed under GNU - LGPL
-  
-  See http://www.osirix-viewer.com/copyright.html for details.
-
-     This software is distributed WITHOUT ANY WARRANTY; without even
-     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
-     PURPOSE.
-=========================================================================*/
+ Program:   OsiriX
+ Copyright (c) 2010 - 2020 Pixmeo SARL
+ 266 rue de Bernex
+ CH-1233 Bernex
+ Switzerland
+ All rights reserved.
+ =========================================================================*/
 
 #import <Cocoa/Cocoa.h>
+#import <DiscRecordingUI/DRSetupPanel.h>
+#import <DiscRecordingUI/DRBurnSetupPanel.h>
+#import <DiscRecordingUI/DRBurnProgressPanel.h>
 
 enum burnerDestination
 {
@@ -23,6 +21,7 @@ enum burnerDestination
 
 @class DRTrack;
 @class DicomDatabase;
+@class DicomImage;
 
 /** \brief Window Controller for DICOM disk burning */
 @interface BurnerWindowController : NSWindowController <NSWindowDelegate>
@@ -30,15 +29,13 @@ enum burnerDestination
 	volatile BOOL burning;
 	NSMutableArray *files, *anonymizedFiles, *dbObjectsID, *originalDbObjectsID;
 	float burnSize;
-	IBOutlet NSTextField *nameField;
-	IBOutlet NSTextField *sizeField, *finalSizeField;
+	IBOutlet NSTextField *sizeField;
 	IBOutlet NSMatrix	 *compressionMode;
 	IBOutlet NSButton *burnButton;
 	IBOutlet NSButton *anonymizedCheckButton;
 	NSString *cdName;
 	NSTimer *burnAnimationTimer;
 	volatile BOOL runBurnAnimation, isExtracting, isSettingUpBurn, isThrobbing, windowWillClose;
-	NSArray *filesToBurn;
 	BOOL _multiplePatients;
 	BOOL cancelled;
     NSString *writeDMGPath, *writeVolumePath;
@@ -49,28 +46,30 @@ enum burnerDestination
 	IBOutlet NSWindow *passwordWindow;
 	
 	BOOL buttonsDisabled;
-	BOOL burnSuppFolder, burnOsiriX, burnHtml, burnWeasis;
+	BOOL burnSuppFolder, burnOsiriX, burnHtml;
     
 	int burnAnimationIndex;
     int irisAnimationIndex;
     NSTimer *irisAnimationTimer;
+    
+    DRBurn *drburn;
 }
 
-@property BOOL buttonsDisabled;
+@property BOOL buttonsDisabled, burning;
 @property NSUInteger selectedUSB;
-@property (retain) NSString *password;
+@property (retain, nonatomic) NSString *password, *cdName;
+@property (retain) DRBurn *drburn;
+
++ (void) writeJSViewerImages: (NSArray<DicomImage*>*) dbObjects filesForSOPInstanceUID: (NSDictionary*) filesForSOPInstanceUID toFolder: (NSString *) burnFolder anonymized: (BOOL) anonymized;
 
 - (NSArray*) volumes;
 - (IBAction) ok:(id)sender;
 - (IBAction) cancel:(id)sender;
 - (IBAction) setAnonymizedCheck: (id) sender;
-- (id) initWithFiles:(NSArray *)theFiles;
+- (id)initWithObjects:(NSArray *)managedObjects;
 - (id)initWithFiles:(NSArray *)theFiles managedObjects:(NSArray *)managedObjects;
 - (IBAction)burn:(id)sender;
-- (void)setCDTitle: (NSString *)title;
-- (IBAction)setCDName:(id)sender;
 - (NSString *)folderToBurn;
-- (void)setFilesToBurn:(NSArray *)theFiles;
 - (void)burnCD:(id)object;
 - (NSArray *)extractFileNames:(NSArray *)filenames;
 - (void)importFiles:(NSArray *)fileNames;
@@ -79,7 +78,6 @@ enum burnerDestination
 - (IBAction)estimateFolderSize:(id)object;
 - (void)performBurn:(id)object;
 - (void)irisAnimation:(NSTimer*)object;
-- (NSNumber*)getSizeOfDirectory:(NSString*)path;
 - (NSString*) defaultTitle;
 - (void)saveOnVolume;
 @end

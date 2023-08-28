@@ -1,16 +1,11 @@
 /*=========================================================================
-  Program:   OsiriX
-
-  Copyright (c) OsiriX Team
-  All rights reserved.
-  Distributed under GNU - LGPL
-  
-  See http://www.osirix-viewer.com/copyright.html for details.
-
-     This software is distributed WITHOUT ANY WARRANTY; without even
-     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
-     PURPOSE.
-=========================================================================*/
+ Program:   OsiriX
+ Copyright (c) 2010 - 2020 Pixmeo SARL
+ 266 rue de Bernex
+ CH-1233 Bernex
+ Switzerland
+ All rights reserved.
+ =========================================================================*/
 
 #import <Cocoa/Cocoa.h>
 #import "OSIWindowController.h"
@@ -28,6 +23,10 @@
 	
 	// To be able to use Cocoa bindings with toolbar...
 	IBOutlet NSView *tbLOD, *tbThickSlab, *tbWLWW, *tbTools, *tbShading, *tbMovie, *tbBlending, *tbSyncZoomLevel;
+    IBOutlet NSView *seriesPopUpToolbarItem;
+    IBOutlet NSPopUpButton *seriesPopupMenu;
+//    NSMenuItem *seriesPopupContextualMenu;
+    NSImage *toolbarMenuItemImage;
 	
 	NSToolbar *toolbar;
 	
@@ -102,6 +101,8 @@
 	IBOutlet NSView *tbAxisColors;
 	NSColor *colorAxis1, *colorAxis2, *colorAxis3;
     NSDictionary *resetDictionary;
+    
+    NSDictionary *previousPosition;
 }
 
 @property (nonatomic) float clippingRangeThickness, dcmInterval, blendingPercentage, dcmIntervalMin, dcmIntervalMax;
@@ -110,13 +111,13 @@
 @property (nonatomic, retain) Point3D *mousePosition;
 @property (retain) NSArray *wlwwMenuItems;
 @property (retain) NSString *dcmSeriesName;
-@property (readonly) DCMPix *originalPix;
+@property (retain) DCMPix *originalPix;
 @property (nonatomic) float LOD, movieRate;
 @property (nonatomic) BOOL lowLOD, dcmSameIntervalAndThickness, displayMousePosition, blendingModeAvailable, dcmBatchReverse;
 @property (nonatomic, retain) NSColor *colorAxis1, *colorAxis2, *colorAxis3;
 @property (readonly) MPRDCMView *mprView1, *mprView2, *mprView3;
 @property (readonly) NSSplitView *horizontalSplit, *verticalSplit;
-@property (retain) NSDictionary *resetDictionary;
+@property (retain) NSDictionary *resetDictionary, *previousPosition, *lastSync3DMPRState;
 @property BOOL frameZoomed;
 
 @property (retain) NSSliderTouchBarItem *thickSlabSliderTouchBarItem;
@@ -144,17 +145,18 @@
 - (void) updateViewsAccordingToFrame:(id) sender;
 - (void)findShadingPreset:(id) sender;
 - (IBAction)editShadingValues:(id) sender;
-- (void) moviePlayStop:(id) sender;
+- (IBAction) moviePlayStop:(id) sender;
 - (IBAction) endDCMExportSettings:(id) sender;
-- (void) addMoviePixList:(NSMutableArray*) pix :(NSData*) vData;
+- (void) addMoviePixList:(NSMutableArray*) pix :(NSData*) vData __deprecated;
+- (void) addMoviePixList:(NSMutableArray*) pix filesList:(NSMutableArray*) files volumeData:(NSData*) vData;
 - (void)updateToolbarItems;
 - (void)toogleAxisVisibility:(id) sender;
 - (BOOL) getMovieDataAvailable;
 - (void)Apply3DOpacityString:(NSString*)str;
 - (void)Apply2DOpacityString:(NSString*)str;
-- (NSImage*) imageForROI: (int) i;
 - (void) setROIToolTag:(ToolMode) roitype;
 - (IBAction) roiGetInfo:(id) sender;
 - (void) setupToolbar;
 - (void) setClippingRangeThicknessInMm:(float) c;
+- (void) positionChanged:(MPRDCMView*) sender;
 @end

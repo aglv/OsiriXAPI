@@ -204,7 +204,7 @@ template <class T> class OFOrderedSet : public OFSet<T>
           }
 
           // delete old array
-          delete this->items;
+          delete[] this->items;
 
           // assign new array to member variable
           this->items = tmp;

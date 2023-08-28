@@ -318,7 +318,7 @@ END_EXTERN_C
 // define INCLUDE_CSTRING to include <cstring> or <string.h> if available
 #ifdef INCLUDE_CSTRING
 #ifdef USE_STD_CXX_INCLUDES
-#include <cstring>
+#include <string.h>
 #elif defined(HAVE_STRING_H)
 BEGIN_EXTERN_C
 #include <string.h>

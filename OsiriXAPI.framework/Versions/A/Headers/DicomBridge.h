@@ -11,7 +11,10 @@
 class DcmDataset;
 class DcmMetaInfo;
 #else
+#ifndef DCMDATASETDEFINED
+#define DCMDATASETDEFINED
 typedef char* DcmDataset;
+#endif
 typedef char* DcmMetaInfo;
 #endif
 
@@ -33,7 +36,7 @@ typedef char* DcmMetaInfo;
 @property (retain) NSDictionary *dictionary;
 @property (retain, nonatomic) NSArray *encodingArray;
 @property (retain) NSString *originalFilePath;
-@property BOOL exportKeyword, exportPixelData;
+@property BOOL exportKeyword;
 
 // utilties
 + (BOOL) isHexadecimal: (NSString*) string;
@@ -58,8 +61,9 @@ typedef char* DcmMetaInfo;
 + (DicomBridge*) bridgeWithXMLData: (NSData*) data;
 
 + (DicomBridge*) bridgeWithDictionary: (NSDictionary*) dict;
-+ (DicomBridge*) bridgeWithDICOMFile: (NSString*) filePath;
-+ (DicomBridge*) bridgeWithDcmDataset: (DcmDataset*) dataset;
+
++ (DicomBridge*) bridgeWithDICOMFile: (NSString*) filePath withPixelData: (BOOL) withPixelData;
++ (DicomBridge*) bridgeWithDcmDataset: (DcmDataset*) dataset withPixelData: (BOOL) withPixelData;
 
 // output
 - (NSString*) xml;

@@ -1,16 +1,11 @@
 /*=========================================================================
-  Program:   OsiriX
-
-  Copyright (c) OsiriX Team
-  All rights reserved.
-  Distributed under GNU - LGPL
-  
-  See http://www.osirix-viewer.com/copyright.html for details.
-
-     This software is distributed WITHOUT ANY WARRANTY; without even
-     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
-     PURPOSE.
-=========================================================================*/
+ Program:   OsiriX
+ Copyright (c) 2010 - 2020 Pixmeo SARL
+ 266 rue de Bernex
+ CH-1233 Bernex
+ Switzerland
+ All rights reserved.
+ =========================================================================*/
 
 #import <Cocoa/Cocoa.h>
 #import "CPRGeneratorOperation.h"
@@ -22,9 +17,7 @@
     float *_floatBytes;
     NSMutableSet *_fillOperations;
 	NSOperation *_projectionOperation;
-    BOOL _operationExecuting;
     BOOL _operationFinished;
-    BOOL _operationFailed;
     
     CGFloat _sampleSpacing; // renerated and cached by the operation based on the width and the length of the bezier
 }

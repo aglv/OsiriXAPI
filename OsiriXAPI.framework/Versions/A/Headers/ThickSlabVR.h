@@ -1,16 +1,11 @@
 /*=========================================================================
-  Program:   OsiriX
-
-  Copyright (c) OsiriX Team
-  All rights reserved.
-  Distributed under GNU - LGPL
-  
-  See http://www.osirix-viewer.com/copyright.html for details.
-
-     This software is distributed WITHOUT ANY WARRANTY; without even
-     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
-     PURPOSE.
-=========================================================================*/
+ Program:   OsiriX
+ Copyright (c) 2010 - 2020 Pixmeo SARL
+ 266 rue de Bernex
+ CH-1233 Bernex
+ Switzerland
+ All rights reserved.
+ =========================================================================*/
 
 
 
@@ -52,9 +47,9 @@
 #include "vtkPiecewiseFunction.h"
 #include "vtkColorTransferFunction.h"
 #include "vtkVolumeProperty.h"
-#include "vtkVolumeRayCastCompositeFunction.h"
-#include "vtkVolumeRayCastMapper.h"
-#include "vtkVolumeRayCastMIPFunction.h"
+//#include "vtkVolumeRayCastCompositeFunction.h"
+//#include "vtkVolumeRayCastMapper.h"
+//#include "vtkVolumeRayCastMIPFunction.h"
 #include "vtkImageFlip.h"
 #undef id
 
@@ -67,18 +62,18 @@
 	long								width, height, count;
 	float								spaceX, spaceY, thickness, ww, wl;
 	
-	BOOL								flipData, lowQuality;
+	BOOL								flipData;
 
 	float								tableFloatR[256], tableFloatG[256], tableFloatB[256];
 	float								tableBlendingFloatR[256], tableBlendingFloatG[256], tableBlendingFloatB[256];
 	float								opacityTable[ 256];
 	
-	vtkVolumeRayCastMapper				*volumeMapper;
+//	vtkVolumeRayCastMapper				*volumeMapper;
 	vtkVolume							*volume;
 	vtkVolumeProperty					*volumeProperty;
 	vtkColorTransferFunction			*colorTransferFunction;
 	vtkImageImport						*reader;
-	vtkVolumeRayCastCompositeFunction   *compositeFunction;
+//	vtkVolumeRayCastCompositeFunction   *compositeFunction;
 	vtkPiecewiseFunction				*opacityTransferFunction;
 	vtkImageFlip						*flipReader;
 	
@@ -104,7 +99,6 @@
 -(unsigned char*) renderSlab;
 -(void) setImageSource: (float*) i :(long) c;
 -(void) setFlip: (BOOL) f;
-- (void) setLowQuality:(BOOL) q;
 -(void) setOpacity:(NSArray*) array;
 -(void) setImageBlendingSource: (float*) i;
 @end

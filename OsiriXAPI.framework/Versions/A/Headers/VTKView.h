@@ -5,6 +5,15 @@
   All rights reserved.
 =========================================================================*/
 
+#ifndef _VTKVIEW_H_INCLUDED_
+#define _VTKVIEW_H_INCLUDED_
+
+#include <vtkAutoInit.h>
+
+VTK_MODULE_INIT(vtkRenderingOpenGL2);
+VTK_MODULE_INIT(vtkRenderingVolumeOpenGL2);
+VTK_MODULE_INIT(vtkInteractionStyle);
+VTK_MODULE_INIT(vtkRenderingFreeType);
 
 
 #import <AppKit/AppKit.h>
@@ -16,6 +25,7 @@
 #include "vtkRenderWindow.h"
 #include "vtkRenderWindowInteractor.h"
 #include "vtkCocoaRenderWindowInteractor.h"
+#undef AT
 #include "vtkCocoaRenderWindow.h"
 #undef id
 #else
@@ -49,3 +59,5 @@ typedef char* vtkCocoaRenderWindow;
 -(void) prepareForRelease;
 
 @end
+
+#endif
