@@ -9,7 +9,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-enum HTTPMethod {
+typedef NS_ENUM(NSInteger, HTTPMethod) {
 	HTTPGet,
 	HTTPPost
 };
