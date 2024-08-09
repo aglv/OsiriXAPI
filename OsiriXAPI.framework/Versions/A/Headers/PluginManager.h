@@ -42,9 +42,6 @@
 + (BOOL) pluginsAlertAlreadyDisplayed;
 + (void) setPluginsAlertAlreadyDisplayed:(BOOL) p;
 
-+ (BOOL) pluginsAlertAlreadyDisplayed;
-+ (void) setPluginsAlertAlreadyDisplayed:(BOOL) p;
-
 + (void) startProtectForCrashWithFilter: (id) filter;
 + (void) startProtectForCrashWithPath: (NSString*) path;
 + (void) endProtectForCrash;
