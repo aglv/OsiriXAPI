@@ -24,7 +24,7 @@ extern NSString* const SessionDontDisplayUser;  // NSNumber
     
     BOOL requireDoubleAuthentication, doubleAuthenticated;
     NSString *doubleAuthenticationToken;
-    NSString *usernameForDoubleAuthentication;
+    NSString *usernameForDoubleAuthentication, *phoneForDoubleAthentication, *phoneForDoubleAthenticationToValidate;
     NSTimeInterval timeStampForDoubleAuthentication;
     
     NSTimeInterval sessionCreationDateTimeInterval;
@@ -33,7 +33,7 @@ extern NSString* const SessionDontDisplayUser;  // NSNumber
 @property(retain) NSString* sid;
 @property(retain) NSMutableDictionary* dict;
 @property BOOL requireDoubleAuthentication, doubleAuthenticated;
-@property(retain) NSString *doubleAuthenticationToken, *usernameForDoubleAuthentication;
+@property(retain) NSString *doubleAuthenticationToken, *usernameForDoubleAuthentication, *phoneForDoubleAthentication, *phoneForDoubleAthenticationToValidate;
 @property NSTimeInterval timeStampForDoubleAuthentication, sessionCreationDateTimeInterval;
 
 -(id)initWithId:(NSString*)isid;

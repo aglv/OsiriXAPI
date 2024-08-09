@@ -17,10 +17,7 @@
 #import "NSFullScreenWindow.h"
 #import "OSIWindowController.h"
 
-
-#define DATABASEPATH				@"/DATABASE.noindex/"
-#define STATEDATABASE				@"/3DSTATE/"
-
+#define STATEDATABASE @"/3DSTATE/"
 
 @class ROIVolume;
 @class ViewerController;

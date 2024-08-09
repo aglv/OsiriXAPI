@@ -42,12 +42,14 @@
 + (NSArray*) fastGrowingRegionWithVolume: (float*) volume width:(long) w height:(long) h depth:(long) depth seedPoint:(long*) seed from:(float) from pixList:(NSArray*) pixList;
 - (id) initWith :(NSArray*) pix :(float*) volumeData  :(long) slice;
 - (id) initWithPix :(NSArray*) pix volume:(float*) volumeData  slice:(long) slice resampleData:(BOOL)resampleData;
++ (id) itkSegmentationWithPix: (DCMPix*) p;
 
 - (ROI*) regionGrowing3D:(ViewerController*) srcViewer :(ViewerController*) destViewer :(long) slice :(NSPoint) startingPoint :(int) algorithmNumber :(NSArray*) parameters :(BOOL) setIn :(float) inValue :(BOOL) setOut :(float) outValue :(int) roiType :(long) roiResolution :(NSString*) newname :(BOOL) mergeWithExistingROIs;
 
 - (ROI*) regionGrowing3D:(ViewerController*) srcViewer :(ViewerController*) destViewer :(long) slice :(NSPoint) startingPoint :(int) algorithmNumber :(NSArray*) parameters :(BOOL) setIn :(float) inValue :(BOOL) setOut :(float) outValue :(int) roiType :(long) roiResolution :(NSString*) newname :(BOOL) mergeWithExistingROIs :(ROI*) limit3DBall :(BOOL) outBall;
 
 - (ROI*) regionGrowing3DForViewer:(ViewerController*) srcViewer slice:(long) slice startingPoint:(NSPoint) startingPoint algorithmNumber:(int) algorithmNumber parameters:(NSArray*) parameters   roiName:(NSString*) newname;
+- (ROI*) regionGrowing3DForViewer:(ViewerController*) srcViewer slice:(long) slice startingPoint:(NSPoint) startingPoint algorithmNumber:(int) algorithmNumber roiType:(int) roiType roiResolution:(long) roiResolution parameters:(NSArray*) parameters addToROIList:(BOOL) addToROIList;
 
 - (ROI*) regionGrowing3DForViewer:(ViewerController*) srcViewer destinationViewer:(ViewerController*) destViewer slice:(long) slice startingPoint:(NSPoint) startingPoint algorithmNumber:(int) algorithmNumber parameters:(NSArray*) parameters setIn:(BOOL) setIn inValue:(float) inValue setOut:(BOOL) setOut outValue:(float) outValue roiType:(int) roiType roiResolution:(long) roiResolution roiName:(NSString*) newname mergeWithExistingROIs:(BOOL) mergeWithExistingROIs limit3DBall:(ROI*) limit3DBall outBall:(BOOL) outBall;
 

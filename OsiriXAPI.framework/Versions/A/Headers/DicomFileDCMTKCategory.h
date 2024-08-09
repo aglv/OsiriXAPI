@@ -22,6 +22,8 @@
 + (BOOL) isDICOMFileDCMTK:(NSString *) file; /**< Check for validity of DICOM using DCMTK */
 + (BOOL) isNRRDFile:(NSString *) file; /**< Test for NRRD file format */
 
++ (NSDate*) studyDateFromDataset: (void *) dataset;
+
 + (NSString*) getDicomField: (NSString*) field forFile: (NSString*) path;
 + (NSString*) getDicomFieldForGroup:(int)gr element:(int)el forFile: (NSString*) path;
 + (NSString*) getDicomFieldForGroup:(int) gr element: (int) el forDcmFileFormat: (void*) ff;

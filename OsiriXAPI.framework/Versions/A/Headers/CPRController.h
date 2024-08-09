@@ -246,7 +246,6 @@ typedef NSInteger CPRExportRotationSpan;
 - (BOOL) getMovieDataAvailable;
 - (void)Apply3DOpacityString:(NSString*)str;
 - (void)Apply2DOpacityString:(NSString*)str;
-- (NSImage*) imageForROI: (int) i;
 - (void) setROIToolTag:(ToolMode) roitype;
 - (IBAction) roiGetInfo:(id) sender;
 - (void) delayedFullLODRendering: (id) sender;

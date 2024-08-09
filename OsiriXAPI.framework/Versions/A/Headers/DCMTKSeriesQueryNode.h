@@ -27,5 +27,8 @@
 - (NSString*) seriesDescription;
 - (NSString*) seriesDICOMUID;
 
+-(void) computeNumberOfImages;
+-(NSNumber*) numberOfImages;
+
 @end
 #endif

@@ -1,6 +1,6 @@
 /*=========================================================================
  Program:   OsiriX
- Copyright (c) 2010 - 2020 Pixmeo SARL
+ Copyright (c) 2010 - 2024 Pixmeo SARL
  266 rue de Bernex
  CH-1233 Bernex
  Switzerland
@@ -43,6 +43,7 @@ enum
 + (NSMutableDictionary*)DICOMNodeInfoFromTXTRecordData:(NSData*)data;
 + (NSString*) emojiForState:(int) state;
 + (NSArray *) DICOMServersListSendOnly: (BOOL) send QROnly:(BOOL) QR;
++ (NSArray *) DICOMServersListSendOnly: (BOOL) send QROnly:(BOOL) QR includeBonjour: (BOOL) includeBonjour;
 + (NSDictionary*) serverForHostname:(NSString*) hostname port: (int) port;
 + (NSString*) getIPAddress: (NSString*) address;
 + (id)sharedNetServiceDelegate;

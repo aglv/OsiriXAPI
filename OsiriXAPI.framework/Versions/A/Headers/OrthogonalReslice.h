@@ -27,8 +27,7 @@
 	DCMPix				*firstPix;
 	
     NSOperationQueue    *yCacheQueue;
-	NSLock				*processorsLock;
-	volatile int		numberOfThreadsForCompute;
+	int	               	numberOfThreadsForCompute;
 }
 
 // init

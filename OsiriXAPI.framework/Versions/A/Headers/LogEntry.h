@@ -17,6 +17,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString *) countryDestinationHostname;
 - (NSString *) countryOriginHostname;
 - (NSString *) countryOriginName;
+- (NSTimeInterval) duration;
+- (NSString*) formattedDuration;
 
 @end
 

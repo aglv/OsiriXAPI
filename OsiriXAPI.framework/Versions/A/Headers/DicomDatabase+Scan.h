@@ -14,6 +14,8 @@
 @interface DicomDatabase (Scan)
 
 -(BOOL)scanAtPath:(NSString*)path;
+-(BOOL) scanAtPath:(NSString*)path isVolume:(BOOL)isVolume;
+-(BOOL) scanAtPath:(NSString*)path isVolume:(BOOL)isVolume dicomImages:(NSArray**) images;
 +(NSString*)_findDicomdirIn:(NSArray*)allpaths;
 -(NSArray*)scanDicomdirAt:(NSString*)path withPaths:(NSArray*)allpaths pathsToScanAnyway:(NSMutableArray*)pathsToScanAnyway;
 @end

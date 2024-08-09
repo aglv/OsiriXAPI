@@ -18,6 +18,8 @@
 + (NSString*) dcmFindNameOfUID: (NSString*) string;
 + (int) modifyDicom:(NSArray*) params encoding: (NSStringEncoding) encoding;
 + (int) modifyDicom:(NSArray*) params files: (NSArray*) files encoding: (NSStringEncoding) encoding;
++ (int) modifyDicomWithDictionary:(NSDictionary*) dict files: (NSArray*) files encoding: (NSStringEncoding) encoding;
+
 //+ (NSString*) stringForElement: (int) element group: (int) group vr: (NSString*) vrString string: (NSString*) string encoding: (NSStringEncoding) encoding;
 - (void) prepareDictionaryArray;
 - (int) getGroupAndElementForName:(NSString*) name group:(int*) gp element:(int*) el;

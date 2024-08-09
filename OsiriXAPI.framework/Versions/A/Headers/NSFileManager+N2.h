@@ -19,7 +19,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 -(void) moveItemAtPathToTrash: (NSString*) path;
 -(NSString*)userApplicationSupportFolderForApp;
+-(NSString*)tmpFilePathInTmpWithName: (NSString*) name;
 -(NSString*)tmpFilePathInDir:(NSString*)dirPath;
+-(NSString*)tmpFilePathInDir:(NSString*)dirPath withExtension:(NSString*) ext;
 -(NSString*)tmpDirPath;
 -(NSString*)tmpFilePathInTmp;
 -(NSString*)tmpFilePathInTmpWithExtension: (NSString*) ext;
@@ -46,6 +48,8 @@ NS_ASSUME_NONNULL_BEGIN
 -(N2DirectoryEnumerator*)enumeratorAtPath:(NSString*)path limitTo:(NSInteger)maxNumberOfFiles;
 -(N2DirectoryEnumerator*)enumeratorAtPath:(NSString*)path filesOnly:(BOOL)filesOnly;
 -(N2DirectoryEnumerator*)enumeratorAtPath:(NSString*)path filesOnly:(BOOL)filesOnly recursive:(BOOL)recursive;
+
+-(BOOL)removeContentOfDirectoryAtPath:(NSString*)dirPath;
 
 -(unsigned long) crc32ForPath: (NSString*) path;
 -(NSString*) volumeFormatForPath:(NSString*) path localized:(NSString*_Nonnull*_Nonnull) localized;

@@ -25,13 +25,15 @@
     id _object;
     NSArray* _children;
     int curStudyIndexAll;
+    int numberOfImages;
 }
 
 @property(retain) id object;
 @property(retain) NSArray* children;
-@property int curStudyIndexAll;
+@property int curStudyIndexAll, numberOfImages;
+@property BOOL isOpenedStudy;
 
 + (id)object:(id)object __deprecated;
-+ (id)object:(id)object children:(NSArray*)children studyIndex: (int) sI;
++ (id)object:(id)object children:(NSArray*)children studyIndex: (int) sI numberOfImages: (int) nI;
 
 @end

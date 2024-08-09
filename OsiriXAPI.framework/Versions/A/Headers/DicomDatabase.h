@@ -63,6 +63,7 @@ extern NSString* const O2ScreenCapturesSeriesName;
 
 +(NSString*) localFieldForDICOMField: (NSString*) field;
 +(NSString*) DICOMFieldForLocalField: (NSString*) field;
++(NSString*) DICOMFieldForLocalField: (NSString*) field level: (NSString*) level;
 
 +(void)initializeDicomDatabaseClass;
 +(void)recomputePatientUIDsInContext:(NSManagedObjectContext*)db;
@@ -75,6 +76,7 @@ extern NSString* const O2ScreenCapturesSeriesName;
 +(NSArray*)allDatabases;
 +(NSDictionary*)databaseDictionary;
 +(DicomDatabase*)defaultDatabase;
+-(BOOL)isDefaultDatabase;
 +(NSManagedObject*)objectWithObjectID: (NSManagedObjectID*) objectID;
 +(DicomImage*)imageWithObjectID: (NSManagedObjectID*) objectID;
 +(DicomSeries*)seriesWithObjectID: (NSManagedObjectID*) objectID;
@@ -86,11 +88,12 @@ extern NSString* const O2ScreenCapturesSeriesName;
 +(DicomDatabase*)databaseForContext:(NSManagedObjectContext*)c; // hopefully one day this will be __deprecated
 +(DicomDatabase*)activeLocalDatabase;
 +(DicomDatabase*)currentLocalDatabase;
++(NSString*)OsiriXDataPath;
 +(DicomDatabase*)databaseForPersistentStore:(NSPersistentStore*)c;
 +(void)setActiveLocalDatabase:(DicomDatabase*)ldb;
 
 @property(readonly,retain) NSString* baseDirPath, *uniqueTmpfolder; // OsiriX Data
-@property(readonly,retain) NSString* dataBaseDirPath; // depends on the content of the file at baseDirPath/DBFOLDER_LOCATION
+@property(readonly,retain) NSString* dataBaseDirPath;
 @property(readwrite,retain,nonatomic) NSString* name, *sourcePath;
 @property(readonly) NSMutableArray *compressingSOPs;
 @property BOOL hasPotentiallySlowDataAccess;
@@ -103,6 +106,7 @@ extern NSString* const O2ScreenCapturesSeriesName;
 #endif
 -(BOOL)isLocal;
 -(NSArray*)childrenArray: (id)item onlyImages: (BOOL)onlyImages;
+-(NSArray*)childrenArray: (id)item containingPixels: (BOOL)containingPixels;
 -(NSArray*)childrenArray: (id)item onlyImages: (BOOL)onlyImages includeLocalizers: (BOOL) includeLocalizers;
 -(NSArray*)childrenArray: (id)item onlyImages: (BOOL)onlyImages retrieveDistant: (BOOL) retrieveDistant;
 -(NSArray*)childrenArray: (id)item onlyImages: (BOOL)onlyImages retrieveDistant: (BOOL) retrieveDistant includeLocalizers: (BOOL) includeLocalizers;
@@ -136,6 +140,7 @@ extern NSString* const DicomDatabaseLogEntryEntityName;
 -(NSString*)loadingFilePath; // this should become private
 // these paths are inside dataBaseDirPath
 -(NSString*)dataDirPath;
++(NSString*)dataDirPathForOsiriXDataFolder:(NSString*)folder;
 -(NSString*)incomingDirPath;
 -(NSString*)uniqueDcmFileInIncomingDirPath;
 -(NSString*)uniqueDcmFileInIncomingDirPathStartingWithDot: (BOOL) startingWithDot;
@@ -177,6 +182,7 @@ extern NSString* const DicomDatabaseLogEntryEntityName;
 -(void) mainDatabaseCreated;
 -(NSArray*) reindexObjects: (NSArray*) objects;
 -(void) turnImagesAndSeriesIntoFault;
++ (NSString*) seriesDICOMUIDFor: (NSString*) seriesDICOMUID from: (NSString*) UID seriesID: (NSString*) seriesID;
 
 #pragma mark Add files
 -(NSArray*)addFilesAtPaths:(NSArray*)paths;
@@ -192,6 +198,8 @@ extern NSString* const DicomDatabaseLogEntryEntityName;
 -(NSArray*)addFilesDescribedInDictionaries:(NSArray*)dicomFilesArray postNotifications:(BOOL)postNotifications rereadExistingItems:(BOOL)rereadExistingItems generatedByOsiriX:(BOOL)generatedByOsiriX importedFiles: (BOOL) importedFiles returnArray: (BOOL) returnArray;
 -(NSArray*)addFilesAtPaths:(NSArray*)paths postNotifications:(BOOL)postNotifications dicomOnly:(BOOL)dicomOnly rereadExistingItems:(BOOL)rereadExistingItems generatedByOsiriX:(BOOL)generatedByOsiriX importedFiles: (BOOL) importedFiles returnArray: (BOOL) returnArray dicomFileDictionary: (NSArray*) dicomFilesArray;
 -(NSArray*)addFilesDescribedInDictionaries:(NSArray*)dicomFilesArray postNotifications:(BOOL)postNotifications rereadExistingItems:(BOOL)rereadExistingItems generatedByOsiriX:(BOOL)generatedByOsiriX importedFiles: (BOOL) importedFiles returnArray: (BOOL) returnArray changesDictionary:(NSDictionary**) objectsDictionary;
+-(NSArray*)addFilesDescribedInDictionaries:(NSArray*)dicomFilesArray postNotifications:(BOOL)postNotifications rereadExistingItems:(BOOL)rereadExistingItems generatedByOsiriX:(BOOL)generatedByOsiriX importedFiles: (BOOL) importedFiles returnArray: (BOOL) returnArray changesDictionary:(NSDictionary**) objectsDictionary mainThread: (NSThread*) mainThread;
+-(NSArray*)addFilesAtPaths:(NSArray*)paths postNotifications:(BOOL)postNotifications dicomOnly:(BOOL)dicomOnly rereadExistingItems:(BOOL)rereadExistingItems generatedByOsiriX:(BOOL)generatedByOsiriX importedFiles: (BOOL) importedFiles returnArray: (BOOL) returnArray dicomFileDictionary: (NSArray*) dicomFileObjectsArray mainThread: (NSThread*) mainThread;
 
 #pragma mark Incoming
 +(BOOL)checkIfFileSystemFreeSizeLimitReachedAtPath: (NSString*) path;
@@ -215,6 +223,7 @@ extern NSString* const DicomDatabaseLogEntryEntityName;
 -(NSArray*) smartAlbumStudiesDICOMNodes;
 -(int) oldestStudyForComparatives;
 -(BOOL) preferStudyWithMoreImages;
+-(BOOL) containsStore: (NSPersistentStore*) store;
 
 #pragma mark Compress/decompress
 -(BOOL)compressFilesAtPaths:(NSArray*)paths;

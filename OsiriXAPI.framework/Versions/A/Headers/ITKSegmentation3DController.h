@@ -31,7 +31,6 @@
 	IBOutlet	NSForm					*params;
 	// results
 	IBOutlet	NSBox					*resultsBox;
-	IBOutlet	NSMatrix				*outputResult;
 	IBOutlet	NSMatrix				*pixelsSet;
 	IBOutlet	NSMatrix				*pixelsValue;
 	IBOutlet	NSSlider				*roiResolution;

@@ -11,10 +11,12 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class QueryLogController;
+
 /** \brief  Window Controller for network logs */
-@interface LogWindowController : NSWindowController <NSTableViewDelegate>
+@interface LogWindowController : NSWindowController <NSTableViewDelegate, NSWindowDelegate>
 {
-	IBOutlet NSArrayController *receive, *move, *send, *web;
+	IBOutlet QueryLogController *receive, *move, *send, *web, *display;
     IBOutlet NSTableView *webTableView;
 }
 

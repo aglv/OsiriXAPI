@@ -112,6 +112,7 @@ typedef NSInteger CPRMPRDCMViewCPRType;
 
 @optional
 - (void)CPRViewWillEditCurvedPath:(id)CPRMPRDCMView;
+- (void)CPRViewWillEditCurvedPath:(id)CPRMPRDCMView addToUndo:(BOOL) addToUndo;
 - (void)CPRViewDidUpdateCurvedPath:(id)CPRMPRDCMView;
 - (void)CPRViewDidEditCurvedPath:(id)CPRMPRDCMView; // the controller will use didBegin and didEnd to log the undo
 

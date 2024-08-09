@@ -18,6 +18,7 @@
 	NSString* templateString;
 	NSMutableDictionary* tokens;
 	int statusCode;
+    NSString *nonce;
 }
 
 @property(assign,readonly) WebPortalConnection* wpc;
@@ -27,6 +28,7 @@
 @property(retain) NSString* templateString;
 @property(readonly) NSMutableDictionary* tokens;
 @property(assign) int statusCode;
+@property(readonly) NSString *nonce;
 
 -(id)initWithWebPortalConnection:(WebPortalConnection*)wpc;
 //-(id)initWithData:(NSData*)data mime:(NSString*)mime sessionId:(NSString*)sessionId __deprecated;

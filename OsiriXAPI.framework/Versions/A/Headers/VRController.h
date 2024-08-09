@@ -54,7 +54,6 @@
 	IBOutlet NSWindow       *growingRegionWindow;
 	BOOL					growingSet;
 	
-	IBOutlet NSButton		*shadingCheck;
 	IBOutlet NSTextField    *shadingValues;
 	
 	IBOutlet NSView			*convolutionView;

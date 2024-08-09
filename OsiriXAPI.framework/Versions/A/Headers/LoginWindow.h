@@ -14,6 +14,9 @@
     NSString *username, *password, *reason;
     BOOL autoSignIn;
     NSArray *keychainAccounts;
+    
+    IBOutlet NSSecureTextField *passwordTextField;
+    IBOutlet NSTextField *usernameTextField;
 }
 @property (retain, nonatomic) NSString *username, *password, *reason;
 @property (retain) NSArray *keychainAccounts;

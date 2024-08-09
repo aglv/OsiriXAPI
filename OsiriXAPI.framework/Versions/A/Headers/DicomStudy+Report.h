@@ -28,6 +28,7 @@
 
 -(void)saveReportAsDicomAtPath:(NSString*)path;
 -(NSString*)saveReportAsDicomInTmp;
+- (void) deleteReport;
 -(BOOL) addToReportROIs:(BOOL) rois andKeyImages:(BOOL) keys;
 - (BOOL) addToReportCurrentImage;
 +(NSString*) imageBlockForDicomImage: (DicomImage*) image;

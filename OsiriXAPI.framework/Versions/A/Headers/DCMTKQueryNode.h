@@ -28,6 +28,7 @@ typedef char* DcmDataset;
 @interface DCMTKQueryNode : DCMTKServiceClassUser <NSCopying, NSURLSessionDelegate>
 {
 	NSMutableArray *_children;
+    BOOL _sortChildren;
     NSString *childrenSynchronized;
     
 	NSString *_uid;
@@ -68,6 +69,8 @@ typedef char* DcmDataset;
     DicomDatabase *db;
     
     NSString *localStudyName, *localSudyDescription;
+    
+    NSTimeInterval lastUpdateInterval;
 }
 
 @property( readonly) DcmDataset *originalDataset;
@@ -84,7 +87,7 @@ typedef char* DcmDataset;
 + (NSURLSession*) dicomWebURLSession;
 
 + (void) errorMessage:(NSArray*) msg;
-+ (void) errorURL:(NSArray*) msg;
++ (void) errorURL:(NSDictionary*) msg;
 
 + (NSString*) boundaryFromHeaders: (NSDictionary*) headers;
 + (NSString*) syntaxStringForTransferSyntaxCode: (TransferSyntaxCodes) ts;
@@ -107,6 +110,8 @@ typedef char* DcmDataset;
 			compression: (float)compression
 			extraParameters:(NSDictionary *)extraParameters;
 
+- (void) setNumberOfImages: (NSNumber*) n;
+- (void) setModality:(NSString*) m;
 - (NSString *)comment;
 - (NSString *)comments;
 - (NSNumber*)rawNoFiles;

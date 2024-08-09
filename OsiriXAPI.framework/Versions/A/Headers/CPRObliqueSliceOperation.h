@@ -18,9 +18,7 @@
     NSMutableSet *_fillOperations;
     NSOperation *_projectionOperation;
 
-    BOOL _operationExecuting;
-    BOOL _operationFinished;
-    BOOL _operationFailed;    
+    BOOL _operationFinished; 
 }
 
 - (id)initWithRequest:(CPRObliqueSliceGeneratorRequest *)request volumeData:(CPRVolumeData *)volumeData;

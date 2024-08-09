@@ -25,11 +25,9 @@ typedef enum  UseScreenPart
 
 - (void) delayedSetObjectForKey: (NSDictionary*) d;
 
-extern NSString* const OsirixDateTimeFormatDefaultsKey;
 +(NSDateFormatter*)dateTimeFormatter;
 +(NSString*)formatDateTime:(NSDate*)date;
 
-extern NSString* const OsirixDateFormatDefaultsKey;
 +(NSDateFormatter*)dateFormatter;
 +(NSString*)formatDate:(NSDate*)date;
 

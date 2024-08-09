@@ -83,7 +83,8 @@ typedef enum ToolMode_
     tBall,                      //  30
     tOvalAngle,                 //  31
     tAutoCurvedROI,             //  32
-    t3DPosition                 //  33
+    t3DPosition,                //  33
+    tMagicFill                  //  34
 } ToolMode;
 
 struct RGBAColor {
@@ -171,9 +172,11 @@ typedef struct RGBAColor RGBAColor;
 	DCMView			*curView;
 	DCMPix			*_pix, *_previousDrawingPix;
 	
-    NSPoint         *cachedNSPoint;
+    NSPoint         cacheSmallDiameter[ 2], cacheLargeDiameter[ 2];
+    NSPoint         *cachedNSPoint, cacheVisualCenter;
     long            cachedNSPointSize;
     NSMutableArray  *cachedSplinePoints, *cachedSplinePointsWithoutScale;
+    NSPoint         cachedUpperLeft, cachedLowerRight;
     float           previousScaleForSplinePoints;
     
     DCMUSRegion     *rUSRegion;
@@ -252,11 +255,18 @@ typedef struct RGBAColor RGBAColor;
     NSString *username;
     
     BOOL textNameOnly;
+    
+    NSMutableArray *texturesToDeleteAfterFlush;
+    
+    NSPoint magicFillPt1, magicFillPt2;
+    
+    BOOL postNotifications;
 }
 
 @property(retain,nonatomic) NSDate *creationDate, *modificationDate;
 @property float roiRotation;
 @property NSPoint imageOrigin;
+@property(readonly) NSMutableArray *texturesToDeleteAfterFlush;
 @property(readonly) int textureWidth, textureHeight;
 @property(readonly) NSTimeInterval creationTimeStamp;
 @property(readonly) int textureDownRightCornerX,textureDownRightCornerY, textureUpLeftCornerX, textureUpLeftCornerY;
@@ -267,6 +277,7 @@ typedef struct RGBAColor RGBAColor;
 @property BOOL isAliased, displayCMOrPixels, mouseOverROI, dontDisplayInKeyImagesWindow, fill, is3DMeasure, textNameOnly;
 @property(nonatomic, copy) NSString *name, *localFontName;
 @property(retain,nonatomic) NSString *comments, *UUID, *username;
+@property(retain) NSNumber *uniqueID;
 @property ToolMode type;
 @property(nonatomic, setter=setROIMode:) ROI_mode ROImode;
 @property(readonly) NSMutableArray *zPositions, *stringTags;
@@ -286,16 +297,24 @@ typedef struct RGBAColor RGBAColor;
 @property(assign) BOOL isSpline;
 @property(readonly) NSMutableDictionary *peakValue, *isoContour;
 @property float offsetTextBox_x, offsetTextBox_y, localFontHeight, localFontSize, preferredWL, preferredWW;
-@property BOOL dontSavePreferredWLWW;
+@property BOOL dontSavePreferredWLWW, postNotifications;
+@property(retain) ROI *magicROI;
+@property(retain) ROI *loadedROICopy;
 
 + (id) unarchiveObjectWithData: (NSData*) d;
 + (id) unarchiveObjectWithFile: (NSString*) d;
+
++ (NSNumberFormatter*) fmt3d;
++ (NSNumberFormatter*) fmt2d;
++ (NSNumberFormatter*) fmt1d;
 
 - (void) setNSColor:(NSColor*)color globally:(BOOL)g;
 - (void) setColor:(RGBColor) a globally: (BOOL) g;
 - (void) setThickness:(float) a globally: (BOOL) g;
 - (void) setOpacity:(float)newOpacity globally: (BOOL) g;
 - (void) addPointUnderMouse: (NSPoint) pt scale:(float) scale;
+
+- (BOOL) isEqualToROI: (ROI*) r;
 
 /** Set default ROI name (if not set, then default name is the currentTool) */
 + (void) setDefaultName:(NSString*) n;
@@ -307,6 +326,7 @@ typedef struct RGBAColor RGBAColor;
 + (NSPoint) segmentDistToPoint: (NSPoint) segA :(NSPoint) segB :(NSPoint) p;
 + (BOOL) isBetween: (NSPoint) a :(NSPoint) b :(NSPoint) c;
 
+- (void) newUID;
 - (void) setDefaultName:(NSString*) n;
 - (NSString*) defaultName;
 - (BOOL) isValidForVolume;
@@ -317,6 +337,7 @@ typedef struct RGBAColor RGBAColor;
 - (BOOL) invertBrushROI;
 + (BOOL) splineForROI;
 - (NSRect) boundRect;
+- (BOOL) modifiedSinceLoad;
 - (void) setPoints: (NSArray*) pts;
 - (NSMutableArray*) points;
 - (NSArray*) pointsIn3DCoordinates;
@@ -512,9 +533,9 @@ typedef struct RGBAColor RGBAColor;
 - (NSString*) niceDescription;
 - (NSString*) textualForLens;
 
+- (void) purgeTexturesAfterFlush;
 - (void) applySettingsToParent;
 - (void) applySettingsFromParent;
-- (BOOL) isIdenticalTo:(ROI*) otherROI;
 - (BOOL) isPointInside: (NSPoint) pixelCoordinates;
 - (BOOL) isInside: (int*) pixelCoordinates;
 - (BOOL) isInside: (int*) pixelCoordinates :(float) sliceInterval;

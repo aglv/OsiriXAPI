@@ -62,7 +62,7 @@
 	long								width, height, count;
 	float								spaceX, spaceY, thickness, ww, wl;
 	
-	BOOL								flipData, lowQuality;
+	BOOL								flipData;
 
 	float								tableFloatR[256], tableFloatG[256], tableFloatB[256];
 	float								tableBlendingFloatR[256], tableBlendingFloatG[256], tableBlendingFloatB[256];
@@ -99,7 +99,6 @@
 -(unsigned char*) renderSlab;
 -(void) setImageSource: (float*) i :(long) c;
 -(void) setFlip: (BOOL) f;
-- (void) setLowQuality:(BOOL) q;
 -(void) setOpacity:(NSArray*) array;
 -(void) setImageBlendingSource: (float*) i;
 @end

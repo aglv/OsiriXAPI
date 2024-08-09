@@ -45,6 +45,7 @@ typedef NSInteger DataNodeIdentifierType;*/
 @property BOOL detected;
 @property BOOL entered;
 @property BOOL checked;
+@property int index;
 
 -(id)initWithLocation:(NSString*)location port:(NSUInteger) port aetitle:(NSString*) aetitle description:(NSString*)description dictionary:(NSDictionary*)dictionary;
 
@@ -91,5 +92,7 @@ typedef NSInteger DataNodeIdentifierType;*/
 +(id)dicomNodeIdentifierWithLocation:(NSString*)location port:(NSUInteger)port aetitle:(NSString*)aetitle description:(NSString*)description dictionary:(NSDictionary*)dictionary;
 
 +(NSString*)location:(NSString*)location port:(NSUInteger)port toAddress:(NSString**)address port:(NSInteger*)port aet:(NSString**)aet;
+
+-(NSString*)uniqueKey;
 
 @end

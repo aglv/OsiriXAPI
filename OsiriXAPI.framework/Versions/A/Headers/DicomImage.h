@@ -101,6 +101,7 @@ void* sopInstanceUIDEncode( NSString *sopuid);
 - (NSSet*) paths;
 - (NSString*) completePath;
 - (NSString*) completePathResolved;
+- (NSString*) UID; //sopInstanceUID
 #ifndef OSIRIX_LIGHT
 - (DCMSequenceAttribute*) graphicAnnotationSequence;
 #endif

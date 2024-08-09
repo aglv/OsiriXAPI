@@ -17,6 +17,7 @@
 -(NSDictionary*)dictionaryWithLowercaseKeys;
 -(id)objectForCaseInsensitiveKey:(NSString *)key;
 -(NSDictionary*)dictionaryByAddingObject:(id) obj forKey:(id) key;
+-(NSDictionary*)dictionaryByAddingDictionary:(NSDictionary*) d;
 -(NSDictionary *)dictionaryByRemovingKey:(id) key;
 -(NSDictionary *)dictionaryByRemovingKeysWithPrefix:(NSString*) keyPrefix;
 +(NSDictionary*)dictionaryWithContentsOfData:(NSData *)data;
@@ -34,4 +35,6 @@
 
 - (NSString*) dictionaryAsString;
 + (NSDictionary*) dictionaryFromString: (NSString*) s;
+
+- (NSArray*)deepFindValueForKey:(NSString*) searchedKey;
 @end

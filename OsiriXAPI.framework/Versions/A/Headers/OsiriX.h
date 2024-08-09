@@ -310,12 +310,6 @@
 #include <OsiriXAPI/djcodece.h>
 #include <OsiriXAPI/djcparam.h>
 #include <OsiriXAPI/djcodecd.h>
-#include <OsiriXAPI/ospray.h>
-#include <OsiriXAPI/ospray_cpp.h>
-#include <OsiriXAPI/version.h>
-#include <OsiriXAPI/OSPDataType.h>
-#include <OsiriXAPI/OSPTexture.h>
-#include <OsiriXAPI/OSPConfig.h>
 #include <OsiriXAPI/N2Shell.h>
 #include <OsiriXAPI/N2Debug.h>
 #include <OsiriXAPI/NSFileManager+N2.h>
@@ -336,6 +330,7 @@
 #include <OsiriXAPI/NSAppleEventDescriptor+N2.h>
 #include <OsiriXAPI/NSColor+N2.h>
 #include <OsiriXAPI/N2Task.h>
+#include <OsiriXAPI/NSManagedObjectID+N2.h>
 #include <OsiriXAPI/N2XMLRPCConnection.h>
 #include <OsiriXAPI/N2MutableUInteger.h>
 #include <OsiriXAPI/N2ConnectionListener.h>
@@ -518,7 +513,6 @@
 #include <OsiriXAPI/XMLOutlineView.h>
 #include <OsiriXAPI/OSIWindow.h>
 #include <OsiriXAPI/VTKStereoSRView.h>
-#include <OsiriXAPI/Registration.h>
 #include <OsiriXAPI/SendController.h>
 #include <OsiriXAPI/SplashScreen.h>
 #include <OsiriXAPI/FlyThruStepsArrayController.h>
@@ -557,6 +551,7 @@
 #include <OsiriXAPI/OSIROIManager.h>
 #include <OsiriXAPI/CPRStretchedView.h>
 #include <OsiriXAPI/QueryFilter.h>
+#include <OsiriXAPI/DatabaseOverWindow+DatabaseOverWindow.h>
 #include <OsiriXAPI/WebPortalDatabase.h>
 #include <OsiriXAPI/OrthogonalMPRPETCTController.h>
 #include <OsiriXAPI/ThreadCell.h>
@@ -582,6 +577,7 @@
 #include <OsiriXAPI/BurnerWindowController.h>
 #include <OsiriXAPI/MPRPreviewView.h>
 #include <OsiriXAPI/HistoView.h>
+#include <OsiriXAPI/ROI+VisualCenter.h>
 #include <OsiriXAPI/IChatTheatreDelegate.h>
 #include <OsiriXAPI/WebViewAlert.h>
 #include <OsiriXAPI/Window3DController+StereoVision.h>
@@ -602,10 +598,8 @@
 #include <OsiriXAPI/AuditStudy.h>
 #include <OsiriXAPI/OSIPlanarBrushROI.h>
 #include <OsiriXAPI/ASHDatePicker.h>
-#include <OsiriXAPI/DiscBurningOptions.h>
 #include <OsiriXAPI/SRController.h>
 #include <OsiriXAPI/KeyMenuViewController.h>
-#include <OsiriXAPI/Subscriptions.h>
 #include <OsiriXAPI/MBProgressHUD.h>
 #include <OsiriXAPI/FlyAssistant+Histo.h>
 #include <OsiriXAPI/AppController+TouchBar.h>
@@ -671,8 +665,8 @@
 #include <OsiriXAPI/O2DicomPredicateEditorView.h>
 #include <OsiriXAPI/OSIButtonCell.h>
 #include <OsiriXAPI/BonjourBrowser.h>
+#include <OsiriXAPI/DatabaseOverWindow.h>
 #include <OsiriXAPI/DefaultsOsiriX.h>
-#include <OsiriXAPI/Installer.h>
 #include <OsiriXAPI/CPRStretchedOperation.h>
 #include <OsiriXAPI/WaitRendering.h>
 #include <OsiriXAPI/ContextCleaner.h>
@@ -739,7 +733,6 @@
 #include <OsiriXAPI/VTKView.h>
 #include <OsiriXAPI/stringAdditions.h>
 #include <OsiriXAPI/Schedulable.h>
-#include <OsiriXAPI/LogArrayController.h>
 #include <OsiriXAPI/DCMTKImageQueryNode.h>
 #include <OsiriXAPI/QuicktimeExport.h>
 #include <OsiriXAPI/PluginManager.h>
@@ -776,8 +769,8 @@
 #include <OsiriXAPI/OSIROI.h>
 #include <OsiriXAPI/OrthogonalMPRViewer.h>
 #include <OsiriXAPI/OSIROIMask.h>
-#include <OsiriXAPI/DicomCompressor.h>
 #include <OsiriXAPI/DCMTKStoreSCU.h>
+#include <OsiriXAPI/BrowserController+Extra.h>
 #include <OsiriXAPI/DCMUSRegion.h>
 #include <OsiriXAPI/NSFullScreenWindow.h>
 #include <OsiriXAPI/MSRGSegmentation.h>

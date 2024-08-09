@@ -127,7 +127,9 @@ typedef enum _ThickSlabMode
     IBOutlet NSView         *toolsView;
     IBOutlet NSView         *WLWWView;
     IBOutlet NSView         *ReconstructionView;
-	IBOutlet NSView         *ConvView;
+    IBOutlet NSView         *WorkspacesView;
+    IBOutlet NSMenu         *WorkspacesToolbarItemMenu;
+    IBOutlet NSView         *ConvView;
 	IBOutlet NSView         *FusionView;
 	IBOutlet NSView			*BlendingView;
 	IBOutlet NSView			*movieView, *serieView, *patientView, *keyImages, *PagePad;
@@ -228,7 +230,7 @@ typedef enum _ThickSlabMode
 	IBOutlet NSTextField	*dcmIntervalText, *dcmFromText, *dcmToText, *dcmNumber;
 	IBOutlet NSBox			*dcmBox;
 	IBOutlet NSButton		*dcmAllViewers;
-	IBOutlet NSTextField	*dcmSeriesName;
+	IBOutlet NSTextField	*dcmSeriesName, *dcmSeriesID;
 	
 	IBOutlet NSWindow       *imageExportWindow;
 	IBOutlet NSMatrix		*imageSelection, *imageFormat;
@@ -279,8 +281,9 @@ typedef enum _ThickSlabMode
     IBOutlet NSButton*      comparativesButton;
     NSNumber* flagListPODComparatives;
 	
-	NSMutableArray			*fileList[ MAX4D];
-    NSMutableArray          *pixList[ MAX4D], *roiList[ MAX4D], *copyRoiList[ MAX4D];
+	NSMutableArray			<DicomImage *> *fileList[ MAX4D];
+    NSMutableArray          <DCMPix *> *pixList[ MAX4D];
+    NSMutableArray          <NSMutableArray *> *roiList[ MAX4D], *copyRoiList[ MAX4D];
 	NSData					*volumeData[ MAX4D];
 	short					curMovieIndex, maxMovieIndex;
     OrientationVector       orientationVector;
@@ -409,8 +412,13 @@ typedef enum _ThickSlabMode
     
     NSImage *toolbarMenuItemImage;
     NSArray *allStudiesMatrixModalities;
+    
+    int setOrientation;
+    
+    BOOL newViewerControllerAllocated, dontCaptureUndoEvents;
 }
 @property BOOL preFlipped, sortedInAscending;
+@property(nonatomic) BOOL mouseOnThumbnail;
 @property(nonatomic) int *viewedImagesArray;
 @property(retain) id annotationsObserver;
 @property(retain) NSString *sortedByKey, *reportURL;
@@ -423,6 +431,7 @@ typedef enum _ThickSlabMode
 @property(readonly) NSButton *keyImageCheck;
 @property(readonly) NSSlider *speedSlider;
 @property(readonly) NSTextField *speedText;
+@property(readonly) NSPopUpButton  *seriesPopupMenu;
 //@property(readonly) NSSplitView *leftSplitView;
 @property(retain) NSString *windowsStateName;
 /** Accessors for plugins using blending window */
@@ -436,6 +445,7 @@ typedef enum _ThickSlabMode
 @property(readonly) ToolbarPanelController *toolbarPanel;
 @property(readonly) O2ViewerThumbnailsMatrix *previewMatrix;
 @property(readonly) NSScrollView *previewMatrixScrollView;
+@property(readonly) NSMutableArray *undoQueue, *redoQueue;
 
 @property(nonatomic) float SUV_PatientsWeight,SUV_InjectedDose, SUV_CorrectedDose, SUV_HalfLife, SUV_PatientsSize, SUV_LBM;
 @property(nonatomic) int SUV_PatientsSex;
@@ -463,6 +473,7 @@ typedef enum _ThickSlabMode
 + (NSArray*) get2DViewersObjectIDs;
 + (int) countOf2DViewers;
 + (NSArray*) getDisplayedSeries;
++ (NSArray*) getDisplayedStudies;
 + (BOOL) isFrontMost2DViewer: (NSWindow*) ww;
 + (ViewerController*) frontMostDisplayed2DViewer;
 + (ViewerController*) frontMostDisplayed2DViewerForScreen: (NSScreen*) screen;
@@ -550,6 +561,7 @@ typedef enum _ThickSlabMode
 - (NSMutableArray*) roiList;
 - (NSMutableArray*) roiList: (long) i;
 - (void) setRoiList: (long) i array:(NSMutableArray*) a;
+- (void) addROI: (ROI*) r;
 
 /**  Create a new MyPoint object */
 - (MyPoint*) newPoint: (float) x :(float) y;
@@ -616,6 +628,7 @@ typedef enum _ThickSlabMode
 
 /** Action to Propagte current settings */
 - (void) copySettingsToOthers: (id)sender;
++ (void) setDoNotCopySettings: (BOOL) b;
 
 /** Set the postprocessed flag */
 - (void) setPostprocessed:(BOOL) v;
@@ -665,6 +678,7 @@ typedef enum _ThickSlabMode
 - (void) brushTool:(id) sender;
 - (IBAction) setButtonTool:(id) sender;
 - (IBAction) shutterOnOff:(id) sender;
+- (IBAction)showCurrentSeriesInSeriesList:(id) sender;
 - (void) setImageIndex:(long) i;
 - (void) setImage:(DicomImage*) image;
 - (void) setImage:(DicomImage*) image andApplyROIWLWW:(BOOL) applyROIWLWW;
@@ -764,6 +778,7 @@ typedef enum _ThickSlabMode
 - (id) initWithPix:(NSMutableArray*)f withFiles:(NSMutableArray*)d withVolume:(NSData*) v movie:(BOOL) movie preFlipped: (BOOL) preFlipped;
 - (void) speedSliderAction:(id) sender;
 - (void) setupToolbar;
+- (void) reInstantiateToolbar;
 - (NSToolbar*) toolbar;
 - (void) PlayStop:(id) sender;
 - (BOOL) isPlaying;
@@ -786,6 +801,9 @@ typedef enum _ThickSlabMode
 - (void)comparativeRefresh:(NSString*) patientUID;
 - (void) loadViewedImagesArray;
 + (NSArray*) buildApplyProtocolMenuForModality: (NSString*) modalities;
++ (NSColor*)_selectedItemColor;
++ (NSColor*)_fusionedItemColor;
++ (NSColor*)_openItemColor;
 
 /** Used to determine in the Window Controller is a 2D Viewer.
 * Always return YES
@@ -921,6 +939,7 @@ typedef enum _ThickSlabMode
 - (IBAction) resetWindowsState:(id) sender;
 - (void) buildMatrixPreview;
 - (void) buildMatrixPreview: (BOOL) showSelected;
+- (void) buildSeriesPopup;
 - (void) matrixPreviewSelectCurrentSeries;
 - (void) autoHideMatrix;
 - (void) exportQuicktimeIn:(long) dimension :(long) from :(long) to :(long) interval;
@@ -957,7 +976,7 @@ typedef enum _ThickSlabMode
 
 - (void) revertSeries:(id) sender;
 - (void) executeRevert;
-- (NSImage*) imageForROI: (int) i;
++ (NSImage*) imageForROI: (int) i;
 - (void) ActivateBlending:(ViewerController*) bC;
 - (void) setFusionMode:(long) m;
 - (short) curMovieIndex;
@@ -1010,6 +1029,7 @@ typedef enum _ThickSlabMode
 - (NSScrollView*) previewMatrixScrollView;
 - (NSView*) previewRootView;
 - (NSMatrix*) buttonToolMatrix;
+- (IBAction)seriesPopupSelect:(NSMenuItem *)sender;
 
 #pragma mark-
 #pragma mark Brush ROI Filters
@@ -1234,6 +1254,7 @@ typedef enum _ThickSlabMode
 #ifndef OSIRIX_LIGHT
 - (NSDictionary*) exportDICOMFileInt:(int)screenCapture withName:(NSString*)name;
 - (NSDictionary*) exportDICOMFileInt:(int)screenCapture withName:(NSString*)name allViewers: (BOOL) allViewers;
+- (NSDictionary*) exportDICOMFileInt:(int)screenCapture withName:(NSString*)name seriesID:(NSString*)seriesID allViewers: (BOOL) allViewers;
 #endif
 
 #pragma mark-

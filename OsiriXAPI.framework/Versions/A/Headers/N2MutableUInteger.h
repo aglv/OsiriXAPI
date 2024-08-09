@@ -7,8 +7,9 @@
  All rights reserved.
  =========================================================================*/
 
+#if !TARGET_OS_IOS
 #import <Cocoa/Cocoa.h>
-
+#endif
 
 @interface N2MutableUInteger : NSObject {
 	NSUInteger _value;

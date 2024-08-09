@@ -24,10 +24,12 @@
 + (void) startCheckForPluginsUpdatesVerbose: (BOOL) verbose;
 
 + (int) compareVersion: (NSString *) v1 withVersion: (NSString *) v2;
++ (NSArray*) pluginsFoldersPaths;
 + (NSDictionary*) plugins;
 + (NSDictionary*) pluginsInstances;
 + (NSDictionary*) pluginsDict;
 + (NSDictionary*) pluginsBundleDictionnary;
++ (NSDictionary*) pluginsLoadError;
 + (NSDictionary*) fileFormatPlugins;
 + (NSDictionary*) reportPlugins;
 + (NSArray*) preProcessPlugins;
@@ -35,6 +37,7 @@
 + (NSArray*) fusionPlugins;
 + (NSImage*) pluginIconForBundle: (NSBundle*) plugin;
 + (NSString*) versionForPath: (NSString*) path;
++ (NSString*) displayedVersionForPath: (NSString*) path;
 
 + (BOOL) pluginsAlertAlreadyDisplayed;
 + (void) setPluginsAlertAlreadyDisplayed:(BOOL) p;

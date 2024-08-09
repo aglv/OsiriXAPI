@@ -8,9 +8,10 @@
  =========================================================================*/
 
 #import <Cocoa/Cocoa.h>
+#import "ASHDatePicker.h"
 
-@interface O2DicomPredicateEditorDatePicker : NSDatePicker {
-    NSWindow* _helperWindow;
+@interface O2DicomPredicateEditorDatePicker : ASHDatePicker {
+//    NSWindow* _helperWindow;
 }
 
 @end

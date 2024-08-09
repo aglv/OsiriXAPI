@@ -21,7 +21,7 @@
     NSArray *reportsDictionaries;
     NSArray *dashboardsDictionaries;
     NSString *url, *sourcesTitle, *oldestDate, *mostRecentDate;
-    BOOL isAddToDashboardButtonVisible;
+    BOOL isAddToDashboardButtonVisible, isBackButtonEnabled, isForwardButtonEnabled;
     
     Audit *currentAudit;
     IBOutlet NSArrayController *audits;
@@ -46,10 +46,12 @@
 @property (retain) Audit *currentAudit;
 @property (retain) NSString *createDashboardTitle;
 @property (retain) NSArray *dashboardMenu;
+@property (retain) NSMutableArray *backStack;
 @property (retain) NSURL *retainURL;
 @property (retain) NSDictionary *retainChart;
 @property (nonatomic) int dashboardMenuIndex;
-@property BOOL isAddToDashboardButtonVisible, createNewDashboard, addToExistingDashboard;
+@property BOOL isAddToDashboardButtonVisible, createNewDashboard, addToExistingDashboard, isBackButtonEnabled, isForwardButtonEnabled;
+@property (nonatomic) int historyStackIndex;
 
 + (id) showWindow;
 + (id) showWindowWithUID:(NSString*) uid;

@@ -31,7 +31,6 @@
 -(void) setFlip: (BOOL) f;
 -(void) setCLUT: (unsigned char*) r : (unsigned char*) g : (unsigned char*) b;
 -(void) setBlendingCLUT:( unsigned char*) r : (unsigned char*) g : (unsigned char*) b;
-- (void) setLowQuality:(BOOL) q;
 -(void) setOpacity:(NSArray*) array;
 -(void) setImageBlendingSource: (float*) i;
 @end

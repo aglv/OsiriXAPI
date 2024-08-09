@@ -27,6 +27,7 @@
 -(NSSize)sizeByScalingDownProportionallyToSize:(NSSize)targetSize;
 -(NSImage*)imageByScalingProportionallyToSize:(NSSize)targetSize;
 -(NSImage*)imageByScalingProportionallyToSizeUsingNSImage:(NSSize)targetSize;
+-(NSImage*)imageByScalingProportionallyToMaxSizeUsingNSImage:(NSSize)maxSize;
 -(NSImage*)imageByScalingProportionallyToSize:(NSSize)targetSize retinaSupport: (BOOL) retinaSupport;
 -(NSImage*)imageByScalingToSize:(NSSize)targetSize retinaSupport: (BOOL) retinaSupport proportionally: (BOOL) proportionally;
 -(NSImage*)imageByScalingProportionallyUsingNSImage:(float)ratio;

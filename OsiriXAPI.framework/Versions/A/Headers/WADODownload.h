@@ -18,7 +18,7 @@
     int WADOTotal, countOfSuccesses;
     int WADOGrandTotal, WADOBaseTotal;
     unsigned long totalData, receivedData;
-	NSMutableDictionary *WADODownloadDictionary, *logEntry;
+	NSMutableDictionary *WADODownloadDictionary, *logEntry, *extraParameters;
 	BOOL showErrorMessage, firstWadoErrorDisplayed, _abortAssociation;
     NSTimeInterval firstReceivedTime, lastStatusUpdate;
     NSString *baseStatus, *incomingPath;
@@ -32,8 +32,11 @@
 @property unsigned long totalData, receivedData;
 @property (retain) NSString *baseStatus, *incomingPath;
 @property (retain) DicomDatabase *database;
+@property (retain) NSMutableDictionary *extraParameters;
+@property NSTimeInterval lastReceivedDataTime;
 
 - (void) WADODownload: (NSArray*) urlToDownload;
 - (void) WADODownload: (NSArray*) urlToDownload server: (NSMutableDictionary*) server;
 
++ (void) addFilesToDatabase: (NSArray*) filesToIndex database: (DicomDatabase*) database mainThread: (NSThread*) mainThread;
 @end

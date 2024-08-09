@@ -23,6 +23,7 @@
 @property (nonatomic, retain) NSNumber * canSeeAlbums;
 @property (nonatomic, retain) NSNumber * canDeleteStudy;
 @property (nonatomic, retain) NSDate * creationDate;
+@property (nonatomic, retain) NSDate * lastConnectionDate;
 @property (nonatomic, retain) NSDate * deletionDate;
 @property (nonatomic, retain) NSNumber * downloadZIP;
 @property (nonatomic, retain) NSString * email;
@@ -34,6 +35,7 @@
 @property (nonatomic, retain) NSString * passwordHash;
 @property (nonatomic, retain) NSDate * passwordCreationDate;
 @property (nonatomic, retain) NSString * phone;
+@property (nonatomic, retain) NSNumber * phoneVerified;
 @property (nonatomic, retain) NSNumber * sendDICOMtoAnyNodes;
 @property (nonatomic, retain) NSNumber * sendDICOMtoSelfIP;
 @property (nonatomic, retain) NSNumber * shareStudyWithUser;
@@ -41,6 +43,7 @@
 @property (nonatomic, retain) NSString * studyPredicate;
 @property (nonatomic, retain) NSNumber * uploadDICOM;
 @property (nonatomic, retain) NSNumber * downloadReport;
+@property (nonatomic, retain) NSNumber * viewPDF;
 @property (nonatomic, retain) NSNumber * editReport;
 @property (nonatomic, retain) NSNumber * uploadDICOMAddToSpecificStudies;
 @property (nonatomic, retain) NSSet* studies;
@@ -54,9 +57,15 @@
 @property (nonatomic, retain) NSNumber * studyOldestDateLimitation;
 @property (nonatomic, retain) NSNumber * dontUseStudyPredicateForPACSOnDemand;
 @property (nonatomic, retain) NSNumber * requireDoubleAuthentication;
+@property (nonatomic, retain) NSString * comment;
+@property (nonatomic, retain) NSNumber * patientTemporaryAccount;
+@property (nonatomic, retain) NSNumber * dontAcceptExternalIPAddress;
+@property (nonatomic, retain) NSNumber * canEditField;
+@property (nonatomic, retain) NSNumber * canUseWeasis;
 
 + (BOOL) dontValidatePredicate;
 + (void) setDontValidatePredicate: (BOOL) b;
++ (NSString*)validatePhone:(NSString*) p;
 
 -(void)generatePassword;
 -(void)convertPasswordToHashIfNeeded;
@@ -99,5 +108,6 @@
 - (void)removeStudies:(NSSet *)value;
 - (void)addRecentStudies:(NSSet *)value;
 - (void)removeRecentStudies:(NSSet *)value;
+- (void) applyDefaultSettings;
 @end
 

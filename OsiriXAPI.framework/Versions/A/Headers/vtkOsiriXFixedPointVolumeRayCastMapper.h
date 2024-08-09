@@ -11,7 +11,6 @@
 #include "vtkFixedPointVolumeRayCastMapper.h"
 
 class VTKRENDERINGVOLUME_EXPORT vtkOsiriXFixedPointVolumeRayCastMapper : public vtkFixedPointVolumeRayCastMapper
-//class VTKRENDERINGVOLUME_EXPORT vtkOsiriXFixedPointVolumeRayCastMapper : public vtkFixedPointVolumeRayCastMapper
 {
 public:
   static vtkOsiriXFixedPointVolumeRayCastMapper *New();
@@ -27,7 +26,7 @@ protected:
     void DisplayRenderedImage( vtkRenderer *ren, vtkVolume   *vol );
 
 private:
-  vtkOsiriXFixedPointVolumeRayCastMapper(const vtkOsiriXFixedPointVolumeRayCastMapper&);  // Not implemented.
+  vtkOsiriXFixedPointVolumeRayCastMapper(const vtkOsiriXFixedPointVolumeRayCastMapper&) = delete;
   void operator=(const vtkOsiriXFixedPointVolumeRayCastMapper&);  // Not implemented.
 };
 #endif

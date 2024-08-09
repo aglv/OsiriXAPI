@@ -16,10 +16,11 @@
 /** \brief Window Controller for the Wait Panel */
 @interface Wait : NSWindowController <NSWindowDelegate>
 {
-    IBOutlet NSProgressIndicator *progress;
-	IBOutlet NSTextField		 *text, *elapsed;
-	IBOutlet NSButton			 *abort;
-	
+	IBOutlet NSTextField		    *text, *elapsed;
+	IBOutlet NSButton			    *abort;
+    IBOutlet NSLevelIndicator       *level;
+    IBOutlet NSProgressIndicator    *inderterminateIndicator;
+    
 	NSTimeInterval startTime;
 	BOOL	cancel, aborted;
 	NSTimeInterval lastTimeFrame, lastTimeFrameUpdate, firstTime, displayedTime;
@@ -36,7 +37,9 @@
 - (void)setProgressValue:(double)v;
 - (void)incrementBy:(double)delta;
 - (void)increment;
-- (NSProgressIndicator*) progress;
+- (NSLevelIndicator*) progress;
+- (NSProgressIndicator*) indeterminateIndicator;
+- (void) setIndeterminate:(BOOL) v;
 - (id) initWithString:(NSString*) str;
 - (BOOL) aborted;
 - (IBAction) abortButton: (id) sender;

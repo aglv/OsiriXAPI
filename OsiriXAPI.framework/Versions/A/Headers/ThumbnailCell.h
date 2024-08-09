@@ -21,6 +21,7 @@
 
 @property(readonly) BOOL rightClick;
 @property float animationHeightPercent;
+@property BOOL mouseOverViewer;
 
 + (float) thumbnailCellWidth;
 + (void) resetThumbnailCellWidth;

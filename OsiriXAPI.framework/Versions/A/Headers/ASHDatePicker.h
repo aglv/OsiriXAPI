@@ -4,7 +4,7 @@
 
 @class ASHDatePickerController;
 
-@interface ASHDatePicker : NSDatePicker
+@interface ASHDatePicker : NSDatePicker <NSPopoverDelegate>
 {
     ASHDatePickerController *controller;
     BOOL showingPopover;

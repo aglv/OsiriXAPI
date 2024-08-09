@@ -27,6 +27,7 @@
 -(NSString*)stringByDeletingPrefix:(NSString*)prefix;
 -(NSString*)stringByDeletingSuffix:(NSString*)suffix;
 +(NSString*)randomStringWithLength: (int) len;
+-(NSString *)sanitizeFileName;
 
 -(NSString*)urlEncodedString;
 -(NSString*)urlDecodedString;

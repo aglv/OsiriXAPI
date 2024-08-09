@@ -42,7 +42,7 @@
     float maximumWidth[ 100];
 
 }
-@property (assign) NSTextTable *table;
+@property (readonly) NSTextTable *table;
 @property (assign) NSTextAlignment alignment;
 @property (assign) BOOL headerRow;
 @property (assign) BOOL headerColumn;

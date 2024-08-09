@@ -47,7 +47,11 @@ END_EXTERN_C
 #define DCMDATA_TRACE(msg) /*std::cout << msg*/
 #define DCMDATA_DEBUG(msg) /*std::cout << msg*/
 #define DCMDATA_INFO(msg) /*std::cout << msg*/
+#ifndef NDEBUG
 #define DCMDATA_WARN(msg) std::cout << msg << std::endl
+#else
+#define DCMDATA_WARN(msg) /*std::cout << msg << std::endl*/
+#endif
 #define DCMDATA_ERROR(msg) std::cout << msg << std::endl
 #define DCMDATA_FATAL(msg) std::cout << msg << std::endl
 

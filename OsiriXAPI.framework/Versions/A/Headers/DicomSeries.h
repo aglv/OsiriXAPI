@@ -77,12 +77,16 @@ typedef enum {
 
 @property(nonatomic, retain) NSNumber* dateTimeZone, *dateAddedTimeZone, *dateOpenedTimeZone;
 
+- (NSString*) UID; //seriesDICOMUID
+- (void)modifyDICOMField: (NSString*) field value: (id) value showError: (BOOL) showError newUIDs: (BOOL) newUIDs;
+- (void)modifyDICOMWithDictionary: dict showError: (BOOL) showError newUIDs: (BOOL) newUIDs;
 - (int) multiframesNumber;
 - (BOOL) computeHasROIs;
 - (NSOrderedSet *)paths;
 - (NSSet*) keyImages;
 - (float) viewedPercentage;
 - (BOOL) hasPixels;
+- (NSNumber*) isMpgVideo;
 - (NSArray*) sortedKeyImages;
 - (NSArray*) sortedImages;
 - (DicomImage*) middleImage;

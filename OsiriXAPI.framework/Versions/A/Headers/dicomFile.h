@@ -9,7 +9,9 @@
 
 
 #import <Foundation/Foundation.h>
+#if !TARGET_OS_IOS
 #import <Cocoa/Cocoa.h>
+#endif
 
 #define MINIMUM_TARGET_SIZE_FOR_PDF 1200
 #define ItIsADICOMDIR -8237
@@ -46,6 +48,7 @@
 
 + (NSArray*) zipExtensions;
 + (NSArray*) moviesExtensions;
++ (NSString*) getTransferSyntaxForFile: (NSString*) filePath;
 
 // file functions
 + (BOOL) isTiffFile:(NSString *) file; /**< Test for TIFF file format */
@@ -74,7 +77,9 @@
 + (NSString *) stringWithBytes:(char *) str encodings:(NSStringEncoding*) encoding trim:(BOOL) trim;
 + (NSString *) stringWithBytes:(char *) str encodings:(NSStringEncoding*) encoding replaceBadCharacters:(BOOL) replace; /**< Convert char* str with NSStringEncoding* encoding to NSString */
 + (NSString *) stringWithBytes:(char *) str encodings:(NSStringEncoding*) encodings replaceBadCharacters:(BOOL) replace trim:(BOOL) trim;
+#if !TARGET_OS_IOS
 - (NSPDFImageRep*) PDFImageRep; /**< Get a PDFImageRep from DICOM SR file */
+#endif
 - (NSString*) PDFFile;
 - (long) NoOfFrames; /**< Number of frames in the file */
 - (long) getWidth; /**<  Returns image width */
@@ -111,10 +116,12 @@
 
 -(short) getDicomFile;  /**< Decode DICOM.  Returns -1 for failure 0 for success */
 
+#if !TARGET_OS_IOS
 #ifndef DECOMPRESS_APP
 -(short) getNIfTI; /**< Decode NIfTI  Returns -1 for failure 0 for success */
 +(NSXMLDocument *) getNIfTIXML : (NSString *) file; /**< Converts NIfTI to XML */
 + (BOOL) isNIfTIFile:(NSString *) file; /**< Test for Nifti file format */
+#endif
 #endif
 
 /** Returns the COMMENTSAUTOFILL default. 
@@ -124,6 +131,7 @@
 - (BOOL) autoFillComments; 
 - (BOOL) splitMultiEchoMR; /**< Returns the splitMultiEchoMR default If YES, splits multi echo series into separate series by Echo number. */
 - (BOOL) useSeriesDescription; /**< Returns the useSeriesDescription default. */
+- (BOOL) splitMonochromeRGB;
 - (BOOL) noLocalizer; /**< Returns the NOLOCALIZER default. */
 - (NSDictionary*) combineSeries;
 - (NSDictionary*) splitSeries;
@@ -136,6 +144,7 @@
 + (NSArray*) combineSplitModalities;
 + (NSDictionary*)combineSeriesDictionary;
 + (NSDictionary*)splitSeriesDictionary;
++(BOOL) isRGBForPhotometricInterpretation: (NSString*) p;
 @end
 
 

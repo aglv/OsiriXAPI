@@ -10,7 +10,7 @@
 		</data>
 		<key>Resources/Info.plist</key>
 		<data>
-		1Tpo8tI5aQpGsPZBt4U1I/qUX5g=
+		9iCABTjRSc1fheCjwT2peJvOlbI=
 		</data>
 		<key>Resources/nameDictionary.plist</key>
 		<data>
@@ -29,252 +29,160 @@
 	<dict>
 		<key>Headers/DCMAbstractSyntaxUID.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			MI01tVWtEZ5Vx/BKJFsn2+ZNpy0=
-			</data>
 			<key>hash2</key>
 			<data>
-			UKfamWy2C6s2v4B1+YcDom8sE5TubB19VGGeQUOerf4=
+			DxUqv0++BSQZnvvvUHAYszfxos77BRveolflX847xiI=
 			</data>
 		</dict>
 		<key>Headers/DCMAttribute.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			aexrBXf+GPCnZNc9OAMn59qxAWE=
-			</data>
 			<key>hash2</key>
 			<data>
-			t5IHDWB71kdLdXtwurnhjQ+x/ZXPe0DBTq03kHoiAWE=
+			/2nt31UYuHIeK0msmbCNr/e7SVBugVzVR/ACM51tzvE=
 			</data>
 		</dict>
 		<key>Headers/DCMAttributeTag.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			znVM+MlmmaGCiDJs37I8vk3pTVA=
-			</data>
 			<key>hash2</key>
 			<data>
-			UER5yg2UG8aXVn0a8vx2ST5FY7jLKbnrhpztzKH4Ad0=
+			3WRSwNtSBlGQTSXoT6fAN8L1MRVCfMf496nSrKxtqeY=
 			</data>
 		</dict>
 		<key>Headers/DCMCalendarDate.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			DsI92eMuxPzC29J0UKf4oZmY7xU=
-			</data>
 			<key>hash2</key>
 			<data>
-			JOjYgQB2kLGMyJhkYeAjgWh1DOYRiRGdJ7ERy+CkH1g=
+			27GMaytKsi/uvKHejmECB/JucH9rfq7/VFpJGFLLAHQ=
 			</data>
 		</dict>
 		<key>Headers/DCMCharacterSet.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			0iQGIVtLMOPPVVIeKVJ+3qHMtnE=
-			</data>
 			<key>hash2</key>
 			<data>
-			cYRRUP0+fQHu0TNZcWbasJzuZkHN58TwFiY3cnIT8iQ=
+			BvL1nxZZ/hRaLr7dpqjn7fYjbfrzv1MGjq0uE/M9Kwc=
 			</data>
 		</dict>
 		<key>Headers/DCMDataContainer.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			bQZLHrZM0GZQlkw5iUS6fxqz81A=
-			</data>
 			<key>hash2</key>
 			<data>
-			ESCSbU8E1VgEAT6/dgIRu+8mimL2FMXTVR47s+NhGuQ=
+			iSTX/BScIaYqBE6rdsXexWmmtdpR+cG1Cq96NCjsZUo=
 			</data>
 		</dict>
 		<key>Headers/DCMEncapsulatedPDF.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			vAs6j8e0C5PCxEsV5fENamqAlSw=
-			</data>
 			<key>hash2</key>
 			<data>
-			dhHZVanzwboNeeJBu//HZVjJPqI0dKlXrF7AO4lTpzU=
+			joCE/0MCzUvJr9zkLH5FssrRnjZndTcnrHvod5tWAQo=
 			</data>
 		</dict>
 		<key>Headers/DCMFramework.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			SGrFtAaiIDsxO/I82F0S4vbtcxU=
-			</data>
 			<key>hash2</key>
 			<data>
-			5WTXJC9AjiQyUvzoR5PhdDDDLTTyvt6SI3ftZKD3wQc=
+			3lxmgPZZ3nBV4049N7TKC5Llh78JCCFP0pKRqZg3oJY=
 			</data>
 		</dict>
 		<key>Headers/DCMLimitedObject.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			DyA5hYdFodj8hWy3PfrrRVcMnfU=
-			</data>
 			<key>hash2</key>
 			<data>
-			hASfXdpg5hef8meXMSguqSTz3CbY7dJdPgbSAjJYnPA=
+			HG7WyH3joabvDD/rXoLMsdXN2f8qvFjA16sgU2uN+OQ=
 			</data>
 		</dict>
 		<key>Headers/DCMNetServiceDelegate.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			FGOstUbgVYgxhTEiyzgybBUU+cA=
-			</data>
 			<key>hash2</key>
 			<data>
-			Th7BYygP9RaVlsKKw5TXMfxIs2qd8zkCK5D0/thD6/o=
+			3Chb60cvnL25vDntuF1FJQ/lfGIFy6sTNXUlM5+ubcc=
 			</data>
 		</dict>
 		<key>Headers/DCMObject.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			LLeyNrGGub0LlX3rsCIHIa5yyd0=
-			</data>
 			<key>hash2</key>
 			<data>
-			HNtivkthFP7fWM24t4Agf18F1jJC3eykQqpVOyj7050=
+			nk0btITa2sKRdZPjxExPEzgn8LuWf8V2oQmPfArxLhk=
 			</data>
 		</dict>
 		<key>Headers/DCMPixelDataAttribute.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			bWwuA9SKuJbmC71akZohM94rAEA=
-			</data>
 			<key>hash2</key>
 			<data>
-			utu8PmXkim6LPvFAsia+TM9oeOGeFcbgTYqSdiate7M=
+			Y226aUtsYwB8vaKwXIk4zaZd+Z/zaknDbUm9V2ZYpMg=
 			</data>
 		</dict>
 		<key>Headers/DCMPixelDataAttributeJPEG12.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			n6Pv+b7crzUlhGOw8qk1IvFFt8I=
-			</data>
 			<key>hash2</key>
 			<data>
-			7vKw6D2mCUcDbJueIHp9mt2T+RtAwqCnEk/hGAHHUes=
+			n8KTen/G0w8bVWZnhE03ThMEWy4MqzfqC8LdlgDwX2o=
 			</data>
 		</dict>
 		<key>Headers/DCMPixelDataAttributeJPEG16.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			6EOVwHF7Iv9nXVHJXignOti4fDg=
-			</data>
 			<key>hash2</key>
 			<data>
-			XOUcRBi6zFTpuMNzlbtGkpphbnc+sFG7kJjfkeO6G7M=
+			R1Xe27yMHpROG/bhNI9rfiFhdulYix2TmMlZJi4cxv0=
 			</data>
 		</dict>
 		<key>Headers/DCMPixelDataAttributeJPEG8.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			kFFsTd4qLiC+CQXieNh2flbPnGY=
-			</data>
 			<key>hash2</key>
 			<data>
-			bZWMQRuebywbr0mwaxY8+90ovyOKW0VOFSfBzXIACQY=
+			Tf7+mW79GlgzAwPKWlgdefXkCmVScrEoSLhN4mrP65I=
 			</data>
 		</dict>
 		<key>Headers/DCMPresentationState.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			/zBXA6ltSAlSoW0dN61gxUoS1dg=
-			</data>
 			<key>hash2</key>
 			<data>
-			8uDEp8P1Ps5DAxnJCCUgxvppmBKJ4uybi53b+4M8rKg=
+			oUtpCCO+78EzLv00m0G3KqDey+DnKhycOat1+xdbcYw=
 			</data>
 		</dict>
 		<key>Headers/DCMSequenceAttribute.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			BB6jrVja5JdYJpZqvf1Ird0LXaI=
-			</data>
 			<key>hash2</key>
 			<data>
-			i/1uLhD7D5Th0vxzHYmeipxWfKrydgMeIdFURM/Aeh8=
+			XDcqpVO7SsyQ4VhpgVR0zTDTZ3aELaUN+IcEK5uKavI=
 			</data>
 		</dict>
 		<key>Headers/DCMTagDictionary.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			gsmVDDotYjUCCr6rXjnk6YSQncU=
-			</data>
 			<key>hash2</key>
 			<data>
-			Nhaq3vOXVQTINB9COUJsDg7Fp3oLqGLEBC2nKGCKNYA=
+			CYOTEErqzCrT1IMsCDzMJeHOQpyOo5Gd+TT5laiiRd8=
 			</data>
 		</dict>
 		<key>Headers/DCMTagForNameDictionary.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			a1oamzPOCetpIyQGQ6wZqlv1nEA=
-			</data>
 			<key>hash2</key>
 			<data>
-			5DYFghd214b848/9CtmpXz2v11hh2WSHIEqpL6LCzxQ=
+			KkXGofblv72mNHHwUV5ki0NcfRzhAmbBGip6YJAm/Qo=
 			</data>
 		</dict>
 		<key>Headers/DCMTransferSyntax.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			6oZPqjNfp/zhu2yfoNJGwK8OAwA=
-			</data>
 			<key>hash2</key>
 			<data>
-			4zrPMDMgKsfOgSVE1H0dSRAuwGqNZHiCBzSpZvLFLyg=
+			8efYULoSV+FXBKkyYjdjzwyk/xi85r6nCOXO3n5Zs6o=
 			</data>
 		</dict>
 		<key>Headers/DCMUIDs.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			iiheejVnKUJJqZlh//VTBIwQRBQ=
-			</data>
 			<key>hash2</key>
 			<data>
-			GKweyN1oF6j+5Xhr757PEqBMfCPrzKT+fYySOs2bb7Q=
+			SH1lH+MeFnHYJ0O0CKVXMB242dHOykZr4Kb9Kgddf8M=
 			</data>
 		</dict>
 		<key>Headers/DCMValueRepresentation.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			rIR8NUE8AypQwClRuKJd9aycKdk=
-			</data>
 			<key>hash2</key>
 			<data>
-			XzHQiy1iTKS4ogqpQXHQ96+ZUfwlum6gs5oOerf798s=
+			OzfPWw0HeB5TKYbynPWYrDe0E0Anv5HJBcL+SrlZ144=
 			</data>
 		</dict>
 		<key>Resources/DCM Framework_Prefix.pch</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			UIWAVnQSQa9TOCQZhbG9MnQn0iU=
-			</data>
 			<key>hash2</key>
 			<data>
 			E0Hs5gKi6L/htSfyeIvi1jNwjhuHSJH47YHrWPIZxBg=
@@ -282,21 +190,13 @@
 		</dict>
 		<key>Resources/Info.plist</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			1Tpo8tI5aQpGsPZBt4U1I/qUX5g=
-			</data>
 			<key>hash2</key>
 			<data>
-			yP0KnZuvKcb30BzEfwaFuO6BVLTYnd3z3GVIz6Lg3HE=
+			QKCjfg5mhXuxySd98cIMgVhIOEmmETKqaur3Isfo5PY=
 			</data>
 		</dict>
 		<key>Resources/nameDictionary.plist</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			9s50OPeMZKKimNxsZFNv86TKDoo=
-			</data>
 			<key>hash2</key>
 			<data>
 			8KMAO7k8xgrzAuYig2aShrChuNHG2jTP9qwWOVmFGrc=
@@ -304,10 +204,6 @@
 		</dict>
 		<key>Resources/tagDictionary.plist</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			lYU5LwyhSWL6SV+rh5VMJ7yvPV0=
-			</data>
 			<key>hash2</key>
 			<data>
 			UBpGBou0evx0VWDv98sowqSxEZbuTZbwutswQ2j0HhM=
@@ -315,10 +211,6 @@
 		</dict>
 		<key>Resources/version.plist</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			HdyBquFwm8szBTf7NpaEQKXYXc8=
-			</data>
 			<key>hash2</key>
 			<data>
 			oXeENGIrgV/sxO+fnmHzvXX8jLy12vC8InNfPeof4Vc=

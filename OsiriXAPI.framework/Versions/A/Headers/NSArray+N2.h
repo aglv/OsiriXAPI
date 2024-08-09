@@ -24,11 +24,12 @@
 - (id) randomObject;
 - (BOOL)intersectArray:(NSArray*) a;
 - (NSArray*)intersectionArray:(NSArray*) a;
-
+- (NSArray*)identicalDictionaries;
 - (NSString*)arrayAsJSONwithOptions: (NSJSONWritingOptions) o;
 + (NSArray*)arrayFromJSON:(NSString*) s withOptions: (NSJSONReadingOptions) o;
 - (NSString*)arrayAsString;
 + (NSArray*)arrayFromString: (NSString*) s;
+- (NSArray*)randomizedArray;
 @end
 
 
@@ -36,5 +37,5 @@
 
 -(void)addUniqueObjectsFromArray:(NSArray*)array;
 -(void) replaceLasObjectWith: (id) object;
-
+-(void) addObjectIfNotNil: (id) object;
 @end
